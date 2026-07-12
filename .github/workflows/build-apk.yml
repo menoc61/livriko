@@ -20,13 +20,13 @@ on:
           - both
         default: both
       version_code:
-        description: Version code (optionnel, auto-increment si vide)
+        description: "Version code (optionnel, auto-increment si vide)"
         type: string
         required: false
       version_name:
-        description: Version name (ex: 3.1.0)
+        description: "Version name (ex: 3.1.0)"
         type: string
-        default: 3.0.0
+        default: "3.0.0"
         required: false
 
 concurrency:
