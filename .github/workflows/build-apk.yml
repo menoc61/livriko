@@ -138,9 +138,9 @@ jobs:
 
       - name: Update version in build.gradle
         run: |
-          sed -i "s/versionCode [0-9]*/versionCode ${{ env.VERSION_CODE }}/" android/app/build.gradle
+          sed -i "s/versionCode [0-9]*/versionCode ${VERSION_CODE}/" android/app/build.gradle
           sed -i "s/versionName \"[^\"]*\"/versionName \"${{ inputs.version_name }}\"/" android/app/build.gradle
-          echo "Version set to ${{ env.VERSION_NAME }} (code: ${{ env.VERSION_CODE }})"
+          echo "Version set to ${{ inputs.version_name }} (code: ${VERSION_CODE})"
 
       - name: Build APK (release)
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
@@ -151,7 +151,7 @@ jobs:
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
         uses: actions/upload-artifact@v4
         with:
-          name: livriko-user-${{ env.VERSION_NAME }}-apk
+          name: livriko-user-apk
           path: Taxido_user/android/app/build/outputs/apk/release/*.apk
           if-no-files-found: warn
 
@@ -164,7 +164,7 @@ jobs:
         if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
         uses: actions/upload-artifact@v4
         with:
-          name: livriko-user-${{ env.VERSION_NAME }}-aab
+          name: livriko-user-aab
           path: Taxido_user/android/app/build/outputs/bundle/release/*.aab
           if-no-files-found: warn
 
@@ -271,9 +271,9 @@ jobs:
 
       - name: Update version in build.gradle
         run: |
-          sed -i "s/versionCode [0-9]*/versionCode ${{ env.VERSION_CODE }}/" android/app/build.gradle
+          sed -i "s/versionCode [0-9]*/versionCode ${VERSION_CODE}/" android/app/build.gradle
           sed -i "s/versionName \"[^\"]*\"/versionName \"${{ inputs.version_name }}\"/" android/app/build.gradle
-          echo "Version set to ${{ env.VERSION_NAME }} (code: ${{ env.VERSION_CODE }})"
+          echo "Version set to ${{ inputs.version_name }} (code: ${VERSION_CODE})"
 
       - name: Build APK (release)
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
@@ -284,7 +284,7 @@ jobs:
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
         uses: actions/upload-artifact@v4
         with:
-          name: livriko-driver-${{ env.VERSION_NAME }}-apk
+          name: livriko-driver-apk
           path: Taxido_driver/android/app/build/outputs/apk/release/*.apk
           if-no-files-found: warn
 
@@ -297,7 +297,7 @@ jobs:
         if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
         uses: actions/upload-artifact@v4
         with:
-          name: livriko-driver-${{ env.VERSION_NAME }}-aab
+          name: livriko-driver-aab
           path: Taxido_driver/android/app/build/outputs/bundle/release/*.aab
           if-no-files-found: warn
 
