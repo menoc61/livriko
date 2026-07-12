@@ -93,7 +93,7 @@ jobs:
           key: ${{ runner.os }}-user-${{ hashFiles('Taxido_user/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run linter
         run: npm run lint
@@ -126,7 +126,7 @@ jobs:
           key: ${{ runner.os }}-driver-${{ hashFiles('Taxido_driver/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run linter
         run: npm run lint
