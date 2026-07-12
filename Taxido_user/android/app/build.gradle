@@ -24,8 +24,8 @@ android {
     namespace "com.livriko.user"
     defaultConfig {
         applicationId "com.livriko.user"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "3.0.0"
         multiDexEnabled true

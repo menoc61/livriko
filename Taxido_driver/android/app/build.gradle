@@ -78,12 +78,11 @@ android {
     namespace "com.livriko.driver"
     defaultConfig {
         applicationId "com.livriko.driver"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+        versionCode 1
         versionName "3.0.0"
-        multiDexEnabled true 
-        missingDimensionStrategy 'react-native', 'hermes' 
+        multiDexEnabled true
     }
     signingConfigs {
         debug {
