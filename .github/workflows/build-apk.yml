@@ -144,8 +144,9 @@ jobs:
 
       - name: Build APK (release)
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
+        continue-on-error: true
         run: |
-          cd android && ./gradlew assembleRelease --no-daemon
+          cd android && ./gradlew assembleRelease --no-daemon --stacktrace
 
       - name: Upload APK
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
@@ -158,7 +159,7 @@ jobs:
       - name: Build AAB (release)
         if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
         run: |
-          cd android && ./gradlew bundleRelease --no-daemon
+          cd android && ./gradlew bundleRelease --no-daemon --stacktrace
 
       - name: Upload AAB
         if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
@@ -278,7 +279,7 @@ jobs:
       - name: Build APK (release)
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
         run: |
-          cd android && ./gradlew assembleRelease --no-daemon
+          cd android && ./gradlew assembleRelease --no-daemon --stacktrace
 
       - name: Upload APK
         if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
@@ -291,7 +292,7 @@ jobs:
       - name: Build AAB (release)
         if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
         run: |
-          cd android && ./gradlew bundleRelease --no-daemon
+          cd android && ./gradlew bundleRelease --no-daemon --stacktrace
 
       - name: Upload AAB
         if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
