@@ -12,9 +12,6 @@ react {
 def enableProguardInReleaseBuilds = false
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
-project.ext.react = [
- hermesEnabled: true
-]
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -24,11 +21,10 @@ android {
     namespace "com.livriko.user"
     defaultConfig {
         applicationId "com.livriko.user"
-        minSdk rootProject.ext.minSdkVersion
-        targetSdk rootProject.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "3.0.0"
-        multiDexEnabled true
     }
     signingConfigs {
         debug {

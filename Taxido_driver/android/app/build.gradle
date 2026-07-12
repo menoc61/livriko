@@ -78,11 +78,10 @@ android {
     namespace "com.livriko.driver"
     defaultConfig {
         applicationId "com.livriko.driver"
-        minSdk rootProject.ext.minSdkVersion
-        targetSdk rootProject.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "3.0.0"
-        multiDexEnabled true
     }
     signingConfigs {
         debug {
