@@ -138,8 +138,8 @@ jobs:
 
       - name: Update version in build.gradle
         run: |
-          sed -i "s/versionCode [0-9]*/versionCode ${VERSION_CODE}/" android/app/build.gradle
-          sed -i "s/versionName \"[^\"]*\"/versionName \"${{ inputs.version_name }}\"/" android/app/build.gradle
+          sed -i "s/versionCode[[:space:]]*=[[:space:]]*[0-9]*/versionCode = ${VERSION_CODE}/" android/app/build.gradle
+          sed -i "s/versionName[[:space:]]*=[[:space:]]*\"[^\"]*\"/versionName = \"${{ inputs.version_name }}\"/" android/app/build.gradle
           echo "Version set to ${{ inputs.version_name }} (code: ${VERSION_CODE})"
 
       - name: Build APK (release)
@@ -272,8 +272,8 @@ jobs:
 
       - name: Update version in build.gradle
         run: |
-          sed -i "s/versionCode [0-9]*/versionCode ${VERSION_CODE}/" android/app/build.gradle
-          sed -i "s/versionName \"[^\"]*\"/versionName \"${{ inputs.version_name }}\"/" android/app/build.gradle
+          sed -i "s/versionCode[[:space:]]*=[[:space:]]*[0-9]*/versionCode = ${VERSION_CODE}/" android/app/build.gradle
+          sed -i "s/versionName[[:space:]]*=[[:space:]]*\"[^\"]*\"/versionName = \"${{ inputs.version_name }}\"/" android/app/build.gradle
           echo "Version set to ${{ inputs.version_name }} (code: ${VERSION_CODE})"
 
       - name: Build APK (release)

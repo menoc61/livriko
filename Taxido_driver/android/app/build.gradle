@@ -80,8 +80,8 @@ android {
         applicationId "com.livriko.driver"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "3.0.0"
+        versionCode = 1
+        versionName = "3.0.0"
     }
     buildTypes {
         debug {
