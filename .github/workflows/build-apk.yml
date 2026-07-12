@@ -1,0 +1,308 @@
+name: Build Android APK/AAB
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: Application a builder
+        type: choice
+        options:
+          - both
+          - user
+          - driver
+        default: both
+      build_type:
+        description: Type de build
+        type: choice
+        options:
+          - apk
+          - aab
+          - both
+        default: both
+      version_code:
+        description: Version code (optionnel, auto-increment si vide)
+        type: string
+        required: false
+      version_name:
+        description: Version name (ex: 3.1.0)
+        type: string
+        default: 3.0.0
+        required: false
+
+concurrency:
+  group: build-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20
+  JAVA_VERSION: '17'
+
+jobs:
+  build-user:
+    name: Build User App
+    if: ${{ inputs.app == 'both' || inputs.app == 'user' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_user
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: Taxido_user/node_modules
+          key: ${{ runner.os }}-user-npm-${{ hashFiles('Taxido_user/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-user-npm-
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            Taxido_user/android/.gradle
+          key: ${{ runner.os }}-user-gradle-${{ hashFiles('Taxido_user/android/**/*.gradle*') }}
+          restore-keys: ${{ runner.os }}-user-gradle-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate google-services.json (CI placeholder)
+        run: |
+          cat > android/app/google-services.json << 'EOF'
+          {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "livriko-ci",
+              "storage_bucket": "livriko-ci.appspot.com"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+                  "android_client_info": {
+                    "package_name": "com.livriko.user"
+                  }
+                },
+                "oauth_client": [],
+                "api_key": [
+                  {
+                    "current_key": "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                  }
+                ],
+                "services": {
+                  "appinvite_service": {
+                    "other_platform_oauth_client": []
+                  }
+                }
+              }
+            ],
+            "configuration_version": "1"
+          }
+          EOF
+          echo "google-services.json generated for CI"
+
+      - name: Generate debug keystore
+        run: |
+          if [ ! -f android/app/debug.keystore ]; then
+            keytool -genkey -v -keystore android/app/debug.keystore \
+              -storepass android -alias androiddebugkey -keypass android \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Android Debug,O=Android,C=US"
+            echo "Debug keystore generated"
+          fi
+
+      - name: Set version code
+        run: |
+          VERSION_CODE="${{ inputs.version_code }}"
+          if [ -z "$VERSION_CODE" ]; then
+            VERSION_CODE=$(date +%Y%m%d%H%M)
+          fi
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+
+          VERSION_NAME="${{ inputs.version_name }}"
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+
+      - name: Update version in build.gradle
+        run: |
+          sed -i "s/versionCode [0-9]*/versionCode ${{ env.VERSION_CODE }}/" android/app/build.gradle
+          sed -i "s/versionName \"[^\"]*\"/versionName \"${{ inputs.version_name }}\"/" android/app/build.gradle
+          echo "Version set to ${{ env.VERSION_NAME }} (code: ${{ env.VERSION_CODE }})"
+
+      - name: Build APK (release)
+        if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+
+      - name: Upload APK
+        if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-user-${{ env.VERSION_NAME }}-apk
+          path: Taxido_user/android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: warn
+
+      - name: Build AAB (release)
+        if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
+        run: |
+          cd android && ./gradlew bundleRelease --no-daemon
+
+      - name: Upload AAB
+        if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-user-${{ env.VERSION_NAME }}-aab
+          path: Taxido_user/android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: warn
+
+      - name: Summary
+        run: |
+          echo "### Build User App - Termine" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: ${{ env.VERSION_NAME }} (code: ${{ env.VERSION_CODE }})" >> $GITHUB_STEP_SUMMARY
+          echo "- Type: ${{ inputs.build_type }}" >> $GITHUB_STEP_SUMMARY
+
+  build-driver:
+    name: Build Driver App
+    if: ${{ inputs.app == 'both' || inputs.app == 'driver' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_driver
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: Taxido_driver/node_modules
+          key: ${{ runner.os }}-driver-npm-${{ hashFiles('Taxido_driver/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-driver-npm-
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            Taxido_driver/android/.gradle
+          key: ${{ runner.os }}-driver-gradle-${{ hashFiles('Taxido_driver/android/**/*.gradle*') }}
+          restore-keys: ${{ runner.os }}-driver-gradle-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate google-services.json (CI placeholder)
+        run: |
+          cat > android/app/google-services.json << 'EOF'
+          {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "livriko-ci",
+              "storage_bucket": "livriko-ci.appspot.com"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+                  "android_client_info": {
+                    "package_name": "com.livriko.driver"
+                  }
+                },
+                "oauth_client": [],
+                "api_key": [
+                  {
+                    "current_key": "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                  }
+                ],
+                "services": {
+                  "appinvite_service": {
+                    "other_platform_oauth_client": []
+                  }
+                }
+              }
+            ],
+            "configuration_version": "1"
+          }
+          EOF
+          echo "google-services.json generated for CI"
+
+      - name: Generate debug keystore
+        run: |
+          if [ ! -f android/app/debug.keystore ]; then
+            keytool -genkey -v -keystore android/app/debug.keystore \
+              -storepass android -alias androiddebugkey -keypass android \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Android Debug,O=Android,C=US"
+            echo "Debug keystore generated"
+          fi
+
+      - name: Set version code
+        run: |
+          VERSION_CODE="${{ inputs.version_code }}"
+          if [ -z "$VERSION_CODE" ]; then
+            VERSION_CODE=$(date +%Y%m%d%H%M)
+          fi
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+
+      - name: Update version in build.gradle
+        run: |
+          sed -i "s/versionCode [0-9]*/versionCode ${{ env.VERSION_CODE }}/" android/app/build.gradle
+          sed -i "s/versionName \"[^\"]*\"/versionName \"${{ inputs.version_name }}\"/" android/app/build.gradle
+          echo "Version set to ${{ env.VERSION_NAME }} (code: ${{ env.VERSION_CODE }})"
+
+      - name: Build APK (release)
+        if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+
+      - name: Upload APK
+        if: ${{ inputs.build_type == 'apk' || inputs.build_type == 'both' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-driver-${{ env.VERSION_NAME }}-apk
+          path: Taxido_driver/android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: warn
+
+      - name: Build AAB (release)
+        if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
+        run: |
+          cd android && ./gradlew bundleRelease --no-daemon
+
+      - name: Upload AAB
+        if: ${{ inputs.build_type == 'aab' || inputs.build_type == 'both' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-driver-${{ env.VERSION_NAME }}-aab
+          path: Taxido_driver/android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: warn
+
+      - name: Summary
+        run: |
+          echo "### Build Driver App - Termine" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: ${{ env.VERSION_NAME }} (code: ${{ env.VERSION_CODE }})" >> $GITHUB_STEP_SUMMARY
+          echo "- Type: ${{ inputs.build_type }}" >> $GITHUB_STEP_SUMMARY
