@@ -1,0 +1,55 @@
+# --------------------------------------------------
+# Advanced Robots.txt for (livriko.fr)
+# --------------------------------------------------
+
+User-agent: *
+# 1. Protect Laravel Backend, System Files, and APIs
+Disallow: /admin/                # Block access to Admin Panel
+Disallow: /api/                  # Block all mobile app API endpoints
+Disallow: /oauth/                # Block passport/authentication routes
+Disallow: /vendor/               # Block Composer vendor packages
+Disallow: /storage/              # Block system storage (except public assets if needed)
+Disallow: /bootstrap/            # Block framework configurations
+Disallow: /config/               # Block app configs
+
+# 2. Block Taxi-Specific Dynamic Application Views
+Disallow: /booking/              # Block ride-booking webviews
+Disallow: /bidding/              # Block price negotiation/bidding routes
+Disallow: /parcel/               # Block parcel delivery paths
+Disallow: /rental/               # Block cab rental dashboards
+Disallow: /track/                # Block live map tracking views (Firebase integrations)
+Disallow: /search/               # Block map search parameters
+Disallow: /*?* # Block queries with parameters to prevent duplicate indexing
+
+# 3. Explicitly Allow Static Marketing Assets
+Allow: /storage/public/          # Allow indexing of logos/banners if necessary
+Allow: /assets/                  # Allow CSS/JS required to render landing pages
+
+# 4. Block Aggressive SEO Bots and Data Scrapers (Saves server CPU/Bandwidth)
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: Rogerbot
+Disallow: /
+
+# 5. Protect maps, data, and driver profiles from AI Scraping
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: Google-Extended
+User-agent: Anthropic-AI
+User-agent: Claude-Web
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: PetalBot
+User-agent: Diffbot
+Disallow: /
+
+# 6. Public Landing/Download Page Sitemap (Only if you have a web frontend landing page)
+Sitemap: https://livriko.fr/sitemap.xml
+
+#7. Bloc sensitive files
+Disallow: /.env
+Disallow: /.git
+Disallow: /.htaccess
+Disallow: /docker-compose.yml
+Disallow: /Dockerfile

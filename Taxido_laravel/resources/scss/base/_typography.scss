@@ -1,0 +1,156 @@
+@use "../utils/variables";
+
+/**=====================
+    Typography css start
+==========================**/
+body {
+    font-family: var(--font-family);
+    position: relative;
+    background-color: variables.$body-bg-color;
+    font-size: variables.$body-font-size;
+    overflow-x: hidden;
+    color: variables.$theme-body-font-color;
+}
+
+h1 {
+    font-size: 60px;
+    color: variables.$dark-font;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    span {
+        font-size: 107px;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+}
+
+h2 {
+    font-size: 36px;
+    color: variables.$dark-font;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+}
+
+h3 {
+    font-size: 23px;
+    font-weight: 400;
+    color: variables.$dark-font;
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+h4 {
+    font-size: 18px;
+    text-transform: capitalize;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 400;
+    color: variables.$dark-font;
+    line-height: 24px;
+    letter-spacing: 0.05em;
+}
+
+h6 {
+    font-size: 14px;
+    font-weight: 400;
+    color: variables.$grey;
+    line-height: 24px;
+}
+
+ul {
+    padding-left: variables.$ul-padding-left;
+    list-style-type: none;
+    margin-bottom: 0;
+    padding-right: variables.$ul-padding-right;
+}
+
+li {
+    display: inline-block;
+}
+
+p {
+    font-size: variables.$sm-font-size;
+    color: variables.$grey;
+    line-height: variables.$paragraph-line-height;
+    letter-spacing: variables.$paragraph-letter-spacing;
+}
+
+a {
+    transition: 0.5s ease;
+    text-decoration: none;
+    color: variables.$dark-font;
+
+    &:hover {
+        text-decoration: none;
+        transition: 0.5s ease;
+        color: variables.$dark-color;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+* a {
+    color: variables.$dark-color;
+}
+
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
+.btn-close {
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+label {
+    margin-bottom: 0.5rem;
+}
+
+:focus {
+    outline: none;
+}
+
+.form-control {
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.text-theme {
+    color: var(--primary-color) !important;
+}
+
+.form-check-input {
+    &:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+}
+
+.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+svg {
+    vertical-align: baseline;
+}
+
+input {
+    &:focus {
+        outline-color: variables.$transparent-color;
+    }
+}

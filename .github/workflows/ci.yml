@@ -1,0 +1,253 @@
+name: Livriko CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      build_android_user:
+        description: Build User App Android APK/AAB
+        type: boolean
+        default: false
+      build_android_driver:
+        description: Build Driver App Android APK/AAB
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  laravel-tests:
+    name: Laravel Backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_laravel
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: taxido_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, pdo, pdo_mysql, bcmath, gd, zip
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-interaction --prefer-dist
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Execute tests
+        run: php artisan test
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: taxido_test
+          DB_USERNAME: root
+          DB_PASSWORD: ""
+
+      - name: PHP syntax check
+        run: find app Modules -name "*.php" -exec php -l {} \;
+
+  user-app-lint:
+    name: User App Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_user
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: Taxido_user/node_modules
+          key: ${{ runner.os }}-user-${{ hashFiles('Taxido_user/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Run tests
+        run: npm test
+
+  driver-app-lint:
+    name: Driver App Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_driver
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: Taxido_driver/node_modules
+          key: ${{ runner.os }}-driver-${{ hashFiles('Taxido_driver/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Run tests
+        run: npm test
+
+  build-user-android:
+    name: Build User App Android
+    if: ${{ github.event.inputs.build_android_user == 'true' || github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_user
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            Taxido_user/node_modules
+            Taxido_user/android/.gradle
+          key: ${{ runner.os }}-user-build-${{ hashFiles('Taxido_user/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Android release
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-user-apk
+          path: Taxido_user/android/app/build/outputs/apk/release/*.apk
+
+      - name: Build Android AAB
+        run: |
+          cd android && ./gradlew bundleRelease --no-daemon
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-user-aab
+          path: Taxido_user/android/app/build/outputs/bundle/release/*.aab
+
+  build-driver-android:
+    name: Build Driver App Android
+    if: ${{ github.event.inputs.build_android_driver == 'true' || github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Taxido_driver
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            Taxido_driver/node_modules
+            Taxido_driver/android/.gradle
+          key: ${{ runner.os }}-driver-build-${{ hashFiles('Taxido_driver/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Android release
+        run: |
+          cd android && ./gradlew assembleRelease --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-driver-apk
+          path: Taxido_driver/android/app/build/outputs/apk/release/*.apk
+
+      - name: Build Android AAB
+        run: |
+          cd android && ./gradlew bundleRelease --no-daemon
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: livriko-driver-aab
+          path: Taxido_driver/android/app/build/outputs/bundle/release/*.aab

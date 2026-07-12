@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/
+*.apk
+*.aab
+*.keystore
+*.jks
+*.hprof
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.backup
+.env.production
+.env.example
+.env.local
+
+# Logs
+*.log
+/storage/logs
+npm-debug.log
+yarn-error.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Laravel specific
+.phpunit.cache
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+public/_log.dic.xml
+public/_migZip.xml
+public/cj7kl89.tmp
+public/fzip.li.dic
+public/installation.json
+public/admin/assets/firebase.json
+storage/logs
+storage/dotenv-editor
+Modules/Taxido/firebase-functions/functions/node_modules
+.kiro
+
+# React Native
+*.jsbundle
+*.jsbundle.map
+
+# iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/app/.cxx/
+local.properties
+*.iml

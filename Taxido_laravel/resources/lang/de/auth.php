@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'failed' => 'Diese Anmeldeinformationen stimmen nicht mit unseren Aufzeichnungen überein.',
+    'password' => 'Das angegebene Passwort ist falsch.',
+    'throttle' => 'Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
+    'otp_sent' => 'Wir haben einen OTP-Code an Ihre registrierte Telefonnummer gesendet!',
+    'logged_out' => 'Sie wurden erfolgreich abgemeldet! Wir hoffen, Sie bald wiederzusehen.',
+    'invalid_token' => 'Das angegebene Token wird nicht erkannt.',
+    'invalid_detail' => 'Die angegebenen Details müssen vom Verbraucher stammen. Bitte versuchen Sie es erneut!',
+    'token_verified' => 'Das Verifizierungstoken wurde erfolgreich verifiziert.',
+    'no_linked_email' => 'Es ist kein Konto mit der angegebenen E-Mail-Adresse verknüpft.',
+    'password_changed' => 'Ihr Passwort wurde erfolgreich geändert!',
+    'disabled_account' => 'Sie können sich nicht mit einem deaktivierten Konto anmelden.',
+    'no_linked_number' => 'Es ist kein Konto mit der angegebenen Nummer verknüpft.',
+    'invalid_email_token' => 'Die angegebene E-Mail oder das Token wird nicht erkannt.',
+    'invalid_credentials' => 'Die eingegebenen Anmeldedaten sind falsch. Bitte versuchen Sie es erneut!',
+    'something_went_wrong' => 'Etwas ist schiefgelaufen.',
+    'await_store_approval' => 'Bitte warten Sie auf die Genehmigung des Geschäfts, bevor Sie sich anmelden.',
+    'invalid_access_token' => 'Das angegebene Zugriffstoken ist ungültig. Bitte versuchen Sie es erneut.',
+    'login_method_disabled' => 'Die angegebene Anmeldemethode ist derzeit nicht aktiviert.',
+    'email_verification_sent' => 'Wir haben einen Verifizierungscode an Ihre registrierte E-Mail-Adresse gesendet!',
+    'multi_vendor_deactivated' => 'Die Multi-Vendor-Funktion ist derzeit deaktiviert.',
+    'invalid_backend_credentials' => 'Die eingegebenen Backend-Anmeldedaten sind falsch. Bitte versuchen Sie es erneut!',
+    'otp_verified' => 'OTP erfolgreich verifiziert!',
+];

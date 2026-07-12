@@ -1,0 +1,56 @@
+@use "../utils/variables";
+
+/**=====================
+      Footer CSS Start
+==========================**/
+
+.page-wrapper {
+    .page-body-wrapper {
+        footer {
+            margin-left: variables.$sidebar-width;
+            transition: all 0.3s ease;
+            z-index: 5;
+            background-color: variables.$white;
+            padding: calc(10px + (20 - 10) * ((100vw - 320px) / (1920 - 320))) calc(10px + (15 - 10) * ((100vw - 320px) / (1920 - 320)));
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - variables.$sidebar-width);
+
+            p {
+                color: rgba(variables.$dark-color, 0.8);
+                font-size: calc(13px + (14 - 13) * ((100vw - 320px) / (1920 - 320)));
+
+                i {
+                    color: variables.$danger-color;
+                    margin-left: 5px;
+                }
+            }
+
+            a {
+                font-weight: 600;
+            }
+
+            &.footer-starter-kit {
+                bottom: -52px;
+            }
+
+            .footer-system {
+                display: flex;
+
+                @media (max-width: 767px) {
+                    justify-content: center;
+                    gap: 10px;
+                    margin-top: 10px;
+                }
+
+                @media (max-width: 575.98px) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+/**=====================
+      Footer CSS Ends
+==========================**/
