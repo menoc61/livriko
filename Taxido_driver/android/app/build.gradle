@@ -83,14 +83,21 @@ android {
         versionCode = 1
         versionName = "3.0.0"
     }
+    signingConfigs {
+        release {
+            storeFile file('livriko-release.keystore')
+            storePassword 'livriko2026'
+            keyAlias 'livriko'
+            keyPassword 'livriko2026'
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             shrinkResources true

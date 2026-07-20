@@ -26,13 +26,22 @@ android {
         versionCode = 1
         versionName = "3.0.0"
     }
+    signingConfigs {
+        release {
+            storeFile file('livriko-release.keystore')
+            storePassword 'livriko2026'
+            keyAlias 'livriko'
+            keyPassword 'livriko2026'
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
             manifestPlaceholders = [usesCleartextTraffic: "true"]
         }
         release {
-        signingConfig signingConfigs.debug
+        signingConfig signingConfigs.release
         minifyEnabled false
         shrinkResources false
         manifestPlaceholders = [usesCleartextTraffic: "true"]
