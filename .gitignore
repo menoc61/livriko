@@ -71,5 +71,6 @@ android/build/
 android/app/build/
 android/app/.cxx/
 android/app/google-services.json
+android/google-services.json
 local.properties
 *.iml

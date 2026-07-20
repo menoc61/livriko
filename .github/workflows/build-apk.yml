@@ -82,13 +82,8 @@ jobs:
 
       - name: Setup google-services.json
         run: |
-          if [ -f android/google-services.json ]; then
-            cp android/google-services.json android/app/google-services.json
-            echo "google-services.json copied from repo"
-          else
-            echo "WARNING: No google-services.json found in repo"
-            echo "Create android/google-services.json or set GOOGLE_SERVICES_JSON secret"
-          fi
+          echo '${{ secrets.GOOGLE_SERVICES_JSON_USER }}' > android/app/google-services.json
+          echo "google-services.json created from secret" 
 
       - name: Generate debug keystore
         run: |
@@ -194,13 +189,8 @@ jobs:
 
       - name: Setup google-services.json
         run: |
-          if [ -f android/google-services.json ]; then
-            cp android/google-services.json android/app/google-services.json
-            echo "google-services.json copied from repo"
-          else
-            echo "WARNING: No google-services.json found in repo"
-            echo "Create android/google-services.json or set GOOGLE_SERVICES_JSON secret"
-          fi
+          echo '${{ secrets.GOOGLE_SERVICES_JSON_DRIVER }}' > android/app/google-services.json
+          echo "google-services.json created from secret"
 
       - name: Generate debug keystore
         run: |
@@ -219,6 +209,9 @@ jobs:
             VERSION_CODE=$(date +%Y%m%d%H%M)
           fi
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+
+          VERSION_NAME="${{ inputs.version_name }}"
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
 
       - name: Update version in build.gradle
         run: |
