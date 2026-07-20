@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "76591461802",
+    "project_id": "livriko",
+    "storage_bucket": "livriko.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76591461802:android:c2368ae5ed855a6c9327d3",
+        "android_client_info": {
+          "package_name": "com.livriko.driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYO9JefUbsWoyAk-gRyoJh_eFWaIpZHDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76591461802:android:b6704f9db65fa9019327d3",
+        "android_client_info": {
+          "package_name": "com.livriko.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYO9JefUbsWoyAk-gRyoJh_eFWaIpZHDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

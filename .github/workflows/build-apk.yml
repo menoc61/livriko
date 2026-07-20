@@ -80,40 +80,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate google-services.json (CI placeholder)
+      - name: Setup google-services.json
         run: |
-          cat > android/app/google-services.json << 'EOF'
-          {
-            "project_info": {
-              "project_number": "000000000000",
-              "project_id": "livriko-ci",
-              "storage_bucket": "livriko-ci.appspot.com"
-            },
-            "client": [
-              {
-                "client_info": {
-                  "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
-                  "android_client_info": {
-                    "package_name": "com.livriko.user"
-                  }
-                },
-                "oauth_client": [],
-                "api_key": [
-                  {
-                    "current_key": "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                  }
-                ],
-                "services": {
-                  "appinvite_service": {
-                    "other_platform_oauth_client": []
-                  }
-                }
-              }
-            ],
-            "configuration_version": "1"
-          }
-          EOF
-          echo "google-services.json generated for CI"
+          if [ -f android/google-services.json ]; then
+            cp android/google-services.json android/app/google-services.json
+            echo "google-services.json copied from repo"
+          else
+            echo "WARNING: No google-services.json found in repo"
+            echo "Create android/google-services.json or set GOOGLE_SERVICES_JSON secret"
+          fi
 
       - name: Generate debug keystore
         run: |
@@ -217,40 +192,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate google-services.json (CI placeholder)
+      - name: Setup google-services.json
         run: |
-          cat > android/app/google-services.json << 'EOF'
-          {
-            "project_info": {
-              "project_number": "000000000000",
-              "project_id": "livriko-ci",
-              "storage_bucket": "livriko-ci.appspot.com"
-            },
-            "client": [
-              {
-                "client_info": {
-                  "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
-                  "android_client_info": {
-                    "package_name": "com.livriko.driver"
-                  }
-                },
-                "oauth_client": [],
-                "api_key": [
-                  {
-                    "current_key": "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                  }
-                ],
-                "services": {
-                  "appinvite_service": {
-                    "other_platform_oauth_client": []
-                  }
-                }
-              }
-            ],
-            "configuration_version": "1"
-          }
-          EOF
-          echo "google-services.json generated for CI"
+          if [ -f android/google-services.json ]; then
+            cp android/google-services.json android/app/google-services.json
+            echo "google-services.json copied from repo"
+          else
+            echo "WARNING: No google-services.json found in repo"
+            echo "Create android/google-services.json or set GOOGLE_SERVICES_JSON secret"
+          fi
 
       - name: Generate debug keystore
         run: |
