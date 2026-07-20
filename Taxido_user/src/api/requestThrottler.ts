@@ -38,6 +38,6 @@ export const resetThrottler = () => {
 /**
  * Note: Dynamic control is now handled via ENABLE_ENDPOINT_THROTTLE from config.tsx
  */
-export const setThrottlingEnabled = (enabled: boolean) => {
+export const setThrottlingEnabled = (_enabled: boolean) => {
   console.warn(`[Throttler] Dynamic toggle is deprecated. Please update config.tsx ENABLE_ENDPOINT_THROTTLE.`);
 };

@@ -44,6 +44,6 @@ export const resetRateLimit = () => {
 /**
  * Note: Dynamic control is now handled via ENABLE_GLOBAL_RATE_LIMIT in config.tsx
  */
-export const setGlobalRateLimitEnabled = (enabled: boolean) => {
+export const setGlobalRateLimitEnabled = (_enabled: boolean) => {
   console.warn(`[RateLimit] Dynamic toggle is deprecated. Please update config.tsx ENABLE_GLOBAL_RATE_LIMIT.`);
 };

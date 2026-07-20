@@ -1,7 +1,6 @@
 import { ambulance, ambulanceRequest } from "../endpoints/ambulanceEndpoit";
 import { GET_API, POST_API } from "../methods";
 import {
-  AmbulanceInterface,
   ambulanceRequestInterface,
 } from "../interface/ambulanceInterface";
 
