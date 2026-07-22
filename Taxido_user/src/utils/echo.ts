@@ -33,13 +33,13 @@ const getEchoInstance = async () => {
 
   echoInstance = new Echo({
     broadcaster: 'pusher',
-    key: '',
-    wsHost: '',
+    key: '84e522af88f8047f868b',
+    wsHost: 'livriko.fr',
     wsPort: 443,
     wssPort: 443,
     forceTLS: true,
     disableStats: true,
-    cluster: '',
+    cluster: 'eu',
     enabledTransports: ['ws', 'wss'],
     Pusher: PusherClient,
     authEndpoint: `${API_URL}/api/broadcasting/auth`,

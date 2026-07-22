@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     FirebaseApp.configure()
 
     factory.startReactNative(
-      withModuleName: "TaxidoDriverUI",
+      withModuleName: "LivrikoDriver",
       in: window,
       launchOptions: launchOptions
     )
