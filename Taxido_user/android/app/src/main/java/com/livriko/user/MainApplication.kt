@@ -1,4 +1,4 @@
-package com.taxidouser.webiots
+package com.livriko.user
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -30,7 +30,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="enter you map key here" />
+            android:value="AIzaSyAYO9JefUbsWoyAk-gRyoJh_eFWaIpZHDY" />
         
         <!-- Google Mobile Ads SDK configuration -->
         <meta-data

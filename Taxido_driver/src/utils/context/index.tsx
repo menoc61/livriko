@@ -39,8 +39,8 @@ export const AppContextProvider = (props: any) => {
   const [notificationValue, setNotificationValues] = useState(false);
   const [categoryIndex, setCategoryIndex] = useState<number>(null)
   const Google_Map_Key = Platform.OS == 'android'
-    ? 'enter you map key here'
-    : 'enter you map key here'
+    ? 'AIzaSyAYO9JefUbsWoyAk-gRyoJh_eFWaIpZHDY'
+    : 'AIzaSyAYO9JefUbsWoyAk-gRyoJh_eFWaIpZHDY'
 
   useEffect(() => {
     const fetchFromStorage = async () => {

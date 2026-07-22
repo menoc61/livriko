@@ -1,6 +1,6 @@
 
 
-export const URL = 'enter base url here';
+export const URL = 'https://livriko.fr';
 
 // API Configuration Flags
 export const ENABLE_GLOBAL_RATE_LIMIT = true
