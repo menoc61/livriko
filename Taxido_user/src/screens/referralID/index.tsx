@@ -44,7 +44,7 @@ export function ReferralID() {
   const handleShareReferral = async () => {
     try {
       const referralCode = self?.referral_code || "Code Note Found";
-      const message = `🚖 ${translateData.referralShare1} *Taxido*! ${translateData.referralShare2}: *${referralCode}* ${translateData.referralShare3}.\n\n${translateData.referralShare4} 🚕\n👉 https://play.google.com/store/apps/details?id=com.taxidouserui&hl=en_IN`;
+      const message = `${translateData.referralShare1} *Livriko*! ${translateData.referralShare2}: *${referralCode}* ${translateData.referralShare3}.\n\n${translateData.referralShare4}\n👉 https://play.google.com/store/apps/details?id=com.livriko.user&hl=en_IN`;
 
       await Share.share({
         message,

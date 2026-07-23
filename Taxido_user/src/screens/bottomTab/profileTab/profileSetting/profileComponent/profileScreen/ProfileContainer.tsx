@@ -114,7 +114,7 @@ export const ProfileContainer = forwardRef(
       } else if (screenName === "Share") {
         safeShare({
           message:
-            "https://play.google.com/store/apps/details?id=com.taxidouser&hl=en-IN",
+            "https://play.google.com/store/apps/details?id=com.livriko.user&hl=en-IN",
         });
       } else if (screenName === "PrivacyPolicy") {
         const url =

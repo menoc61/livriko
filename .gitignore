@@ -74,3 +74,4 @@ android/app/google-services.json
 android/google-services.json
 local.properties
 *.iml
+storage/framework/views/

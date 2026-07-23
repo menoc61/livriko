@@ -32,11 +32,11 @@ export function ReferralHome() {
     const handleShareReferral = async () => {
         try {
             const referralCode = selfDriver?.referral_code;
-            const message = `${translateData.referralShare1} *${referralCode}* ${translateData.referralShare2}\n\n ${translateData.referralShare3}\n👉 https://play.google.com/store/apps/details?id=com.taxidouserui&hl=en_IN`;
+            const message = `${translateData.referralShare1} *${referralCode}* ${translateData.referralShare2}\n\n ${translateData.referralShare3}\n👉 https://play.google.com/store/apps/details?id=com.livriko.driver&hl=en_IN`;
 
             await Share.share({
                 message,
-                title: "Invite to Taxido",
+                title: "Invite to Livriko",
             });
         } catch (error) {
             console.error("❌ Error sharing referral:", error);
