@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOS - Livriko Documentation</title>
+  <meta name="description" content="Configure emergency SOS features for rider and driver safety.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <section class="section-header">
+      <h2><i class="fas fa-shield-halved" style="color:var(--secondary);margin-right:8px;"></i> SOS Emergency Feature</h2>
+      <p>The SOS feature provides a critical safety mechanism for both riders and drivers. When activated, it immediately shares the user's real-time location with emergency contacts, displays local emergency numbers, and alerts the platform administrator. This feature is essential for building trust and ensuring user safety in any ride-hailing platform.</p>
+    </section>
+
+    <section class="section-header">
+      <h2>How the SOS Flow Works</h2>
+      <p>Step-by-step walkthrough of the emergency alert sequence.</p>
+    </section>
+
+    <div class="prose">
+      <h3>SOS Activation Sequence</h3>
+      <ol>
+        <li><strong>Button press</strong> &mdash; The rider or driver presses the SOS button in the app. A confirmation dialog appears to prevent accidental activation.</li>
+        <li><strong>Confirmation</strong> &mdash; The user confirms the emergency by tapping "Yes, Send SOS" or cancels to abort. Some implementations use a long-press (3 seconds) to reduce false alarms.</li>
+        <li><strong>Location sharing begins</strong> &mdash; The user's real-time GPS location starts streaming to pre-configured emergency contacts and the admin panel.</li>
+        <li><strong>Emergency contacts notified</strong> &mdash; SMS and/or push notifications are sent to the user's emergency contacts with the user's name, current location (with map link), and trip details.</li>
+        <li><strong>Admin alert</strong> &mdash; An alert notification appears in the admin panel with the user's identity, location, trip details, and driver information.</li>
+        <li><strong>Live location tracking</strong> &mdash; The admin and emergency contacts can view the user's live location on a map as they move. This continues until the SOS is deactivated or the trip ends.</li>
+        <li><strong>Emergency number displayed</strong> &mdash; The app displays the configured emergency number (e.g., 112, 911) with a one-tap dial button.</li>
+      </ol>
+
+      <h3>SOS Button Location in the App</h3>
+      <ul>
+        <li><strong>Rider app</strong> &mdash; The SOS button is prominently displayed during an active ride, typically on the trip tracking screen.</li>
+        <li><strong>Driver app</strong> &mdash; The SOS button is accessible from the trip screen and the main dashboard for use even when not on a trip.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Configuring SOS Settings</h2>
+      <p>Follow these steps to set up the emergency SOS feature.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to SOS Settings</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>SOS</strong>. You will see the SOS configuration form with all available settings.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Set Emergency Number</h4>
+          <p>Enter the local emergency services number for your operating country. Common examples: <strong>112</strong> (Europe), <strong>911</strong> (US/Canada), <strong>999</strong> (UK), <strong>15</strong> (France). This number is displayed to users with a one-tap dial button.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Set Support Number</h4>
+          <p>Enter your platform's support hotline number. This is a secondary number displayed alongside the emergency number for non-emergency situations requiring immediate platform assistance.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Enable SOS Button</h4>
+          <p>Toggle the SOS button on or off. When disabled, the SOS button is hidden from both rider and driver apps. Keep this enabled in production environments.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Add Emergency Alert Contacts</h4>
+          <p>Add phone numbers that will receive SOS alert notifications. These can be platform administrators, safety team members, or trusted contacts. Multiple numbers can be added.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>6. Save Configuration</h4>
+          <p>Click <strong>Save</strong> to apply the SOS settings. The changes take effect immediately in the apps.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>SOS Settings Reference</h2>
+      <p>Complete reference for all SOS configuration fields.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Emergency Number</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>The local emergency services number displayed to users (e.g., 112, 911, 999). Must match your operating country's emergency services. Shown with a one-tap dial button in the app.</td>
+          </tr>
+          <tr>
+            <td><strong>Support Number</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>Your platform's customer support hotline. Displayed alongside the emergency number for non-emergency situations. Should be staffed 24/7 if possible.</td>
+          </tr>
+          <tr>
+            <td><strong>SOS Button Toggle</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Enabled</strong> shows the SOS button in both rider and driver apps during trips and on the dashboard. <strong>Disabled</strong> hides the button completely. Keep enabled in production.</td>
+          </tr>
+          <tr>
+            <td><strong>Alert Contacts</strong></td>
+            <td>Multi-entry</td>
+            <td>Yes</td>
+            <td>Phone numbers that receive SOS alert notifications when any user activates the SOS feature. Add platform administrators, safety officers, or trusted team members. Multiple contacts can be added.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Emergency Contacts</h2>
+      <p>How emergency contacts are managed and notified.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Platform-Level Contacts</h3>
+      <p>Emergency contacts configured in the admin panel are notified for every SOS activation across the platform. These are typically:</p>
+      <ul>
+        <li><strong>Safety team members</strong> &mdash; Dedicated staff trained to handle emergency situations.</li>
+        <li><strong>Platform administrators</strong> &mdash; Senior staff who can coordinate with local authorities.</li>
+        <li><strong>On-call managers</strong> &mdash; Managers responsible for after-hours emergency response.</li>
+      </ul>
+
+      <h3>User-Level Contacts</h3>
+      <p>In addition to platform-level contacts, riders and drivers can add their own emergency contacts in the app settings. These personal contacts are notified only when that specific user activates SOS.</p>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Notification Channels</div>
+          SOS alerts are sent via multiple channels simultaneously: SMS (to phone numbers), push notifications (to admin panel), and email (if configured). This redundancy ensures alerts reach the right people even if one channel fails.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Auto-Alert Features</h2>
+      <p>Automated safety features that complement manual SOS activation.</p>
+    </section>
+
+    <div class="prose">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-route"></i></div>
+          <h4>Route Deviation Alert</h4>
+          <p>Automatically sends an alert if the driver deviates significantly from the planned route. Riders can confirm it is okay or trigger an SOS.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-clock"></i></div>
+          <h4>Stalled Trip Alert</h4>
+          <p>Detects when a trip is paused for an unusually long time without movement. Sends a check-in notification to the rider to confirm safety.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-location-crosshairs"></i></div>
+          <h4>Live Location Sharing</h4>
+          <p>When SOS is active, real-time GPS location is continuously shared with emergency contacts and the admin panel until the situation is resolved.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-share-nodes"></i></div>
+          <h4>Trip Sharing</h4>
+          <p>SOS alerts include full trip details: pickup location, destination, driver name, vehicle details, and license plate for quick identification.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Safety Tips</h2>
+      <p>Best practices for implementing and promoting the SOS feature.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout danger">
+        <i class="fas fa-circle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Test Regularly</div>
+          Test the SOS feature at least monthly to ensure all notification channels are working correctly. Verify that SMS messages are delivered, push notifications arrive, and admin alerts appear in real-time.
+        </div>
+      </div>
+
+      <h3>Implementation Best Practices</h3>
+      <ul>
+        <li><strong>Keep the SOS button prominent</strong> &mdash; Do not hide it behind menus or require multiple taps. In an emergency, every second counts.</li>
+        <li><strong>Use a confirmation step</strong> &mdash; A single confirmation dialog prevents accidental SOS activations while keeping the process fast.</li>
+        <li><strong>24/7 monitoring</strong> &mdash; Ensure someone is always available to respond to SOS alerts. An unanswered alert erodes user trust.</li>
+        <li><strong>Match the emergency number</strong> &mdash; Verify the configured emergency number is correct for every country you operate in. Wrong numbers can be dangerous.</li>
+        <li><strong>Train your team</strong> &mdash; Safety team members should know how to respond to SOS alerts, coordinate with authorities, and follow up with affected users.</li>
+      </ul>
+
+      <h3>Promoting Safety</h3>
+      <ul>
+        <li><strong>In-app education</strong> &mdash; Show a brief explanation of the SOS feature during onboarding or in the app help section.</li>
+        <li><strong>Pre-ride safety tips</strong> &mdash; Display safety reminders before each ride (e.g., "Verify driver name and vehicle before entering").</li>
+        <li><strong>Post-ride check-in</strong> &mdash; Send a quick "How was your ride?" notification after each trip to catch any issues early.</li>
+        <li><strong>Driver verification</strong> &mdash; Ensure all drivers are thoroughly verified (license, background check, vehicle inspection) before they can accept rides.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>Configure additional safety and platform settings.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-settings.html" class="feature-card">
+        <div class="icon"><i class="fas fa-gear"></i></div>
+        <h4>App Settings</h4>
+        <p>Configure general safety settings, driver verification requirements, and platform policies.</p>
+      </a>
+      <a href="management-drivers.html" class="feature-card">
+        <div class="icon"><i class="fas fa-id-card"></i></div>
+        <h4>Drivers</h4>
+        <p>Manage driver verification, background checks, and document requirements.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

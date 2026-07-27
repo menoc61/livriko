@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Android Setup - Livriko Documentation</title>
+  <meta name="description" content="Configure Android dev environment for Livriko.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Android Setup</h2>
+        <p>This guide walks you through setting up your development environment for building and running the Livriko User App and Driver App on Android devices and emulators.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Install Android Studio</h2>
+        <p>Download and install the latest stable version of Android Studio from the official website:</p>
+
+<pre><code>https://developer.android.com/studio</code></pre>
+
+        <p>During installation, ensure the following components are selected in the setup wizard:</p>
+        <ul>
+          <li>Android SDK</li>
+          <li>Android SDK Platform-Tools</li>
+          <li>Android Virtual Device (AVD)</li>
+          <li>Android SDK Build-Tools</li>
+        </ul>
+
+        <h2>SDK Manager Setup</h2>
+        <p>After installing Android Studio, open the SDK Manager (<strong>Tools &rarr; SDK Manager</strong>) and install the following components:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Version</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Android SDK Platform</td>
+                <td>36</td>
+                <td>Target API level for building</td>
+              </tr>
+              <tr>
+                <td>Android SDK Build-Tools</td>
+                <td>36</td>
+                <td>Required for compiling native code</td>
+              </tr>
+              <tr>
+                <td>Android SDK Platform-Tools</td>
+                <td>Latest</td>
+                <td>ADB and debugging utilities</td>
+              </tr>
+              <tr>
+                <td>NDK (Side by Side)</td>
+                <td>27.1</td>
+                <td>Native Development Kit for C++ modules</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>You can also install these via the command line using <code>sdkmanager</code>:</p>
+<pre><code>sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools" "ndk;27.1.12297006"</code></pre>
+        </div>
+
+        <h2>Environment Variables</h2>
+        <p>Set the following environment variables so that React Native can locate your Android SDK and tools:</p>
+
+        <h3>ANDROID_HOME</h3>
+        <p>This variable points to your Android SDK installation directory:</p>
+
+<pre><code># macOS/Linux — add to ~/.zshrc or ~/.bashrc
+export ANDROID_HOME=$HOME/Library/Android/sdk
+# or on Linux:
+export ANDROID_HOME=$HOME/Android/Sdk
+
+# Windows (PowerShell)
+[System.Environment]::SetEnvironmentVariable(
+  "ANDROID_HOME",
+  "C:\Users\YourUser\AppData\Local\Android\Sdk",
+  "User"
+)</code></pre>
+
+        <h3>JAVA_HOME</h3>
+        <p>This variable points to your JDK 17 installation directory:</p>
+
+<pre><code># macOS/Linux — add to ~/.zshrc or ~/.bashrc
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+# or on Linux:
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+
+# Windows (PowerShell)
+[System.Environment]::SetEnvironmentVariable(
+  "JAVA_HOME",
+  "C:\Program Files\Eclipse Adoptium\jdk-17",
+  "User"
+)</code></pre>
+
+        <h3>PATH</h3>
+        <p>Add the SDK tools to your system PATH:</p>
+
+<pre><code># macOS/Linux — add to ~/.zshrc or ~/.bashrc
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin</code></pre>
+
+        <p>After setting these variables, reload your shell configuration:</p>
+<pre><code># For zsh
+source ~/.zshrc
+
+# For bash
+source ~/.bashrc</code></pre>
+
+        <h2>Java JDK 17</h2>
+        <p>The Livriko apps require JDK 17 for Android builds. Install it using your preferred package manager:</p>
+
+        <h3>macOS (Homebrew)</h3>
+<pre><code>brew install openjdk@17
+sudo ln -sfn $(brew --prefix openjdk@17)/libexec/openjdk.jdk \
+  /Library/Java/JavaVirtualMachines/openjdk-17.jdk</code></pre>
+
+        <h3>Linux (APT)</h3>
+<pre><code>sudo apt update
+sudo apt install openjdk-17-jdk
+java -version  # Should show JDK 17</code></pre>
+
+        <h3>Windows</h3>
+        <p>Download the JDK 17 installer from <a href="https://adoptium.net/" target="_blank" rel="noopener">Adoptium</a> and follow the installation wizard. Ensure <code>JAVA_HOME</code> is set after installation.</p>
+
+        <h2>Create a Virtual Device</h2>
+        <p>To run the app on an emulator, create an Android Virtual Device (AVD):</p>
+
+        <ol>
+          <li>Open Android Studio</li>
+          <li>Go to <strong>Tools &rarr; Device Manager</strong></li>
+          <li>Click <strong>Create Device</strong></li>
+          <li>Select a device definition (e.g., <strong>Pixel 7</strong>) and click <strong>Next</strong></li>
+          <li>Select a system image with API 34 or higher and click <strong>Next</strong></li>
+          <li>Configure the AVD name and settings, then click <strong>Finish</strong></li>
+          <li>Click the <strong>Play</strong> button to start the emulator</li>
+        </ol>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Ensure that <strong>Hardware Acceleration</strong> (HAXM on Intel or Hypervisor Framework on Apple Silicon) is enabled for smooth emulator performance. Without it, the emulator will be extremely slow.</p>
+        </div>
+
+        <h2>Gradle Configuration</h2>
+        <p>The Livriko Android projects use Gradle 8.9 as the build automation tool. If you encounter build issues, check the following in <code>android/gradle/wrapper/gradle-wrapper.properties</code>:</p>
+
+<pre><code># android/gradle/wrapper/gradle-wrapper.properties
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.9-all.zip</code></pre>
+
+        <p>For memory-constrained machines, increase the Gradle JVM memory in <code>android/gradle.properties</code>:</p>
+
+<pre><code># android/gradle.properties
+org.gradle.jvmargs=-Xmx4096m -XX:MaxMetaspaceSize=512m
+org.gradle.daemon=true
+org.gradle.parallel=true</code></pre>
+
+        <h2>Signing Keys</h2>
+        <p>For release builds, you need to configure a signing key. Create a keystore file:</p>
+
+<pre><code>keytool -genkeypair -v -storetype PKCS12 \
+  -keystore my-release-key.keystore \
+  -alias my-key-alias \
+  -keyalg RSA -keysize 2048 \
+  -validity 10000</code></pre>
+
+        <p>Then configure it in <code>android/app/build.gradle</code>:</p>
+
+<pre><code>signingConfigs {
+    release {
+        storeFile file('my-release-key.keystore')
+        storePassword System.getenv("KEYSTORE_PASSWORD") ?: ""
+        keyAlias 'my-key-alias'
+        keyPassword System.getenv("KEY_PASSWORD") ?: ""
+    }
+}</code></pre>
+
+        <div class="callout danger">
+          <div class="callout-icon"><i class="fas fa-circle-exclamation"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Never commit your keystore file or passwords to version control. Add <code>*.keystore</code> to your <code>.gitignore</code> file and store passwords in environment variables or a secure vault.</p>
+        </div>
+
+        <h2>Verify Your Setup</h2>
+        <p>Run these commands to verify everything is configured correctly:</p>
+
+<pre><code># Check Android SDK path
+echo $ANDROID_HOME
+
+# Check ADB
+adb --version
+
+# Check Java version
+java -version  # Should show JDK 17
+
+# Check connected devices / emulators
+adb devices
+
+# Check Gradle
+cd Taxido_user/android && ./gradlew --version</code></pre>
+
+        <div class="callout success">
+          <div class="callout-icon"><i class="fas fa-circle-check"></i></div>
+          <div class="callout-title">All checks passed?</div>
+          <p>If all the commands above return valid output, your Android development environment is ready. You can now proceed to install and run the Livriko apps.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-installation.html">App Installation</a> — Clone and install the mobile apps</li>
+          <li><a href="app-ios.html">iOS Setup</a> — Configure the iOS development environment</li>
+          <li><a href="app-build.html">Build APK / AAB</a> — Build release binaries for the Play Store</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

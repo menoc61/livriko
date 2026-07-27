@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build APK / AAB - Livriko Documentation</title>
+  <meta name="description" content="Generate release APK and AAB for Livriko Android apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Build APK / AAB</h2>
+      <p>This guide covers building Android APK and AAB files from the Livriko React Native apps. Choose the build type based on your deployment target.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Build Types Overview</h2>
+      <p>Android supports multiple build types. The type you choose depends on how you plan to distribute the app.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Command</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Debug APK</strong></td>
+              <td><code>cd android &amp;&amp; ./gradlew assembleDebug</code></td>
+              <td>Development and testing on devices</td>
+            </tr>
+            <tr>
+              <td><strong>Release APK</strong></td>
+              <td><code>cd android &amp;&amp; ./gradlew assembleRelease</code></td>
+              <td>Direct installation (sideloading), APK distribution</td>
+            </tr>
+            <tr>
+              <td><strong>Release AAB</strong></td>
+              <td><code>cd android &amp;&amp; ./gradlew bundleRelease</code></td>
+              <td>Google Play Store submission (required since August 2021)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Debug Build</h2>
+      <p>Debug builds are unsigned and include development tools. Use them during development and testing only.</p>
+
+      <pre><code># Navigate to the app directory
+cd Taxido_user    # or Taxido_driver
+
+# Clean previous builds
+cd android
+./gradlew clean
+
+# Build debug APK
+./gradlew assembleDebug
+
+# Output location:
+# android/app/build/outputs/apk/debug/app-debug.apk</code></pre>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Debug vs Release</p>
+          <p>Debug builds are larger, slower, and not suitable for distribution. They include the React Native Dev Menu and debugging tools. Always use release builds for production.</p>
+        </div>
+      </div>
+
+      <h2>Release APK Build</h2>
+      <p>Build a signed release APK for direct distribution or sideloading. This produces a single APK file that can be installed on any Android device.</p>
+
+      <pre><code># Navigate to the Android directory
+cd Taxido_user/android    # or Taxido_driver/android
+
+# Build release APK
+./gradlew assembleRelease
+
+# Output location:
+# android/app/build/outputs/apk/release/app-release.apk</code></pre>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Signing Required</p>
+          <p>You must configure a keystore signing config before building a release APK. Without it, the build will fail. See the signing configuration section below.</p>
+        </div>
+      </div>
+
+      <h2>Release AAB Build (Google Play)</h2>
+      <p>Google Play Store requires AAB (Android App Bundle) format since August 2021. AAB files are smaller because Google Play generates optimized APKs for each device configuration.</p>
+
+      <pre><code># Build release AAB
+./gradlew bundleRelease
+
+# Output location:
+# android/app/build/outputs/bundle/release/app-release.aab</code></pre>
+
+      <div class="callout danger">
+        <i class="fas fa-times-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Google Play AAB Requirement</p>
+          <p>Google Play no longer accepts new APK submissions. All new app updates must be uploaded as AAB files. Existing APK-based apps can continue receiving APK updates, but new apps must use AAB.</p>
+        </div>
+      </div>
+
+      <h2>Keystore Generation</h2>
+      <p>A keystore is a cryptographic file used to sign your Android app. You need it for all release builds. Generate one before your first release.</p>
+
+      <pre><code># Generate a new keystore
+keytool -genkeypair -v -storetype PKCS12 \
+  -keystore your-keystore.jks \
+  -keyalg RSA -keysize 2048 \
+  -validity 10000 \
+  -alias your-key-alias
+
+# You will be prompted for:
+# - Keystore password
+# - Your name, organization, city, state, country code
+# - Key password (can be same as keystore password)</code></pre>
+
+      <div class="callout danger">
+        <i class="fas fa-times-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Never Lose Your Keystore!</p>
+          <p>If you lose the keystore used to sign your app, you cannot update the app on Google Play. You will have to publish a brand-new app with a different package name, losing all your users and reviews. Store your keystore securely and maintain multiple backups.</p>
+        </div>
+      </div>
+
+      <h2>Signing Configuration</h2>
+      <p>Configure release signing in <code>android/app/build.gradle</code> for both apps:</p>
+
+      <pre><code>android {
+    signingConfigs {
+        release {
+            storeFile file('your-keystore.jks')
+            storePassword 'your-store-password'
+            keyAlias 'your-key-alias'
+            keyPassword 'your-key-password'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                          'proguard-rules.pro'
+        }
+    }
+}</code></pre>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Secure Your Credentials</p>
+          <p>Never commit keystore passwords to version control. Use environment variables or a local <code>keystore.properties</code> file that is added to <code>.gitignore</code>.</p>
+        </div>
+      </div>
+
+      <h2>Version Management</h2>
+      <p>Update the app version before each release in <code>android/app/build.gradle</code>:</p>
+
+      <pre><code>android {
+    defaultConfig {
+        versionCode 1          // Increment for each release (integer)
+        versionName "1.0.0"    // Semantic versioning (user-visible)
+    }
+}</code></pre>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Purpose</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>versionCode</code></td>
+              <td>Internal integer, incremented each release. Google Play uses this to determine update order.</td>
+              <td>1, 2, 3, 4...</td>
+            </tr>
+            <tr>
+              <td><code>versionName</code></td>
+              <td>User-visible version string displayed in the Play Store and app settings.</td>
+              <td>1.0.0, 1.1.0, 2.0.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>ProGuard / R8 Optimization</h2>
+      <p>ProGuard (or R8 in newer AGP versions) shrinks and obfuscates your release build, reducing APK size and protecting source code. The Livriko apps include a ProGuard configuration file.</p>
+
+      <pre><code># android/app/proguard-rules.pro
+# Add custom ProGuard rules here
+
+# Keep React Native classes
+-keep class com.facebook.react.** { *; }
+-keep class com.facebook.hermes.** { *; }
+
+# Keep Google Maps classes
+-keep class com.google.android.gms.maps.** { *; }</code></pre>
+
+      <h2>CI/CD Pipeline</h2>
+      <p>For automated builds, configure a CI/CD pipeline using GitHub Actions, Bitrise, or Codemagic. A basic GitHub Actions workflow:</p>
+
+      <pre><code># .github/workflows/build-android.yml
+name: Build Android
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: cd Taxido_user &amp;&amp; npm install
+      - run: cd Taxido_user/android &amp;&amp; ./gradlew assembleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: Taxido_user/android/app/build/outputs/apk/release/</code></pre>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Build Complete</p>
+          <p>Once built, install the APK on a device to test, or upload the AAB to Google Play Console for review and release. See <a href="app-ios-build.html">iOS Build</a> for Apple App Store deployment.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-ios-build.html">iOS Build</a> — Build for iOS using Xcode</li>
+        <li><a href="firebase-create.html">Firebase Setup</a> — Configure push notifications</li>
+        <li><a href="app-google-maps.html">Google Maps</a> — Ensure maps are configured</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

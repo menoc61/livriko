@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupons - Livriko Documentation</title>
+  <meta name="description" content="Create and manage promotional discount codes.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <section class="section-header">
+      <h2><i class="fas fa-tag" style="color:var(--primary);margin-right:8px;"></i> Coupons</h2>
+      <p>Coupons let you offer promotional discounts to riders, driving user acquisition, retention, and engagement. Create percentage-based or fixed-amount discount codes that riders apply during checkout to reduce their ride fare. Coupons are a powerful marketing tool for launching in new cities, rewarding loyal customers, and running seasonal promotions.</p>
+    </section>
+
+    <section class="section-header">
+      <h2>How Coupons Work</h2>
+      <p>Understanding the coupon lifecycle from creation to redemption.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Coupon Lifecycle</h3>
+      <ol>
+        <li><strong>Creation</strong> &mdash; Admin creates a coupon with a code, discount type, value, validity period, and usage limits.</li>
+        <li><strong>Distribution</strong> &mdash; The coupon code is shared with riders via push notifications, email, social media, or in-app promotions.</li>
+        <li><strong>Redemption</strong> &mdash; Rider enters the coupon code during ride booking. The system validates the code and applies the discount.</li>
+        <li><strong>Tracking</strong> &mdash; Each redemption is logged. Admin can view usage statistics, total discounts given, and remaining uses.</li>
+      </ol>
+
+      <h3>Discount Types</h3>
+      <ul>
+        <li><strong>Percentage (%)</strong> &mdash; Discounts the ride fare by a percentage (e.g., 20% off). Useful for promotions where the discount scales with the fare amount.</li>
+        <li><strong>Flat Amount</strong> &mdash; Deducts a fixed amount from the ride fare (e.g., $5 off). Predictable for both the platform and the rider.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Creating a Coupon</h2>
+      <p>Follow these steps to add a new promotional discount code.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Coupons</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Coupons</strong>. You will see a list of existing coupons with their status and usage statistics.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Coupon"</h4>
+          <p>Click the <strong>Add New Coupon</strong> button to open the coupon creation form.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Configure Coupon Details</h4>
+          <p>Enter the coupon code, discount type and value, minimum fare requirements, maximum discount cap, validity period, and usage limits. See the field reference table below.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Set Validity Period</h4>
+          <p>Configure the start date and end date for the coupon. The coupon is only valid within this date range. Expired coupons are automatically rejected during redemption.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Save and Distribute</h4>
+          <p>Set the <strong>Status</strong> to <em>Active</em> and click <strong>Save</strong>. Share the coupon code with riders through your marketing channels.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the coupon form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Code</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>The promo code riders enter during checkout (e.g., WELCOME20, SUMMER50, FIRST2024). Case-insensitive, no spaces allowed. Must be unique across the platform.</td>
+          </tr>
+          <tr>
+            <td><strong>Discount Type</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td><strong>Percentage (%)</strong> &mdash; Discount by percentage of the ride fare. <strong>Flat Amount</strong> &mdash; Discount by a fixed monetary amount.</td>
+          </tr>
+          <tr>
+            <td><strong>Value</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>The discount value. For percentage: enter the percentage (e.g., 20 for 20% off). For flat: enter the amount in the zone currency (e.g., 5 for $5 off).</td>
+          </tr>
+          <tr>
+            <td><strong>Min Fare</strong></td>
+            <td>Number</td>
+            <td>No</td>
+            <td>Minimum ride fare required to use the coupon. Prevents applying discounts to very cheap rides. Set to 0 for no minimum.</td>
+          </tr>
+          <tr>
+            <td><strong>Max Discount</strong></td>
+            <td>Number</td>
+            <td>No</td>
+            <td>Maximum discount amount for percentage coupons. Caps the discount to prevent excessive deductions. Only applies to percentage-type coupons.</td>
+          </tr>
+          <tr>
+            <td><strong>Valid From</strong></td>
+            <td>Date</td>
+            <td>Yes</td>
+            <td>The date when the coupon becomes active. Riders cannot use the coupon before this date. Format: YYYY-MM-DD.</td>
+          </tr>
+          <tr>
+            <td><strong>Valid To</strong></td>
+            <td>Date</td>
+            <td>Yes</td>
+            <td>The date when the coupon expires. After this date, the coupon is automatically rejected. Format: YYYY-MM-DD.</td>
+          </tr>
+          <tr>
+            <td><strong>Usage Limit</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Total number of times the coupon can be redeemed across all riders. Once this limit is reached, the coupon is exhausted. Set to 0 for unlimited uses.</td>
+          </tr>
+          <tr>
+            <td><strong>Per User Limit</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Maximum number of times each individual rider can use this coupon. Prevents a single user from redeeming the code multiple times. Set to 0 for unlimited per user.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Active</strong> makes the coupon redeemable. <strong>Inactive</strong> disables it without deleting. Useful for pausing a promotion temporarily.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Redemption Flow</h2>
+      <p>How the system validates and applies coupons during ride booking.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Validation Steps</h3>
+      <ol>
+        <li><strong>Code exists</strong> &mdash; The system checks that the entered code matches an existing coupon in the database.</li>
+        <li><strong>Status is active</strong> &mdash; The coupon must be set to Active status. Inactive coupons are rejected.</li>
+        <li><strong>Within validity period</strong> &mdash; The current date must fall between the Valid From and Valid To dates.</li>
+        <li><strong>Usage limit not reached</strong> &mdash; Total redemptions must be below the configured Usage Limit.</li>
+        <li><strong>Per user limit not reached</strong> &mdash; The rider must not have exceeded the Per User Limit for this coupon.</li>
+        <li><strong>Minimum fare met</strong> &mdash; The ride fare (before discount) must meet or exceed the Min Fare threshold.</li>
+        <li><strong>Discount applied</strong> &mdash; If all checks pass, the discount is calculated and subtracted from the fare.</li>
+      </ol>
+
+      <h3>Discount Calculation</h3>
+      <pre><code>Percentage Coupon (20% off, $10 max, $8 min fare):
+  Ride fare: $45.00
+  Calculated discount: $45.00 × 20% = $9.00
+  Max discount cap: $10.00
+  Applied discount: $9.00 (under cap)
+  Final fare: $45.00 - $9.00 = $36.00
+
+Flat Coupon ($5 off, $10 min fare):
+  Ride fare: $45.00
+  Applied discount: $5.00
+  Final fare: $45.00 - $5.00 = $40.00
+
+Flat Coupon ($5 off, $10 min fare):
+  Ride fare: $8.00
+  Result: REJECTED (fare below $10 minimum)</code></pre>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Rider Feedback</div>
+          If a coupon is rejected, the rider sees a clear error message explaining why (expired, minimum not met, usage limit reached, etc.). This transparency helps riders understand the issue and try a different code.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Coupon Examples</h2>
+      <p>Common coupon configurations for various marketing scenarios.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Min Fare</th>
+            <th>Max Discount</th>
+            <th>Limit</th>
+            <th>Per User</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>New user welcome</td>
+            <td>WELCOME20</td>
+            <td>Percentage</td>
+            <td>20%</td>
+            <td>$10</td>
+            <td>$8</td>
+            <td>1000</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Summer promotion</td>
+            <td>SUMMER50</td>
+            <td>Flat</td>
+            <td>$5.00</td>
+            <td>$15</td>
+            <td>&mdash;</td>
+            <td>5000</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>Referral reward</td>
+            <td>INVITE10</td>
+            <td>Flat</td>
+            <td>$10.00</td>
+            <td>$20</td>
+            <td>&mdash;</td>
+            <td>0 (unlimited)</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Flash sale</td>
+            <td>FLASH30</td>
+            <td>Percentage</td>
+            <td>30%</td>
+            <td>$5</td>
+            <td>$15</td>
+            <td>200</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Best Practices</h2>
+      <p>Tips for running effective coupon campaigns.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Track ROI</div>
+          Monitor the total discount amount given versus the increase in rides and new user signups. A successful coupon campaign should generate more revenue than it costs in discounts.
+        </div>
+      </div>
+
+      <h3>Campaign Tips</h3>
+      <ul>
+        <li><strong>Use memorable codes</strong> &mdash; Codes like WELCOME20 or SUMMER50 are easy to remember and share. Avoid random strings like X7K9M2.</li>
+        <li><strong>Set per-user limits</strong> &mdash; Always set a per-user limit to prevent abuse. First-time rider coupons should have a limit of 1.</li>
+        <li><strong>Combine with push notifications</strong> &mdash; Send coupon codes via <a href="management-push.html">Push Notifications</a> to reach riders directly on their devices.</li>
+        <li><strong>Create urgency</strong> &mdash; Short validity periods (3-7 days) create urgency and drive faster redemption.</li>
+        <li><strong>Monitor usage</strong> &mdash; Check the coupon list regularly to see redemption rates. Deactivate underperforming coupons and scale successful ones.</li>
+      </ul>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Fraud Prevention</div>
+          Monitor for coupon abuse patterns: multiple accounts using the same code, rapid successive redemptions, or accounts created solely to exploit discounts. Set conservative per-user limits for high-value coupons.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>Amplify your coupon campaigns with these related features.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-push.html" class="feature-card">
+        <div class="icon"><i class="fas fa-bell"></i></div>
+        <h4>Push Notifications</h4>
+        <p>Send coupon codes directly to riders' devices via push notifications.</p>
+      </a>
+      <a href="management-settings.html" class="feature-card">
+        <div class="icon"><i class="fas fa-gear"></i></div>
+        <h4>App Settings</h4>
+        <p>Configure general platform settings that affect coupon behavior.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

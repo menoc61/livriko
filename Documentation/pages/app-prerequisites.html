@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Prerequisites - Livriko Documentation</title>
+  <meta name="description" content="Requirements for building Livriko mobile apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>App Prerequisites</h2>
+        <p>Before building the Livriko User App or Driver App, ensure your development environment meets all of the following requirements. Missing any prerequisite may cause build failures or runtime errors.</p>
+      </div>
+
+      <div class="prose">
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>The Livriko backend (Laravel API) must be installed and running before you can fully test the mobile apps. See the <a href="laravel-installation.html">Laravel Installation</a> guide first.</p>
+        </div>
+
+        <h2>Core Requirements</h2>
+        <p>The following table lists all required tools, their minimum versions, and what each is used for. Install everything below before proceeding.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Requirement</th>
+                <th>Version</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>React Native</strong></td>
+                <td><code>0.82.1</code></td>
+                <td>Cross-platform mobile framework</td>
+              </tr>
+              <tr>
+                <td><strong>React</strong></td>
+                <td><code>19.1.1</code></td>
+                <td>UI library (bundled with React Native)</td>
+              </tr>
+              <tr>
+                <td><strong>Node.js</strong></td>
+                <td><code>&gt;= 20</code></td>
+                <td>JavaScript runtime — LTS recommended</td>
+              </tr>
+              <tr>
+                <td><strong>npm</strong></td>
+                <td><code>&gt;= 10</code></td>
+                <td>Package manager (bundled with Node.js)</td>
+              </tr>
+              <tr>
+                <td><strong>TypeScript</strong></td>
+                <td><code>^5.8.3</code></td>
+                <td>Type-safe JavaScript development</td>
+              </tr>
+              <tr>
+                <td><strong>Java JDK</strong></td>
+                <td><code>17</code></td>
+                <td>Required for Android builds</td>
+              </tr>
+              <tr>
+                <td><strong>Android Studio</strong></td>
+                <td>Latest stable</td>
+                <td>Android IDE with SDK Manager and emulator</td>
+              </tr>
+              <tr>
+                <td><strong>Android SDK Platform</strong></td>
+                <td><code>36</code></td>
+                <td>Target API level for building</td>
+              </tr>
+              <tr>
+                <td><strong>Xcode</strong></td>
+                <td><code>15+</code></td>
+                <td>Apple IDE with iOS SDK (macOS only)</td>
+              </tr>
+              <tr>
+                <td><strong>CocoaPods</strong></td>
+                <td>Latest</td>
+                <td>iOS dependency manager (macOS only)</td>
+              </tr>
+              <tr>
+                <td><strong>Watchman</strong></td>
+                <td>Latest</td>
+                <td>File watching service for React Native hot reload</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Android Development Tools</h2>
+        <p>For building and running the apps on Android devices or emulators, you need the following components installed through Android Studio's SDK Manager:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Version</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Android Studio</td>
+                <td>Latest stable</td>
+                <td>IDE for Android development</td>
+              </tr>
+              <tr>
+                <td>Android SDK Platform</td>
+                <td>36</td>
+                <td>Target API level for building</td>
+              </tr>
+              <tr>
+                <td>Android SDK Build-Tools</td>
+                <td>36</td>
+                <td>Required for compiling native code</td>
+              </tr>
+              <tr>
+                <td>Android SDK Platform-Tools</td>
+                <td>Latest</td>
+                <td>ADB and debugging utilities</td>
+              </tr>
+              <tr>
+                <td>NDK (Side by Side)</td>
+                <td>27.1</td>
+                <td>Native Development Kit for C++ modules</td>
+              </tr>
+              <tr>
+                <td>Kotlin</td>
+                <td>2.1.20</td>
+                <td>Android language support</td>
+              </tr>
+              <tr>
+                <td>Gradle</td>
+                <td>8.9</td>
+                <td>Build automation tool</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>iOS Development Tools</h2>
+        <p>For building and running the apps on iOS devices or simulators, you need a <strong>macOS</strong> machine with the following tools:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Version</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Xcode</td>
+                <td>15+</td>
+                <td>Apple IDE with iOS SDK</td>
+              </tr>
+              <tr>
+                <td>CocoaPods</td>
+                <td>Latest</td>
+                <td>iOS dependency manager</td>
+              </tr>
+              <tr>
+                <td>iOS Deployment Target</td>
+                <td>15.1</td>
+                <td>Minimum supported iOS version</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>iOS development requires a <strong>Mac computer</strong> running macOS. iOS apps cannot be built on Windows or Linux.</p>
+        </div>
+
+        <h2>Recommended IDE</h2>
+        <p><strong>Visual Studio Code</strong> is the recommended code editor for editing the Livriko app source code. Install the following extensions for the best development experience:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Extension</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ES7+ React/Redux/React-Native snippets</code></td>
+                <td>React Native code snippets</td>
+              </tr>
+              <tr>
+                <td><code>Prettier - Code formatter</code></td>
+                <td>Automatic code formatting</td>
+              </tr>
+              <tr>
+                <td><code>ESLint</code></td>
+                <td>JavaScript/TypeScript linting</td>
+              </tr>
+              <tr>
+                <td><code>React Native Tools</code></td>
+                <td>Debugging and running React Native apps</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Verification Commands</h2>
+        <p>Run the following commands in your terminal to verify that all prerequisites are correctly installed and configured:</p>
+
+<pre><code># Check Node.js and npm
+node -v        # Should output v20.x.x or higher
+npm -v         # Should output 10.x.x or higher
+
+# Check Java (required for Android builds)
+java -version  # Should show JDK 17
+
+# Check Android SDK
+echo $ANDROID_HOME  # Should point to your SDK directory
+
+# Check ADB (Android Debug Bridge)
+adb --version  # Should show platform-tools version
+
+# Check Xcode (macOS only)
+xcodebuild -version  # Should show Xcode 15+
+
+# Check CocoaPods (macOS only)
+pod --version  # Should show CocoaPods version
+
+# Check Watchman
+watchman --version  # Should show a version number</code></pre>
+
+        <div class="callout success">
+          <div class="callout-icon"><i class="fas fa-circle-check"></i></div>
+          <div class="callout-title">All checks passed?</div>
+          <p>If all the commands above return valid output, your environment is ready. Proceed to <a href="app-installation.html">App Installation</a> to clone and install the mobile apps.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-installation.html">App Installation</a> — Clone and install the mobile apps</li>
+          <li><a href="app-android.html">Android Setup</a> — Detailed Android environment configuration</li>
+          <li><a href="app-ios.html">iOS Setup</a> — Detailed iOS environment configuration</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

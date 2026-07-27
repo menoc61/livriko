@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Common Errors - Livriko Documentation</title>
+  <meta name="description" content="Troubleshoot common Livriko admin panel errors — login issues, 500 errors, and configuration problems.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Admin Common Errors</h2>
+        <p>Below are the most common errors encountered when running the Livriko Laravel admin panel, along with their causes and solutions.</p>
+      </div>
+
+      <div class="prose">
+        <h2>"500 Internal Server Error"</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stale cached configuration</td>
+                <td>Run the following commands to clear all caches:<pre><code>php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan event:clear</code></pre></td>
+              </tr>
+              <tr>
+                <td>Application in maintenance mode</td>
+                <td>Run <code>php artisan down</code> to disable maintenance mode</td>
+              </tr>
+              <tr>
+                <td>PHP version incompatibility</td>
+                <td>Ensure your server runs PHP 8.1 or higher. Check with <code>php --version</code></td>
+              </tr>
+              <tr>
+                <td>Missing PHP extensions</td>
+                <td>Install required extensions: <code>mbstring, xml, ctype, json, bcmath, pdo_mysql</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>"Class not found" Error</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Autoload not regenerated</td>
+                <td>Run <code>composer dump-autoload</code></td>
+              </tr>
+              <tr>
+                <td>Missing composer dependency</td>
+                <td>Run <code>composer install</code> to install all dependencies</td>
+              </tr>
+              <tr>
+                <td>Namespace mismatch</td>
+                <td>Check that the class namespace matches the directory structure</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>"Token Mismatch" Error</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CSRF token expired</td>
+                <td>Clear the config cache: <code>php artisan config:clear</code></td>
+              </tr>
+              <tr>
+                <td>Session driver misconfigured</td>
+                <td>Check <code>SESSION_DRIVER</code> in <code>.env</code> (use <code>file</code> or <code>database</code>)</td>
+              </tr>
+              <tr>
+                <td>Browser cookie issues</td>
+                <td>Clear browser cookies and cache, then try again</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Database Connection Error</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Incorrect database credentials in <code>.env</code></td>
+                <td>Verify the following values:<pre><code>DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=livriko
+DB_USERNAME=root
+DB_PASSWORD=your_password</code></pre></td>
+              </tr>
+              <tr>
+                <td>Database server not running</td>
+                <td>Start MySQL: <code>sudo systemctl start mysql</code></td>
+              </tr>
+              <tr>
+                <td>Database does not exist</td>
+                <td>Create the database: <code>mysql -u root -p -e "CREATE DATABASE livriko"</code></td>
+              </tr>
+              <tr>
+                <td>User lacks privileges</td>
+                <td>Grant privileges: <code>GRANT ALL ON livriko.* TO 'username'@'localhost'</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Login Issues</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Admin user not seeded</td>
+                <td>Run the seeder: <code>php artisan db:seed --class=AdminSeeder</code></td>
+              </tr>
+              <tr>
+                <td>Incorrect password</td>
+                <td>Reset the password: <code>php artisan tinker</code> then <code>User::where('email', 'admin@example.com')->update(['password' => Hash::make('new-password')])</code></td>
+              </tr>
+              <tr>
+                <td>Account locked</td>
+                <td>Check the <code>users</code> table for lock status and reset if needed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>"Permission denied" Error</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Incorrect directory permissions</td>
+                <td>Set the correct permissions:<pre><code>chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+chown -R www-data:www-data storage
+chown -R www-data:www-data bootstrap/cache</code></pre></td>
+              </tr>
+              <tr>
+                <td>Storage link not created</td>
+                <td>Create the storage link: <code>php artisan storage:link</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Email Not Sending</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Incorrect SMTP configuration</td>
+                <td>Verify SMTP settings in <code>.env</code>:<pre><code>MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls</code></pre></td>
+              </tr>
+              <tr>
+                <td>App-specific password required</td>
+                <td>For Gmail, generate an app-specific password in your Google account settings</td>
+              </tr>
+              <tr>
+                <td>Config cache stale</td>
+                <td>Run <code>php artisan config:clear</code> after changing mail settings</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Queue Not Processing</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Queue worker not running</td>
+                <td>Start the queue worker:<pre><code>php artisan queue:work --sleep=3 --tries=3</code></pre></td>
+              </tr>
+              <tr>
+                <td>Supervisor process crashed</td>
+                <td>Restart Supervisor:<pre><code>sudo supervisorctl restart all</code></pre></td>
+              </tr>
+              <tr>
+                <td>Redis not running</td>
+                <td>Start Redis: <code>sudo systemctl start redis</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Migration Errors</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MySQL version incompatibility</td>
+                <td>Livriko requires MySQL 5.7+ or 8.0+. Check with <code>mysql --version</code></td>
+              </tr>
+              <tr>
+                <td>Column already exists</td>
+                <td>Rollback and re-migrate: <code>php artisan migrate:rollback && php artisan migrate</code></td>
+              </tr>
+              <tr>
+                <td>Table does not exist</td>
+                <td>Run all migrations from the beginning: <code>php artisan migrate:fresh --seed</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Debugging Tip</div>
+          <p>When troubleshooting, always check the Laravel log file first: <code>tail -100 storage/logs/laravel.log</code>. The log file contains detailed error messages that will help you identify the root cause.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="troubleshooting-database.html">Database Upgrade</a> — Migration and backup procedures</li>
+          <li><a href="troubleshooting-update.html">Version Update</a> — Updating Livriko</li>
+          <li><a href="settings-system.html">System Tools</a> — System maintenance utilities</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

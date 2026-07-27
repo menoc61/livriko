@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic App Setup - Livriko Documentation</title>
+  <meta name="description" content="Initial configuration for Livriko mobile apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Basic App Setup</h2>
+      <p>This guide covers the essential configuration steps to get both the User and Driver apps running. These steps must be completed after installation and before building for production.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Environment Configuration</h2>
+      <p>Both apps need to know the URL of your Livriko backend API, your Firebase project details, and your Google Maps API key. Edit the configuration file in each app to set these values.</p>
+
+      <p><strong>User App:</strong> Open <code>src/config/config.js</code></p>
+      <pre><code>// src/config/config.js
+export const BASE_URL = 'http://localhost:8000/api';   // Local development
+// export const BASE_URL = 'https://yourdomain.com/api'; // Production
+
+export const SOCKET_URL = 'http://localhost:8080';     // Reverb WebSocket
+// export const SOCKET_URL = 'wss://yourdomain.com/reverb'; // Production
+
+export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';</code></pre>
+
+      <p><strong>Driver App:</strong> Open <code>src/config/config.js</code></p>
+      <pre><code>// src/config/config.js
+export const BASE_URL = 'http://localhost:8000/api';
+// export const BASE_URL = 'https://yourdomain.com/api';
+
+export const SOCKET_URL = 'http://localhost:8080';
+// export const SOCKET_URL = 'wss://yourdomain.com/reverb';
+
+export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';</code></pre>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">API URL Suffix Required</p>
+          <p>Ensure the API URL ends with <code>/api</code> for both apps. Without the <code>/api</code> suffix, all API requests will fail with 404 errors. The backend Laravel route prefixes expect this path.</p>
+        </div>
+      </div>
+
+      <h2>API Base URL</h2>
+      <p>The API base URL points to your Livriko Laravel backend. For local development, use your machine's IP address rather than <code>localhost</code> when testing on a physical device.</p>
+
+      <pre><code># Find your local IP address
+# macOS / Linux:
+ifconfig | grep 'inet '
+
+# Windows:
+ipconfig</code></pre>
+
+      <p>Then use the IP in your config:</p>
+      <pre><code>export const BASE_URL = 'http://192.168.1.100:8000/api';</code></pre>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">HTTPS in Production</p>
+          <p>For production deployments, always use HTTPS. iOS enforces App Transport Security and will block plain HTTP connections. Android 9+ also blocks cleartext traffic by default.</p>
+        </div>
+      </div>
+
+      <h2>Firebase Initialization</h2>
+      <p>Both apps require Firebase for push notifications and optional social login. Complete the Firebase setup before proceeding.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Download Firebase Config Files</h4>
+            <p>Go to the <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a>, select your project, and download the config files for each platform.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Place Android Config</h4>
+            <p>Copy <code>google-services.json</code> to <code>Taxido_user/android/app/</code> and <code>Taxido_driver/android/app/</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Place iOS Config</h4>
+            <p>Copy <code>GoogleService-Info.plist</code> to <code>Taxido_user/ios/</code> and <code>Taxido_driver/ios/</code>. Drag it into Xcode with "Copy items if needed" checked.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Enable Firebase Services</h4>
+            <p>In the Firebase Console, enable <strong>Cloud Messaging</strong> for push notifications. Enable <strong>Authentication</strong> if using social login (Google, Apple, Facebook).</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Google Maps SDK</h2>
+      <p>Google Maps is required for map display, geolocation, and route calculation. See the <a href="app-google-maps.html">Google Maps Setup</a> guide for detailed instructions on obtaining and restricting your API key.</p>
+
+      <pre><code>// src/config/config.js
+export const GOOGLE_MAPS_API_KEY = 'AIzaSy...YOUR_KEY';</code></pre>
+
+      <p>Add the key to the Android manifest in both apps:</p>
+      <pre><code>&lt;!-- android/app/src/main/AndroidManifest.xml --&gt;
+&lt;meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_GOOGLE_MAPS_API_KEY"/&gt;</code></pre>
+
+      <h2>Push Notification Registration</h2>
+      <p>On first launch, each app registers a Firebase Cloud Messaging (FCM) token with the Livriko backend. This token is used to send ride updates, driver arrival alerts, and promotional notifications.</p>
+
+      <pre><code>// In your app initialization (App.js or auth service)
+import messaging from '@react-native-firebase/messaging';
+
+async function registerForPushNotifications() {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    const token = await messaging().getToken();
+    // Send token to your backend
+    await api.post('/device/register', { fcm_token: token });
+  }
+}</code></pre>
+
+      <h2>Authentication Flow</h2>
+      <p>Livriko supports multiple authentication methods. The flow depends on your admin panel configuration:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>User App</th>
+              <th>Driver App</th>
+              <th>Admin Config Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Email/Password</strong></td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Enable in Settings → Auth</td>
+            </tr>
+            <tr>
+              <td><strong>Phone OTP</strong></td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>SMS gateway configured</td>
+            </tr>
+            <tr>
+              <td><strong>Google Sign-In</strong></td>
+              <td>Yes</td>
+              <td>Yes</td>
+              <td>Firebase Social Login enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Apple Sign-In</strong></td>
+              <td>Yes</td>
+              <td>iOS only</td>
+              <td>Apple Developer account required</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Launch Screen Configuration</h2>
+      <p>The launch screen (splash screen) is the first thing users see. Customize it to match your brand:</p>
+      <ul>
+        <li><strong>Android:</strong> Edit <code>android/app/src/main/res/drawable/splash_screen.xml</code> and <code>android/app/src/main/res/values/styles.xml</code></li>
+        <li><strong>iOS:</strong> Edit <code>ios/LivrikoUser/LaunchScreen.storyboard</code> in Xcode. Update the background color and center image.</li>
+      </ul>
+
+      <h2>Run the Apps</h2>
+      <p>Start the development servers for both apps after completing the above steps:</p>
+
+      <p><strong>User App:</strong></p>
+      <pre><code>cd Taxido_user
+npm install
+npm run android    # For Android
+npm run ios        # For iOS (Mac only)</code></pre>
+
+      <p><strong>Driver App:</strong></p>
+      <pre><code>cd Taxido_driver
+npm install
+npm run android    # For Android
+npm run ios        # For iOS (Mac only)</code></pre>
+
+      <h2>Verify Connection</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Open the App</h4>
+            <p>Launch the User App on a device or emulator. The login screen should load (this confirms API connectivity).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Authenticate</h4>
+            <p>Register a new account or log in with existing credentials. Verify you reach the home screen with the map.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Verify Map</h4>
+            <p>Confirm the Google Map loads and shows your current location. This validates the Maps SDK configuration.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Test Driver App</h4>
+            <p>Open the Driver App and repeat the verification steps. Ensure both apps can authenticate and communicate with the backend.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Setup Complete</p>
+          <p>If both apps can log in and display the map, the basic setup is complete. Proceed to build production APK/AAB files or configure iOS-specific settings.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-google-maps.html">Google Maps Setup</a> — Configure maps API in detail</li>
+        <li><a href="app-build.html">Build APK / AAB</a> — Generate production builds</li>
+        <li><a href="app-ios-setup.html">iOS Setup Detail</a> — iOS-specific configuration</li>
+        <li><a href="firebase-create.html">Firebase Setup</a> — Configure push notifications</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

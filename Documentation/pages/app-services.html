@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service List - Livriko Documentation</title>
+  <meta name="description" content="Manage ride services — Cab, Rental, Parcel, Freight.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Service List</h2>
+      <p>Livriko supports multiple service types that can be enabled or disabled from the admin panel. Each service represents a distinct business offering available to users.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Available Services</h2>
+      <p>Livriko ships with four core service categories. Each category can contain multiple sub-types configured independently in the admin panel.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Default Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cab — Ride</strong></td>
+              <td>Transport</td>
+              <td>On-demand point-to-point rides with real-time driver matching and GPS tracking</td>
+              <td>Enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Cab — Intercity</strong></td>
+              <td>Transport</td>
+              <td>Long-distance rides between cities with fixed or distance-based pricing</td>
+              <td>Enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Cab — Schedule</strong></td>
+              <td>Transport</td>
+              <td>Book rides in advance for a specific date and time with guaranteed availability</td>
+              <td>Enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Rental — Hourly</strong></td>
+              <td>Rental</td>
+              <td>Rent vehicles by the hour with duration tracking and deposit management</td>
+              <td>Enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Rental — Daily</strong></td>
+              <td>Rental</td>
+              <td>Rent vehicles for full-day periods at predetermined daily rates</td>
+              <td>Enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Parcel — Delivery</strong></td>
+              <td>Delivery</td>
+              <td>Send and track packages with real-time delivery status and proof of delivery</td>
+              <td>Enabled</td>
+            </tr>
+            <tr>
+              <td><strong>Freight — Heavy Goods</strong></td>
+              <td>Delivery</td>
+              <td>Transport heavy or oversized goods with specialized vehicles and handling</td>
+              <td>Disabled</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Cab Services</h2>
+      <p>The Cab category is the primary revenue driver. It includes three sub-types that cover the most common ride-hailing use cases.</p>
+
+      <h3>Ride (On-Demand)</h3>
+      <p>The standard ride-hailing experience. Users enter pickup and drop-off locations, select a vehicle type, and get matched with the nearest available driver. The app shows real-time driver location, estimated arrival time, and fare estimate before booking.</p>
+
+      <h3>Intercity</h3>
+      <p>For longer trips between cities or towns. Intercity rides typically have higher base fares and different pricing tiers. Drivers must be registered for intercity service in their profile. The admin can set minimum and maximum intercity distances.</p>
+
+      <h3>Schedule</h3>
+      <p>Allows users to book rides up to 30 days in advance. Scheduled rides are assigned to drivers closer to the pickup time. Users receive confirmation when a driver accepts the scheduled ride. The system sends reminders before the scheduled pickup.</p>
+
+      <h2>Rental Services</h2>
+      <p>Rental services let users hire vehicles for extended periods. The driver stays with the vehicle, or in some configurations, the vehicle is delivered to the user.</p>
+
+      <h3>Hourly Rental</h3>
+      <p>Users rent a vehicle by the hour with a configurable minimum duration. The fare is calculated as: <code>(hourly_rate × hours) + distance_charge</code>. A security deposit is collected at booking time and refunded upon vehicle return.</p>
+
+      <h3>Daily Rental</h3>
+      <p>Full-day rental packages at a flat daily rate. Includes a set number of kilometers; additional kilometers are charged at a per-km rate. Daily rentals are popular for tourist areas and business travel.</p>
+
+      <h2>Delivery Services</h2>
+      <p>Delivery services handle package transport from sender to recipient with real-time tracking.</p>
+
+      <h3>Parcel Delivery</h3>
+      <p>Standard package delivery for documents, small items, and packages. The sender enters pickup and drop-off addresses, and a driver is matched to transport the parcel. Recipients receive tracking updates and proof of delivery (photo or signature).</p>
+
+      <h3>Freight (Heavy Goods)</h3>
+      <p>Specialized service for transporting heavy, oversized, or bulk items. Requires vehicles with appropriate load capacity. The admin configures weight limits, vehicle requirements, and freight-specific pricing.</p>
+
+      <h2>Configuring Services in Admin</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Log In to Admin Panel</h4>
+            <p>Access the admin panel at <code>https://yourdomain.com/admin</code> with your administrator credentials.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Navigate to Settings</h4>
+            <p>Go to <strong>Settings</strong> → <strong>Services</strong> from the sidebar menu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Toggle Services</h4>
+            <p>Enable or disable each service using the toggle switches. Disabled services will not appear in the mobile apps.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Save Changes</h4>
+            <p>Click <strong>Save</strong> to apply changes. The mobile apps will reflect the updated service list on the next API call.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Service Categories in Mobile Apps</h2>
+      <p>Services are organized into tab-based categories in the User app home screen:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Category Tab</th>
+              <th>Services Included</th>
+              <th>Icon</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Transport</strong></td>
+              <td>Ride, Intercity, Schedule</td>
+              <td><i class="fas fa-car"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Rental</strong></td>
+              <td>Hourly, Daily</td>
+              <td><i class="fas fa-key"></i></td>
+            </tr>
+            <tr>
+              <td><strong>Delivery</strong></td>
+              <td>Parcel, Freight</td>
+              <td><i class="fas fa-box"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Service Availability by Zone</h2>
+      <p>Services can be restricted to specific geographic zones. For example, you might enable Intercity rides only in metropolitan areas and disable them in rural zones. Configure zone-based service availability in the admin panel under <strong>Settings</strong> → <strong>Zones</strong> → <strong>Service Availability</strong>.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Zone Type</th>
+              <th>Recommended Services</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>City Center</strong></td>
+              <td>Ride, Schedule, Hourly Rental, Parcel</td>
+              <td>All services available, highest demand</td>
+            </tr>
+            <tr>
+              <td><strong>Suburban</strong></td>
+              <td>Ride, Schedule, Daily Rental</td>
+              <td>Longer wait times, fewer drivers</td>
+            </tr>
+            <tr>
+              <td><strong>Airport</strong></td>
+              <td>Ride, Intercity, Schedule</td>
+              <td>Fixed airport pickup zones, surge pricing likely</td>
+            </tr>
+            <tr>
+              <td><strong>Rural</strong></td>
+              <td>Ride, Schedule</td>
+              <td>Limited driver availability, higher minimum fares</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Driver Assignment per Service</h2>
+      <p>Drivers can be assigned to one or more services in their profile. When a driver registers, they select which services they want to offer. The app only matches riders with drivers who are assigned to the requested service.</p>
+
+      <p>For example, a driver who only offers Parcel Delivery will not receive Ride booking requests. This ensures drivers only get trips they are equipped and trained to handle.</p>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Disabling a Service</p>
+          <p>When a service is disabled, it will not appear in the mobile apps. Existing bookings for that service will still be visible in the admin panel and the user's booking history. The service can be re-enabled at any time without data loss.</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Freight Service is Disabled by Default</p>
+          <p>The Freight (Heavy Goods) service is disabled by default because it requires specialized vehicles, different insurance coverage, and driver training. Enable it only if your fleet includes appropriate vehicles and your drivers are certified for heavy goods transport.</p>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Start Simple</p>
+          <p>For new deployments, we recommend starting with Ride and Parcel Delivery enabled. Add Intercity, Rental, and other services as your fleet grows and you have sufficient driver coverage in your service zones.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-vehicle-types.html">Vehicle Types</a> — Configure vehicle types for each service</li>
+        <li><a href="management-zones.html">Zones</a> — Define service zones</li>
+        <li><a href="management-coupons.html">Coupons</a> — Create promotional offers</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

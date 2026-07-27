@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drivers - Livriko Documentation</title>
+  <meta name="description" content="Manage driver accounts in Livriko — registration, verification, documents, and profile management.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Drivers</h2>
+        <p>Manage the full lifecycle of driver accounts — from registration and document verification through to active service on your platform.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Driver Lifecycle</h2>
+        <p>Every driver on your platform passes through a structured lifecycle. Understanding this flow helps you maintain quality control and ensure only verified, qualified drivers serve your riders.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Registration</h4>
+              <p>The driver downloads the driver app and creates an account by providing their name, email, phone number, address, and vehicle details. At this point, the driver's status is set to <strong>Unverified</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Document Upload</h4>
+              <p>The driver uploads required documents — driving license, vehicle registration, insurance certificate, and profile photo. These are stored securely and flagged for admin review.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Admin Verification</h4>
+              <p>An admin reviews the submitted documents in the admin panel. Each document is inspected for validity, expiry dates, and authenticity. The admin can approve or reject individual documents or the entire application.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Approved</h4>
+              <p>Once all documents are verified and the admin approves the driver, their status changes to <strong>Approved</strong>. The driver can now go online and start accepting ride requests.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Active</h4>
+              <p>The driver toggles their availability in the app and begins receiving ride requests. Their real-time location appears on the <a href="management-location.html">Driver Location</a> map.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Driver Fields Reference</h2>
+        <p>Each driver profile contains the following data fields. These are collected during registration and can be updated by the driver or by an admin.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Name</strong></td>
+                <td>Text</td>
+                <td>Full name of the driver as it appears on their license.</td>
+              </tr>
+              <tr>
+                <td><strong>Email</strong></td>
+                <td>Email</td>
+                <td>Driver's email address for account login and notifications.</td>
+              </tr>
+              <tr>
+                <td><strong>Phone</strong></td>
+                <td>Phone</td>
+                <td>Mobile number linked to the driver's account for SMS and calls.</td>
+              </tr>
+              <tr>
+                <td><strong>Address</strong></td>
+                <td>Text</td>
+                <td>Residential address of the driver.</td>
+              </tr>
+              <tr>
+                <td><strong>Profile Photo</strong></td>
+                <td>Image</td>
+                <td>A clear photo of the driver's face. Used for rider identification during pickup.</td>
+              </tr>
+              <tr>
+                <td><strong>Vehicle Type</strong></td>
+                <td>Select</td>
+                <td>The type of vehicle the driver operates (e.g., Economy, Comfort, Premium). Determines which ride requests the driver receives.</td>
+              </tr>
+              <tr>
+                <td><strong>License Number</strong></td>
+                <td>Text</td>
+                <td>The driver's official driving license number.</td>
+              </tr>
+              <tr>
+                <td><strong>License Expiry</strong></td>
+                <td>Date</td>
+                <td>Expiry date of the driving license. The system flags expired licenses automatically.</td>
+              </tr>
+              <tr>
+                <td><strong>Insurance Number</strong></td>
+                <td>Text</td>
+                <td>Vehicle insurance policy number for liability coverage.</td>
+              </tr>
+              <tr>
+                <td><strong>Bank Account</strong></td>
+                <td>Text</td>
+                <td>Bank account details for withdrawal of earnings from the <a href="management-wallet.html">Driver Wallet</a>.</td>
+              </tr>
+              <tr>
+                <td><strong>Status</strong></td>
+                <td>Select</td>
+                <td>Current lifecycle status: <strong>Unverified</strong>, <strong>Approved</strong>, <strong>Rejected</strong>, or <strong>Suspended</strong>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Document Verification Workflow</h2>
+        <p>Document verification is the most critical step in the driver onboarding process. Thorough verification protects your platform's reputation and rider safety.</p>
+
+        <h3>Required Documents</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>What to Check</th>
+                <th>Rejection Criteria</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Driving License</strong></td>
+                <td>Valid license class, not expired, matches driver's name and photo.</td>
+                <td>Expired, wrong license class, name mismatch, blurred image.</td>
+              </tr>
+              <tr>
+                <td><strong>Vehicle Registration</strong></td>
+                <td>Vehicle is registered, plate number matches, not expired.</td>
+                <td>Unregistered vehicle, expired registration, plate number mismatch.</td>
+              </tr>
+              <tr>
+                <td><strong>Insurance Certificate</strong></td>
+                <td>Active insurance policy covering ride-hailing operations.</td>
+                <td>Expired policy, personal-only coverage (not commercial), name mismatch.</td>
+              </tr>
+              <tr>
+                <td><strong>Profile Photo</strong></td>
+                <td>Clear face shot, good lighting, matches the driver's identity.</td>
+                <td>Blurred photo, no face visible, photo of someone else, sunglasses or mask.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Verification Tip</div>
+          <p>Compare the profile photo with the photo on the driving license to confirm the driver's identity. Cross-reference the vehicle registration plate number with the vehicle details provided during registration.</p>
+        </div>
+
+        <h3>Approval vs. Rejection</h3>
+        <p>When reviewing a driver application, you have two primary actions:</p>
+        <ul>
+          <li><strong>Approve</strong> — All documents are valid and the driver meets your platform's requirements. The driver is moved to <strong>Approved</strong> status and can begin accepting rides.</li>
+          <li><strong>Reject</strong> — One or more documents are invalid or incomplete. When rejecting, provide a clear reason so the driver knows what to correct (e.g., "License expired", "Blurry profile photo").</li>
+        </ul>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Always Provide a Reason</div>
+          <p>When rejecting a driver application, always include a specific reason. This reduces support tickets, helps drivers correct issues quickly, and maintains a professional relationship. Drivers who receive clear feedback are more likely to reapply.</p>
+        </div>
+
+        <hr>
+
+        <h2>Managing Drivers from the Admin Panel</h2>
+        <p>The Drivers section in the admin panel provides a comprehensive view of all driver accounts and their current status.</p>
+
+        <h3>Viewing Driver Profiles</h3>
+        <ol>
+          <li>Go to <strong>Livriko Management</strong> → <strong>Drivers</strong>.</li>
+          <li>Browse the list of all drivers, or use the search bar to find a specific driver by name, email, or phone.</li>
+          <li>Click on a driver's name to open their full profile, including document history and ride statistics.</li>
+        </ol>
+
+        <h3>Available Actions</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Description</th>
+                <th>When to Use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Approve</strong></td>
+                <td>Changes driver status from Unverified to Approved. The driver can go online and accept rides.</td>
+                <td>All documents are verified and valid.</td>
+              </tr>
+              <tr>
+                <td><strong>Reject</strong></td>
+                <td>Sends the application back with a reason. The driver can re-upload documents and resubmit.</td>
+                <td>One or more documents are invalid or missing.</td>
+              </tr>
+              <tr>
+                <td><strong>Suspend</strong></td>
+                <td>Temporarily blocks the driver from receiving ride requests. The driver cannot go online while suspended.</td>
+                <td>Driver complaints, safety concerns, or policy violations pending investigation.</td>
+              </tr>
+              <tr>
+                <td><strong>Delete</strong></td>
+                <td>Permanently removes the driver account and associated data from the platform.</td>
+                <td>Driver has permanently left the platform or violated terms severely.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout danger">
+          <i class="fas fa-exclamation-circle callout-icon"></i>
+          <div class="callout-title">Suspend Before Delete</div>
+          <p>Always suspend a driver before deleting their account. This gives you a grace period to investigate any pending issues, review recent rides, and handle any financial settlements through the <a href="management-wallet.html">Wallet</a>. Deletion is irreversible.</p>
+        </div>
+
+        <hr>
+
+        <h2>Adding Drivers Manually</h2>
+        <p>In some cases, you may need to add a driver directly from the admin panel rather than having them self-register through the app. This is useful for fleet drivers or VIP drivers who require a streamlined onboarding process.</p>
+        <ol>
+          <li>Go to <strong>Livriko Management</strong> → <strong>Drivers</strong>.</li>
+          <li>Click <strong>Add New Driver</strong>.</li>
+          <li>Enter the driver's personal details, vehicle information, and bank account details.</li>
+          <li>Set the initial status to <strong>Approved</strong> if you have already verified their documents offline, or leave as <strong>Unverified</strong> to trigger the standard verification workflow.</li>
+          <li>Click <strong>Save</strong> to create the account.</li>
+        </ol>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Manual Addition vs. Self-Registration</div>
+          <p>Drivers added manually from the admin panel still benefit from the same platform features — wallet, ride matching, notifications, and analytics. The only difference is the initial onboarding path.</p>
+        </div>
+
+        <hr>
+
+        <h2>Driver Documents Section</h2>
+        <p>Each driver profile includes a dedicated <strong>Documents</strong> tab where you can view all uploaded documents, their verification status, and the date they were last reviewed. This section also tracks document expiry dates and sends automatic alerts when a document is about to expire.</p>
+        <ul>
+          <li><strong>Document Status</strong> — Each document shows as Pending, Verified, or Rejected.</li>
+          <li><strong>Expiry Tracking</strong> — The system monitors expiry dates and flags documents that are within 30 days of expiring.</li>
+          <li><strong>Re-Verification</strong> — If a driver's license or insurance expires, their status is automatically changed to <strong>Suspended</strong> until they upload updated documents.</li>
+        </ul>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Automated Alerts</div>
+          <p>Livriko can automatically send push notifications and emails to drivers when their documents are nearing expiry. Enable this feature in <a href="management-settings.html">App Settings</a> under Driver Settings.</p>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-location.html">Driver Location</a> — Monitor driver positions on the real-time map.</li>
+          <li><a href="management-plans.html">Plans</a> — Configure subscription plans and commission tiers for drivers.</li>
+          <li><a href="management-wallet.html">Wallet</a> — View driver earnings, withdrawals, and transaction history.</li>
+          <li><a href="management-fleet.html">Fleet Manager</a> — Organize drivers into fleets for large-scale operations.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

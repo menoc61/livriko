@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livriko Documentation – All-in-One Mobility Platform</title>
+  <meta name="description" content="Official documentation for Livriko. Complete guides for ride-hailing, vehicle rental, and parcel delivery platform setup and configuration.">
+  <link rel="stylesheet" href="pages/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       MOBILE HEADER
+       ============================================================ -->
+  <div class="mobile-header">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko" class="mobile-logo">
+  </div>
+
+  <!-- ============================================================
+       SIDEBAR OVERLAY (mobile)
+       ============================================================ -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko">
+        <span>Docs</span>
+      </div>
+      <!-- Search -->
+      <div class="sidebar-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search documentation…" aria-label="Search documentation">
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav" id="sidebarNav">
+
+      <!-- Introduction -->
+      <div class="nav-section">
+        <a href="index.html" class="nav-link active">
+          <i class="fas fa-home"></i> Introduction
+        </a>
+      </div>
+
+      <!-- Laravel Configuration -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="laravel">
+          <span><i class="fab fa-laravel" style="margin-right:6px;"></i> Laravel Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="laravel">
+          <a href="pages/laravel-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="pages/laravel-localhost.html" class="nav-link"><i class="fas fa-circle"></i> Localhost Configuration</a>
+          <a href="pages/laravel-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation Overview</a>
+          <a href="pages/laravel-installation-gui.html" class="nav-link"><i class="fas fa-circle"></i> Installation GUI</a>
+          <a href="pages/laravel-installation-cli.html" class="nav-link"><i class="fas fa-circle"></i> Installation CLI</a>
+        </div>
+      </div>
+
+      <!-- Deployment -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="deployment">
+          <span><i class="fas fa-cloud-arrow-up" style="margin-right:6px;"></i> Deployment</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="deployment">
+          <a href="pages/deployment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="pages/deployment-cpanel-gui.html" class="nav-link"><i class="fas fa-circle"></i> cPanel GUI</a>
+          <a href="pages/deployment-cpanel-cli.html" class="nav-link"><i class="fas fa-circle"></i> cPanel CLI</a>
+          <a href="pages/deployment-vps-apache.html" class="nav-link"><i class="fas fa-circle"></i> VPS Apache</a>
+          <a href="pages/deployment-vps-nginx.html" class="nav-link"><i class="fas fa-circle"></i> VPS Nginx</a>
+        </div>
+      </div>
+
+      <!-- App Configuration -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="app">
+          <span><i class="fas fa-mobile-screen-button" style="margin-right:6px;"></i> App Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="app">
+          <a href="pages/app-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="pages/app-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation</a>
+          <a href="pages/app-features.html" class="nav-link"><i class="fas fa-circle"></i> Features</a>
+          <a href="pages/app-android.html" class="nav-link"><i class="fas fa-circle"></i> Android Setup</a>
+          <a href="pages/app-ios.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup</a>
+          <a href="pages/app-create-user.html" class="nav-link"><i class="fas fa-circle"></i> Create User App</a>
+          <a href="pages/app-create-driver.html" class="nav-link"><i class="fas fa-circle"></i> Create Driver App</a>
+          <a href="pages/app-change-name.html" class="nav-link"><i class="fas fa-circle"></i> Change App Name</a>
+          <a href="pages/app-change-color.html" class="nav-link"><i class="fas fa-circle"></i> Change App Color</a>
+          <a href="pages/app-change-icon.html" class="nav-link"><i class="fas fa-circle"></i> Change App Icon</a>
+          <a href="pages/app-environment.html" class="nav-link"><i class="fas fa-circle"></i> Environment URL</a>
+          <a href="pages/app-folder-structure.html" class="nav-link"><i class="fas fa-circle"></i> Folder Structure</a>
+          <a href="pages/app-basic-setup.html" class="nav-link"><i class="fas fa-circle"></i> Basic Setup</a>
+          <a href="pages/app-build.html" class="nav-link"><i class="fas fa-circle"></i> Build APK / AAB</a>
+          <a href="pages/app-google-maps.html" class="nav-link"><i class="fas fa-circle"></i> Google Maps</a>
+          <a href="pages/app-services.html" class="nav-link"><i class="fas fa-circle"></i> Service List</a>
+          <a href="pages/app-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="pages/app-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="pages/app-addons.html" class="nav-link"><i class="fas fa-circle"></i> Add-Ons</a>
+          <a href="pages/app-ios-setup.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup Detail</a>
+          <a href="pages/app-ios-build.html" class="nav-link"><i class="fas fa-circle"></i> iOS Build</a>
+        </div>
+      </div>
+
+      <!-- Payment Gateways -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="payment">
+          <span><i class="fas fa-credit-card" style="margin-right:6px;"></i> Payment Gateways</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="payment">
+          <a href="pages/payment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+        </div>
+      </div>
+
+      <!-- Platform Settings -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="settings">
+          <span><i class="fas fa-gear" style="margin-right:6px;"></i> Platform Settings</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="settings">
+          <a href="pages/settings-languages.html" class="nav-link"><i class="fas fa-circle"></i> Languages</a>
+          <a href="pages/settings-currencies.html" class="nav-link"><i class="fas fa-circle"></i> Currencies</a>
+          <a href="pages/settings-taxes.html" class="nav-link"><i class="fas fa-circle"></i> Taxes</a>
+          <a href="pages/settings-sms.html" class="nav-link"><i class="fas fa-circle"></i> SMS Gateways</a>
+          <a href="pages/settings-landing.html" class="nav-link"><i class="fas fa-circle"></i> Landing Page</a>
+          <a href="pages/settings-system.html" class="nav-link"><i class="fas fa-circle"></i> System Tools</a>
+          <a href="pages/settings-general.html" class="nav-link"><i class="fas fa-circle"></i> Settings</a>
+        </div>
+      </div>
+
+      <!-- Livriko Management -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="management">
+          <span><i class="fas fa-sliders" style="margin-right:6px;"></i> Livriko Management</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="management">
+          <a href="pages/management-zones.html" class="nav-link"><i class="fas fa-circle"></i> Zones</a>
+          <a href="pages/management-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="pages/management-rental.html" class="nav-link"><i class="fas fa-circle"></i> Rental Vehicles</a>
+          <a href="pages/management-hourly.html" class="nav-link"><i class="fas fa-circle"></i> Hourly Packages</a>
+          <a href="pages/management-airports.html" class="nav-link"><i class="fas fa-circle"></i> Airports</a>
+          <a href="pages/management-surge.html" class="nav-link"><i class="fas fa-circle"></i> Surge Pricing</a>
+          <a href="pages/management-vehicle-zone.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Zone Pricing</a>
+          <a href="pages/management-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="pages/management-sos.html" class="nav-link"><i class="fas fa-circle"></i> SOS</a>
+          <a href="pages/management-plans.html" class="nav-link"><i class="fas fa-circle"></i> Plans</a>
+          <a href="pages/management-drivers.html" class="nav-link"><i class="fas fa-circle"></i> Drivers</a>
+          <a href="pages/management-location.html" class="nav-link"><i class="fas fa-circle"></i> Driver Location</a>
+          <a href="pages/management-wallet.html" class="nav-link"><i class="fas fa-circle"></i> Wallet</a>
+          <a href="pages/management-fleet.html" class="nav-link"><i class="fas fa-circle"></i> Fleet Manager</a>
+          <a href="pages/management-push.html" class="nav-link"><i class="fas fa-circle"></i> Push Notifications</a>
+          <a href="pages/management-templates.html" class="nav-link"><i class="fas fa-circle"></i> Notification Templates</a>
+          <a href="pages/management-settings.html" class="nav-link"><i class="fas fa-circle"></i> App Settings</a>
+        </div>
+      </div>
+
+      <!-- Firebase -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="firebase">
+          <span><i class="fas fa-fire" style="margin-right:6px;"></i> Firebase</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="firebase">
+          <a href="pages/firebase-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="pages/firebase-create.html" class="nav-link"><i class="fas fa-circle"></i> Create Project</a>
+          <a href="pages/firebase-rules.html" class="nav-link"><i class="fas fa-circle"></i> Rules</a>
+          <a href="pages/firebase-sha.html" class="nav-link"><i class="fas fa-circle"></i> SHA Key</a>
+          <a href="pages/firebase-admin.html" class="nav-link"><i class="fas fa-circle"></i> Connect Admin</a>
+          <a href="pages/firebase-messaging.html" class="nav-link"><i class="fas fa-circle"></i> Messaging</a>
+          <a href="pages/firebase-social.html" class="nav-link"><i class="fas fa-circle"></i> Social Login</a>
+          <a href="pages/firebase-billing.html" class="nav-link"><i class="fas fa-circle"></i> Billing</a>
+          <a href="pages/firebase-functions.html" class="nav-link"><i class="fas fa-circle"></i> Cloud Functions</a>
+          <a href="pages/firebase-collections.html" class="nav-link"><i class="fas fa-circle"></i> Firestore Collections</a>
+        </div>
+      </div>
+
+      <!-- Troubleshooting -->
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="troubleshooting">
+          <span><i class="fas fa-bug" style="margin-right:6px;"></i> Troubleshooting</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="troubleshooting">
+          <a href="pages/troubleshooting-app.html" class="nav-link"><i class="fas fa-circle"></i> App Errors</a>
+          <a href="pages/troubleshooting-admin.html" class="nav-link"><i class="fas fa-circle"></i> Admin Errors</a>
+          <a href="pages/troubleshooting-database.html" class="nav-link"><i class="fas fa-circle"></i> Database Upgrade</a>
+          <a href="pages/troubleshooting-update.html" class="nav-link"><i class="fas fa-circle"></i> Version Update</a>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <p>Livriko v1.0 &middot; Based on <a href="#">Taxido</a></p>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main class="main">
+    <div class="content">
+
+      <!-- ====== HERO ====== -->
+      <section class="hero">
+        <img src="../livriko png 0.5x/Logo 1 pour fond claire@0.5x.png" alt="Livriko" class="hero-logo">
+        <h1><span>Livriko</span> Documentation</h1>
+        <p>All-in-One Mobility Platform &mdash; Ride-Hailing, Vehicle Rental &amp; Parcel Delivery</p>
+        <div style="margin-top: 16px;">
+          <img src="../livriko png 0.5x/Logo 2 pour fond claire@0.5x.png" alt="Livriko Logo" style="height: 40px; margin: 0 auto; opacity: 0.7;">
+        </div>
+        <div class="hero-badges">
+          <span class="badge badge-primary"><i class="fas fa-code-branch"></i> v1.0</span>
+          <span class="badge badge-success"><i class="fas fa-check-circle"></i> Stable</span>
+          <span class="badge badge-info"><i class="fas fa-code"></i> Open Source</span>
+        </div>
+      </section>
+
+      <!-- ====== QUICK START ====== -->
+      <section class="section-header">
+        <h2>Quick Start</h2>
+        <p>Jump straight into what you need.</p>
+      </section>
+
+      <div class="feature-grid">
+        <a href="pages/laravel-installation.html" class="feature-card">
+          <div class="icon"><i class="fas fa-rocket"></i></div>
+          <h3>Quick Start</h3>
+          <p>Get up and running in minutes with our step-by-step installation guide.</p>
+        </a>
+        <a href="pages/app-installation.html" class="feature-card">
+          <div class="icon"><i class="fas fa-mobile-screen"></i></div>
+          <h3>Mobile Apps</h3>
+          <p>User and Driver app setup &mdash; build, configure, and deploy to Android &amp; iOS.</p>
+        </a>
+        <a href="pages/payment-overview.html" class="feature-card">
+          <div class="icon"><i class="fas fa-credit-card"></i></div>
+          <h3>Payments</h3>
+          <p>Configure Stripe, PayPal, Razorpay, and other payment gateways.</p>
+        </a>
+      </div>
+
+      <!-- ====== TECH STACK ====== -->
+      <section class="section-header">
+        <h2>Tech Stack</h2>
+        <p>Built on battle-tested, modern technologies.</p>
+      </section>
+
+      <div class="tech-grid">
+        <div class="tech-item">
+          <i class="fab fa-laravel"></i>
+          <div class="tech-info">
+            <span class="tech-name">Laravel 12</span>
+            <span class="tech-desc">PHP 8.2 Backend</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <i class="fab fa-react"></i>
+          <div class="tech-info">
+            <span class="tech-name">React Native</span>
+            <span class="tech-desc">0.82.1 Mobile</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-database"></i>
+          <div class="tech-info">
+            <span class="tech-name">MySQL 8.0</span>
+            <span class="tech-desc">Relational DB</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-fire"></i>
+          <div class="tech-info">
+            <span class="tech-name">Firebase</span>
+            <span class="tech-desc">Auth &amp; Messaging</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-map-location-dot"></i>
+          <div class="tech-info">
+            <span class="tech-name">Google Maps</span>
+            <span class="tech-desc">Maps &amp; Geolocation</span>
+          </div>
+        </div>
+        <div class="tech-item">
+          <i class="fas fa-bolt"></i>
+          <div class="tech-info">
+            <span class="tech-name">Redis</span>
+            <span class="tech-desc">Caching &amp; Queues</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== WHAT IS LIVRIKO? ====== -->
+      <section class="section-header">
+        <h2>What is Livriko?</h2>
+      </section>
+
+      <div class="prose">
+        <p>
+          <strong>Livriko</strong> is a comprehensive mobility platform that connects passengers, drivers, and businesses through a seamless digital experience. Built as a fork of Taxido by Pixelstrap, it offers ride-hailing, vehicle rental, and parcel delivery services from a single mobile application.
+        </p>
+
+        <h3>Key Capabilities</h3>
+        <ul>
+          <li><strong>Real-time GPS tracking</strong> with live driver locations</li>
+          <li><strong>Scheduled ride booking</strong> for advance planning</li>
+          <li><strong>Multiple secure payment options</strong> &mdash; Cash, Stripe, PayPal, wallets</li>
+          <li><strong>Ride history and digital receipts</strong></li>
+          <li><strong>Bidirectional driver-customer ratings</strong></li>
+          <li><strong>SOS emergency safety features</strong></li>
+          <li><strong>Fleet management tools</strong></li>
+          <li><strong>Surge pricing and dynamic fare calculation</strong></li>
+          <li><strong>Multi-language and multi-currency support</strong></li>
+          <li><strong>Push notifications</strong> via Firebase Cloud Messaging</li>
+          <li><strong>Real-time updates</strong> via Laravel Reverb WebSockets</li>
+        </ul>
+
+        <div class="callout info">
+          <i class="fas fa-circle-info callout-icon"></i>
+          <div>
+            <div class="callout-title">Open &amp; Extensible</div>
+            Livriko is designed to be white-labeled and customized for any market. Its modular architecture lets you enable or disable services, add new payment gateways, and adapt the platform to local regulations.
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== ARCHITECTURE OVERVIEW ====== -->
+      <section class="section-header">
+        <h2>Architecture Overview</h2>
+        <p>Livriko is composed of three tightly integrated components.</p>
+      </section>
+
+      <div class="arch-grid">
+        <div class="arch-block">
+          <div class="arch-number">1</div>
+          <div class="arch-tech">Laravel 12 &middot; PHP 8.2</div>
+          <h4>Backend API</h4>
+          <p>RESTful API with Laravel Sanctum authentication, a full admin panel, and 20+ business modules covering ride logic, payments, fleets, notifications, and analytics.</p>
+        </div>
+        <div class="arch-block">
+          <div class="arch-number">2</div>
+          <div class="arch-tech">React Native 0.82.1</div>
+          <h4>User App</h4>
+          <p>The passenger-facing mobile application with Google Maps integration, multiple payment options, ride booking, scheduling, real-time tracking, and ride history.</p>
+        </div>
+        <div class="arch-block">
+          <div class="arch-number">3</div>
+          <div class="arch-tech">React Native 0.82.1</div>
+          <h4>Driver App</h4>
+          <p>The driver-facing mobile application with turn-by-turn navigation, earnings dashboard, background location tracking, online/offline toggle, and SOS features.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Communication Layer</div>
+          All three components communicate via RESTful APIs. Real-time features (ride status updates, driver location pings, chat messages) use Laravel Reverb WebSockets, while push notifications are delivered through Firebase Cloud Messaging (FCM).
+        </div>
+      </div>
+
+      <!-- ====== SERVICES ====== -->
+      <section class="section-header">
+        <h2>Services</h2>
+        <p>Livriko provides three core services from a single app.</p>
+      </section>
+
+      <div class="services-list">
+        <div class="service-item">
+          <div class="service-icon ride">
+            <i class="fas fa-car"></i>
+          </div>
+          <div>
+            <h4>Ride Booking</h4>
+            <p>Request reliable rides with verified drivers. Choose from standard, premium, or shared rides with real-time tracking, fare estimation, and scheduled bookings.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon rental">
+            <i class="fas fa-key"></i>
+          </div>
+          <div>
+            <h4>Vehicle Rental</h4>
+            <p>Rent vehicles for personal or business use. Manage hourly or daily packages, track rental duration, and handle deposits and returns seamlessly.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon delivery">
+            <i class="fas fa-box"></i>
+          </div>
+          <div>
+            <h4>Parcel Delivery</h4>
+            <p>Send and track packages quickly and securely. Real-time delivery tracking, proof of delivery, and multi-stop routing for efficient logistics.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== GETTING STARTED ====== -->
+      <section class="section-header">
+        <h2>Getting Started</h2>
+        <p>Follow these steps to go from zero to a fully functional Livriko deployment.</p>
+      </section>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Set up the Laravel backend</h4>
+            <p>Install PHP 8.2, Composer, and Laravel 12. Clone the repository and run the initial setup.</p>
+            <a href="pages/laravel-installation.html">Laravel Configuration &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure the database and environment</h4>
+            <p>Create your MySQL database, configure <code>.env</code>, and run migrations and seeders.</p>
+            <a href="pages/laravel-localhost.html">Localhost Configuration &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Install the User App</h4>
+            <p>Set up React Native, configure API endpoints, and build the passenger mobile application.</p>
+            <a href="pages/app-installation.html">App Installation &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Install the Driver App</h4>
+            <p>Configure the driver application with navigation, background location, and earnings tracking.</p>
+            <a href="pages/app-create-driver.html">Create Driver App &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure Firebase</h4>
+            <p>Set up Firebase for push notifications, authentication, and real-time messaging.</p>
+            <a href="pages/firebase-create.html">Firebase Setup &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Set up payment gateways</h4>
+            <p>Enable Stripe, PayPal, Razorpay, or other payment providers for your region.</p>
+            <a href="pages/payment-overview.html">Payment Gateways &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Deploy to production</h4>
+            <p>Deploy the backend to cPanel or VPS, configure SSL, and release the apps to app stores.</p>
+            <a href="pages/deployment-overview.html">Deployment &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== FOOTER ====== -->
+      <footer class="footer">
+        <img src="../livriko png 0.5x/Forme monochrome noir@0.5x.png" alt="Livriko" class="footer-logo">
+        <p>&copy; 2024&ndash;2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 &middot; Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="index.html">Documentation</a>
+          <a href="pages/laravel-installation.html">Installation</a>
+          <a href="pages/troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+
+    </div><!-- .content -->
+  </main>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script>
+    /* ---- Sidebar toggle (mobile) ---- */
+    const hamburger   = document.getElementById('hamburgerBtn');
+    const sidebar     = document.getElementById('sidebar');
+    const overlay     = document.getElementById('sidebarOverlay');
+
+    function openSidebar()  { sidebar.classList.add('open'); overlay.classList.add('active', 'visible'); hamburger.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); hamburger.classList.remove('active'); setTimeout(() => overlay.classList.remove('active'), 300); }
+
+    hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    /* ---- Collapsible nav sections ---- */
+    document.querySelectorAll('.nav-section-header[data-toggle]').forEach(header => {
+      header.addEventListener('click', () => {
+        const section = header.closest('.nav-section');
+        section.classList.toggle('collapsed');
+      });
+    });
+
+    /* ---- Mark active link ---- */
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

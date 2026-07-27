@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iOS Setup - Livriko Documentation</title>
+  <meta name="description" content="Configure iOS dev environment for Livriko.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>iOS Setup</h2>
+        <p>This guide walks you through setting up your macOS development environment for building and running the Livriko User App and Driver App on iOS devices and simulators.</p>
+      </div>
+
+      <div class="prose">
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Note</div>
+          <p>iOS development requires a <strong>Mac computer</strong> running macOS. iOS apps cannot be built on Windows or Linux.</p>
+        </div>
+
+        <h2>Install Xcode</h2>
+        <p>Download and install Xcode from the Mac App Store. The minimum required version is <strong>Xcode 15</strong>.</p>
+
+        <h3>Configure Command Line Tools</h3>
+        <p>After installing Xcode, open a terminal and run the following to ensure the correct developer tools are active:</p>
+
+<pre><code>sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+xcodebuild -version  # Should show Xcode 15.x or later</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>If you have multiple Xcode versions installed, use <code>xcode-select -p</code> to verify which one is currently active. Switch with <code>sudo xcode-select -s /Applications/Xcode_15.app/Contents/Developer</code>.</p>
+        </div>
+
+        <h2>Install CocoaPods</h2>
+        <p>CocoaPods is the dependency manager for iOS projects. Install it using RubyGems:</p>
+
+<pre><code># Install CocoaPods (requires sudo on some systems)
+sudo gem install cocoapods
+
+# Initialize the CocoaPods spec repository
+pod setup
+
+# Verify installation
+pod --version</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>If you are using macOS Ventura or later, you may need to install Ruby via Homebrew first:</p>
+<pre><code>brew install ruby
+gem install cocoapods</code></pre>
+        </div>
+
+        <h2>Apple Developer Account</h2>
+        <p>An Apple Developer Account is required for certain features and for publishing to the App Store:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Requires Developer Account?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Run on iOS Simulator</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Run on physical iPhone</td>
+                <td>Yes (free account works for development)</td>
+              </tr>
+              <tr>
+                <td>Push Notifications (APNs)</td>
+                <td>Yes ($99/year)</td>
+              </tr>
+              <tr>
+                <td>Sign In with Apple</td>
+                <td>Yes ($99/year)</td>
+              </tr>
+              <tr>
+                <td>Background Location</td>
+                <td>Yes ($99/year)</td>
+              </tr>
+              <tr>
+                <td>App Store Submission</td>
+                <td>Yes ($99/year)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>To enroll, visit <a href="https://developer.apple.com/programs/" target="_blank" rel="noopener">developer.apple.com/programs</a> and sign up for the <strong>Apple Developer Program</strong> ($99/year).</p>
+
+        <h2>Provisioning Profiles and Certificates</h2>
+        <p>To run apps on a physical device or submit to the App Store, you need to configure signing certificates and provisioning profiles:</p>
+
+        <ol>
+          <li>Log in to <a href="https://developer.apple.com/account" target="_blank" rel="noopener">Apple Developer Account</a></li>
+          <li>Navigate to <strong>Certificates, Identifiers &amp; Profiles</strong></li>
+          <li>Create a new <strong>App ID</strong> for each app (e.g., <code>com.livriko.user</code> and <code>com.livriko.driver</code>)</li>
+          <li>Generate a <strong>Distribution Certificate</strong> for App Store builds</li>
+          <li>Create a <strong>Provisioning Profile</strong> linking the certificate to your App ID</li>
+          <li>Download and install both the certificate and provisioning profile on your Mac</li>
+        </ol>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Xcode can automatically manage signing if you enable <strong>Automatically manage signing</strong> in the project's <strong>Signing &amp; Capabilities</strong> tab. This is recommended for development builds.</p>
+        </div>
+
+        <h2>Info.plist Permissions</h2>
+        <p>The Livriko apps require several iOS permissions configured in <code>Info.plist</code>. Ensure the following keys are present in both the User App and Driver App:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Purpose</th>
+                <th>Required By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>NSLocationWhenInUseUsageDescription</code></td>
+                <td>Location access while app is in use</td>
+                <td>User App + Driver App</td>
+              </tr>
+              <tr>
+                <td><code>NSLocationAlwaysAndWhenInUseUsageDescription</code></td>
+                <td>Background location access</td>
+                <td>Driver App only</td>
+              </tr>
+              <tr>
+                <td><code>NSCameraUsageDescription</code></td>
+                <td>Camera access for document upload</td>
+                <td>Driver App only</td>
+              </tr>
+              <tr>
+                <td><code>NSPhotoLibraryUsageDescription</code></td>
+                <td>Photo library access for profile pictures</td>
+                <td>User App + Driver App</td>
+              </tr>
+              <tr>
+                <td><code>UIBackgroundModes</code> (location)</td>
+                <td>Background location tracking</td>
+                <td>Driver App only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>iOS Simulator</h2>
+        <p>Xcode includes the iOS Simulator for testing without a physical device:</p>
+
+        <ol>
+          <li>Open Xcode</li>
+          <li>Go to <strong>Xcode &rarr; Open Developer Tool &rarr; Simulator</strong></li>
+          <li>Or launch from the terminal: <code>open -a Simulator</code></li>
+          <li>Choose a device from <strong>Hardware &rarr; Device</strong> (e.g., iPhone 15 Pro)</li>
+        </ol>
+
+        <h2>Project Setup</h2>
+        <p>After cloning the repository and installing dependencies, install CocoaPods for each app:</p>
+
+        <h3>User App</h3>
+<pre><code>cd Taxido_user/ios
+pod install
+cd ..
+npm run ios</code></pre>
+
+        <h3>Driver App</h3>
+<pre><code>cd Taxido_driver/ios
+pod install
+cd ..
+npm run ios</code></pre>
+
+        <div class="callout danger">
+          <div class="callout-icon"><i class="fas fa-circle-exclamation"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Always open the <code>.xcworkspace</code> file (not <code>.xcodeproj</code>) when working with the iOS project in Xcode after running <code>pod install</code>. Running <code>pod install</code> generates a workspace that includes both your project and the Pods project.</p>
+        </div>
+
+<pre><code># Open the workspace in Xcode
+open Taxido_user/ios/Taxido_user.xcworkspace
+# or for the Driver App:
+open Taxido_driver/ios/Taxido_driver.xcworkspace</code></pre>
+
+        <h2>Troubleshooting iOS Setup</h2>
+        <p>Common issues encountered during iOS environment setup and their solutions:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>pod install</code> fails with version conflicts</td>
+                <td>Run <code>pod repo update</code> then retry. If still failing, delete <code>Podfile.lock</code> and run <code>pod install</code> again.</td>
+              </tr>
+              <tr>
+                <td>Xcode shows "No matching provisioning profiles"</td>
+                <td>Ensure your Apple Developer account is configured in Xcode &rarr; Preferences &rarr; Accounts. Enable automatic signing.</td>
+              </tr>
+              <tr>
+                <td>Build fails with "Module not found" for Pods</td>
+                <td>Run <code>cd ios && pod deintegrate && pod install</code> to rebuild the Pods workspace from scratch.</td>
+              </tr>
+              <tr>
+                <td>Simulator crashes on launch</td>
+                <td>Reset the simulator: <code>xcrun simctl shutdown all && xcrun simctl erase all</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Xcode Project Settings</h2>
+        <p>After opening the <code>.xcworkspace</code> file, review these project settings in Xcode:</p>
+
+        <ul>
+          <li><strong>Deployment Target</strong> — Set to iOS 15.1 or higher in the project's Build Settings</li>
+          <li><strong>Signing & Capabilities</strong> — Select your development team and verify the bundle identifier</li>
+          <li><strong>Build Settings</strong> — Ensure <code>IPHONEOS_DEPLOYMENT_TARGET</code> is set correctly</li>
+        </ul>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-installation.html">App Installation</a> — Clone and install the mobile apps</li>
+          <li><a href="app-create-user.html">Create User App</a> — Customize the User App identity</li>
+          <li><a href="app-create-driver.html">Create Driver App</a> — Customize the Driver App identity</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

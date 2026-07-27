@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airports - Livriko Documentation</title>
+  <meta name="description" content="Configure airport pickup/dropoff zones with flat rates.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-plane" style="color:var(--primary);margin-right:8px;"></i> Airports</h2>
+      <p>Airport management lets you configure specific pickup and dropoff zones for airports with flat-rate pricing, designated meeting points, and flight-aware features. This is essential for ride-hailing platforms operating in cities with major airports, providing predictable fares and a smooth experience for travelers.</p>
+    </section>
+
+    <!-- ====== OVERVIEW ====== -->
+    <section class="section-header">
+      <h2>Why Airport Zones Matter</h2>
+      <p>Airports require special handling compared to regular ride zones.</p>
+    </section>
+
+    <div class="prose">
+      <ul>
+        <li><strong>Flat-rate pricing</strong> &mdash; Airport rides typically use fixed fares instead of dynamic metered pricing, giving riders cost certainty.</li>
+        <li><strong>Designated pickup points</strong> &mdash; Airports have specific pickup zones (arrivals level, parking garage, rideshare lot) that drivers must navigate to.</li>
+        <li><strong>Flight tracking</strong> &mdash; Optional integration with flight status APIs to adjust driver dispatch based on actual arrival times.</li>
+        <li><strong>Surge restrictions</strong> &mdash; Many airports prohibit surge pricing on rides originating from the airport terminal.</li>
+        <li><strong>Waiting fees</strong> &mdash; Drivers may charge a waiting fee if the rider is late for a scheduled airport pickup.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== ADDING AN AIRPORT (STEPS) ====== -->
+    <section class="section-header">
+      <h2>Adding an Airport</h2>
+      <p>Follow these steps to configure a new airport for your platform.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Airport Management</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Airports</strong>. You will see a list of existing airport configurations.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Airport"</h4>
+          <p>Click the <strong>Add New Airport</strong> button to open the airport creation form.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Enter Airport Details</h4>
+          <p>Fill in the airport name, IATA code, assign to a zone, and set the flat rate for rides to/from this airport. See the field reference table below.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Configure Meeting Points</h4>
+          <p>Define designated pickup and dropoff points within the airport (e.g., "Arrivals Hall - Gate 3", "Rideshare Pickup Zone B", "Parking Level 2"). Drivers will be directed to the nearest meeting point.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Set Surcharge Rules (Optional)</h4>
+          <p>Configure additional charges for late-night pickups, holiday surcharges, or waiting fees. These rules automatically apply based on the conditions you set.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>6. Save and Activate</h4>
+          <p>Set the <strong>Status</strong> to <em>Active</em> and click <strong>Save</strong>. The airport will now appear as a selectable origin/destination in the rider app.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the airport form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Airport Name</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>Full display name of the airport (e.g., "Charles de Gaulle Airport", "JFK International Airport"). Shown to riders and drivers in the app.</td>
+          </tr>
+          <tr>
+            <td><strong>IATA Code</strong></td>
+            <td>Text (3 chars)</td>
+            <td>Yes</td>
+            <td>Standard 3-letter IATA airport code (e.g., CDG, JFK, LHR, DXB). Used for flight tracking integration and compact display in the app.</td>
+          </tr>
+          <tr>
+            <td><strong>Zone</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>The zone this airport belongs to. The airport inherits the zone's currency, distance unit, and payment methods. Airport rides use the zone's pricing unless overridden by flat rate.</td>
+          </tr>
+          <tr>
+            <td><strong>Flat Rate</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Fixed fare for rides between this airport and the zone center (or another defined destination). When set, all airport rides use this flat rate instead of dynamic metered pricing. Set to 0 to use standard metered fares.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Active</strong> makes the airport available for bookings. <strong>Inactive</strong> hides it from the app. Useful for temporarily disabling airport service during closures or maintenance.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== MEETING POINTS ====== -->
+    <section class="section-header">
+      <h2>Meeting Points</h2>
+      <p>Define specific pickup and dropoff locations within the airport.</p>
+    </section>
+
+    <div class="prose">
+      <p>Airports are large, complex facilities with multiple terminals and levels. Meeting points help drivers find the exact pickup location and give riders clear directions.</p>
+
+      <h3>Common Meeting Point Types</h3>
+      <ul>
+        <li><strong>Arrivals Hall</strong> &mdash; Ground-level exit where arriving passengers emerge from baggage claim.</li>
+        <li><strong>Rideshare Pickup Zone</strong> &mdash; Designated rideshare area, often in a parking garage or specific lane outside the terminal.</li>
+        <li><strong>Departures Level</strong> &mdash; For dropoffs at the check-in counters. Multi-level airports may have separate zones per terminal.</li>
+        <li><strong>Parking Garage</strong> &mdash; Some airports require rideshare pickups from a specific parking structure level.</li>
+      </ul>
+
+      <h3>Configuring Meeting Points</h3>
+      <ol>
+        <li>Open the airport configuration in the admin panel.</li>
+        <li>In the <strong>Meeting Points</strong> section, click <strong>Add Meeting Point</strong>.</li>
+        <li>Enter the meeting point name (e.g., "Terminal 1 - Arrivals Gate A").</li>
+        <li>Set the GPS coordinates (latitude/longitude) for the exact location.</li>
+        <li>Mark as <strong>Pickup</strong>, <strong>Dropoff</strong>, or <strong>Both</strong>.</li>
+        <li>Save the meeting point.</li>
+      </ol>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Driver Navigation</div>
+          When a rider requests an airport pickup, the driver's app will display the nearest meeting point with turn-by-turn navigation. This reduces confusion and pickup time at busy airports.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FLIGHT TRACKING ====== -->
+    <section class="section-header">
+      <h2>Flight Tracking</h2>
+      <p>Optionally integrate with flight status APIs to improve the airport pickup experience.</p>
+    </section>
+
+    <div class="prose">
+      <h3>How Flight Tracking Works</h3>
+      <ol>
+        <li>The rider enters their flight number when booking an airport pickup.</li>
+        <li>Livriko queries a flight status API (e.g., AviationStack, FlightAware) to get the estimated arrival time.</li>
+        <li>If the flight is delayed, the driver is automatically notified and the pickup time is adjusted.</li>
+        <li>When the flight lands, the driver receives a notification to head to the pickup point.</li>
+      </ol>
+
+      <h3>Benefits</h3>
+      <ul>
+        <li><strong>No wasted wait time</strong> &mdash; Drivers arrive when the rider is actually ready, not based on the original scheduled time.</li>
+        <li><strong>Better rider experience</strong> &mdash; Riders don't need to rush to arrange a ride after a long flight.</li>
+        <li><strong>Reduced no-shows</strong> &mdash; Automatic adjustments prevent cancellations due to flight changes.</li>
+      </ul>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">API Configuration Required</div>
+          Flight tracking requires an API key from a flight status provider. Configure this under Platform Settings &rarr; Settings &rarr; Flight Tracking API. Additional API costs may apply depending on your provider and usage volume.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== SURCHARGE RULES ====== -->
+    <section class="section-header">
+      <h2>Surcharge Rules</h2>
+      <p>Configure additional charges for specific airport ride conditions.</p>
+    </section>
+
+    <div class="prose">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Rule Type</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Night Surcharge</strong></td>
+              <td>Extra fee for pickups between specified late-night/early-morning hours.</td>
+              <td>$5.00 extra for pickups between 11:00 PM and 5:00 AM</td>
+            </tr>
+            <tr>
+              <td><strong>Holiday Surcharge</strong></td>
+              <td>Extra fee on public holidays or high-demand dates.</td>
+              <td>15% extra on Dec 25, Jan 1, and national holidays</td>
+            </tr>
+            <tr>
+              <td><strong>Waiting Fee</strong></td>
+              <td>Per-minute charge after a free waiting period expires.</td>
+              <td>$0.50/min after 15 minutes of free waiting</td>
+            </tr>
+            <tr>
+              <td><strong>Terminal Surcharge</strong></td>
+              <td>Extra fee for pickups from specific terminals (e.g., international terminal).</td>
+              <td>$3.00 extra for Terminal 2 (International) pickups</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>Configure related settings for airport operations.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-zones.html" class="feature-card">
+        <div class="icon"><i class="fas fa-map-location-dot"></i></div>
+        <h4>Zones</h4>
+        <p>Define the geographic zones that airports belong to for fare calculation and service area boundaries.</p>
+      </a>
+      <a href="management-vehicle-zone.html" class="feature-card">
+        <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+        <h4>Vehicle Zone Pricing</h4>
+        <p>Set airport-specific flat rates and pricing for each vehicle type operating airport routes.</p>
+      </a>
+      <a href="management-surge.html" class="feature-card">
+        <div class="icon"><i class="fas fa-chart-line"></i></div>
+        <h4>Surge Pricing</h4>
+        <p>Configure demand-based pricing for non-airport areas while keeping airport fares fixed.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

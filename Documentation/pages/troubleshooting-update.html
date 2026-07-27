@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Version Update - Livriko Documentation</title>
+  <meta name="description" content="Update Livriko to the latest version — pull changes, run migrations, and verify.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Version Update</h2>
+        <p>This guide covers how to update your Livriko backend and mobile apps when a new version is released.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Pre-Update Checklist</h2>
+        <p>Before updating Livriko, complete the following preparation steps:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Backup Database</h4>
+              <p>Create a full backup of your database using <code>mysqldump</code> or the Laravel Backup package. See <a href="troubleshooting-database.html">Database Upgrade</a> for detailed backup procedures.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Note Current Version</h4>
+              <p>Record your current Livriko version. Check <code>composer.json</code> or the admin panel for version information.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Enable Maintenance Mode</h4>
+              <p>Put the application in maintenance mode to prevent user access during the update:<pre><code>php artisan down</code></pre></p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Updating the Backend</h2>
+        <p>Follow these steps to update the Laravel backend:</p>
+
+        <pre><code># 1. Pull the latest changes from GitHub
+git pull origin main
+
+# 2. Install updated PHP dependencies
+composer install --no-dev --optimize-autoloader
+
+# 3. Install updated JavaScript dependencies (if frontend changes)
+npm install
+
+# 4. Build frontend assets (if needed)
+npm run build
+
+# 5. Run database migrations for new schema changes
+php artisan migrate --force
+
+# 6. Clear all cached configuration
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+php artisan event:clear
+
+# 7. Disable maintenance mode
+php artisan up</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Note</div>
+          <p>Always create a backup of your database and files before updating. See <a href="troubleshooting-database.html">Database Upgrade</a> for backup procedures.</p>
+        </div>
+
+        <h2>Updating Mobile Apps</h2>
+        <p>To update the User or Driver mobile apps:</p>
+
+        <pre><code># 1. Pull the latest changes from GitHub
+git pull origin main
+
+# 2. Install updated JavaScript dependencies
+npm install
+
+# 3. Update the version number in build.gradle (Android)
+# Navigate to android/app/build.gradle and update:
+#   versionCode (increment by 1)
+#   versionName (e.g., "1.1.0")
+
+# 4. Rebuild the app
+
+# Android:
+cd android && ./gradlew clean && cd ..
+npx react-native run-android
+
+# iOS:
+cd ios && pod install && cd ..
+npx react-native run-ios</code></pre>
+
+        <h2>Post-Update Verification</h2>
+        <p>After updating, verify that everything works correctly:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Check</th>
+                <th>Verification Method</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Admin panel loads</td>
+                <td>Visit your admin URL and log in</td>
+              </tr>
+              <tr>
+                <td>API endpoints respond</td>
+                <td>Test key endpoints: <code>curl https://your-domain.com/api/v1/health</code></td>
+              </tr>
+              <tr>
+                <td>Database migrations applied</td>
+                <td>Run <code>php artisan migrate:status</code> to verify all migrations are up to date</td>
+              </tr>
+              <tr>
+                <td>Queue workers running</td>
+                <td>Check with <code>php artisan queue:status</code></td>
+              </tr>
+              <tr>
+                <td>Email sending works</td>
+                <td>Send a test email from the admin panel</td>
+              </tr>
+              <tr>
+                <td>Push notifications work</td>
+                <td>Send a test notification to a device</td>
+              </tr>
+              <tr>
+                <td>Mobile apps compile</td>
+                <td>Build and run both User and Driver apps</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Handling Merge Conflicts</h2>
+        <p>If you've made custom modifications, you may encounter merge conflicts during <code>git pull</code>:</p>
+
+        <pre><code># Check for conflicts
+git status
+
+# If there are conflicts, resolve them manually
+# Edit the conflicting files and choose the correct version
+
+# After resolving conflicts
+git add .
+git commit -m "Resolved merge conflicts after update"
+
+# Continue with the update steps</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Always review the changelog or release notes before updating. Some updates may include breaking changes that require additional configuration steps.</p>
+        </div>
+
+        <h2>Updating Mobile Apps for App Stores</h2>
+        <p>After updating the mobile app code, you need to rebuild and publish to the app stores:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Update Version Numbers</h4>
+              <p>Increment the version code and name in both Android (<code>build.gradle</code>) and iOS (<code>Info.plist</code>) projects.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Build Release Version</h4>
+              <p>Build the release APK/AAB for Android or archive the iOS project in Xcode.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Submit to Stores</h4>
+              <p>Upload the build to Google Play Console and App Store Connect. Follow the store-specific submission guidelines.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Wait for Review</h4>
+              <p>Google Play review typically takes 1–3 days. App Store review takes 1–7 days. Plan your updates accordingly.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Rollback Procedure</h2>
+        <p>If the update causes issues, follow these steps to rollback:</p>
+
+        <pre><code># 1. Enable maintenance mode
+php artisan down
+
+# 2. Revert to the previous version
+git checkout v1.0.0  # Replace with your previous version tag
+
+# 3. Install dependencies for that version
+composer install --no-dev --optimize-autoloader
+
+# 4. Restore the database backup
+mysql -u root -p livriko < pre_upgrade_backup.sql
+
+# 5. Clear caches
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+
+# 6. Disable maintenance mode
+php artisan up</code></pre>
+
+        <h2>Using Git Tags for Version Management</h2>
+        <p>Use Git tags to mark release versions. This makes it easy to reference specific versions and roll back if needed:</p>
+
+        <pre><code># Tag a release
+git tag -a v1.1.0 -m "Release version 1.1.0"
+git push origin v1.1.0
+
+# View all tags
+git tag -l
+
+# Checkout a specific tag
+git checkout v1.1.0
+
+# Create a new branch from a tag
+git checkout -b hotfix/v1.1.1 v1.1.0</code></pre>
+
+        <h2>Keeping Docs in Sync</h2>
+        <p>If you are maintaining custom documentation for your deployment, ensure you update the documentation files alongside code changes. This prevents discrepancies between the docs and the actual behavior.</p>
+
+        <div class="callout success">
+          <div class="callout-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="callout-title">Best Practice</div>
+          <p>Always update your documentation when making configuration changes or adding new features. This helps your team troubleshoot issues and onboard new members efficiently.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="troubleshooting-app.html">App Errors</a> — Common mobile app errors</li>
+          <li><a href="troubleshooting-admin.html">Admin Errors</a> — Common admin panel errors</li>
+          <li><a href="troubleshooting-database.html">Database Upgrade</a> — Migration and backup procedures</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

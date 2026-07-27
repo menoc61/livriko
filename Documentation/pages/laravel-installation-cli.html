@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livriko Laravel API (CLI) - Livriko Documentation</title>
+  <meta name="description" content="Command-line installation guide for the Livriko Laravel backend, including the automated install.sh script and Docker setup.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="mobile-header">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko" class="mobile-logo">
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko">
+        <span>Docs</span>
+      </div>
+      <div class="sidebar-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search documentation…" aria-label="Search documentation">
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-section">
+        <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Introduction</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="laravel">
+          <span><i class="fab fa-laravel" style="margin-right:6px;"></i> Laravel Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="laravel">
+          <a href="laravel-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="laravel-localhost.html" class="nav-link"><i class="fas fa-circle"></i> Localhost Configuration</a>
+          <a href="laravel-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation Overview</a>
+          <a href="laravel-installation-gui.html" class="nav-link"><i class="fas fa-circle"></i> Installation GUI</a>
+          <a href="laravel-installation-cli.html" class="nav-link"><i class="fas fa-circle"></i> Installation CLI</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="deployment">
+          <span><i class="fas fa-cloud-arrow-up" style="margin-right:6px;"></i> Deployment</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="deployment">
+          <a href="deployment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="deployment-cpanel-gui.html" class="nav-link"><i class="fas fa-circle"></i> cPanel GUI</a>
+          <a href="deployment-cpanel-cli.html" class="nav-link"><i class="fas fa-circle"></i> cPanel CLI</a>
+          <a href="deployment-vps-apache.html" class="nav-link"><i class="fas fa-circle"></i> VPS Apache</a>
+          <a href="deployment-vps-nginx.html" class="nav-link"><i class="fas fa-circle"></i> VPS Nginx</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="app">
+          <span><i class="fas fa-mobile-screen-button" style="margin-right:6px;"></i> App Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="app">
+          <a href="app-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="app-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation</a>
+          <a href="app-features.html" class="nav-link"><i class="fas fa-circle"></i> Features</a>
+          <a href="app-android.html" class="nav-link"><i class="fas fa-circle"></i> Android Setup</a>
+          <a href="app-ios.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup</a>
+          <a href="app-create-user.html" class="nav-link"><i class="fas fa-circle"></i> Create User App</a>
+          <a href="app-create-driver.html" class="nav-link"><i class="fas fa-circle"></i> Create Driver App</a>
+          <a href="app-change-name.html" class="nav-link"><i class="fas fa-circle"></i> Change App Name</a>
+          <a href="app-change-color.html" class="nav-link"><i class="fas fa-circle"></i> Change App Color</a>
+          <a href="app-change-icon.html" class="nav-link"><i class="fas fa-circle"></i> Change App Icon</a>
+          <a href="app-environment.html" class="nav-link"><i class="fas fa-circle"></i> Environment URL</a>
+          <a href="app-folder-structure.html" class="nav-link"><i class="fas fa-circle"></i> Folder Structure</a>
+          <a href="app-basic-setup.html" class="nav-link"><i class="fas fa-circle"></i> Basic Setup</a>
+          <a href="app-build.html" class="nav-link"><i class="fas fa-circle"></i> Build APK / AAB</a>
+          <a href="app-google-maps.html" class="nav-link"><i class="fas fa-circle"></i> Google Maps</a>
+          <a href="app-services.html" class="nav-link"><i class="fas fa-circle"></i> Service List</a>
+          <a href="app-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="app-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="app-addons.html" class="nav-link"><i class="fas fa-circle"></i> Add-Ons</a>
+          <a href="app-ios-setup.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup Detail</a>
+          <a href="app-ios-build.html" class="nav-link"><i class="fas fa-circle"></i> iOS Build</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="payment">
+          <span><i class="fas fa-credit-card" style="margin-right:6px;"></i> Payment Gateways</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="payment">
+          <a href="payment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="settings">
+          <span><i class="fas fa-gear" style="margin-right:6px;"></i> Platform Settings</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="settings">
+          <a href="settings-languages.html" class="nav-link"><i class="fas fa-circle"></i> Languages</a>
+          <a href="settings-currencies.html" class="nav-link"><i class="fas fa-circle"></i> Currencies</a>
+          <a href="settings-taxes.html" class="nav-link"><i class="fas fa-circle"></i> Taxes</a>
+          <a href="settings-sms.html" class="nav-link"><i class="fas fa-circle"></i> SMS Gateways</a>
+          <a href="settings-landing.html" class="nav-link"><i class="fas fa-circle"></i> Landing Page</a>
+          <a href="settings-system.html" class="nav-link"><i class="fas fa-circle"></i> System Tools</a>
+          <a href="settings-general.html" class="nav-link"><i class="fas fa-circle"></i> Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="management">
+          <span><i class="fas fa-sliders" style="margin-right:6px;"></i> Livriko Management</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="management">
+          <a href="management-zones.html" class="nav-link"><i class="fas fa-circle"></i> Zones</a>
+          <a href="management-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="management-rental.html" class="nav-link"><i class="fas fa-circle"></i> Rental Vehicles</a>
+          <a href="management-hourly.html" class="nav-link"><i class="fas fa-circle"></i> Hourly Packages</a>
+          <a href="management-airports.html" class="nav-link"><i class="fas fa-circle"></i> Airports</a>
+          <a href="management-surge.html" class="nav-link"><i class="fas fa-circle"></i> Surge Pricing</a>
+          <a href="management-vehicle-zone.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Zone Pricing</a>
+          <a href="management-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="management-sos.html" class="nav-link"><i class="fas fa-circle"></i> SOS</a>
+          <a href="management-plans.html" class="nav-link"><i class="fas fa-circle"></i> Plans</a>
+          <a href="management-drivers.html" class="nav-link"><i class="fas fa-circle"></i> Drivers</a>
+          <a href="management-location.html" class="nav-link"><i class="fas fa-circle"></i> Driver Location</a>
+          <a href="management-wallet.html" class="nav-link"><i class="fas fa-circle"></i> Wallet</a>
+          <a href="management-fleet.html" class="nav-link"><i class="fas fa-circle"></i> Fleet Manager</a>
+          <a href="management-push.html" class="nav-link"><i class="fas fa-circle"></i> Push Notifications</a>
+          <a href="management-templates.html" class="nav-link"><i class="fas fa-circle"></i> Notification Templates</a>
+          <a href="management-settings.html" class="nav-link"><i class="fas fa-circle"></i> App Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="firebase">
+          <span><i class="fas fa-fire" style="margin-right:6px;"></i> Firebase</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="firebase">
+          <a href="firebase-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="firebase-create.html" class="nav-link"><i class="fas fa-circle"></i> Create Project</a>
+          <a href="firebase-rules.html" class="nav-link"><i class="fas fa-circle"></i> Rules</a>
+          <a href="firebase-sha.html" class="nav-link"><i class="fas fa-circle"></i> SHA Key</a>
+          <a href="firebase-admin.html" class="nav-link"><i class="fas fa-circle"></i> Connect Admin</a>
+          <a href="firebase-messaging.html" class="nav-link"><i class="fas fa-circle"></i> Messaging</a>
+          <a href="firebase-social.html" class="nav-link"><i class="fas fa-circle"></i> Social Login</a>
+          <a href="firebase-billing.html" class="nav-link"><i class="fas fa-circle"></i> Billing</a>
+          <a href="firebase-functions.html" class="nav-link"><i class="fas fa-circle"></i> Cloud Functions</a>
+          <a href="firebase-collections.html" class="nav-link"><i class="fas fa-circle"></i> Firestore Collections</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="troubleshooting">
+          <span><i class="fas fa-bug" style="margin-right:6px;"></i> Troubleshooting</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="troubleshooting">
+          <a href="troubleshooting-app.html" class="nav-link"><i class="fas fa-circle"></i> App Errors</a>
+          <a href="troubleshooting-admin.html" class="nav-link"><i class="fas fa-circle"></i> Admin Errors</a>
+          <a href="troubleshooting-database.html" class="nav-link"><i class="fas fa-circle"></i> Database Upgrade</a>
+          <a href="troubleshooting-update.html" class="nav-link"><i class="fas fa-circle"></i> Version Update</a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <p>Livriko v1.0 &middot; Based on <a href="#">Taxido</a></p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <section class="section-header">
+        <h1>Livriko Laravel API (CLI)</h1>
+        <p>This guide covers installing the Livriko Backend API using the command line. The CLI installation gives you full control over every step and is recommended for developers comfortable with the terminal. We cover both manual installation and the automated <code>install.sh</code> script.</p>
+      </section>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Prerequisites</div>
+          Before starting, ensure you have all <a href="laravel-prerequisites.html">prerequisites</a> installed: PHP 8.2+, Composer 2.x, MySQL 8.0, Node.js 20+, and Git.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Quick Install</h2>
+        <p>Livriko includes an automated installation script that handles the entire setup process. This is the fastest way to get started.</p>
+      </section>
+
+      <pre><code># Clone the repository
+git clone https://github.com/HitechFacilitator/livriko.git
+cd livriko/Taxido_laravel
+
+# Run the automated installer
+bash install.sh</code></pre>
+
+      <p>The script will prompt you for:</p>
+      <ul>
+        <li>Database name, username, and password</li>
+        <li>Application URL (e.g., <code>http://localhost:8000</code>)</li>
+        <li>Whether to run seeders with default data</li>
+      </ul>
+
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Automated Setup</div>
+          The install script handles: <code>composer install</code>, <code>.env</code> configuration, <code>key:generate</code>, <code>migrate --seed</code>, <code>storage:link</code>, and <code>config:cache</code>. It also verifies all PHP extensions are enabled.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>What the Script Does</h2>
+        <p>The automated installer performs the following operations in sequence:</p>
+      </section>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Step</th><th>Command</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><code>composer install</code></td><td>Downloads all PHP dependencies from Packagist</td></tr>
+            <tr><td>2</td><td><code>cp .env.example .env</code></td><td>Creates the environment configuration file</td></tr>
+            <tr><td>3</td><td><code>php artisan key:generate</code></td><td>Generates the application encryption key</td></tr>
+            <tr><td>4</td><td><code>php artisan migrate --seed</code></td><td>Creates all database tables and populates default data</td></tr>
+            <tr><td>5</td><td><code>php artisan storage:link</code></td><td>Creates the public storage symlink for file uploads</td></tr>
+            <tr><td>6</td><td><code>php artisan config:cache</code></td><td>Caches the configuration for faster load times</td></tr>
+            <tr><td>7</td><td><code>php artisan route:cache</code></td><td>Caches the route definitions for faster routing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <section class="section-header">
+        <h2>Manual CLI Steps</h2>
+        <p>If you prefer to run each step manually (or the automated script is not available), follow these steps one by one:</p>
+      </section>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 1: Clone the Repository</h4>
+            <pre><code>git clone https://github.com/HitechFacilitator/livriko.git
+cd livriko/Taxido_laravel</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 2: Install Dependencies</h4>
+            <pre><code>composer install</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 3: Configure Environment</h4>
+            <pre><code>cp .env.example .env
+php artisan key:generate</code></pre>
+            <p>Edit <code>.env</code> with your database credentials and application settings.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 4: Create Database</h4>
+            <pre><code>mysql -u root -p
+CREATE DATABASE livriko_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 5: Run Migrations</h4>
+            <pre><code>php artisan migrate --seed</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 6: Create Storage Link</h4>
+            <pre><code>php artisan storage:link</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Step 7: Start Development Server</h4>
+            <pre><code>php artisan serve</code></pre>
+            <p>The API will be available at <code>http://localhost:8000</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Production .env Configuration</h2>
+        <p>For production deployments, ensure your <code>.env</code> file includes the following settings:</p>
+      </section>
+
+      <pre><code># APPLICATION
+APP_NAME=Livriko
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+# DATABASE
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=livriko_db
+DB_USERNAME=livriko_user
+DB_PASSWORD=your_secure_password
+
+# CACHE &amp; QUEUE (use Redis in production)
+CACHE_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+
+# REVERB (WebSockets)
+REVERB_APP_KEY=your-reverb-key
+REVERB_APP_SECRET=your-reverb-secret
+REVERB_APP_ID=your-reverb-app-id
+REVERB_HOST=yourdomain.com
+REVERB_PORT=443
+REVERB_SCHEME=https</code></pre>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Never Commit .env</div>
+          The <code>.env</code> file contains sensitive credentials and API keys. Never commit it to version control. The <code>.env.example</code> file is safe to commit as it contains only placeholder values.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Docker Installation</h2>
+        <p>Livriko also supports Docker-based development. This is ideal for ensuring a consistent environment across your team and avoiding "works on my machine" issues.</p>
+      </section>
+
+      <pre><code># Clone the repository
+git clone https://github.com/HitechFacilitator/livriko.git
+cd livriko
+
+# Start all services with Docker Compose
+docker-compose up -d
+
+# Install dependencies inside the app container
+docker-compose exec app composer install
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
+docker-compose exec app php artisan storage:link
+
+# Access the application
+# API: http://localhost:8000
+# Admin: http://localhost:8000/admin
+# phpMyAdmin: http://localhost:8080</code></pre>
+
+      <section class="section-header">
+        <h2>Docker Services</h2>
+        <p>The Docker Compose configuration includes the following services:</p>
+      </section>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Service</th><th>Image</th><th>Port</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>app</strong></td><td>PHP 8.2 + Composer</td><td>8000</td><td>Laravel application server</td></tr>
+            <tr><td><strong>mysql</strong></td><td>MySQL 8.0</td><td>3306</td><td>Database server</td></tr>
+            <tr><td><strong>phpmyadmin</strong></td><td>phpMyAdmin</td><td>8080</td><td>Database management interface</td></tr>
+            <tr><td><strong>queue</strong></td><td>PHP 8.2</td><td>&mdash;</td><td>Laravel queue worker for background jobs</td></tr>
+            <tr><td><strong>redis</strong></td><td>Redis 7</td><td>6379</td><td>Caching and session storage</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Docker Resources</div>
+          Docker requires at least 4 GB of RAM allocated to Docker Desktop. If you encounter memory errors, increase the resource limits in Docker Desktop settings.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Verification</h2>
+        <p>After installation, run these commands to verify everything is set up correctly:</p>
+      </section>
+
+      <pre><code># Check application key
+php artisan key:show
+
+# Verify database connection
+php artisan db:show
+
+# List all routes
+php artisan route:list
+
+# Check storage link
+ls -la public/storage</code></pre>
+
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Installation Complete</div>
+          If all verification commands pass, the CLI installation is complete. Access the admin panel at <code>http://localhost:8000/admin</code> and log in with <code>admin@livriko.com</code> / <code>password</code>.
+        </div>
+      </div>
+
+      <div class="callout danger">
+        <i class="fas fa-circle-xmark callout-icon"></i>
+        <div>
+          <div class="callout-title">Change Default Password</div>
+          Change the default admin password immediately after your first login. The default credentials are publicly documented and must never be used in a production environment.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Next Steps</h2>
+      </section>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>App Configuration</h4>
+            <p>Set up the User App and Driver App for Android and iOS.</p>
+            <a href="app-prerequisites.html">App Configuration &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Deploy to Production</h4>
+            <p>Deploy the backend to cPanel or VPS with SSL and proper security.</p>
+            <a href="deployment-overview.html">Deployment &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <img src="../livriko png 0.5x/Forme monochrome noir@0.5x.png" alt="Livriko" class="footer-logo">
+        <p>&copy; 2024&ndash;2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 &middot; Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active', 'visible'); hamburger.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); hamburger.classList.remove('active'); setTimeout(() => overlay.classList.remove('active'), 300); }
+    hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.nav-section-header[data-toggle]').forEach(header => {
+      header.addEventListener('click', () => { header.closest('.nav-section').classList.toggle('collapsed'); });
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.href === window.location.href) { link.classList.add('active'); } else { link.classList.remove('active'); }
+    });
+  </script>
+</body>
+</html>

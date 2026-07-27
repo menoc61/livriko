@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Billing - Livriko Documentation</title>
+  <meta name="description" content="Understand Firebase billing for Livriko — pricing tiers, quotas, and cost optimization.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Firebase Billing</h2>
+        <p>Understanding when you need to enable billing on your Firebase project, what the free tier includes, and how to optimize costs.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Why Billing Is Required</h2>
+        <p>The Firebase Spark (free) plan does not support certain features required by Livriko, most notably <strong>Social Login</strong> (Google Sign-In and Apple Sign-In). To enable these features, you must upgrade to the <strong>Blaze (pay-as-you-go)</strong> plan.</p>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">No Immediate Charges</div>
+          <p>Enabling the Blaze plan does not mean you will be charged immediately. Google provides generous free tier quotas that are sufficient for most deployments. You only pay for usage beyond the free tier.</p>
+        </div>
+
+        <h2>Enable Billing</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Open Project Settings</h4>
+              <p>Go to <strong>Firebase Console → Project Settings → Usage and billing</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>View Current Plan</h4>
+              <p>Click <strong>"Details & usage"</strong> to see your current plan and usage.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Modify Plan</h4>
+              <p>Click <strong>"Modify plan"</strong> and select <strong>"Blaze - Pay as you go"</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Link Billing Account</h4>
+              <p>Follow the prompts to link a Google Cloud billing account. Confirm the upgrade.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Pricing Tiers Comparison</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Spark (Free)</th>
+                <th>Blaze (Pay-as-you-go)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Authentication</strong></td>
+                <td>50K monthly active users</td>
+                <td>$0.01 per additional user</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Firestore</strong></td>
+                <td>50K reads / 20K writes per day</td>
+                <td>$0.06 per 100K reads, $0.18 per 100K writes</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Functions</strong></td>
+                <td>2M invocations per month</td>
+                <td>$0.40 per million invocations</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Messaging</strong></td>
+                <td>Unlimited</td>
+                <td>Free for all usage</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Storage</strong></td>
+                <td>5 GB stored</td>
+                <td>$0.026 per GB per month</td>
+              </tr>
+              <tr>
+                <td><strong>Hosting</strong></td>
+                <td>10 GB stored, 360 MB/day transfer</td>
+                <td>$0.026 per GB stored, $0.15 per GB transfer</td>
+              </tr>
+              <tr>
+                <td><strong>Social Login</strong></td>
+                <td>Not available</td>
+                <td>Included (no extra cost)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Free Tier Quotas (Blaze Plan)</h2>
+        <p>The Blaze plan includes the following free monthly quotas. You will only be charged if you exceed these limits:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Free Tier Limit</th>
+                <th>Overage Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Authentication</strong></td>
+                <td>50,000 monthly active users</td>
+                <td>$0.01 per additional user</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Firestore</strong></td>
+                <td>50K reads / 20K writes per day</td>
+                <td>$0.06 per 100K reads, $0.18 per 100K writes</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Functions</strong></td>
+                <td>2M invocations per month</td>
+                <td>$0.40 per million invocations</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Messaging</strong></td>
+                <td>Unlimited</td>
+                <td>Free for all usage</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Storage</strong></td>
+                <td>5 GB stored</td>
+                <td>$0.026 per GB per month</td>
+              </tr>
+              <tr>
+                <td><strong>Hosting</strong></td>
+                <td>10 GB stored</td>
+                <td>$0.026 per GB per month</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="callout-title">Good News</div>
+          <p>For most Livriko deployments, the free tier is more than sufficient. You will typically only exceed limits if you have a very large number of active users (10K+) or heavy Firestore usage.</p>
+        </div>
+
+        <h2>Monitoring Usage</h2>
+        <p>Monitor your Firebase usage to avoid unexpected charges:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Open Usage Dashboard</h4>
+              <p>Go to <strong>Firebase Console → Usage and billing → Details & usage</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Review Metrics</h4>
+              <p>Check the usage graphs for each service. Pay attention to trends and approaching limits.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Setting Budget Alerts</h2>
+        <p>Set up budget alerts in Google Cloud Console to get notified before exceeding your budget:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Open Google Cloud Console</h4>
+              <p>Go to <a href="https://console.cloud.google.com/billing" target="_blank">console.cloud.google.com/billing</a>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Select Your Budget</h4>
+              <p>Click on your budget and set alert thresholds (e.g., 50%, 90%, 100%).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Configure Notifications</h4>
+              <p>Add email addresses to receive budget alerts. Consider setting up SMS alerts for critical thresholds.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Cost Optimization Tips</h2>
+        <ul>
+          <li><strong>Optimize Firestore reads</strong> — Use queries efficiently and avoid fetching unnecessary data</li>
+          <li><strong>Limit Cloud Functions invocations</strong> — Avoid unnecessary function calls and batch operations</li>
+          <li><strong>Use FCM topics</strong> — Send bulk notifications via topics instead of individual device tokens</li>
+          <li><strong>Clean up old data</strong> — Remove expired Firestore documents and old notifications regularly</li>
+          <li><strong>Monitor usage patterns</strong> — Set up alerts to catch usage spikes early</li>
+        </ul>
+
+        <h2>Common Cost Surprises</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Impact</th>
+                <th>Prevention</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>High Firestore reads</td>
+                <td>Real-time listeners generating excessive reads</td>
+                <td>Optimize query patterns, limit listener scope</td>
+              </tr>
+              <tr>
+                <td>Cloud Functions cold starts</td>
+                <td>Frequent invocations increasing costs</td>
+                <td>Batch operations, reduce function calls</td>
+              </tr>
+              <tr>
+                <td>Storage growth</td>
+                <td>Old files accumulating in Cloud Storage</td>
+                <td>Implement lifecycle policies, clean up old files</td>
+              </tr>
+              <tr>
+                <td>Unexpected traffic spikes</td>
+                <td>Sudden increase in API calls</td>
+                <td>Set budget alerts, monitor usage dashboards</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-social.html">Social Login</a> — Configure Google and Apple sign-in</li>
+          <li><a href="firebase-functions.html">Cloud Functions</a> — Set up serverless triggers</li>
+          <li><a href="firebase-messaging.html">Cloud Messaging</a> — Configure push notifications</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

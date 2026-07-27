@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Firebase Project - Livriko Documentation</title>
+  <meta name="description" content="Create and configure a Firebase project for Livriko — step-by-step guide.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Create Firebase Project</h2>
+        <p>This guide walks you through creating a Firebase project and registering both the User and Driver apps for Livriko.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Prerequisites</h2>
+        <p>Before you begin, make sure you have:</p>
+        <ul>
+          <li>A <strong>Google Account</strong> (required for Firebase Console access)</li>
+          <li>The <strong>package names</strong> for your Android and iOS apps</li>
+          <li>Access to your project's <code>android/</code> and <code>ios/</code> directories</li>
+        </ul>
+
+        <h2>Step 1: Create the Firebase Project</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Navigate to the Firebase Console</h4>
+              <p>Go to <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> and sign in with your Google account.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Click "Add project"</h4>
+              <p>On the Firebase Console dashboard, click the <strong>"Add project"</strong> button to start the project creation wizard.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Enter Project Name</h4>
+              <p>Enter a project name (e.g., <code>Livriko</code>). This name is for your reference and does not need to match your app name. Click <strong>"Continue"</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Configure Google Analytics (Optional)</h4>
+              <p>You can enable or disable Google Analytics based on your preference. If enabled, select your Analytics account. Click <strong>"Create project"</strong> and wait for provisioning to complete.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Note</div>
+          <p>Project provisioning typically takes 1–2 minutes. You will see a progress indicator. Once complete, click <strong>"Continue"</strong> to enter the project dashboard.</p>
+        </div>
+
+        <h2>Step 2: Add Android App (User)</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Start App Registration</h4>
+              <p>From the Firebase console project overview, click the <strong>Android icon</strong> (or "Add app" → Android).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Enter Package Name</h4>
+              <p>Enter the Android package name: <code>com.livriko.user</code></p>
+              <p>Enter an app nickname (e.g., <code>Livriko User</code>) for your reference.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Register the App</h4>
+              <p>Click <strong>"Register app"</strong> to register your Android application.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Download Configuration File</h4>
+              <p>Download the <code>google-services.json</code> file. Place it in your User App's <code>android/app/</code> directory:</p>
+              <pre><code>user-app/android/app/google-services.json</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Important</div>
+          <p>The <code>google-services.json</code> file contains your Firebase project configuration including API keys and project IDs. <strong>Do not modify its contents manually</strong> and never commit it to public repositories.</p>
+        </div>
+
+        <h2>Step 3: Add iOS App (User)</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Start iOS Registration</h4>
+              <p>From the Firebase console, click <strong>"Add app"</strong> and select <strong>iOS</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Enter Bundle ID</h4>
+              <p>Enter the iOS bundle ID: <code>com.livriko.user</code></p>
+              <p>Enter an app nickname (e.g., <code>Livriko User iOS</code>).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Register and Download</h4>
+              <p>Click <strong>"Register app"</strong>, then download the <code>GoogleService-Info.plist</code> file.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Place the File</h4>
+              <p>Move the downloaded file to your User App's <code>ios/</code> directory:</p>
+              <pre><code>user-app/ios/GoogleService-Info.plist</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <h2>Step 4: Add Apps for Driver</h2>
+        <p>Repeat Steps 2 and 3 for the Driver app using the following identifiers:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Package / Bundle ID</th>
+                <th>Config File</th>
+                <th>Destination</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Android</td>
+                <td><code>com.livriko.driver</code></td>
+                <td><code>google-services.json</code></td>
+                <td><code>android/app/</code></td>
+              </tr>
+              <tr>
+                <td>iOS</td>
+                <td><code>com.livriko.driver</code></td>
+                <td><code>GoogleService-Info.plist</code></td>
+                <td><code>ios/</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Each app (User and Driver) must be registered separately in Firebase. <strong>Do not reuse the same <code>google-services.json</code> across different apps.</strong> Each app gets its own configuration file with unique API keys.</p>
+        </div>
+
+        <h2>Configuration File Locations</h2>
+        <p>After completing the setup, your project structure should look like this:</p>
+
+        <pre><code>livriko/
+├── user-app/
+│   ├── android/
+│   │   └── app/
+│   │       └── google-services.json
+│   └── ios/
+│       └── GoogleService-Info.plist
+└── driver-app/
+    ├── android/
+    │   └── app/
+    │       └── google-services.json
+    └── ios/
+        └── GoogleService-Info.plist</code></pre>
+
+        <h2>Verifying Your Setup</h2>
+        <p>After placing the configuration files, verify that Firebase is properly initialized:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Verification Method</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Android</td>
+                <td>Build the app — if <code>google-services.json</code> is correctly placed, the build will succeed without errors</td>
+              </tr>
+              <tr>
+                <td>iOS</td>
+                <td>Open the project in Xcode — <code>GoogleService-Info.plist</code> should appear in the project navigator</td>
+              </tr>
+              <tr>
+                <td>Admin Panel</td>
+                <td>Check the Firebase project console — your registered apps should appear in the project overview</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-sha.html">SHA Key</a> — Generate and register your SHA fingerprints</li>
+          <li><a href="firebase-admin.html">Connect Admin</a> — Link Firebase to your Laravel backend</li>
+          <li><a href="firebase-rules.html">Firebase Rules</a> — Configure Firestore security rules</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

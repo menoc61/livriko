@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Push Notifications - Livriko Documentation</title>
+  <meta name="description" content="Configure and send push notifications to riders and drivers in Livriko via Firebase Cloud Messaging.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Push Notifications</h2>
+        <p>Send targeted push notifications to riders and drivers via Firebase Cloud Messaging — reach your users instantly with promotions, updates, and alerts.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Overview</h2>
+        <p>Push notifications are one of the most effective communication channels for engaging riders and drivers. Livriko integrates with <strong>Firebase Cloud Messaging (FCM)</strong> to deliver reliable, real-time push notifications to both iOS and Android devices.</p>
+        <p>Use push notifications for:</p>
+        <ul>
+          <li><strong>Promotions</strong> — Announce discount codes, seasonal offers, and referral bonuses.</li>
+          <li><strong>Operational Alerts</strong> — Notify drivers of high-demand zones or service disruptions.</li>
+          <li><strong>Engagement</strong> — Re-engage inactive riders with personalized offers and reminders.</li>
+          <li><strong>Safety</strong> — Send emergency alerts and critical safety information to all users.</li>
+        </ul>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Firebase Integration</div>
+          <p>Push notifications in Livriko are powered by Firebase Cloud Messaging (FCM). Ensure your <a href="firebase-messaging.html">Firebase Messaging</a> is properly configured before sending notifications. The platform uses FCM topics for targeted delivery.</p>
+        </div>
+
+        <hr>
+
+        <h2>Notification Types</h2>
+        <p>Livriko supports both automated (system-triggered) and manual (admin-initiated) push notifications. Automated notifications are sent automatically at specific points in the ride lifecycle.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Notification</th>
+                <th>Trigger</th>
+                <th>Recipient</th>
+                <th>Auto / Manual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ride Request</strong></td>
+                <td>Rider requests a new ride</td>
+                <td>Nearby drivers</td>
+                <td>Automatic</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Accepted</strong></td>
+                <td>Driver accepts the ride request</td>
+                <td>Rider</td>
+                <td>Automatic</td>
+              </tr>
+              <tr>
+                <td><strong>Driver Arriving</strong></td>
+                <td>Driver is within 2 minutes of pickup</td>
+                <td>Rider</td>
+                <td>Automatic</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Started</strong></td>
+                <td>Driver taps "Start Ride"</td>
+                <td>Rider</td>
+                <td>Automatic</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Completed</strong></td>
+                <td>Driver taps "End Ride"</td>
+                <td>Rider &amp; Driver</td>
+                <td>Automatic</td>
+              </tr>
+              <tr>
+                <td><strong>Payment Received</strong></td>
+                <td>Payment is processed successfully</td>
+                <td>Driver</td>
+                <td>Automatic</td>
+              </tr>
+              <tr>
+                <td><strong>Promotional</strong></td>
+                <td>Admin sends a manual notification</td>
+                <td>Targeted audience</td>
+                <td>Manual</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Sending a Push Notification</h2>
+        <p>To manually send a push notification from the admin panel:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Navigate to Push Notifications</h4>
+              <p>Go to <strong>Livriko Management</strong> → <strong>Push Notifications</strong>. You will see a list of previously sent notifications and their delivery status.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Click "Send New Notification"</h4>
+              <p>Open the notification composer by clicking the <strong>Send New Notification</strong> button.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Select Target Audience</h4>
+              <p>Choose who receives the notification (see <a href="#targeting">Targeting Options</a> below). This determines the FCM topic used for delivery.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Compose the Message</h4>
+              <p>Enter the notification <strong>Title</strong> (headline) and <strong>Message</strong> (body text). Optionally add an image and a deep link URL that opens when the notification is tapped.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Send or Schedule</h4>
+              <p>Click <strong>Send</strong> to deliver immediately, or choose <strong>Schedule</strong> to send at a specific date and time.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2 id="targeting">Targeting Options</h2>
+        <p>Livriko uses FCM topics to segment notification delivery. Select the appropriate audience to ensure notifications reach the right users.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Target</th>
+                <th>Description</th>
+                <th>FCM Topic</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>All Users</strong></td>
+                <td>Every rider and driver on the platform receives the notification.</td>
+                <td><code>all_users</code></td>
+              </tr>
+              <tr>
+                <td><strong>All Riders</strong></td>
+                <td>Only rider accounts receive the notification.</td>
+                <td><code>riders</code></td>
+              </tr>
+              <tr>
+                <td><strong>All Drivers</strong></td>
+                <td>Only driver accounts receive the notification.</td>
+                <td><code>drivers</code></td>
+              </tr>
+              <tr>
+                <td><strong>Specific Zone</strong></td>
+                <td>Users in a selected zone receive the notification. Ideal for city-specific promotions.</td>
+                <td><code>zone_{zone_id}</code></td>
+              </tr>
+              <tr>
+                <td><strong>Vehicle Type</strong></td>
+                <td>Drivers of a specific vehicle type receive the notification.</td>
+                <td><code>vehicle_{type_id}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Test Before Broadcasting</div>
+          <p>Always send a test notification to your own device before broadcasting to all users. This ensures the message content, formatting, and deep links work correctly. A misconfigured notification sent to thousands of users can damage trust and engagement.</p>
+        </div>
+
+        <hr>
+
+        <h2>Bulk Notifications</h2>
+        <p>When sending notifications to large audiences, Livriko handles the delivery in batches to avoid overwhelming the FCM API and to ensure reliable delivery. The system automatically retries failed deliveries and logs the outcome for each device token.</p>
+        <ul>
+          <li><strong>Batch Processing</strong> — Large audiences are split into smaller batches and sent sequentially.</li>
+          <li><strong>Retry Logic</strong> — Failed deliveries (due to network issues, device offline, etc.) are retried up to 3 times.</li>
+          <li><strong>Delivery Tracking</strong> — The notification history shows the number of successful and failed deliveries for each broadcast.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Scheduling Notifications</h2>
+        <p>Scheduled notifications allow you to plan campaigns in advance. This is particularly useful for:</p>
+        <ul>
+          <li><strong>Weekend Promotions</strong> — Schedule Friday evening notifications for Saturday morning offers.</li>
+          <li><strong>Holiday Campaigns</strong> — Prepare notifications for holidays and special events ahead of time.</li>
+          <li><strong>Peak Hour Alerts</strong> — Schedule driver incentives for rush hour periods automatically.</li>
+        </ul>
+        <p>To schedule a notification, select the <strong>Schedule</strong> option in the composer and set the desired date and time. The notification will be queued and delivered automatically at the scheduled time.</p>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Timezone Handling</div>
+          <p>Scheduled notifications are delivered in the timezone configured in <a href="settings-general.html">Platform Settings</a>. Ensure the timezone is set correctly to avoid notifications being sent at unexpected times for your users.</p>
+        </div>
+
+        <hr>
+
+        <h2>Notification History</h2>
+        <p>The notification history page provides a complete log of all notifications sent from the admin panel, including both manual and scheduled broadcasts.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Title</strong></td>
+                <td>The notification headline as it appeared to users.</td>
+              </tr>
+              <tr>
+                <td><strong>Target</strong></td>
+                <td>The audience segment that received the notification.</td>
+              </tr>
+              <tr>
+                <td><strong>Sent At</strong></td>
+                <td>The date and time the notification was delivered.</td>
+              </tr>
+              <tr>
+                <td><strong>Delivered</strong></td>
+                <td>Number of devices that successfully received the notification.</td>
+              </tr>
+              <tr>
+                <td><strong>Failed</strong></td>
+                <td>Number of devices where delivery failed (e.g., invalid token, app uninstalled).</td>
+              </tr>
+              <tr>
+                <td><strong>Status</strong></td>
+                <td>Sent, Scheduled, or Failed.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Best Practices</h2>
+        <ol>
+          <li><strong>Keep Messages Short</strong> — Push notifications have limited screen space. Keep titles under 50 characters and body text under 150 characters for optimal readability.</li>
+          <li><strong>Personalize When Possible</strong> — Use <a href="management-templates.html">Notification Templates</a> with variables like <code>{{user_name}}</code> to create personalized experiences.</li>
+          <li><strong>Don't Over-Notify</strong> — Sending too many notifications leads to app uninstalls. Limit promotional notifications to 2–3 per week.</li>
+          <li><strong>Use Rich Media</strong> — Include relevant images to increase engagement. Visual notifications stand out more than text-only ones.</li>
+          <li><strong>Leverage Deep Links</strong> — Add URLs that open specific screens in the app (e.g., a promotion page, wallet top-up, or ride history).</li>
+          <li><strong>Measure Results</strong> — Monitor delivery rates and user engagement. Low delivery rates may indicate stale device tokens that need cleanup.</li>
+        </ol>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Engagement Tip</div>
+          <p>Combine push notifications with <a href="management-coupons.html">Coupons</a> for maximum impact. Send a notification with a unique promo code to drive immediate ride bookings and measure the campaign's ROI.</p>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-templates.html">Notification Templates</a> — Customize automated notification content for all platform events.</li>
+          <li><a href="firebase-messaging.html">Firebase Messaging</a> — Set up FCM integration for push notification delivery.</li>
+          <li><a href="management-coupons.html">Coupons</a> — Create promotional codes to include in push notification campaigns.</li>
+          <li><a href="settings-sms.html">SMS Gateways</a> — Configure SMS as an alternative notification channel.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

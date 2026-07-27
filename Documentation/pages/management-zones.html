@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zones - Livriko Documentation</title>
+  <meta name="description" content="Zone management — create geographic service areas.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-map-location-dot" style="color:var(--primary);margin-right:8px;"></i> Zones</h2>
+      <p>Zones define the geographical areas where your Livriko ride-hailing, rental, and parcel delivery services operate. Each zone represents a city or region where riders request rides, drivers accept trips, and parcels are delivered. Configuring zones is the first step in setting up your platform.</p>
+    </section>
+
+    <!-- ====== PREREQUISITES ====== -->
+    <section class="section-header">
+      <h2>Prerequisites</h2>
+      <p>Before creating zones, ensure the following are in place.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Google Maps API Key Required</div>
+          Zone creation relies on Google Maps for drawing boundaries on the map. You must have a valid Google Maps JavaScript API key configured in your platform settings. Without it, the map widget will not render and you will be unable to draw zone polygons.
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Google Maps API Key</strong> &mdash; Enable the <em>Maps JavaScript API</em> and <em>Geocoding API</em> in your Google Cloud Console.</li>
+        <li><strong>Admin Panel Access</strong> &mdash; You need administrator privileges to create or edit zones.</li>
+        <li><strong>Currency Configured</strong> &mdash; At least one currency must be set up under Platform Settings &rarr; Currencies.</li>
+        <li><strong>Zone Boundaries Known</strong> &mdash; Have the approximate coordinates or a reference map of the area you intend to serve.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== CREATING A ZONE (STEPS) ====== -->
+    <section class="section-header">
+      <h2>Creating a Zone</h2>
+      <p>Follow these steps to add a new geographic service area to your platform.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Zone Management</h4>
+          <p>Log in to the admin panel. From the left sidebar, go to <strong>Livriko Management</strong> &rarr; <strong>Zones</strong>. You will see a list of existing zones (empty if this is your first one).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Zone"</h4>
+          <p>Click the <strong>Add New Zone</strong> button in the top-right corner of the zones list page. This opens the zone creation form.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Fill In Zone Details</h4>
+          <p>Enter the zone name (e.g., "Paris", "New York City", "Mumbai"), configure the distance measurement type, currency, and payment method. See the field reference table below for full details.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Draw the Zone Boundary</h4>
+          <p>Use the interactive map widget to draw the zone boundary. Click on the map to place vertices (points) that define the polygon shape. Connect the last point back to the first to close the polygon. The area inside the polygon is your service area.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Enable the Zone</h4>
+          <p>Set the <strong>Status</strong> toggle to <em>Active</em>. Inactive zones are hidden from riders and drivers and cannot receive ride requests.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>6. Save and Verify</h4>
+          <p>Click <strong>Save</strong>. After saving, verify the zone appears in the list with the correct status. Open the zone to confirm the drawn boundary is accurate on the map.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the zone creation form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Zone Name</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>Display name for the zone shown to riders and drivers (e.g., "Paris", "Lagos Central"). Must be unique across the platform.</td>
+          </tr>
+          <tr>
+            <td><strong>Distance Type</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>Unit of distance measurement. Choose between <strong>Kilometers (km)</strong> or <strong>Miles</strong>. This affects all distance-based fare calculations within the zone.</td>
+          </tr>
+          <tr>
+            <td><strong>Currency</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>The currency used for fares, coupons, and pricing in this zone. Must match a currency configured under Platform Settings &rarr; Currencies (e.g., EUR, USD, NGN).</td>
+          </tr>
+          <tr>
+            <td><strong>Payment Method</strong></td>
+            <td>Multi-select</td>
+            <td>Yes</td>
+            <td>Accepted payment methods in this zone. Options include <strong>Cash</strong>, <strong>Card (Stripe)</strong>, <strong>PayPal</strong>, <strong>Wallet</strong>, and other gateways you have configured. At least one must be selected.</td>
+          </tr>
+          <tr>
+            <td><strong>Place Points</strong></td>
+            <td>Map polygon</td>
+            <td>Yes</td>
+            <td>The geographic boundary of the zone. Click on the map to place points (vertices) that form a polygon. The enclosed area defines where rides can be requested and accepted.</td>
+          </tr>
+          <tr>
+            <td><strong>Map</strong></td>
+            <td>Widget</td>
+            <td>Yes</td>
+            <td>Interactive Google Maps widget for drawing and previewing the zone boundary. Supports zoom, pan, and vertex editing after initial drawing.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td>Set to <strong>Active</strong> to make the zone live and visible to riders/drivers. <strong>Inactive</strong> zones are hidden and cannot receive ride requests.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== ZONE FEATURES ====== -->
+    <section class="section-header">
+      <h2>Zone Features</h2>
+      <p>Once a zone is created, you can configure additional features for each zone.</p>
+    </section>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-map-pin"></i></div>
+        <h4>Availability Areas</h4>
+        <p>Define specific pickup and dropoff sub-areas within the zone where the service is available. Useful for restricting service to certain neighborhoods or districts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+        <h4>Pricing Per Zone</h4>
+        <p>Set unique base fare, per-km, per-minute, and minimum fare rates for each vehicle type within the zone. See <a href="management-vehicle-zone.html">Vehicle Zone Pricing</a> for details.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-bolt"></i></div>
+        <h4>Surge Pricing</h4>
+        <p>Configure demand-based pricing multipliers that activate automatically during peak hours or high-demand periods within the zone.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-car"></i></div>
+        <h4>Service Restrictions</h4>
+        <p>Limit which vehicle types and services (Ride, Rental, Parcel, Freight) are available in the zone. Not all vehicle types need to operate in every zone.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== OPENSTREETMAP ALTERNATIVE ====== -->
+    <section class="section-header">
+      <h2>OpenStreetMap (OSM) Alternative</h2>
+      <p>If you prefer not to use Google Maps, Livriko supports OpenStreetMap via Leaflet.js for zone drawing.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Configuring OSM</h3>
+      <ol>
+        <li>Navigate to <strong>Platform Settings</strong> &rarr; <strong>Settings</strong> &rarr; <strong>Map Provider</strong>.</li>
+        <li>Change the map provider from <strong>Google Maps</strong> to <strong>OpenStreetMap</strong>.</li>
+        <li>Save the settings. The zone creation map widget will now use Leaflet.js and OSM tiles.</li>
+      </ol>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">No API Key Needed</div>
+          OpenStreetMap does not require an API key, making it a cost-effective choice for development and testing. However, Google Maps is recommended for production due to superior geocoding accuracy and performance.
+        </div>
+      </div>
+
+      <h3>Limitations of OSM</h3>
+      <ul>
+        <li>Geocoding and reverse geocoding may be less accurate than Google Maps in some regions.</li>
+        <li>Tile loading speed depends on the OSM tile server and may vary by region.</li>
+        <li>Advanced features like Directions API and Distance Matrix are not natively supported.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== BEST PRACTICES ====== -->
+    <section class="section-header">
+      <h2>Best Practices &amp; Tips</h2>
+      <p>Follow these guidelines to get the most out of your zone configuration.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Start with Your Primary City</div>
+          Begin by creating a zone for your main city or launch area. Get pricing, vehicle types, and operations running smoothly before expanding to additional zones.
+        </div>
+      </div>
+
+      <h3>Zone Design Tips</h3>
+      <ul>
+        <li><strong>Use enough vertices</strong> &mdash; Place at least 8-12 points when drawing the boundary to create a smooth, accurate polygon that matches the real-world service area.</li>
+        <li><strong>Avoid self-intersecting polygons</strong> &mdash; Ensure boundary lines do not cross each other, as this can cause fare calculation errors.</li>
+        <li><strong>Consider adjacent zones</strong> &mdash; If you plan to expand, design the initial zone boundary with room for neighboring zones. Overlapping zones can cause confusing behavior.</li>
+        <li><strong>Account for landmarks</strong> &mdash; Include key pickup/dropoff points like airports, train stations, shopping centers, and business districts within the zone boundary.</li>
+      </ul>
+
+      <h3>Operational Considerations</h3>
+      <ul>
+        <li><strong>Zone naming convention</strong> &mdash; Use clear, consistent names. Include city and region (e.g., "Paris - Central", "Paris - suburbs") for multi-zone cities.</li>
+        <li><strong>Currency consistency</strong> &mdash; Ensure the zone currency matches the local currency to avoid fare confusion.</li>
+        <li><strong>Payment methods</strong> &mdash; Enable all payment methods relevant to your operating region. Cash is essential in many markets.</li>
+        <li><strong>Testing</strong> &mdash; Before activating a zone, test the boundary by requesting rides from points inside, outside, and near the boundary edge.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>After creating your zones, proceed with the following configurations.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-vehicle-types.html" class="feature-card">
+        <div class="icon"><i class="fas fa-car-side"></i></div>
+        <h4>Vehicle Types</h4>
+        <p>Configure vehicle categories with images, pricing, and zone assignments.</p>
+      </a>
+      <a href="management-vehicle-zone.html" class="feature-card">
+        <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+        <h4>Vehicle Zone Pricing</h4>
+        <p>Set base fare, per-km, per-minute, and minimum fare rates per zone per vehicle.</p>
+      </a>
+      <a href="management-surge.html" class="feature-card">
+        <div class="icon"><i class="fas fa-chart-line"></i></div>
+        <h4>Surge Pricing</h4>
+        <p>Configure demand-based pricing multipliers for peak hours and events.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

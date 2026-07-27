@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iOS Build - Livriko Documentation</title>
+  <meta name="description" content="Build and release Livriko iOS apps — archive, TestFlight, App Store.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>iOS Build</h2>
+      <p>This guide covers building and releasing the Livriko iOS apps to the Apple App Store. This process requires an Apple Developer account, Xcode, and properly configured certificates and provisioning profiles.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Archive Steps</h2>
+      <p>The archive process packages your app into a distributable format for TestFlight or the App Store. Follow these steps in Xcode:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Open .xcworkspace</h4>
+            <p>Open <code>LivrikoUser.xcworkspace</code> (or <code>LivrikoDriver.xcworkspace</code>) in Xcode.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Select Device Target</h4>
+            <p>Select <strong>Any iOS Device (arm64)</strong> from the scheme dropdown in the Xcode toolbar. Do not select a simulator.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Start Archive</h4>
+            <p>Go to <strong>Product</strong> → <strong>Archive</strong>. Wait for the archive to complete (this may take several minutes depending on project size).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Open Archives Window</h4>
+            <p>When the archive completes, the <strong>Archives</strong> window opens automatically. If not, go to <strong>Window</strong> → <strong>Organizer</strong> → <strong>Archives</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Distribute App</h4>
+            <p>Select the archive and click <strong>Distribute App</strong>. Choose <strong>App Store Connect</strong> → <strong>Upload</strong>. Follow the prompts to complete the upload.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Certificates & Provisioning</h2>
+      <p>iOS requires code signing certificates and provisioning profiles. Manage these at the <a href="https://developer.apple.com/account/resources/" target="_blank">Apple Developer Portal</a>.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Certificate Type</th>
+              <th>Purpose</th>
+              <th>Required For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Apple Distribution</strong></td>
+              <td>Sign the app for App Store distribution</td>
+              <td>App Store submission</td>
+            </tr>
+            <tr>
+              <td><strong>Apple Development</strong></td>
+              <td>Sign the app for development/testing</td>
+              <td>Local testing on devices</td>
+            </tr>
+            <tr>
+              <td><strong>Provisioning Profile (App Store)</strong></td>
+              <td>Links distribution certificate to App ID</td>
+              <td>App Store and TestFlight uploads</td>
+            </tr>
+            <tr>
+              <td><strong>Provisioning Profile (Development)</strong></td>
+              <td>Links development certificate to App ID and devices</td>
+              <td>Debug builds on physical devices</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Automatic vs Manual Signing</p>
+          <p>For development, use Xcode's automatic signing. For distribution builds (App Store), you may need to create explicit provisioning profiles manually in the Developer Portal and download them to Xcode.</p>
+        </div>
+      </div>
+
+      <h2>TestFlight</h2>
+      <p>TestFlight is Apple's platform for beta testing iOS apps. Use it to distribute pre-release builds to internal and external testers before the official App Store release.</p>
+
+      <h3>Internal Testing</h3>
+      <ol>
+        <li>Upload the archive to App Store Connect (as described in the archive steps)</li>
+        <li>In App Store Connect, go to <strong>TestFlight</strong></li>
+        <li>Select the build and add <strong>internal testers</strong> (up to 100, must be on your App Store Connect team)</li>
+        <li>Internal testers receive an email with instructions to install via the TestFlight app</li>
+        <li>No beta review required for internal testing</li>
+      </ol>
+
+      <h3>External Testing</h3>
+      <ol>
+        <li>In App Store Connect → <strong>TestFlight</strong>, select the build</li>
+        <li>Click <strong>External Testing</strong> → <strong>Create New Group</strong></li>
+        <li>Add external testers by email (up to 10,000 per app)</li>
+        <li>Submit for <strong>Beta App Review</strong> — Apple reviews external test builds</li>
+        <li>Review typically takes 24-48 hours</li>
+        <li>Once approved, testers receive an email to install via TestFlight</li>
+      </ol>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">TestFlight Limits</p>
+          <p>TestFlight allows up to 10,000 external testers per app. External testers require Apple's beta app review, which typically takes 24-48 hours. Internal testers (up to 100) can install immediately without review.</p>
+        </div>
+      </div>
+
+      <h2>App Store Connect</h2>
+      <p>Before submitting to the App Store, you must prepare your app listing in App Store Connect.</p>
+
+      <h3>Required Metadata</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Description</th>
+              <th>Requirements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>App Name</strong></td>
+              <td>The name displayed on the App Store</td>
+              <td>Max 30 characters</td>
+            </tr>
+            <tr>
+              <td><strong>Subtitle</strong></td>
+              <td>Brief description shown below the app name</td>
+              <td>Max 30 characters</td>
+            </tr>
+            <tr>
+              <td><strong>Description</strong></td>
+              <td>Detailed app description</td>
+              <td>Max 4000 characters</td>
+            </tr>
+            <tr>
+              <td><strong>Keywords</strong></td>
+              <td>Search keywords for App Store discovery</td>
+              <td>Max 100 characters, comma-separated</td>
+            </tr>
+            <tr>
+              <td><strong>App Icon</strong></td>
+              <td>1024x1024 PNG, no transparency or rounded corners</td>
+              <td>Required</td>
+            </tr>
+            <tr>
+              <td><strong>Screenshots</strong></td>
+              <td>App screenshots for all required device sizes</td>
+              <td>Required for all supported devices</td>
+            </tr>
+            <tr>
+              <td><strong>Privacy Policy URL</strong></td>
+              <td>Link to your privacy policy</td>
+              <td>Required</td>
+            </tr>
+            <tr>
+              <td><strong>Support URL</strong></td>
+              <td>Link to your support page</td>
+              <td>Required</td>
+            </tr>
+            <tr>
+              <td><strong>Category</strong></td>
+              <td>App Store category (e.g., Transportation)</td>
+              <td>Required (primary + optional secondary)</td>
+            </tr>
+            <tr>
+              <td><strong>Age Rating</strong></td>
+              <td>Age rating questionnaire responses</td>
+              <td>Required</td>
+            </tr>
+            <tr>
+              <td><strong>Pricing</strong></td>
+              <td>App price tier (free or paid)</td>
+              <td>Required</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Screenshot Requirements</h3>
+      <p>Apple requires screenshots for specific device sizes. Use the following sizes for Livriko apps:</p>
+      <ul>
+        <li><strong>iPhone 6.9"</strong> (iPhone 16 Pro Max): 1320 × 2868 pixels</li>
+        <li><strong>iPhone 6.7"</strong> (iPhone 15 Plus): 1290 × 2796 pixels</li>
+        <li><strong>iPhone 6.5"</strong> (iPhone 11 Pro Max): 1242 × 2688 pixels</li>
+        <li><strong>iPhone 5.5"</strong> (iPhone 8 Plus): 1242 × 2208 pixels</li>
+        <li><strong>iPad 12.9"</strong> (iPad Pro 6th gen): 2048 × 2732 pixels</li>
+      </ul>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Screenshot Tips</p>
+          <p>Take screenshots from the actual app, not from marketing mockups. Show key features: home screen, ride booking, tracking, payment, and profile. Use real data (not lorem ipsum) for a professional appearance.</p>
+        </div>
+      </div>
+
+      <h2>Pricing & Availability</h2>
+      <p>Set your app pricing and availability in App Store Connect:</p>
+      <ul>
+        <li><strong>Free or Paid:</strong> Livriko apps are typically free; revenue comes from ride commissions</li>
+        <li><strong>Availability:</strong> Select the countries/regions where the app should be available</li>
+        <li><strong>Release:</strong> Choose manual release (submit when ready) or automatic release (publish immediately after approval)</li>
+      </ul>
+
+      <h2>Common App Store Rejections</h2>
+      <p>Avoid these common reasons for App Store rejection:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Rejection Reason</th>
+              <th>How to Avoid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Missing privacy descriptions</strong></td>
+              <td>Ensure all <code>NS*UsageDescription</code> keys are in <code>Info.plist</code></td>
+            </tr>
+            <tr>
+              <td><strong>Broken functionality</strong></td>
+              <td>Test all features thoroughly before submission. Test on real devices, not just simulators.</td>
+            </tr>
+            <tr>
+              <td><strong>Incomplete metadata</strong></td>
+              <td>Fill in all required fields: description, screenshots, keywords, privacy policy URL</td>
+            </tr>
+            <tr>
+              <td><strong>Placeholder content</strong></td>
+              <td>Remove all placeholder text, lorem ipsum, and test data from the app</td>
+            </tr>
+            <tr>
+              <td><strong>Crash on launch</strong></td>
+              <td>Test the app on multiple device sizes and iOS versions before submission</td>
+            </tr>
+            <tr>
+              <td><strong>Missing Sign in with Apple</strong></td>
+              <td>If offering social login, you must also offer Sign in with Apple (Apple requirement)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout danger">
+        <i class="fas fa-times-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Info.plist Privacy Descriptions</p>
+          <p>Ensure your <code>Info.plist</code> contains all required privacy usage descriptions (NSLocationWhenInUseUsageDescription, NSLocationAlwaysAndWhenInUseUsageDescription, etc.). Missing descriptions will cause the app to crash on iOS and will be rejected by App Store review. See <a href="app-ios-setup.html">iOS Setup Detail</a> for the complete list.</p>
+        </div>
+      </div>
+
+      <h2>Post-Submission</h2>
+      <p>After submitting your app to the App Store:</p>
+      <ol>
+        <li><strong>App Review:</strong> Apple's review team typically reviews apps within 24-48 hours</li>
+        <li><strong>Status Updates:</strong> Monitor the status in App Store Connect → <strong>App Store</strong> → <strong>App Review</strong></li>
+        <li><strong>Rejection Handling:</strong> If rejected, read the rejection notes carefully, fix the issues, and resubmit</li>
+        <li><strong>Release:</strong> Once approved, release the app manually or wait for automatic release</li>
+        <li><strong>Monitor:</strong> Check crash reports and user reviews in App Store Connect after launch</li>
+      </ol>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-build.html">Android Build</a> — Build for Android using Gradle</li>
+        <li><a href="firebase-create.html">Firebase Setup</a> — Configure push notifications</li>
+        <li><a href="app-google-maps.html">Google Maps</a> — Configure maps for iOS</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Types - Livriko Documentation</title>
+  <meta name="description" content="Vehicle types as displayed in Livriko mobile apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Vehicle Types</h2>
+      <p>Vehicle types define the different categories of vehicles available for ride booking in Livriko. Each vehicle type has its own pricing, capacity, and icon displayed in the user app.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>How Vehicle Types Work</h2>
+      <p>Vehicle types are configured in the admin panel and pushed to the mobile apps via the API. When a user requests a ride, the app fetches available vehicle types for their current zone and displays them as selectable options. Each type shows its name, capacity, estimated fare, and arrival time.</p>
+
+      <h2>Admin-Configured Types</h2>
+      <p>Livriko comes with pre-configured vehicle types that you can customize. Each type has the following properties set in the admin panel:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Name</strong></td>
+              <td>Display name shown to users in the app</td>
+              <td>Sedan, SUV, Luxury</td>
+            </tr>
+            <tr>
+              <td><strong>Capacity</strong></td>
+              <td>Maximum number of passengers</td>
+              <td>2, 4, 6</td>
+            </tr>
+            <tr>
+              <td><strong>Description</strong></td>
+              <td>Brief description of the vehicle type</td>
+              <td>"Affordable everyday rides"</td>
+            </tr>
+            <tr>
+              <td><strong>Image</strong></td>
+              <td>Vehicle icon or photo displayed in the app</td>
+              <td>Uploaded PNG/SVG</td>
+            </tr>
+            <tr>
+              <td><strong>Status</strong></td>
+              <td>Enable or disable this vehicle type</td>
+              <td>Active / Inactive</td>
+            </tr>
+            <tr>
+              <td><strong>Sort Order</strong></td>
+              <td>Display order in the vehicle selection screen</td>
+              <td>1, 2, 3...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Popular Vehicle Types</h2>
+      <p>These are the most commonly used vehicle types across Livriko deployments:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Vehicle Type</th>
+              <th>Capacity</th>
+              <th>Description</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bike</strong></td>
+              <td>1 passenger</td>
+              <td>Motorcycle or scooter for quick solo trips</td>
+              <td>Budget rides, traffic-heavy areas</td>
+            </tr>
+            <tr>
+              <td><strong>Sedan</strong></td>
+              <td>4 passengers</td>
+              <td>Standard sedan for everyday rides</td>
+              <td>Most popular choice, good value</td>
+            </tr>
+            <tr>
+              <td><strong>SUV</strong></td>
+              <td>6 passengers</td>
+              <td>Spacious vehicle for groups and extra luggage</td>
+              <td>Family trips, airport runs</td>
+            </tr>
+            <tr>
+              <td><strong>Luxury</strong></td>
+              <td>4 passengers</td>
+              <td>Premium vehicle with professional driver</td>
+              <td>Business travel, special occasions</td>
+            </tr>
+            <tr>
+              <td><strong>Van</strong></td>
+              <td>8+ passengers</td>
+              <td>Large van for group travel or cargo</td>
+              <td>Group outings, event transport</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Selection Screen</h2>
+      <p>After entering pickup and destination, the User app displays a vehicle selection screen. Each vehicle type is shown as a card with:</p>
+      <ul>
+        <li>Vehicle image/icon</li>
+        <li>Type name and passenger capacity</li>
+        <li>Estimated fare for the trip</li>
+        <li>Estimated time of arrival (ETA) for the nearest driver of that type</li>
+        <li>A "Choose" or "Book" button to confirm selection</li>
+      </ul>
+
+      <p>The vehicle selection screen only shows types that are <strong>enabled</strong> in the admin panel, have <strong>available drivers</strong> nearby, and are <strong>assigned to the user's current zone</strong>.</p>
+
+      <h2>Price Estimation</h2>
+      <p>Vehicle type pricing is configured per zone in the <a href="management-vehicle-zone.html">Vehicle Zone Pricing</a> section. The fare estimate is calculated using:</p>
+
+      <pre><code>Estimated Fare = Base Fare + (Per KM × Distance) + (Per Minute × Duration)</code></pre>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Pricing Field</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Base Fare</strong></td>
+              <td>Fixed amount charged at the start of a ride</td>
+              <td>$2.50</td>
+            </tr>
+            <tr>
+              <td><strong>Per KM</strong></td>
+              <td>Charge per kilometer traveled</td>
+              <td>$0.75/km</td>
+            </tr>
+            <tr>
+              <td><strong>Per Minute</strong></td>
+              <td>Charge per minute of ride time</td>
+              <td>$0.15/min</td>
+            </tr>
+            <tr>
+              <td><strong>Minimum Fare</strong></td>
+              <td>Lowest possible fare for a ride</td>
+              <td>$5.00</td>
+            </tr>
+            <tr>
+              <td><strong>Maximum Fare</strong></td>
+              <td>Ceiling for fare calculation (optional)</td>
+              <td>$50.00</td>
+            </tr>
+            <tr>
+              <td><strong>Cancellation Fee</strong></td>
+              <td>Fee charged when a ride is cancelled after acceptance</td>
+              <td>$3.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Creating a New Vehicle Type</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Open Admin Panel</h4>
+            <p>Log in to the admin panel and navigate to <strong>Vehicle Types</strong> from the sidebar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Click Add New</h4>
+            <p>Click the <strong>Add New</strong> button to open the vehicle type creation form.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Fill in Details</h4>
+            <p>Enter the name, capacity, description, upload an image, and set the status to Active.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure Pricing</h4>
+            <p>Go to <strong>Vehicle Zone Pricing</strong> and set the base fare, per-km rate, and per-minute rate for each zone where this vehicle type should be available.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Save and Test</h4>
+            <p>Click <strong>Save</strong>. Open the User app and verify the new vehicle type appears in the selection screen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Zone Assignment Required</p>
+          <p>Vehicle types must be assigned to zones in the <a href="management-vehicle-zone.html">Vehicle Zone Pricing</a> section for them to appear as available options to users. A vehicle type without zone assignment will not show up in the app.</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Driver Vehicle Matching</p>
+          <p>Drivers must have their vehicle type set in their profile. The app only matches riders with drivers who drive the selected vehicle type. Ensure your driver registration flow collects vehicle type information and that drivers update their vehicle details when they change vehicles.</p>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Optimize Your Fleet Mix</p>
+          <p>Analyze ride request data in the admin panel to understand which vehicle types are most popular in each zone. Adjust your fleet composition and pricing accordingly. For example, if SUV requests frequently result in long wait times, encourage more SUV drivers to go online in those zones.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="management-zones.html">Zones</a> — Define service zones</li>
+        <li><a href="management-vehicle-zone.html">Vehicle Zone Pricing</a> — Set pricing per vehicle per zone</li>
+        <li><a href="management-surge.html">Surge Pricing</a> — Configure dynamic pricing</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

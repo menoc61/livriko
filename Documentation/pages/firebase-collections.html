@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firestore Collections - Livriko Documentation</title>
+  <meta name="description" content="Firestore data structure in Livriko — collections, documents, and real-time sync.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Firestore Collections</h2>
+        <p>Cloud Firestore is the real-time database used by Livriko to store and sync data between the admin panel, User app, and Driver app.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Key Collections</h2>
+        <p>Livriko uses the following Firestore collections:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Collection</th>
+                <th>Purpose</th>
+                <th>Key Fields</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>riders</code></td>
+                <td>Rider profile data, FCM tokens, and account status</td>
+                <td>uid, name, email, phone, fcmToken, status</td>
+              </tr>
+              <tr>
+                <td><code>drivers</code></td>
+                <td>Driver profile data, vehicle info, FCM tokens, online/offline status</td>
+                <td>uid, name, email, vehicleType, fcmToken, status, rating</td>
+              </tr>
+              <tr>
+                <td><code>rides</code></td>
+                <td>Ride request details, status, fare information, and trip data</td>
+                <td>riderId, driverId, status, pickup, dropoff, fare, distance</td>
+              </tr>
+              <tr>
+                <td><code>locations</code></td>
+                <td>Real-time GPS coordinates for active drivers</td>
+                <td>driverId, geopoint, timestamp, heading, speed</td>
+              </tr>
+              <tr>
+                <td><code>messages</code></td>
+                <td>Chat messages between riders and drivers during active rides</td>
+                <td>rideId, senderId, text, timestamp, read</td>
+              </tr>
+              <tr>
+                <td><code>notifications</code></td>
+                <td>Push notification payloads to be delivered via FCM</td>
+                <td>userId, title, body, type, read, createdAt</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Document Structure Examples</h2>
+
+        <h3>Riders Collection</h3>
+        <pre><code>// riders/{riderId}
+{
+  "uid": "firebase-auth-uid-123",
+  "name": "Ahmed Hassan",
+  "email": "ahmed@example.com",
+  "phone": "+212600000000",
+  "fcmToken": "dJ9vN4xYQ:APA91bH...",
+  "status": "active",
+  "avatar": "https://storage.example.com/avatars/rider-123.jpg",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "updatedAt": "2024-06-20T14:22:00Z"
+}</code></pre>
+
+        <h3>Drivers Collection</h3>
+        <pre><code>// drivers/{driverId}
+{
+  "uid": "firebase-auth-uid-456",
+  "name": "Mohamed Alami",
+  "email": "mohamed@example.com",
+  "phone": "+212611111111",
+  "fcmToken": "eK0wO5yZR:APA91bI...",
+  "status": "online",
+  "vehicleType": "sedan",
+  "vehiclePlate": "12345-A-12",
+  "rating": 4.8,
+  "totalRides": 342,
+  "createdAt": "2023-08-10T08:15:00Z",
+  "updatedAt": "2024-06-20T15:45:00Z"
+}</code></pre>
+
+        <h3>Rides Collection</h3>
+        <pre><code>// rides/{rideId}
+{
+  "riderId": "rider-auth-uid",
+  "driverId": "driver-auth-uid",
+  "status": "in_progress",
+  "pickup": {
+    "address": "123 Main Street, Casablanca",
+    "latitude": 33.5731,
+    "longitude": -7.5898
+  },
+  "dropoff": {
+    "address": "456 Avenue Hassan II, Casablanca",
+    "latitude": 33.5850,
+    "longitude": -7.6251
+  },
+  "fare": 45.00,
+  "currency": "MAD",
+  "distance": 8.5,
+  "duration": 1200,
+  "paymentMethod": "cash",
+  "createdAt": "2024-06-20T14:30:00Z",
+  "startedAt": "2024-06-20T14:35:00Z"
+}</code></pre>
+
+        <h3>Locations Collection</h3>
+        <pre><code>// locations/{locationId}
+{
+  "driverId": "driver-auth-uid",
+  "geopoint": {
+    "latitude": 33.5731,
+    "longitude": -7.5898
+  },
+  "heading": 45.0,
+  "speed": 35.5,
+  "timestamp": "2024-06-20T14:36:00Z"
+}</code></pre>
+
+        <h2>Real-Time Listeners</h2>
+        <p>Livriko uses Firestore's real-time listeners to sync data across the platform:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Listener</th>
+                <th>Collection</th>
+                <th>Used By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ride status updates</td>
+                <td><code>rides</code></td>
+                <td>Rider and Driver apps (real-time ride tracking)</td>
+              </tr>
+              <tr>
+                <td>Driver location tracking</td>
+                <td><code>locations</code></td>
+                <td>Rider app (live map), Admin panel (driver monitoring)</td>
+              </tr>
+              <tr>
+                <td>Chat messages</td>
+                <td><code>messages</code></td>
+                <td>Rider and Driver apps (in-ride messaging)</td>
+              </tr>
+              <tr>
+                <td>Notification delivery</td>
+                <td><code>notifications</code></td>
+                <td>Cloud Functions (auto-send via FCM)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Geopoints for Driver Location</h2>
+        <p>Driver locations are stored as Firestore geopoints for efficient spatial queries:</p>
+
+        <pre><code>// Storing a driver location (handled by the Driver app)
+const locationRef = firestore.collection('locations').doc(driverId);
+await locationRef.set({
+  driverId: driverId,
+  geopoint: new GeoPoint(latitude, longitude),
+  heading: heading,
+  speed: speed,
+  timestamp: admin.firestore.FieldValue.serverTimestamp(),
+});
+
+// Query nearby drivers (handled by the Rider app or admin)
+const nearbyDrivers = await firestore.collection('locations')
+    .where('geopoint', '>=', new GeoPoint(minLat, minLng))
+    .where('geopoint', '<=', new GeoPoint(maxLat, maxLng))
+    .get();</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Note</div>
+          <p>Firestore geopoints require composite indexes for efficient range queries. Create the necessary indexes in the Firebase Console under <strong>Firestore → Indexes</strong>.</p>
+        </div>
+
+        <h2>Data Relationships</h2>
+        <p>Firestore is a NoSQL database, so relationships are managed through document references and field IDs:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Relationship</th>
+                <th>Method</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ride → Rider</td>
+                <td>Reference by UID</td>
+                <td><code>rides/{rideId}.riderId = riders/{riderId}.uid</code></td>
+              </tr>
+              <tr>
+                <td>Ride → Driver</td>
+                <td>Reference by UID</td>
+                <td><code>rides/{rideId}.driverId = drivers/{driverId}.uid</code></td>
+              </tr>
+              <tr>
+                <td>Message → Ride</td>
+                <td>Reference by rideId</td>
+                <td><code>messages/{msgId}.rideId = rides/{rideId}</code></td>
+              </tr>
+              <tr>
+                <td>Location → Driver</td>
+                <td>Reference by driverId</td>
+                <td><code>locations/{locId}.driverId = drivers/{driverId}.uid</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Querying Patterns</h2>
+        <pre><code>// Get all active rides for a rider
+const rides = await firestore.collection('rides')
+    .where('riderId', '==', currentUserId)
+    .where('status', 'in', ['requested', 'accepted', 'in_progress'])
+    .orderBy('createdAt', 'desc')
+    .limit(20)
+    .get();
+
+// Get online drivers of a specific vehicle type
+const drivers = await firestore.collection('drivers')
+    .where('status', '==', 'online')
+    .where('vehicleType', '==', 'sedan')
+    .get();
+
+// Get unread notifications for a user
+const notifications = await firestore.collection('notifications')
+    .where('userId', '==', currentUserId)
+    .where('read', '==', false)
+    .orderBy('createdAt', 'desc')
+    .get();</code></pre>
+
+        <h2>Indexing Requirements</h2>
+        <p>Firestore requires indexes for compound queries. Common indexes needed by Livriko:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Collection</th>
+                <th>Index Fields</th>
+                <th>Query Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>rides</code></td>
+                <td>riderId + status</td>
+                <td>Get rider's active rides</td>
+              </tr>
+              <tr>
+                <td><code>rides</code></td>
+                <td>driverId + status</td>
+                <td>Get driver's active rides</td>
+              </tr>
+              <tr>
+                <td><code>drivers</code></td>
+                <td>status + vehicleType</td>
+                <td>Find available drivers by type</td>
+              </tr>
+              <tr>
+                <td><code>notifications</code></td>
+                <td>userId + read</td>
+                <td>Get unread notifications</td>
+              </tr>
+              <tr>
+                <td><code>messages</code></td>
+                <td>rideId + timestamp</td>
+                <td>Get chat history for a ride</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Always back up your Firestore data before making changes to collections or security rules. Data loss in Firestore is irreversible. Use the Firebase console's export feature or the Firebase CLI for backups.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-rules.html">Firebase Rules</a> — Configure security rules</li>
+          <li><a href="firebase-functions.html">Cloud Functions</a> — Set up serverless triggers</li>
+          <li><a href="firebase-admin.html">Connect Admin</a> — Link Firebase to your Laravel backend</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change App Name - Livriko Documentation</title>
+  <meta name="description" content="Rename Livriko mobile apps on both platforms.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Change App Name</h2>
+        <p>Rename the Livriko User App and Driver App on both Android and iOS. The app name appears on the device home screen, in the app switcher, and in the app store listing.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>User App — Android</h2>
+        <p>Edit the <code>AndroidManifest.xml</code> file in the User App to change the app label displayed on the device home screen and in the app switcher:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/android/app/src/main/AndroidManifest.xml</code></p>
+
+<pre><code>&lt;application
+  android:name=".MainApplication"
+  android:label="@string/app_name"
+  android:icon="@mipmap/ic_launcher"
+  android:roundIcon="@mipmap/ic_launcher_round"
+  ...&gt;</code></pre>
+
+        <p>The <code>@string/app_name</code> reference points to the string resource file. Edit it to change the display name:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/android/app/src/main/res/values/strings.xml</code></p>
+
+<pre><code>&lt;resources&gt;
+    &lt;string name="app_name"&gt;YourAppName&lt;/string&gt;
+&lt;/resources&gt;</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>You can also change the app name in different languages by creating localized <code>strings.xml</code> files in <code>values-fr/</code>, <code>values-de/</code>, etc.</p>
+        </div>
+
+        <h2>User App — iOS</h2>
+        <p>Edit the <code>Info.plist</code> file in the User App iOS project to change the display name shown on the home screen and in the app switcher:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/ios/Taxido_user/Info.plist</code></p>
+
+<pre><code>&lt;key&gt;CFBundleDisplayName&lt;/key&gt;
+&lt;string&gt;YourAppName&lt;/string&gt;</code></pre>
+
+        <p>You should also update the <code>CFBundleName</code> entry in the same file:</p>
+
+<pre><code>&lt;key&gt;CFBundleName&lt;/key&gt;
+&lt;string&gt;YourAppName&lt;/string&gt;</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>The iOS Xcode target may still be named <strong>TaxidoUserApp</strong>. You can rename it in Xcode by selecting the target in the project navigator and editing the "Product Name" build setting under Build Settings.</p>
+        </div>
+
+        <h2>Driver App — Android</h2>
+        <p>Edit the <code>strings.xml</code> file in the Driver App Android resources. This controls the app name displayed on the Android home screen and in the app switcher:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/android/app/src/main/res/values/strings.xml</code></p>
+
+<pre><code>&lt;resources&gt;
+    &lt;string name="app_name"&gt;YourDriverAppName&lt;/string&gt;
+&lt;/resources&gt;</code></pre>
+
+        <h2>iOS — Info.plist</h2>
+        <p>Edit the <code>Info.plist</code> file in the Driver App iOS project to change the display name shown on the home screen:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/ios/Taxido_driver/Info.plist</code></p>
+
+<pre><code>&lt;key&gt;CFBundleDisplayName&lt;/key&gt;
+&lt;string&gt;YourDriverAppName&lt;/string&gt;
+
+&lt;key&gt;CFBundleName&lt;/key&gt;
+&lt;string&gt;YourDriverAppName&lt;/string&gt;</code></pre>
+
+        <h2>React Native app.json</h2>
+        <p>You should also update the <code>app.json</code> file in the root of each app directory to keep the names consistent with the native configuration. This file is used by React Native's build system:</p>
+
+<pre><code>// Taxido_user/app.json
+{
+  "name": "YourAppName",
+  "displayName": "YourAppName"
+}
+
+// Taxido_driver/app.json
+{
+  "name": "YourDriverAppName",
+  "displayName": "YourDriverAppName"
+}</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>The <code>name</code> field must not contain spaces (use camelCase), while <code>displayName</code> can contain spaces and is what users see on the home screen.</p>
+        </div>
+
+        <h2>Application ID</h2>
+        <p>If you need to change the application ID (the unique identifier used for Play Store / App Store identification), edit the <code>build.gradle</code> file for Android and the Xcode project settings for iOS:</p>
+
+        <h3>Android</h3>
+        <p><strong>File:</strong> <code>Taxido_user/android/app/build.gradle</code></p>
+
+<pre><code>android {
+    namespace "com.yourcompany.yourapp"
+    defaultConfig {
+        applicationId "com.yourcompany.yourapp"
+        // ...
+    }
+}</code></pre>
+
+        <h3>iOS</h3>
+        <p>Change the <strong>Bundle Identifier</strong> in Xcode: select the project in the navigator, go to the <strong>Signing &amp; Capabilities</strong> tab, and update the bundle identifier.</p>
+
+        <h2>Quick Reference</h2>
+        <p>The following table summarizes all the files that need to be modified when changing the app name:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>File</th>
+                <th>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>React Native (User)</td>
+                <td><code>Taxido_user/app.json</code></td>
+                <td><code>name</code> and <code>displayName</code> fields</td>
+              </tr>
+              <tr>
+                <td>React Native (Driver)</td>
+                <td><code>Taxido_driver/app.json</code></td>
+                <td><code>name</code> and <code>displayName</code> fields</td>
+              </tr>
+              <tr>
+                <td>Android (User)</td>
+                <td><code>Taxido_user/android/app/src/main/res/values/strings.xml</code></td>
+                <td><code>app_name</code> string resource</td>
+              </tr>
+              <tr>
+                <td>Android (Driver)</td>
+                <td><code>Taxido_driver/android/app/src/main/res/values/strings.xml</code></td>
+                <td><code>app_name</code> string resource</td>
+              </tr>
+              <tr>
+                <td>iOS (User)</td>
+                <td><code>Taxido_user/ios/Taxido_user/Info.plist</code></td>
+                <td><code>CFBundleDisplayName</code> and <code>CFBundleName</code></td>
+              </tr>
+              <tr>
+                <td>iOS (Driver)</td>
+                <td><code>Taxido_driver/ios/Taxido_driver/Info.plist</code></td>
+                <td><code>CFBundleDisplayName</code> and <code>CFBundleName</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>After changing the app name or application ID, you must perform a <strong>clean build</strong> for the changes to take effect. Delete the <code>build</code> folder (Android) and <code>DerivedData</code> folder (iOS) before rebuilding.</p>
+        </div>
+
+<pre><code># Android clean (User App)
+cd Taxido_user/android
+./gradlew clean
+cd ../..
+npm run android
+
+# Android clean (Driver App)
+cd Taxido_driver/android
+./gradlew clean
+cd ../..
+npm run android
+
+# iOS clean (User App)
+rm -rf ~/Library/Developer/Xcode/DerivedData/Taxido_user-*
+cd Taxido_user/ios
+pod install
+cd ..
+npm run ios
+
+# iOS clean (Driver App)
+rm -rf ~/Library/Developer/Xcode/DerivedData/Taxido_driver-*
+cd Taxido_driver/ios
+pod install
+cd ..
+npm run ios</code></pre>
+
+        <h2>Verification</h2>
+        <p>After rebuilding, verify the name change by checking the following locations on your device:</p>
+
+        <ul>
+          <li><strong>Home screen</strong> — The app icon label shows the new name</li>
+          <li><strong>App switcher</strong> — The app card shows the new name in the multitasking view</li>
+          <li><strong>Settings</strong> — The app appears with the new name in device settings</li>
+          <li><strong>Push notifications</strong> — The notification header shows the new name</li>
+          <li><strong>App Store / Play Store</strong> — After publishing, the store listing shows the new name</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Keep the app name short (under 15 characters) so it displays correctly on all device home screens without truncation. Long names may be cut off on smaller devices.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-change-color.html">Change App Color</a> — Customize app theme colors</li>
+          <li><a href="app-change-icon.html">Change App Icon</a> — Replace app icons with custom branding</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

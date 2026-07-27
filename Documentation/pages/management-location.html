@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Location - Livriko Documentation</title>
+  <meta name="description" content="Monitor real-time driver locations on the map in Livriko — track availability and optimize dispatch.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Driver Location</h2>
+        <p>Monitor real-time driver positions on an interactive map to optimize dispatch, manage coverage, and ensure service reliability across your zones.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Overview</h2>
+        <p>The Driver Location page displays every driver's GPS position on a live map. This is one of the most powerful operational tools available to platform administrators, giving you instant visibility into where your drivers are, what status they're in, and how well your zones are covered.</p>
+        <p>Key use cases for the location map include:</p>
+        <ul>
+          <li><strong>Real-Time Monitoring</strong> — See which drivers are online, idle, or currently on a ride.</li>
+          <li><strong>Coverage Analysis</strong> — Identify areas with low driver availability and take action to improve coverage.</li>
+          <li><strong>Dispatch Optimization</strong> — Make informed decisions when manually dispatching rides or matching riders with nearby drivers.</li>
+          <li><strong>Incident Response</strong> — Quickly locate the nearest driver during emergencies or SOS events.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Accessing the Location Map</h2>
+        <ol>
+          <li>Log in to the admin panel.</li>
+          <li>Navigate to <strong>Livriko Management</strong> → <strong>Driver Location</strong>.</li>
+          <li>The map loads with all driver positions displayed as colored pins.</li>
+        </ol>
+        <p>The map supports standard zoom and pan controls. You can zoom in to see individual driver positions or zoom out for a city-wide overview.</p>
+
+        <hr>
+
+        <h2>Understanding Driver Pins</h2>
+        <p>Each driver on the map is represented by a pin whose color indicates their current status. This color-coding allows you to assess the situation at a glance.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Pin Color</th>
+                <th>Status</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span style="color: #10b981;">&#9679;</span> Green</td>
+                <td><strong>Online</strong></td>
+                <td>Driver is available and actively looking for ride requests. They can be matched with riders.</td>
+              </tr>
+              <tr>
+                <td><span style="color: #3b82f6;">&#9679;</span> Blue</td>
+                <td><strong>Busy</strong></td>
+                <td>Driver is currently on an active ride. They are transporting a rider and cannot accept new requests.</td>
+              </tr>
+              <tr>
+                <td><span style="color: #6b7280;">&#9679;</span> Gray</td>
+                <td><strong>Offline</strong></td>
+                <td>Driver is not available. Their last known position is shown, but they are not receiving ride requests.</td>
+              </tr>
+              <tr>
+                <td><span style="color: #f59e0b;">&#9679;</span> Yellow</td>
+                <td><strong>Idle</strong></td>
+                <td>Driver is online but has not received a ride request in a while. They may be in a low-demand area.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Pin Details</div>
+          <p>Click on any driver pin to open a popup showing the driver's name, vehicle type, phone number, rating, and the time since their last location update. You can also view their full profile directly from the map.</p>
+        </div>
+
+        <hr>
+
+        <h2>Filtering Drivers</h2>
+        <p>Use the filter controls at the top of the map to narrow down which drivers are displayed. Filtering helps you focus on specific segments of your fleet without visual clutter.</p>
+
+        <h3>Filter by Status</h3>
+        <p>Toggle visibility for each driver status independently. For example, you might hide offline drivers to focus only on available drivers for immediate dispatch needs.</p>
+        <ul>
+          <li><strong>Online</strong> — Show/hide drivers who are available for rides.</li>
+          <li><strong>Busy</strong> — Show/hide drivers who are currently on a ride.</li>
+          <li><strong>Offline</strong> — Show/hide drivers who are not available.</li>
+          <li><strong>Idle</strong> — Show/hide drivers who are online but inactive.</li>
+        </ul>
+
+        <h3>Filter by Zone</h3>
+        <p>Select a specific zone from the dropdown to display only drivers operating within that area. This is particularly useful when you have <a href="management-zones.html">multiple zones</a> and need to assess coverage in a specific city or region.</p>
+
+        <h3>Filter by Vehicle Type</h3>
+        <p>Narrow the view to drivers of a specific vehicle type (e.g., Economy, Comfort, Premium). This helps you verify that premium riders in a zone have enough high-end vehicles available nearby.</p>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">No Results</div>
+          <p>If no drivers appear after applying filters, check that the selected zone is correct and that drivers of that vehicle type are registered and approved in the area. You may need to adjust zone boundaries in <a href="management-zones.html">Zones</a> or add vehicle types in <a href="management-vehicle-types.html">Vehicle Types</a>.</p>
+        </div>
+
+        <hr>
+
+        <h2>How Location Data Flows</h2>
+        <p>Understanding the data flow helps you troubleshoot issues where driver positions appear outdated or missing.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Driver App Captures GPS</h4>
+              <p>The driver app continuously reads GPS coordinates from the device's location services. Location updates are captured at configurable intervals (typically every 5–15 seconds for active drivers, and less frequently for idle or offline drivers).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Data Sent to API</h4>
+              <p>The app sends the GPS coordinates (latitude, longitude, timestamp, and heading) to the Livriko backend API over an encrypted HTTPS connection. The API validates the data and stores it in the database.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Admin Panel Receives Updates</h4>
+              <p>The admin panel polls the API or receives real-time updates (via WebSocket or Firebase) to refresh driver positions on the map. Online drivers update more frequently than offline drivers to conserve battery.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Map Renders Pins</h4>
+              <p>The map component renders each driver's position as a colored pin based on their status. Pins update in real-time as new location data arrives, providing a live view of your fleet.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Location Update Frequency</h2>
+        <p>How often driver positions refresh depends on the driver's current status and the device's location settings.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Driver Status</th>
+                <th>Update Interval</th>
+                <th>Battery Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Online (Available)</strong></td>
+                <td>Every 5–10 seconds</td>
+                <td>High — continuous GPS usage</td>
+              </tr>
+              <tr>
+                <td><strong>Busy (On Ride)</strong></td>
+                <td>Every 5–10 seconds</td>
+                <td>High — real-time tracking for rider</td>
+              </tr>
+              <tr>
+                <td><strong>Idle</strong></td>
+                <td>Every 30–60 seconds</td>
+                <td>Medium — periodic updates</td>
+              </tr>
+              <tr>
+                <td><strong>Offline</strong></td>
+                <td>Last known position only</td>
+                <td>None — GPS not actively used</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Location Permissions</div>
+          <p>Drivers must grant location permissions in the app for their position to appear on the map. If a driver's pin is not showing, advise them to check their device's location settings and ensure "Always Allow" or "Allow While Using" is enabled for the Livriko driver app.</p>
+        </div>
+
+        <hr>
+
+        <h2>Optimizing Dispatch with Location Data</h2>
+        <p>The location map is not just for observation — it's a powerful dispatch tool. Here's how to use it effectively:</p>
+        <ul>
+          <li><strong>Manual Dispatch</strong> — When a rider requests a ride and automatic matching fails, you can identify the nearest available driver on the map and manually assign the ride.</li>
+          <li><strong>Coverage Gaps</strong> — If a zone shows very few green (online) pins, consider sending a <a href="management-push.html">Push Notification</a> to offline drivers in that area to encourage them to go online.</li>
+          <li><strong>Demand Hotspots</strong> — Combine the location map with <a href="management-zones.html">Zone</a> data to identify high-demand areas and optimize your surge pricing strategy.</li>
+          <li><strong>Peak Hour Planning</strong> — Review location data during peak hours to understand driver distribution patterns and plan incentives accordingly.</li>
+        </ul>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Pro Tip</div>
+          <p>Keep the location map open during high-demand events (concerts, sports games, rush hour) to monitor driver availability in real-time. Proactive management during these periods can significantly reduce rider wait times and improve satisfaction scores.</p>
+        </div>
+
+        <hr>
+
+        <h2>Privacy Considerations</h2>
+        <p>Driver location data is sensitive. Livriko implements several safeguards to protect driver privacy while still giving admins the visibility they need:</p>
+        <ul>
+          <li><strong>Encrypted Transmission</strong> — All location data is transmitted over HTTPS with TLS encryption.</li>
+          <li><strong>Access Control</strong> — Only authorized admin accounts can access the location map. Driver location history is not accessible to riders.</li>
+          <li><strong>Data Retention</strong> — Historical location data is automatically purged after a configurable period (default: 30 days) to minimize data exposure.</li>
+          <li><strong>Driver Consent</strong> — Drivers consent to location tracking during registration. They are informed that their position is visible to platform administrators.</li>
+          <li><strong>Offline Privacy</strong> — When a driver goes offline, their last known position is retained briefly for dispatch purposes but is not tracked further.</li>
+        </ul>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Data Protection</div>
+          <p>Ensure your platform complies with local data protection regulations (e.g., GDPR, CCPA) regarding driver location tracking. Include location tracking disclosure in your <a href="management-settings.html">Privacy Policy</a> and driver terms of service.</p>
+        </div>
+
+        <hr>
+
+        <h2>Troubleshooting</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Likely Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Driver pin not appearing</td>
+                <td>Location permissions denied or GPS disabled.</td>
+                <td>Ask the driver to enable location services in their device settings and in the app.</td>
+              </tr>
+              <tr>
+                <td>Pin position is outdated</td>
+                <td>Driver is offline or has poor network connectivity.</td>
+                <td>Check the driver's network connection. If they are online but the pin is stale, ask them to restart the app.</td>
+              </tr>
+              <tr>
+                <td>Map is blank or not loading</td>
+                <td>Map API key issue or network error.</td>
+                <td>Verify your Google Maps API key in <a href="management-settings.html">App Settings</a> and check browser console for errors.</td>
+              </tr>
+              <tr>
+                <td>Filters return no results</td>
+                <td>No drivers match the selected filter criteria.</td>
+                <td>Remove filters one by one to identify which filter is hiding the drivers. Verify drivers exist in the selected zone.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-drivers.html">Drivers</a> — Manage driver accounts and verification status.</li>
+          <li><a href="management-zones.html">Zones</a> — Define service areas and manage zone boundaries.</li>
+          <li><a href="management-vehicle-types.html">Vehicle Types</a> — Configure vehicle types that appear on the map.</li>
+          <li><a href="management-fleet.html">Fleet Manager</a> — Organize drivers into fleets for large-scale operations.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

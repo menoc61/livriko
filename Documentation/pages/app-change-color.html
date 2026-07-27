@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change App Color - Livriko Documentation</title>
+  <meta name="description" content="Customize Livriko app theme colors.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Change App Color</h2>
+        <p>Customize the theme colors of the Livriko User App and Driver App. Colors control the visual identity of the app, including buttons, headers, status bars, and accent elements.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Livriko Brand Colors</h2>
+        <p>The default Livriko color palette is defined as follows. Use these values when rebranding the app to maintain visual consistency:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Color Name</th>
+                <th>Hex Value</th>
+                <th>Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Primary Blue</td>
+                <td><code>#1070b7</code></td>
+                <td>Main brand color, buttons, headers, links</td>
+              </tr>
+              <tr>
+                <td>Accent Red</td>
+                <td><code>#be1823</code></td>
+                <td>Error states, alerts, critical actions</td>
+              </tr>
+              <tr>
+                <td>Price Green</td>
+                <td><code>#20B149</code></td>
+                <td>Price display, earnings, success states</td>
+              </tr>
+              <tr>
+                <td>Dark</td>
+                <td><code>#1F1F1F</code></td>
+                <td>Text, backgrounds, dark mode elements</td>
+              </tr>
+              <tr>
+                <td>Active Blue</td>
+                <td><code>#3F8FDA</code></td>
+                <td>Active states, selected items, toggles</td>
+              </tr>
+              <tr>
+                <td>Complete Yellow</td>
+                <td><code>#FFB400</code></td>
+                <td>Completed status, star ratings, warnings</td>
+              </tr>
+              <tr>
+                <td>Schedule Purple</td>
+                <td><code>#7F00FF</code></td>
+                <td>Scheduled rides, premium features</td>
+              </tr>
+              <tr>
+                <td>White</td>
+                <td><code>#FFFFFF</code></td>
+                <td>Card backgrounds, text on dark surfaces</td>
+              </tr>
+              <tr>
+                <td>Light Gray</td>
+                <td><code>#F5F5F5</code></td>
+                <td>Page backgrounds, dividers</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>User App Colors</h2>
+        <p>Edit the color theme file to change the User App colors. This file is imported throughout the app for consistent theming:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/themes/appColors.tsx</code></p>
+
+<pre><code>// Taxido_user/src/themes/appColors.tsx
+export const appColors = {
+  primary: '#1070b7',       // Main brand color
+  alertRed: '#be1823',      // Error / alert accent
+  successGreen: '#20B149',  // Success / price color
+  dark: '#1F1F1F',          // Text and dark backgrounds
+  activeBlue: '#3F8FDA',    // Active states and toggles
+  completeYellow: '#FFB400', // Completed status and ratings
+  schedulePurple: '#7F00FF', // Scheduled ride features
+  // ... add more colors as needed
+};</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>The User App uses <code>src/themes/</code> (plural) while the Driver App uses <code>src/theme/</code> (singular). Make sure you edit the correct file for each app.</p>
+        </div>
+
+        <h2>Driver App Colors</h2>
+        <p>Edit the color theme file for the Driver App. Note that the Driver App uses a singular <code>theme</code> directory name, unlike the User App which uses <code>themes</code>:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/src/theme/appColors.tsx</code></p>
+
+<pre><code>// Taxido_driver/src/theme/appColors.tsx
+export const appColors = {
+  primary: '#1070b7',       // Main brand color
+  alertRed: '#be1823',      // Error / alert accent
+  successGreen: '#20B149',  // Success / price color
+  dark: '#1F1F1F',          // Text and dark backgrounds
+  activeBlue: '#3F8FDA',    // Active states and toggles
+  completeYellow: '#FFB400', // Completed status and ratings
+  schedulePurple: '#7F00FF', // Scheduled ride features
+  // ... add more colors as needed
+};</code></pre>
+
+        <h2>Android Native Colors</h2>
+        <p>For Android-specific color changes (e.g., status bar, navigation bar, splash screen), edit the native color resource files:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/android/app/src/main/res/values/colors.xml</code></p>
+
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;color name="colorPrimary"&gt;#1070b7&lt;/color&gt;
+    &lt;color name="colorPrimaryDark"&gt;#0D5A94&lt;/color&gt;
+    &lt;color name="colorAccent"&gt;#be1823&lt;/color&gt;
+    &lt;color name="statusBarColor"&gt;#1070b7&lt;/color&gt;
+    &lt;color name="navigationBarColor"&gt;#1F1F1F&lt;/color&gt;
+&lt;/resources&gt;</code></pre>
+
+        <p>Update the same file for the Driver App at:</p>
+
+<pre><code>Taxido_driver/android/app/src/main/res/values/colors.xml</code></pre>
+
+        <h2>iOS Native Colors</h2>
+        <p>For iOS-specific color changes (e.g., status bar tint, launch screen accent color), update the asset catalog files. These colors apply to native UI elements outside of the React Native layer:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/ios/Taxido_user/Assets.xcassets/AccentColor.colorset/Contents.json</code></p>
+
+        <p>You can edit this file directly or use Xcode's visual asset catalog editor to pick the new color values.</p>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Use a color picker tool like <a href="https://coolors.co/" target="_blank" rel="noopener">Coolors</a> or <a href="https://color.adobe.com/" target="_blank" rel="noopener">Adobe Color</a> to generate a harmonious color palette for your rebrand.</p>
+        </div>
+
+        <h2>Consistency Checklist</h2>
+        <p>When changing app colors, ensure you update all of the following locations for a consistent visual experience across the entire app:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>File</th>
+                <th>What Changes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>React Native (User)</td>
+                <td><code>src/themes/appColors.tsx</code></td>
+                <td>In-app UI colors</td>
+              </tr>
+              <tr>
+                <td>React Native (Driver)</td>
+                <td><code>src/theme/appColors.tsx</code></td>
+                <td>In-app UI colors</td>
+              </tr>
+              <tr>
+                <td>Android (User)</td>
+                <td><code>android/app/src/main/res/values/colors.xml</code></td>
+                <td>Status bar, nav bar, native elements</td>
+              </tr>
+              <tr>
+                <td>Android (Driver)</td>
+                <td><code>android/app/src/main/res/values/colors.xml</code></td>
+                <td>Status bar, nav bar, native elements</td>
+              </tr>
+              <tr>
+                <td>iOS (User)</td>
+                <td><code>ios/Taxido_user/Assets.xcassets/</code></td>
+                <td>Accent color, launch screen tint</td>
+              </tr>
+              <tr>
+                <td>iOS (Driver)</td>
+                <td><code>ios/Taxido_driver/Assets.xcassets/</code></td>
+                <td>Accent color, launch screen tint</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Testing Color Changes</h2>
+        <p>After updating colors, rebuild the app and verify the changes on both platforms:</p>
+
+        <ul>
+          <li><strong>Headers and navigation bars</strong> — Should reflect the primary brand color</li>
+          <li><strong>Buttons</strong> — Primary action buttons should use the primary color</li>
+          <li><strong>Status bar</strong> — On Android, the status bar color should match the header</li>
+          <li><strong>Error states</strong> — Validation errors and alerts should use the accent red</li>
+          <li><strong>Success states</strong> — Price displays and confirmations should use the success green</li>
+          <li><strong>Tab indicators</strong> — Active tabs should highlight with the active blue color</li>
+          <li><strong>Rating stars</strong> — Star ratings should display in the complete yellow color</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Test your color changes on both light and dark backgrounds to ensure sufficient contrast and accessibility. Use a contrast checker tool to verify WCAG 2.1 compliance for text readability.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-change-icon.html">Change App Icon</a> — Replace app icons with custom branding</li>
+          <li><a href="app-change-name.html">Change App Name</a> — Update the app display name</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

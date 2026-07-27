@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Database Upgrade - Livriko Documentation</title>
+  <meta name="description" content="Upgrade and migrate the Livriko database — version updates, backups, and rollback procedures.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Database Upgrade</h2>
+        <p>This guide covers running database migrations, creating backups, and rolling back changes in your Livriko deployment.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Before You Upgrade</h2>
+        <div class="callout danger">
+          <div class="callout-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="callout-title">Critical</div>
+          <p>Always create a <strong>full backup</strong> of your database before running migrations, especially in production environments. Migration failures can result in data loss. Test migrations on a staging environment first whenever possible.</p>
+        </div>
+
+        <h2>Step 1: Backup Database</h2>
+        <p>Before running any migrations, create a backup of your database:</p>
+
+        <h3>Using mysqldump</h3>
+        <pre><code># Create a timestamped backup
+mysqldump -u root -p livriko > backup_$(date +%Y%m%d_%H%M%S).sql
+
+# Example output: backup_20240620_143000.sql</code></pre>
+
+        <h3>Using Laravel Backup</h3>
+        <p>If you have the <code>spatie/laravel-backup</code> package installed:</p>
+        <pre><code># Create a full application backup
+php artisan backup:run
+
+# Create only a database backup
+php artisan backup:run --only-db
+
+# List all backups
+php artisan backup:list</code></pre>
+
+        <h3>Restore from Backup</h3>
+        <pre><code># Restore from a mysqldump backup
+mysql -u root -p livriko < backup_20240620_143000.sql
+
+# Or using Laravel
+php artisan backup:restore</code></pre>
+
+        <h2>Step 2: Run Migrations</h2>
+        <p>After backing up, run the database migrations:</p>
+
+        <pre><code># Run all pending migrations
+php artisan migrate
+
+# Run without confirmation prompt (useful for automation)
+php artisan migrate --force</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">What Migrations Do</div>
+          <p>Migration files in <code>database/migrations</code> contain SQL statements that create or modify database tables. Running <code>php artisan migrate</code> executes all pending migrations in order.</p>
+        </div>
+
+        <h2>Step 3: If Errors Occur</h2>
+        <p>If the migration fails, use rollback commands to undo changes:</p>
+
+        <pre><code># Rollback the last migration batch
+php artisan migrate:rollback
+
+# Rollback the last 3 batches
+php artisan migrate:rollback --step=3
+
+# Rollback all migrations
+php artisan migrate:reset
+
+# Rollback all, then re-run all migrations
+php artisan migrate:refresh
+
+# Rollback all, re-run, and seed
+php artisan migrate:refresh --seed</code></pre>
+
+        <h2>Step 4: Seed Database</h2>
+        <p>After migrations, seed the database with default data if needed:</p>
+
+        <pre><code># Run all seeders
+php artisan db:seed
+
+# Run a specific seeder
+php artisan db:seed --class=VehicleTypeSeeder
+
+# Refresh migrations and seed
+php artisan migrate:refresh --seed</code></pre>
+
+        <h2>Common Migration Issues</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Column already exists</td>
+                <td>Migration was partially applied or re-run</td>
+                <td><code>php artisan migrate:rollback</code> then <code>php artisan migrate</code></td>
+              </tr>
+              <tr>
+                <td>Table does not exist</td>
+                <td>Migration depends on a table from a previous migration</td>
+                <td>Run <code>php artisan migrate:fresh --seed</code> to start fresh</td>
+              </tr>
+              <tr>
+                <td>Duplicate entry error</td>
+                <td>Seeder trying to insert existing data</td>
+                <td>Use <code>firstOrCreate</code> or check for duplicates before inserting</td>
+              </tr>
+              <tr>
+                <td>Foreign key constraint fails</td>
+                <td>Referenced table doesn't exist or has different data</td>
+                <td>Ensure migrations run in the correct order</td>
+              </tr>
+              <tr>
+                <td>Unknown column</td>
+                <td>Code references a column that doesn't exist yet</td>
+                <td>Run migrations before accessing the new column</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Database Version Compatibility</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Database</th>
+                <th>Minimum Version</th>
+                <th>Recommended</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MySQL</strong></td>
+                <td>5.7</td>
+                <td>8.0+</td>
+              </tr>
+              <tr>
+                <td><strong>MariaDB</strong></td>
+                <td>10.3</td>
+                <td>10.6+</td>
+              </tr>
+              <tr>
+                <td><strong>PostgreSQL</strong></td>
+                <td>12.0</td>
+                <td>14.0+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Rollback Strategy</h2>
+        <p>A proper rollback strategy ensures you can recover from failed upgrades:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Before Upgrade</h4>
+              <p>Create a full database backup. Note the current Livriko version and migration batch number.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>During Upgrade</h4>
+              <p>Run migrations one batch at a time. Test each batch before proceeding.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>After Upgrade</h4>
+              <p>Verify the application works correctly. Check all major features.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Rollback (If Needed)</h4>
+              <p>Restore from backup if the upgrade fails. Use <code>php artisan migrate:rollback</code> for minor issues.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Step-by-Step Upgrade Procedure</h2>
+
+        <pre><code># 1. Create backup
+mysqldump -u root -p livriko > pre_upgrade_backup.sql
+
+# 2. Enable maintenance mode
+php artisan down
+
+# 3. Pull latest code
+git pull origin main
+
+# 4. Install dependencies
+composer install --no-dev --optimize-autoloader
+
+# 5. Run migrations
+php artisan migrate --force
+
+# 6. Clear caches
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+
+# 7. Seed if needed
+php artisan db:seed --force
+
+# 8. Disable maintenance mode
+php artisan up
+
+# 9. Verify application
+curl -I https://your-domain.com</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Always test your upgrade process on a staging environment before applying it to production. This helps identify potential issues without affecting your users.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="troubleshooting-update.html">Version Update</a> — Updating Livriko from GitHub</li>
+          <li><a href="troubleshooting-admin.html">Admin Errors</a> — Common admin panel errors</li>
+          <li><a href="settings-system.html">System Tools</a> — System maintenance utilities</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

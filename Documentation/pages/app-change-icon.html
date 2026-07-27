@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change App Icon - Livriko Documentation</title>
+  <meta name="description" content="Replace Livriko app icons on Android and iOS.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Change App Icon</h2>
+        <p>Replace the default Livriko app icons with your custom branding on both Android and iOS. This guide covers icon replacement for the User App and Driver App across all required sizes.</p>
+      </div>
+
+      <div class="prose">
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Start with a high-resolution source image (1024 x 1024 px) and resize it for each required size. This ensures crisp icons across all device densities. Use an online icon generator like <a href="https://appicon.co/" target="_blank" rel="noopener">appicon.co</a> or <a href="https://www.appiconmaker.co/" target="_blank" rel="noopener">App Icon Maker</a> for quick resizing.</p>
+        </div>
+
+        <h2>User App — Android</h2>
+        <p>Replace the launcher icons in the User App Android <code>res</code> directories. You must replace both <code>ic_launcher.png</code> and <code>ic_launcher_round.png</code> in each density folder. The round icon is used on devices that support circular icon masking:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Directory</th>
+                <th>Size</th>
+                <th>File Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Taxido_user/android/app/src/main/res/mipmap-mdpi/</code></td>
+                <td>48 x 48 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_user/android/app/src/main/res/mipmap-hdpi/</code></td>
+                <td>72 x 72 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_user/android/app/src/main/res/mipmap-xhdpi/</code></td>
+                <td>96 x 96 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_user/android/app/src/main/res/mipmap-xxhdpi/</code></td>
+                <td>144 x 144 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_user/android/app/src/main/res/mipmap-xxxhdpi/</code></td>
+                <td>192 x 192 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>User App — iOS</h2>
+        <p>Replace the icons in the User App AppIcon asset catalog. The asset catalog is the standard way to manage app icons in Xcode and handles all required sizes automatically based on the device:</p>
+
+<pre><code>Taxido_user/ios/Taxido_user/Images.xcassets/AppIcon.appiconset/</code></pre>
+
+        <p>Update the <code>Contents.json</code> file to point to your new icon files, or use Xcode's asset catalog editor to drag and drop the icons directly. The asset catalog handles all required sizes automatically.</p>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>In Xcode, open <code>Assets.xcassets</code>, select <code>AppIcon</code>, and drag your icon files into the appropriate slots. Xcode will validate the sizes and warn you if any are missing or incorrectly sized.</p>
+        </div>
+
+        <h2>Driver App — Android</h2>
+        <p>Replace the launcher icons in the Driver App Android <code>res</code> directories. Replace both <code>ic_launcher.png</code> and <code>ic_launcher_round.png</code> in each density folder to ensure the icon displays correctly on all Android devices:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Directory</th>
+                <th>Size</th>
+                <th>File Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Taxido_driver/android/app/src/main/res/mipmap-mdpi/</code></td>
+                <td>48 x 48 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_driver/android/app/src/main/res/mipmap-hdpi/</code></td>
+                <td>72 x 72 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_driver/android/app/src/main/res/mipmap-xhdpi/</code></td>
+                <td>96 x 96 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_driver/android/app/src/main/res/mipmap-xxhdpi/</code></td>
+                <td>144 x 144 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+              <tr>
+                <td><code>Taxido_driver/android/app/src/main/res/mipmap-xxxhdpi/</code></td>
+                <td>192 x 192 px</td>
+                <td><code>ic_launcher.png</code> and <code>ic_launcher_round.png</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Driver App — iOS</h2>
+        <p>Replace the icons in the Driver App AppIcon asset catalog. Use a distinct icon design from the User App so drivers can easily differentiate between the two apps:</p>
+
+<pre><code>Taxido_driver/ios/Taxido_driver/Images.xcassets/AppIcon.appiconset/</code></pre>
+
+        <h2>Adaptive Icons (Android 8.0+)</h2>
+        <p>Android 8.0 and above use adaptive icons, which separate the foreground and background layers. This allows the system to apply different shapes (circle, squircle, etc.) while keeping your icon looking good. To customize the adaptive icon, edit the following XML files:</p>
+
+        <p><strong>Foreground:</strong> <code>Taxido_user/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml</code></p>
+
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+    &lt;background android:drawable="@color/ic_launcher_background"/&gt;
+    &lt;foreground android:drawable="@mipmap/ic_launcher_foreground"/&gt;
+&lt;/adaptive-icon&gt;</code></pre>
+
+        <p>Place your foreground image at 432 x 432 px in the <code>mipmap-anydpi-v26</code> directory. The system will automatically crop it to the correct shape based on the device's icon mask settings.</p>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>The adaptive icon background can be a solid color (defined in <code>colors.xml</code>) or a drawable resource. For a simple branded look, use a solid color that matches your primary theme color.</p>
+        </div>
+
+        <h2>Icon Generation Tools</h2>
+        <p>Use these tools to generate all required icon sizes from a single high-resolution image:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>URL</th>
+                <th>Platform</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>App Icon Generator</td>
+                <td><a href="https://appicon.co/" target="_blank" rel="noopener">appicon.co</a></td>
+                <td>Android + iOS</td>
+              </tr>
+              <tr>
+                <td>App Icon Maker</td>
+                <td><a href="https://www.appiconmaker.co/" target="_blank" rel="noopener">appiconmaker.co</a></td>
+                <td>Android + iOS</td>
+              </tr>
+              <tr>
+                <td>Icon Kitchen</td>
+                <td><a href="https://icon.kitchen/" target="_blank" rel="noopener">icon.kitchen</a></td>
+                <td>Android adaptive icons</td>
+              </tr>
+              <tr>
+                <td>MakeAppIcon</td>
+                <td><a href="https://makeappicon.com/" target="_blank" rel="noopener">makeappicon.com</a></td>
+                <td>Android + iOS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>After replacing icons, perform a <strong>clean build</strong>. Delete the <code>build</code> folder and for iOS, also clean the <code>DerivedData</code> folder to ensure the new icons are picked up by the system.</p>
+        </div>
+
+<pre><code># Android: clean build
+cd Taxido_user/android && ./gradlew clean && cd ../..
+
+# iOS: clean derived data
+rm -rf ~/Library/Developer/Xcode/DerivedData/Taxido_user-*</code></pre>
+
+        <h2>Verifying Icon Changes</h2>
+        <p>After replacing the icons and performing a clean build, verify the changes on your device or emulator:</p>
+
+        <ul>
+          <li><strong>Home screen</strong> — The app icon should display your new custom icon clearly</li>
+          <li><strong>App drawer (Android)</strong> — Verify the icon appears correctly in the app list</li>
+          <li><strong>Settings</strong> — The icon should appear in device settings app list</li>
+          <li><strong>Push notifications</strong> — The notification icon may require separate configuration on Android</li>
+          <li><strong>Spotlight search (iOS)</strong> — The icon should appear correctly in search results</li>
+          <li><strong>Share sheet (iOS)</strong> — The icon should display when sharing content from the app</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>On Android, if the notification icon appears as a solid white square, you need to create a monochrome notification icon in <code>res/drawable/</code> and reference it in the notification channel configuration. The notification icon must be a simple white-on-transparent design.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-environment.html">Environment URL</a> — Configure API endpoints</li>
+          <li><a href="app-build.html">Build APK / AAB</a> — Build release binaries</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

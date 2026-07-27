@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surge Pricing - Livriko Documentation</title>
+  <meta name="description" content="Configure demand-based pricing for peak hours.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-chart-line" style="color:var(--primary);margin-right:8px;"></i> Surge Pricing</h2>
+      <p>Surge pricing automatically increases ride fares when demand exceeds the supply of available drivers. This time-based pricing model helps balance supply and demand, incentivizes drivers to go online during peak hours, and ensures ride availability when riders need it most.</p>
+    </section>
+
+    <!-- ====== OVERVIEW ====== -->
+    <section class="section-header">
+      <h2>How Surge Pricing Works</h2>
+      <p>Understanding the mechanics of demand-based pricing.</p>
+    </section>
+
+    <div class="prose">
+      <p>Surge pricing in Livriko is configured as <strong>time-based rules</strong> that apply to specific days and time windows. When a surge rule is active, a multiplier is applied to all ride fares within the rule's parameters.</p>
+
+      <h3>The Surge Flow</h3>
+      <ol>
+        <li><strong>Rule activation</strong> &mdash; The system checks the current time and day against configured surge rules. If the current time falls within a rule's window, the surge multiplier is applied.</li>
+        <li><strong>Rider notification</strong> &mdash; Riders see the surge multiplier displayed in the app before confirming their ride. A "Surge Pricing Active" indicator appears on the ride selection screen.</li>
+        <li><strong>Fare calculation</strong> &mdash; The base fare (base amount + vehicle charge + distance + time charges) is multiplied by the surge factor. For example, a $10 base fare with a 1.5x surge becomes $15.</li>
+        <li><strong>Driver earnings</strong> &mdash; Drivers earn the full surge-adjusted fare minus the platform commission, incentivizing more drivers to go online during peak periods.</li>
+      </ol>
+
+      <h3>Surge Multiplier Examples</h3>
+      <pre><code>Base Fare: $10.00
+
+1.2x Surge → $12.00 (20% increase)
+1.5x Surge → $15.00 (50% increase)
+2.0x Surge → $20.00 (100% increase / double fare)
+2.5x Surge → $25.00 (150% increase)</code></pre>
+    </div>
+
+    <hr>
+
+    <!-- ====== CREATING SURGE RULES (STEPS) ====== -->
+    <section class="section-header">
+      <h2>Creating Surge Rules</h2>
+      <p>Follow these steps to set up time-based surge pricing.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Surge Pricing</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Surge Pricing</strong>. You will see a list of existing surge rules with their active status.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Rule"</h4>
+          <p>Click the <strong>Add New Rule</strong> button to open the surge rule creation form.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Set Time Window</h4>
+          <p>Configure the start time and end time for the surge rule. Use 24-hour format (HH:MM). For example, set 07:00 to 09:00 for a morning rush hour surge.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Select Days</h4>
+          <p>Choose which days of the week the surge rule applies to. Use the multi-select checkboxes to select one or more days. Select all weekdays for a commuter rush hour rule, or specific days for weekend nightlife surges.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Save and Activate</h4>
+          <p>Set the <strong>Status</strong> to <em>Active</em> and click <strong>Save</strong>. The surge rule will automatically apply during the configured time windows.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the surge rule form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Start Time</strong></td>
+            <td>Time (HH:MM)</td>
+            <td>Yes</td>
+            <td>The time of day when the surge multiplier begins to apply. Use 24-hour format. For example, <strong>07:00</strong> for 7:00 AM or <strong>17:00</strong> for 5:00 PM.</td>
+          </tr>
+          <tr>
+            <td><strong>End Time</strong></td>
+            <td>Time (HH:MM)</td>
+            <td>Yes</td>
+            <td>The time of day when the surge multiplier stops applying. Use 24-hour format. If the end time is earlier than the start time (e.g., start 22:00, end 03:00), the rule wraps around midnight.</td>
+          </tr>
+          <tr>
+            <td><strong>Days</strong></td>
+            <td>Multi-select</td>
+            <td>Yes</td>
+            <td>Days of the week when the surge rule is active. Select one or more days: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. At least one day must be selected.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Active</strong> enables the surge rule during the configured time windows. <strong>Inactive</strong> disables it without deleting the rule. Useful for temporarily pausing surge during promotions or holidays.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== HOW MULTIPLIERS WORK ====== -->
+    <section class="section-header">
+      <h2>How Multipliers Work</h2>
+      <p>Detailed explanation of surge multiplier calculation and application.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Multiplier Application</h3>
+      <p>The surge multiplier is applied to the <strong>total ride fare</strong> before commission and tax are deducted. The calculation flow is:</p>
+      <pre><code>1. Base Fare = Base Amount + Vehicle Charge
+2. Distance Charge = Distance × Per-KM Rate
+3. Time Charge = Duration × Per-Minute Rate
+4. Subtotal = Base Fare + Distance Charge + Time Charge
+5. Surge Amount = Subtotal × (Surge Multiplier - 1)
+6. Total Fare = Subtotal + Surge Amount
+7. Commission = Total Fare × Commission %
+8. Tax = Total Fare × Tax %
+9. Driver Earnings = Total Fare - Commission + Tax</code></pre>
+
+      <h3>Overlapping Rules</h3>
+      <p>If multiple surge rules overlap (e.g., a morning rush from 07:00-09:00 and a general peak rule from 06:00-10:00), the <strong>highest applicable multiplier</strong> is used. Surge multipliers do not stack or multiply together.</p>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Rider Transparency</div>
+          Riders always see the surge multiplier before confirming a ride. This transparency builds trust and reduces disputes. The surge amount is clearly displayed in the fare breakdown.
+        </div>
+      </div>
+
+      <h3>Midnight Wrap-Around</h3>
+      <p>When the start time is later than the end time (e.g., start: 22:00, end: 04:00), the surge rule wraps around midnight and applies from 10:00 PM to 4:00 AM the next day. This is useful for nightlife and late-night surge pricing.</p>
+    </div>
+
+    <hr>
+
+    <!-- ====== REVENUE TIPS ====== -->
+    <section class="section-header">
+      <h2>Revenue Optimization Tips</h2>
+      <p>Strategies for using surge pricing effectively without alienating riders.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Start Conservative</div>
+          Begin with modest multipliers (1.2x-1.5x) and increase gradually based on market response. Aggressive surge pricing (2.5x+) can drive riders to competitors and damage brand perception.
+        </div>
+      </div>
+
+      <h3>Effective Surge Strategies</h3>
+      <ul>
+        <li><strong>Rush hour surges</strong> &mdash; Configure 1.2x-1.5x for weekday morning (07:00-09:00) and evening (17:00-19:00) rush hours. These are predictable demand peaks.</li>
+        <li><strong>Weekend nightlife</strong> &mdash; Apply 1.3x-1.8x surges on Friday and Saturday nights (22:00-03:00) when bar and restaurant traffic peaks.</li>
+        <li><strong>Event-based surges</strong> &mdash; Create temporary surge rules for concerts, sports events, and festivals. Remember to deactivate them after the event.</li>
+        <li><strong>Weather-responsive</strong> &mdash; During rain or extreme weather, surge helps attract more drivers to meet increased demand.</li>
+      </ul>
+
+      <h3>What to Avoid</h3>
+      <ul>
+        <li><strong>Excessive multipliers</strong> &mdash; Multipliers above 2.5x cause significant rider dissatisfaction and may lead to regulatory scrutiny in some markets.</li>
+        <li><strong>Too many overlapping rules</strong> &mdash; Keep your surge rules simple and clear. Complex configurations are harder to manage and explain to riders.</li>
+        <li><strong>Ignoring driver supply</strong> &mdash; Surge pricing only works if there are enough drivers to meet demand. Monitor driver availability alongside surge rules.</li>
+      </ul>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Regulatory Considerations</div>
+          Some jurisdictions regulate or cap surge pricing multipliers. Check local transportation regulations before implementing surge pricing in a new market. Some cities require advance disclosure of maximum surge multipliers.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== SURGE MONITORING ====== -->
+    <section class="section-header">
+      <h2>Monitoring &amp; Analytics</h2>
+      <p>Track surge performance to optimize your pricing strategy.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Key Metrics to Watch</h3>
+      <ul>
+        <li><strong>Surge frequency</strong> &mdash; How often surge activates in each zone. Frequent surge may indicate a need for more drivers in that area.</li>
+        <li><strong>Average multiplier</strong> &mdash; The typical surge level during peak periods. Track this over time to identify trends.</li>
+        <li><strong>Rider drop-off rate</strong> &mdash; Percentage of riders who see the surge notification but cancel their booking. High drop-off suggests multipliers are too aggressive.</li>
+        <li><strong>Driver online rate during surge</strong> &mdash; More drivers should go online when surge is active. If they don't, the surge may not be compelling enough.</li>
+        <li><strong>Revenue per ride during surge</strong> &mdash; Compare average fare during surge vs. non-surge periods to measure revenue impact.</li>
+      </ul>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Data-Driven Adjustments</div>
+          Review surge analytics weekly. If a particular time slot consistently shows high rider drop-off, reduce the multiplier. If surge rarely activates, the time windows may need adjustment to match actual demand patterns.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>Configure related pricing and zone settings.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-vehicle-zone.html" class="feature-card">
+        <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+        <h4>Vehicle Zone Pricing</h4>
+        <p>Set base fare, per-km, per-minute, and minimum fare rates that surge multipliers are applied to.</p>
+      </a>
+      <a href="management-zones.html" class="feature-card">
+        <div class="icon"><i class="fas fa-map-location-dot"></i></div>
+        <h4>Zones</h4>
+        <p>Create and manage geographic service areas where surge pricing rules apply.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Settings - Livriko Documentation</title>
+  <meta name="description" content="Configure core app settings in Livriko — logo, branding, feature toggles, and platform defaults.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>App Settings</h2>
+        <p>Configure the core settings that govern how your Livriko platform operates — from branding and feature toggles to ride parameters and platform defaults.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Overview</h2>
+        <p>App Settings is the central configuration hub for your Livriko platform. Changes made here affect the behavior of the rider app, driver app, and admin panel. It is essential to review these settings carefully before launching your platform and to revisit them as your operations evolve.</p>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Review Before Going Live</div>
+          <p>Many App Settings take effect immediately without requiring an app rebuild. Always review every setting in this section before your public launch to ensure a polished first impression for riders and drivers.</p>
+        </div>
+
+        <hr>
+
+        <h2>General Settings</h2>
+        <p>General settings control the fundamental identity and behavior of your platform.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>App Name</strong></td>
+                <td>Text</td>
+                <td>The name displayed in the mobile apps, notifications, email headers, and SMS messages. This is your primary brand identifier across all touchpoints.</td>
+              </tr>
+              <tr>
+                <td><strong>App Logo</strong></td>
+                <td>Image Upload</td>
+                <td>Your platform logo displayed in the app splash screen, admin panel, and email templates. Recommended size: 512×512px PNG with transparent background.</td>
+              </tr>
+              <tr>
+                <td><strong>Privacy Policy URL</strong></td>
+                <td>URL</td>
+                <td>Link to your privacy policy page. Displayed in the app's settings and required for app store compliance.</td>
+              </tr>
+              <tr>
+                <td><strong>Terms &amp; Conditions URL</strong></td>
+                <td>URL</td>
+                <td>Link to your terms of service. Users must accept these during registration.</td>
+              </tr>
+              <tr>
+                <td><strong>App Store URL</strong></td>
+                <td>URL</td>
+                <td>Link to your iOS app on the Apple App Store. Used for deep linking and in-app redirects.</td>
+              </tr>
+              <tr>
+                <td><strong>Play Store URL</strong></td>
+                <td>URL</td>
+                <td>Link to your Android app on the Google Play Store. Used for deep linking and in-app redirects.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Feature Toggles</h2>
+        <p>Livriko supports multiple service types that can be enabled or disabled independently. This allows you to launch with core features and expand over time, or to customize the platform for specific markets.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Description</th>
+                <th>Default</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ride Hailing</strong></td>
+                <td>Standard point-to-point ride booking. Riders request a ride, a driver is matched, and the rider is transported from pickup to drop-off.</td>
+                <td>Enabled</td>
+              </tr>
+              <tr>
+                <td><strong>Rental</strong></td>
+                <td>Hourly or daily vehicle rental service. Riders rent vehicles for self-drive or chauffeur-driven use. Configure rental vehicles in <a href="management-rental.html">Rental Vehicles</a>.</td>
+                <td>Disabled</td>
+              </tr>
+              <tr>
+                <td><strong>Parcel Delivery</strong></td>
+                <td>Package delivery service where drivers transport parcels between addresses. Riders or senders book a delivery and track the parcel in real-time.</td>
+                <td>Disabled</td>
+              </tr>
+              <tr>
+                <td><strong>Freight</strong></td>
+                <td>Heavy goods and bulk cargo transport. Uses larger vehicles and specialized pricing. Designed for commercial logistics operations.</td>
+                <td>Disabled</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Feature Rollout Strategy</div>
+          <p>Start by enabling only <strong>Ride Hailing</strong>. Once your core operations are stable, enable additional features one at a time. Each feature has its own configuration requirements and operational workflows that need attention.</p>
+        </div>
+
+        <hr>
+
+        <h2>Map Provider</h2>
+        <p>Livriko supports multiple map providers. Choose the one that best fits your budget, coverage requirements, and geographic focus.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Pros</th>
+                <th>Cons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Google Maps</strong></td>
+                <td>Worldwide coverage, accurate geocoding, reliable routing, traffic data, Street View.</td>
+                <td>Requires API key with billing, costs increase with usage, usage quotas.</td>
+              </tr>
+              <tr>
+                <td><strong>OpenStreetMap (OSM)</strong></td>
+                <td>Free and open-source, no API billing, community-maintained, customizable tiles.</td>
+                <td>Less accurate in some regions, no built-in traffic data, requires additional geocoding service.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">API Key Security</div>
+          <p>If using Google Maps, ensure your API key is restricted to your domains and app bundles. Exposed API keys can lead to unexpected billing charges. See <a href="app-google-maps.html">Google Maps Setup</a> for configuration details.</p>
+        </div>
+
+        <hr>
+
+        <h2>Ride Settings</h2>
+        <p>These settings control how ride requests are processed and matched with drivers.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Default Search Radius</strong></td>
+                <td>Number (km)</td>
+                <td>The maximum distance within which the system searches for available drivers when a ride is requested. Default: 5 km. Increase in low-density areas, decrease in dense cities.</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Request Timeout</strong></td>
+                <td>Number (seconds)</td>
+                <td>How long a ride request remains active before timing out if no driver accepts. Default: 30 seconds. After timeout, the request is typically expanded to a wider radius.</td>
+              </tr>
+              <tr>
+                <td><strong>Maximum Waiting Time</strong></td>
+                <td>Number (minutes)</td>
+                <td>The maximum time a rider will wait for a driver to arrive at the pickup location. Default: 5 minutes. After this period, the rider can cancel without penalty.</td>
+              </tr>
+              <tr>
+                <td><strong>OTP Length</strong></td>
+                <td>Number (digits)</td>
+                <td>Number of digits in the One-Time Password used to verify ride start. Default: 4 digits. The rider shares this OTP with the driver to confirm they are in the correct vehicle.</td>
+              </tr>
+              <tr>
+                <td><strong>Map Zoom Level</strong></td>
+                <td>Number (1–20)</td>
+                <td>Default zoom level when the map is displayed in the rider app. Adjust based on your service area size — lower zoom for large cities, higher zoom for smaller areas.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Driver Settings</h2>
+        <p>Configure how drivers are onboarded and managed on your platform.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Approval Required</strong></td>
+                <td>Toggle</td>
+                <td>When enabled, new driver registrations must be approved by an admin before the driver can go online. When disabled, drivers are auto-approved upon registration. <strong>Recommended: Enabled</strong> for quality control.</td>
+              </tr>
+              <tr>
+                <td><strong>Required Document Types</strong></td>
+                <td>Multi-select</td>
+                <td>Configure which documents drivers must upload during registration. Common options: Driving License, Vehicle Registration, Insurance Certificate, Profile Photo. At least one document type should be required.</td>
+              </tr>
+              <tr>
+                <td><strong>Document Expiry Alerts</strong></td>
+                <td>Toggle</td>
+                <td>When enabled, drivers receive push notifications and emails when their documents are within 30 days of expiry. Helps maintain compliance and avoid service disruptions.</td>
+              </tr>
+              <tr>
+                <td><strong>Auto-Suspend on Expiry</strong></td>
+                <td>Toggle</td>
+                <td>When enabled, drivers are automatically suspended when any required document expires. The driver must upload a renewed document to regain active status.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout danger">
+          <i class="fas fa-exclamation-circle callout-icon"></i>
+          <div class="callout-title">Approval Required</div>
+          <p>Disabling the approval requirement means any user can register as a driver and immediately start accepting rides without document verification. This poses significant safety and legal risks. Only disable this setting in trusted, controlled environments.</p>
+        </div>
+
+        <hr>
+
+        <h2>Currency and Distance Defaults</h2>
+        <p>These settings define the default units and currency used throughout the platform.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Default Currency</strong></td>
+                <td>Select</td>
+                <td>The currency used for all fare displays and wallet transactions. Configure additional currencies in <a href="settings-currencies.html">Platform Currencies</a>.</td>
+              </tr>
+              <tr>
+                <td><strong>Distance Unit</strong></td>
+                <td>Select</td>
+                <td>Whether distances are displayed in <strong>Kilometers (km)</strong> or <strong>Miles (mi)</strong>. Affects fare calculation, search radius, and driver distance displays.</td>
+              </tr>
+              <tr>
+                <td><strong>Timezone</strong></td>
+                <td>Select</td>
+                <td>The timezone used for scheduling, transaction timestamps, and notification delivery. Ensure this matches your primary operating region.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Multi-Currency Support</div>
+          <p>If you operate in multiple regions with different currencies, configure each currency in the <a href="settings-currencies.html">Currencies</a> settings. Zones can then be assigned specific currencies, and the platform will display fares in the appropriate currency based on the rider's location.</p>
+        </div>
+
+        <hr>
+
+        <h2>Safety Settings</h2>
+        <p>Configure safety features that protect both riders and drivers during rides.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SOS Button</strong></td>
+                <td>Enable or disable the emergency SOS button in the rider and driver apps. When triggered, it sends an alert to the admin panel and can notify emergency contacts.</td>
+              </tr>
+              <tr>
+                <td><strong>Share Trip</strong></td>
+                <td>Allow riders to share their live trip status (route, ETA, driver info) with trusted contacts via a shareable link.</td>
+              </tr>
+              <tr>
+                <td><strong>Panic Button</strong></td>
+                <td>Enable a panic button that sends immediate alerts to admin and configured emergency contacts with the user's real-time location.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Safety First</div>
+          <p>It is strongly recommended to enable the SOS Button, Share Trip, and Panic Button features for all markets. These features are often required by ride-hailing regulations and significantly improve rider and driver confidence in your platform.</p>
+        </div>
+
+        <hr>
+
+        <h2>Notification Settings</h2>
+        <p>Control which notification channels are enabled for your platform. These global toggles affect all automated and manual notifications.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Channel</th>
+                <th>Toggle</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Email Notifications</strong></td>
+                <td>Enable / Disable</td>
+                <td>Controls all email notifications including ride receipts, registration confirmations, and promotional emails. Requires a configured email SMTP service.</td>
+              </tr>
+              <tr>
+                <td><strong>SMS Notifications</strong></td>
+                <td>Enable / Disable</td>
+                <td>Controls all SMS notifications including OTPs, ride confirmations, and alerts. Requires a configured <a href="settings-sms.html">SMS Gateway</a>.</td>
+              </tr>
+              <tr>
+                <td><strong>Push Notifications</strong></td>
+                <td>Enable / Disable</td>
+                <td>Controls all push notifications sent via Firebase Cloud Messaging. Requires <a href="firebase-messaging.html">Firebase Messaging</a> configuration.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Best Practices</h2>
+        <ol>
+          <li><strong>Document Your Settings</strong> — Keep a record of your configuration choices and the rationale behind them. This helps new team members understand the platform setup.</li>
+          <li><strong>Test in Staging</strong> — Before changing production settings, test them in a staging environment. Some settings (like feature toggles) affect the live app immediately.</li>
+          <li><strong>Review Periodically</strong> — Revisit your settings quarterly. As your platform grows, you may need to adjust search radius, timeouts, or enable new features.</li>
+          <li><strong>Match Your Market</strong> — Settings should reflect your operating market. A ride-hailing service in a dense city needs different parameters than one in a suburban area.</li>
+          <li><strong>Enable Safety Features</strong> — Always enable SOS, Share Trip, and Panic Button. These are non-negotiable for rider and driver safety.</li>
+        </ol>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-settings.html">App Settings</a> — This page.</li>
+          <li><a href="settings-general.html">Platform Settings</a> — Additional general configuration options.</li>
+          <li><a href="settings-currencies.html">Currencies</a> — Configure supported currencies and exchange rates.</li>
+          <li><a href="settings-languages.html">Languages</a> — Set up multi-language support.</li>
+          <li><a href="management-sos.html">SOS</a> — Configure emergency settings and contacts.</li>
+          <li><a href="app-google-maps.html">Google Maps</a> — Set up map provider integration.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

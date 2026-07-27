@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupons - Livriko Documentation</title>
+  <meta name="description" content="Promotional coupons in Livriko mobile apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Coupons</h2>
+      <p>Coupons allow you to offer discounts to users on rides, rentals, and deliveries. You can create percentage-based or fixed-amount coupons with various restrictions and expiry rules.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Coupon Types</h2>
+      <p>Livriko supports two primary coupon discount types, each with different configuration options.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Percentage Discount</strong></td>
+              <td>Discount calculated as a percentage of the ride fare. Can include a maximum discount cap.</td>
+              <td>20% off, max $15 discount</td>
+            </tr>
+            <tr>
+              <td><strong>Fixed Amount</strong></td>
+              <td>A flat discount amount deducted from the ride fare regardless of the total.</td>
+              <td>$10 off any ride</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Creating a Coupon</h2>
+      <p>Follow these steps to create a new coupon in the admin panel:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Navigate to Coupons</h4>
+            <p>Log in to the admin panel and go to <strong>Coupons</strong> from the sidebar menu.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Click Add New</h4>
+            <p>Click the <strong>Add New</strong> button to open the coupon creation form.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Fill in Coupon Details</h4>
+            <p>Enter all required fields — code, type, value, restrictions, and validity period. See the full field reference below.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Save the Coupon</h4>
+            <p>Click <strong>Save</strong>. The coupon is now active and can be applied by users in the mobile app.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Coupon Configuration Fields</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Code</strong></td>
+              <td>The code users enter to apply the coupon (case-insensitive)</td>
+              <td><code>WELCOME20</code></td>
+            </tr>
+            <tr>
+              <td><strong>Type</strong></td>
+              <td>Percentage or Fixed amount</td>
+              <td>Percentage</td>
+            </tr>
+            <tr>
+              <td><strong>Value</strong></td>
+              <td>The discount value (e.g., 20 for 20% off or $20 off)</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td><strong>Max Discount</strong></td>
+              <td>Cap the discount amount (for percentage coupons only)</td>
+              <td>$15</td>
+            </tr>
+            <tr>
+              <td><strong>Minimum Fare</strong></td>
+              <td>Minimum ride fare required to use the coupon</td>
+              <td>$10</td>
+            </tr>
+            <tr>
+              <td><strong>Usage Limit</strong></td>
+              <td>Total number of times this coupon can be used globally</td>
+              <td>1000 (empty = unlimited)</td>
+            </tr>
+            <tr>
+              <td><strong>Per User Limit</strong></td>
+              <td>Maximum uses per individual user</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td><strong>Start Date</strong></td>
+              <td>Date the coupon becomes active</td>
+              <td>2025-01-01</td>
+            </tr>
+            <tr>
+              <td><strong>End Date</strong></td>
+              <td>Date the coupon expires</td>
+              <td>2025-12-31</td>
+            </tr>
+            <tr>
+              <td><strong>Services</strong></td>
+              <td>Which services this coupon applies to</td>
+              <td>Ride, Rental, Delivery</td>
+            </tr>
+            <tr>
+              <td><strong>Vehicle Types</strong></td>
+              <td>Which vehicle types this coupon applies to</td>
+              <td>Sedan, SUV</td>
+            </tr>
+            <tr>
+              <td><strong>Zones</strong></td>
+              <td>Which zones this coupon is valid in</td>
+              <td>City Center, Airport</td>
+            </tr>
+            <tr>
+              <td><strong>Status</strong></td>
+              <td>Enable or disable the coupon</td>
+              <td>Active</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>User App — Apply Coupon Screen</h2>
+      <p>Users can apply coupons during the ride booking process. The flow is:</p>
+      <ol>
+        <li>Enter pickup and destination locations</li>
+        <li>Select a vehicle type</li>
+        <li>On the fare summary screen, tap <strong>"Apply Coupon"</strong></li>
+        <li>Enter the coupon code in the text field and tap <strong>Apply</strong></li>
+        <li>If valid, the discount is reflected in the fare total immediately</li>
+        <li>If invalid, an error message explains the reason (expired, minimum fare not met, etc.)</li>
+      </ol>
+
+      <h2>Driver App — Coupon Display</h2>
+      <p>When a user applies a coupon to a ride, the driver sees the discount reflected in the ride details. The driver's earnings are calculated on the <strong>original fare before the coupon discount</strong>. The coupon discount is absorbed by the platform, not the driver.</p>
+
+      <h2>Expiry Handling</h2>
+      <p>Coupons have built-in expiry management:</p>
+      <ul>
+        <li><strong>Automatic Expiry:</strong> Coupons automatically become inactive after their end date</li>
+        <li><strong>Usage Limit Reached:</strong> When the global usage limit is reached, the coupon is deactivated</li>
+        <li><strong>Per User Limit:</strong> Users who have exhausted their per-user limit see an error message</li>
+        <li><strong>Expired Coupon Error:</strong> Users attempting to apply an expired coupon see "This coupon has expired"</li>
+      </ul>
+
+      <h2>Coupon Usage in the App</h2>
+      <p>The coupon system is integrated into the ride booking flow. Here is how it appears at each stage:</p>
+      <ul>
+        <li><strong>Fare Summary Screen:</strong> A prominent "Apply Coupon" button appears below the fare breakdown</li>
+        <li><strong>Coupon Entry:</strong> A text input field for the code with an "Apply" button. The code is case-insensitive</li>
+        <li><strong>Valid Coupon:</strong> The discount is applied immediately. A green checkmark and the discount amount are displayed</li>
+        <li><strong>Invalid Coupon:</strong> An error message explains why (expired, minimum not met, usage limit reached)</li>
+        <li><strong>Applied State:</strong> The applied coupon is shown with its code and discount amount, with a "Remove" option</li>
+      </ul>
+
+      <h2>Coupon Analytics</h2>
+      <p>The admin panel provides coupon usage analytics to help you track performance:</p>
+      <ul>
+        <li><strong>Total Uses:</strong> How many times the coupon has been applied across all users</li>
+        <li><strong>Unique Users:</strong> How many distinct users have used the coupon</li>
+        <li><strong>Total Discount Given:</strong> The aggregate discount amount provided</li>
+        <li><strong>Average Discount Per Use:</strong> The average discount per application</li>
+        <li><strong>Revenue Impact:</strong> Estimated revenue impact from the coupon</li>
+      </ul>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Welcome Coupon Strategy</p>
+          <p>Create a <code>WELCOME</code> coupon with a 20% percentage discount and a per-user limit of 1. This is an effective way to incentivize new user registrations and encourage first rides. Set a minimum fare of $5 to ensure profitability.</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Monitor Coupon Usage</p>
+          <p>Check the coupon usage statistics in the admin panel regularly. If a coupon is being used more than expected, adjust the usage limit or per-user limit to control costs. Overuse of coupons can significantly impact revenue. Set up usage alerts for high-volume coupons.</p>
+        </div>
+      </div>
+
+      <h2>Invalid Coupon Error Messages</h2>
+      <p>When a user enters an invalid coupon code, the app displays one of these error messages:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Error</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>"Coupon not found"</strong></td>
+              <td>The entered code does not match any active coupon in the system</td>
+            </tr>
+            <tr>
+              <td><strong>"This coupon has expired"</strong></td>
+              <td>The coupon's end date has passed</td>
+            </tr>
+            <tr>
+              <td><strong>"Minimum fare not met"</strong></td>
+              <td>The ride fare is below the coupon's minimum fare requirement</td>
+            </tr>
+            <tr>
+              <td><strong>"Usage limit reached"</strong></td>
+              <td>The coupon has reached its global usage limit</td>
+            </tr>
+            <tr>
+              <td><strong>"You've reached your limit"</strong></td>
+              <td>The user has used this coupon the maximum number of times allowed</td>
+            </tr>
+            <tr>
+              <td><strong>"Not valid for this service"</strong></td>
+              <td>The coupon does not apply to the selected service type</td>
+            </tr>
+            <tr>
+              <td><strong>"Not valid for this vehicle"</strong></td>
+              <td>The coupon does not apply to the selected vehicle type</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="management-coupons.html">Manage Coupons</a> — Full coupon management in admin</li>
+        <li><a href="app-addons.html">Add-Ons</a> — Configure ride add-ons</li>
+        <li><a href="app-services.html">Service List</a> — Configure available services</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

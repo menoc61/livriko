@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add-Ons - Livriko Documentation</title>
+  <meta name="description" content="Ride add-ons — extra services during booking.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Add-Ons</h2>
+      <p>Add-ons allow users to customize their ride by selecting optional extras during the booking process. Each add-on has an additional cost that is added to the ride fare.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Available Add-Ons</h2>
+      <p>Livriko ships with several commonly requested add-ons. You can enable, disable, or create new add-ons from the admin panel.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Add-On</th>
+              <th>Description</th>
+              <th>Typical Price</th>
+              <th>Available For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Child Seat</strong></td>
+              <td>Request a child safety seat for young passengers</td>
+              <td>$3.00</td>
+              <td>Sedan, SUV, Van</td>
+            </tr>
+            <tr>
+              <td><strong>Extra Luggage</strong></td>
+              <td>Additional luggage space for large bags or equipment</td>
+              <td>$2.00</td>
+              <td>All types</td>
+            </tr>
+            <tr>
+              <td><strong>Pet Friendly</strong></td>
+              <td>Request a vehicle that accepts pets</td>
+              <td>$2.50</td>
+              <td>Sedan, SUV, Van</td>
+            </tr>
+            <tr>
+              <td><strong>Wheelchair Accessible</strong></td>
+              <td>Request a vehicle with wheelchair ramp or lift</td>
+              <td>$0.00</td>
+              <td>Van (accessible fleet only)</td>
+            </tr>
+            <tr>
+              <td><strong>Priority Pickup</strong></td>
+              <td>Skip the queue and get matched with the nearest available driver</td>
+              <td>$5.00</td>
+              <td>All types</td>
+            </tr>
+            <tr>
+              <td><strong>Quiet Ride</strong></td>
+              <td>Request a driver who will keep conversation to a minimum</td>
+              <td>$1.00</td>
+              <td>Sedan, Luxury</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Booking Flow with Add-Ons</h2>
+      <p>Add-ons are selected during the ride booking process, after choosing a vehicle type and before confirming the ride:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Select Vehicle Type</h4>
+            <p>The user selects a vehicle type from the vehicle selection screen (e.g., Sedan, SUV).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Choose Add-Ons</h4>
+            <p>An "Add-Ons" section appears below the vehicle selection. The user can toggle on one or more available add-ons for their chosen vehicle type.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Review Fare</h4>
+            <p>The fare summary updates to include add-on costs. The total fare = base fare + distance charge + add-on charges.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Confirm Booking</h4>
+            <p>The user confirms the ride. The selected add-ons are sent to the driver along with the ride request.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Driver Notification</h4>
+            <p>The driver sees the selected add-ons in the ride request card. They can acknowledge the add-ons (e.g., confirm they have a child seat installed).</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Configuring Add-Ons in Admin</h2>
+      <p>To manage add-ons in the admin panel:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Navigate to Add-Ons</h4>
+            <p>Log in to the admin panel and go to <strong>Add-Ons</strong> from the sidebar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Create or Edit</h4>
+            <p>Click <strong>Add New</strong> to create a new add-on, or click an existing add-on to edit it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Fill in Fields</h4>
+            <p>Enter the name, description, price, upload an icon, and set the status to Active.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure Availability</h4>
+            <p>Select which vehicle types this add-on is available for. For example, "Child Seat" might only be available for Sedan and SUV.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Save</h4>
+            <p>Click <strong>Save</strong> to apply changes. The add-on will appear in the mobile apps on the next API call.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Add-On Configuration Fields</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Description</th>
+              <th>Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Name</strong></td>
+              <td>Display name shown to users in the app</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Description</strong></td>
+              <td>Brief description of what the add-on provides</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Price</strong></td>
+              <td>Additional flat cost for this add-on (added to fare)</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Image</strong></td>
+              <td>Icon displayed in the app add-on selection</td>
+              <td>Recommended</td>
+            </tr>
+            <tr>
+              <td><strong>Status</strong></td>
+              <td>Enable or disable the add-on</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Vehicle Types</strong></td>
+              <td>Which vehicle types this add-on is available for</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Services</strong></td>
+              <td>Which services this add-on applies to (Ride, Rental)</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Add-On Display in the App</h2>
+      <p>In the User app, add-ons appear as toggleable chips or checkboxes on the vehicle selection screen. Each add-on shows its name, description, and price. Users can select multiple add-ons, and the fare summary updates in real-time to reflect the total add-on cost.</p>
+
+      <p>In the Driver app, selected add-ons are displayed in the ride request card so the driver knows what to prepare before arriving at the pickup location. For example, if a "Child Seat" add-on is selected, the driver knows to install the seat before the trip.</p>
+
+      <h2>Add-On Pricing Strategy</h2>
+      <p>When setting add-on prices, consider the following factors:</p>
+      <ul>
+        <li><strong>Cost Recovery:</strong> Ensure the price covers the actual cost of providing the add-on (e.g., child seat maintenance, pet cleaning)</li>
+        <li><strong>Market Rates:</strong> Research what competitors charge for similar add-ons in your market</li>
+        <li><strong>Perceived Value:</strong> Users are willing to pay more for convenience add-ons like Priority Pickup</li>
+        <li><strong>Minimum Threshold:</strong> Set prices low enough to encourage usage but high enough to remain profitable</li>
+      </ul>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Add-On Availability</p>
+          <p>Add-on availability varies by vehicle type. For example, the "Wheelchair Accessible" add-on should only be available for vehicles in your accessible fleet. Configure this in the add-on settings to ensure users only see relevant options for their selected vehicle type.</p>
+        </div>
+      </div>
+
+      <h2>Driver Acknowledgment</h2>
+      <p>When a ride with add-ons is accepted, the driver sees a summary of selected add-ons in the ride request card. The driver should acknowledge that they can fulfill the add-on requirements (e.g., confirm they have a child seat installed, confirm the vehicle accepts pets). This acknowledgment is logged in the system for accountability and dispute resolution.</p>
+
+      <p>If a driver cannot fulfill a selected add-on, they can decline the ride request. The system will then match the rider with another available driver who can accommodate the add-on requirements. This ensures riders always get the experience they paid for.</p>
+
+      <h2>Add-On Revenue Tracking</h2>
+      <p>The admin panel tracks add-on revenue separately from base fares. You can view add-on performance metrics including total add-on revenue, most popular add-ons, and revenue per add-on type. Use this data to optimize your add-on offerings and pricing strategy.</p>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Revenue Opportunity</p>
+          <p>Add-ons are a significant revenue opportunity. Consider adding add-ons like "Priority Pickup" or "Extra Luggage" that users are willing to pay a premium for. Monitor which add-ons are most popular and adjust pricing accordingly. Popular add-ons can generate 10-20% of total ride revenue.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-services.html">Service List</a> — Configure available services</li>
+        <li><a href="app-vehicle-types.html">Vehicle Types</a> — Configure vehicle categories</li>
+        <li><a href="app-coupons.html">Coupons</a> — Create promotional offers</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>
