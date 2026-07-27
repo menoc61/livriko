@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Folder Structure - Livriko Documentation</title>
+  <meta name="description" content="React Native project structure for User and Driver apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>App Folder Structure</h2>
+      <p>Understanding the folder structure of the Livriko React Native apps is essential for customizing features, branding, and business logic. Both the User and Driver apps follow a similar architecture.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>User App — Taxido_user/</h2>
+      <p>The User app is the passenger-facing application. It handles ride requests, vehicle selection, fare estimation, real-time tracking, payment processing, and ride history. The directory tree below shows the complete project layout.</p>
+
+      <pre><code>Taxido_user/
+├── android/                            # Android native project files
+│   ├── app/
+│   │   ├── build.gradle                # Android build configuration
+│   │   └── src/
+│   │       └── main/
+│   │           ├── AndroidManifest.xml # App permissions &amp; metadata
+│   │           ├── java/               # Native Java/Kotlin code
+│   │           └── res/                # Android resources (icons, splash)
+│   ├── build.gradle                    # Root Gradle config
+│   ├── gradle.properties               # Gradle properties
+│   └── settings.gradle                 # Project settings
+├── ios/                                # iOS native project files
+│   ├── LivrikoUser/
+│   │   ├── AppDelegate.swift           # iOS app entry point
+│   │   ├── Info.plist                  # iOS configuration &amp; permissions
+│   │   ├── LaunchScreen.storyboard     # Launch screen layout
+│   │   └── Assets.xcassets/            # App icons &amp; images
+│   ├── LivrikoUser.xcodeproj           # Xcode project file
+│   ├── LivrikoUser.xcworkspace         # Xcode workspace (use this!)
+│   └── Podfile                         # CocoaPods dependencies
+├── src/                                # React Native source code
+│   ├── components/                     # Reusable UI components
+│   │   ├── common/                     # Generic components (Button, Modal, Input)
+│   │   │   ├── Button.js
+│   │   │   ├── Modal.js
+│   │   │   ├── Input.js
+│   │   │   └── Loading.js
+│   │   ├── map/                        # Map-related components
+│   │   │   ├── MapView.js
+│   │   │   ├── Marker.js
+│   │   │   └── RoutePolyline.js
+│   │   └── ride/                       # Ride-specific components
+│   │       ├── FareCard.js
+│   │       ├── DriverInfo.js
+│   │       └── RatingModal.js
+│   ├── screens/                        # App screens (pages)
+│   │   ├── auth/                       # Authentication screens
+│   │   │   ├── Login.js
+│   │   │   ├── Register.js
+│   │   │   └── OTPVerification.js
+│   │   ├── home/                       # Home &amp; map view
+│   │   │   ├── HomeScreen.js
+│   │   │   └── LocationSearch.js
+│   │   ├── ride/                       # Ride flow screens
+│   │   │   ├── RideRequest.js
+│   │   │   ├── VehicleSelect.js
+│   │   │   ├── RideTracking.js
+│   │   │   ├── RideComplete.js
+│   │   │   └── RideHistory.js
+│   │   ├── profile/                    # User profile &amp; settings
+│   │   │   ├── Profile.js
+│   │   │   ├── EditProfile.js
+│   │   │   └── Settings.js
+│   │   └── payment/                    # Payment methods &amp; wallet
+│   │       ├── PaymentMethods.js
+│   │       ├── AddPayment.js
+│   │       └── Wallet.js
+│   ├── services/                       # API service calls
+│   │   ├── api.js                      # Axios instance configuration
+│   │   ├── authService.js              # Login, register, OTP endpoints
+│   │   ├── rideService.js              # Ride request, cancel, rate endpoints
+│   │   ├── paymentService.js           # Payment &amp; wallet endpoints
+│   │   └── userService.js              # Profile &amp; settings endpoints
+│   ├── store/                          # Redux state management
+│   │   ├── index.js                    # Store configuration
+│   │   └── slices/                     # Redux Toolkit slices
+│   │       ├── authSlice.js
+│   │       ├── rideSlice.js
+│   │       └── userSlice.js
+│   ├── utils/                          # Utility functions
+│   │   ├── constants.js                # App-wide constants
+│   │   ├── helpers.js                  # Helper functions
+│   │   └── storage.js                  # AsyncStorage wrapper
+│   ├── navigation/                     # React Navigation setup
+│   │   └── AppNavigator.js             # Stack &amp; tab navigators
+│   ├── config/                         # App configuration
+│   │   └── config.js                   # API URL, map keys, Firebase config
+│   ├── assets/                         # Static assets (images, fonts)
+│   │   ├── images/
+│   │   └── fonts/
+│   └── App.js                          # Root component
+├── package.json                        # Node.js dependencies
+├── app.json                            # React Native app metadata
+├── babel.config.js                     # Babel transpiler config
+├── metro.config.js                     # Metro bundler config
+├── .env                                # Environment variables (local)
+└── .env.example                        # Environment variable template</code></pre>
+
+      <h2>Driver App — Taxido_driver/</h2>
+      <p>The Driver app is the driver-facing application. It handles ride acceptance, real-time navigation, earnings tracking, document management, and online/offline status. Its structure mirrors the User app with driver-specific screens and services.</p>
+
+      <pre><code>Taxido_driver/
+├── android/                            # Android native project files
+│   ├── app/
+│   │   ├── build.gradle
+│   │   └── src/
+│   │       └── main/
+│   │           ├── AndroidManifest.xml # Additional background location perms
+│   │           ├── java/
+│   │           └── res/
+│   ├── build.gradle
+│   ├── gradle.properties
+│   └── settings.gradle
+├── ios/                                # iOS native project files
+│   ├── LivrikoDriver/
+│   │   ├── AppDelegate.swift
+│   │   ├── Info.plist
+│   │   ├── LaunchScreen.storyboard
+│   │   └── Assets.xcassets/
+│   ├── LivrikoDriver.xcodeproj
+│   ├── LivrikoDriver.xcworkspace
+│   └── Podfile
+├── src/                                # React Native source code
+│   ├── components/                     # Reusable UI components
+│   │   ├── common/                     # Generic components
+│   │   ├── map/                        # Map &amp; navigation components
+│   │   └── ride/                       # Ride management components
+│   │       ├── RideRequestCard.js
+│   │       ├── EarningsSummary.js
+│   │       └── DocumentUpload.js
+│   ├── screens/                        # App screens
+│   │   ├── auth/                       # Login, Register, OTP
+│   │   ├── home/                       # Home screen with map
+│   │   │   └── HomeScreen.js           # Online/offline toggle + map
+│   │   ├── ride/                       # Ride flow screens
+│   │   │   ├── RideRequest.js          # Accept/decline incoming rides
+│   │   │   ├── RideNavigation.js       # Turn-by-turn navigation
+│   │   │   ├── RideComplete.js
+│   │   │   └── RideHistory.js
+│   │   ├── earnings/                   # Earnings dashboard
+│   │   │   ├── EarningsScreen.js
+│   │   │   └── EarningsHistory.js
+│   │   ├── profile/                    # Driver profile &amp; documents
+│   │   │   ├── Profile.js
+│   │   │   ├── Documents.js
+│   │   │   └── VehicleInfo.js
+│   │   └── settings/                   # Online/offline, SOS
+│   │       ├── Settings.js
+│   │       └── SOSScreen.js
+│   ├── services/                       # API service calls
+│   │   ├── api.js                      # Axios instance configuration
+│   │   ├── authService.js              # Authentication endpoints
+│   │   ├── rideService.js              # Ride accept, complete, cancel
+│   │   ├── locationService.js          # Background location tracking
+│   │   └── earningsService.js          # Earnings &amp; wallet endpoints
+│   ├── store/                          # Redux state management
+│   │   ├── index.js
+│   │   └── slices/
+│   │       ├── authSlice.js
+│   │       ├── rideSlice.js
+│   │       └── locationSlice.js
+│   ├── utils/                          # Utility functions
+│   │   ├── constants.js
+│   │   ├── helpers.js
+│   │   └── storage.js
+│   ├── navigation/                     # Navigation configuration
+│   │   └── AppNavigator.js
+│   ├── config/                         # App configuration
+│   │   └── config.js
+│   ├── assets/                         # Static assets
+│   └── App.js                          # Root component
+├── package.json
+├── app.json
+├── babel.config.js
+├── metro.config.js
+├── .env
+└── .env.example</code></pre>
+
+      <h2>Key Folders Explained</h2>
+
+      <h3>src/screens/</h3>
+      <p>Each screen is a top-level view in the app. Screens are organized by feature domain (auth, home, ride, profile, payment/earnings). Each screen file contains a React component that renders a full page and handles its own navigation events and lifecycle hooks.</p>
+
+      <h3>src/components/</h3>
+      <p>Reusable UI components that are shared across multiple screens. Components are organized into subdirectories by domain: <strong>common</strong> for generic elements like buttons and modals, <strong>map</strong> for map-related rendering, and <strong>ride</strong> for ride-specific cards and modals. Components receive props and manage minimal local state.</p>
+
+      <h3>src/services/</h3>
+      <p>API service modules that handle all HTTP communication with the Livriko backend. Each service file groups related endpoints: <strong>authService.js</strong> for login and registration, <strong>rideService.js</strong> for ride lifecycle operations, and so on. The <strong>api.js</strong> file configures a shared Axios instance with base URL, interceptors, and auth token injection.</p>
+
+      <h3>src/store/</h3>
+      <p>Redux Toolkit state management. The <strong>index.js</strong> file creates and configures the Redux store. Slice files define reducers and async thunks for specific domains: authentication state, ride state, user/driver profile state, and location tracking state.</p>
+
+      <h3>src/utils/</h3>
+      <p>Shared utility functions used throughout the app. <strong>constants.js</strong> defines app-wide constants (API endpoints, timeout values), <strong>helpers.js</strong> contains formatting and calculation functions, and <strong>storage.js</strong> wraps AsyncStorage for persistent key-value storage.</p>
+
+      <h3>src/assets/</h3>
+      <p>Static assets bundled with the app, including image files (logos, placeholders, onboarding illustrations) and custom fonts. Assets are referenced via relative imports in components and styles.</p>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Shared Configuration</p>
+          <p>Both apps share the same configuration file structure (<code>config.js</code>) and API service pattern. When updating the API URL, Firebase configuration, or Google Maps key, you must update it in both <strong>Taxido_user/src/config/config.js</strong> and <strong>Taxido_driver/src/config/config.js</strong>.</p>
+        </div>
+      </div>
+
+      <h2>User App vs Driver App Comparison</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Directory</th>
+              <th>User App</th>
+              <th>Driver App</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>screens/</code></td>
+              <td>Request rides, track drivers, payment history</td>
+              <td>Accept rides, navigate, manage earnings</td>
+            </tr>
+            <tr>
+              <td><code>components/</code></td>
+              <td>Passenger-facing UI (FareCard, RatingModal)</td>
+              <td>Driver-facing UI (RideRequestCard, EarningsSummary)</td>
+            </tr>
+            <tr>
+              <td><code>services/</code></td>
+              <td>auth, ride, payment, user endpoints</td>
+              <td>auth, ride, location, earnings endpoints</td>
+            </tr>
+            <tr>
+              <td><code>store/slices/</code></td>
+              <td>auth, ride, user slices</td>
+              <td>auth, ride, location slices</td>
+            </tr>
+            <tr>
+              <td><code>config.js</code></td>
+              <td>Same API URL, same map keys</td>
+              <td>Same API URL, same map keys</td>
+            </tr>
+            <tr>
+              <td><code>AndroidManifest.xml</code></td>
+              <td>Standard permissions (INTERNET, location)</td>
+              <td>Additional <code>ACCESS_BACKGROUND_LOCATION</code></td>
+            </tr>
+            <tr>
+              <td><code>Info.plist</code></td>
+              <td>Standard entitlements</td>
+              <td>Background mode entitlements for location</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Configuration Files</h2>
+      <p>Several root-level configuration files control how the React Native project builds and runs:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>package.json</code></td>
+              <td>Node.js dependencies and npm scripts for building, running, and testing</td>
+            </tr>
+            <tr>
+              <td><code>app.json</code></td>
+              <td>React Native app metadata — name, slug, version, platform-specific config</td>
+            </tr>
+            <tr>
+              <td><code>babel.config.js</code></td>
+              <td>Babel transpiler presets and plugins for JSX and modern JavaScript</td>
+            </tr>
+            <tr>
+              <td><code>metro.config.js</code></td>
+              <td>Metro bundler configuration — file resolution, transforms, and optimization</td>
+            </tr>
+            <tr>
+              <td><code>.env</code></td>
+              <td>Local environment variables (API URL, map keys). Never commit to version control.</td>
+            </tr>
+            <tr>
+              <td><code>.env.example</code></td>
+              <td>Template for <code>.env</code> with placeholder values. Safe to commit.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Don't Modify Native Code Directly</p>
+          <p>Avoid editing files inside the <code>android/</code> or <code>ios/</code> directories unless absolutely necessary. Changes to native code can be overwritten during upgrades. Use React Native libraries and native modules via npm packages instead.</p>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Best Practice</p>
+          <p>Keep the <code>src/</code> directory clean and well-organized. When adding a new feature, place screens in the appropriate <code>screens/</code> subdirectory, extract reusable UI into <code>components/</code>, and create a new service file in <code>services/</code> if the feature requires API calls.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-basic-setup.html">Basic Setup</a> — Initial configuration for both apps</li>
+        <li><a href="app-google-maps.html">Google Maps</a> — Integrate maps and geolocation</li>
+        <li><a href="app-build.html">Build APK / AAB</a> — Generate release builds</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

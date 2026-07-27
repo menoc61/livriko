@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet - Livriko Documentation</title>
+  <meta name="description" content="Manage digital wallets for riders, drivers, and fleet managers in Livriko — credit, debit, and transaction history.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Wallet</h2>
+        <p>Manage digital wallets for riders, drivers, and fleet managers — handle credits, debits, refunds, and transaction history from a single interface.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Overview</h2>
+        <p>The Wallet system is the financial backbone of the Livriko platform. It enables seamless cashless transactions between riders and drivers, supports admin-initiated adjustments, and provides a transparent record of every financial movement on your platform.</p>
+        <p>Livriko maintains three distinct wallet types, each serving a specific purpose in the ecosystem.</p>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-user"></i></div>
+            <h3>Rider Wallet</h3>
+            <p>Riders top up their wallet to pay for rides. Supports multiple payment methods including credit cards and mobile money. Balance is deducted automatically when a ride is completed.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-car"></i></div>
+            <h3>Driver Wallet</h3>
+            <p>Drivers receive earnings after platform commission is deducted. Earnings accumulate with each completed ride and can be withdrawn to a linked bank account.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-building"></i></div>
+            <h3>Fleet Wallet</h3>
+            <p>Fleet managers have a consolidated wallet that aggregates earnings from all vehicles in their fleet. Useful for businesses managing multiple drivers and vehicles.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Managing Transactions</h2>
+        <p>As an admin, you can manually credit or debit any wallet on the platform. This is essential for handling refunds, bonuses, promotional credits, and corrections.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Select Wallet Type</h4>
+              <p>Go to <strong>Livriko Management</strong> → <strong>Wallet</strong>. Choose whether you are managing a <strong>Rider</strong>, <strong>Driver</strong>, or <strong>Fleet</strong> wallet by selecting the appropriate tab.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Find the Account</h4>
+              <p>Search for the specific rider, driver, or fleet manager by name, email, or phone number. Click on the account to view their current balance and transaction history.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Enter Amount and Select Action</h4>
+              <p>Enter the transaction amount, then select either <strong>Credit</strong> (add funds) or <strong>Debit</strong> (deduct funds). Always add a descriptive reason note — this appears in the transaction history for both you and the account holder.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Confirm the Transaction</h4>
+              <p>Review the details carefully before confirming. The transaction is processed immediately and the wallet balance updates in real-time. The account holder will see the new balance and transaction in their app.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout danger">
+          <i class="fas fa-exclamation-circle callout-icon"></i>
+          <div class="callout-title">Double-Check Before Confirming</div>
+          <p>Wallet transactions are processed immediately and cannot be automatically reversed. Always verify the account, amount, and action (credit/debit) before confirming. If you make an error, you will need to create a reverse transaction manually.</p>
+        </div>
+
+        <hr>
+
+        <h2>Credit Flow — Adding Funds</h2>
+        <p>Crediting a wallet adds funds to the account. Common use cases for manual credits include:</p>
+        <ul>
+          <li><strong>Refunds</strong> — Return funds to a rider after a disputed ride, cancellation, or platform error.</li>
+          <li><strong>Bonuses</strong> — Reward drivers with performance bonuses, sign-up incentives, or referral rewards.</li>
+          <li><strong>Promotions</strong> — Credit promotional funds to rider wallets as part of marketing campaigns.</li>
+          <li><strong>Compensation</strong> — Compensate a rider or driver for a poor experience, service disruption, or delay.</li>
+        </ul>
+        <p>When you credit a wallet, the following happens:</p>
+        <ol>
+          <li>The wallet balance increases by the specified amount.</li>
+          <li>A transaction record is created with the type "Credit", the amount, reason note, and admin ID.</li>
+          <li>The account holder receives a notification (if enabled) confirming the credit.</li>
+          <li>The transaction appears in their wallet history in the app.</li>
+        </ol>
+
+        <hr>
+
+        <h2>Debit Flow — Deducting Funds</h2>
+        <p>Debiting a wallet removes funds from the account. Use this cautiously and only for valid reasons. Common use cases include:</p>
+        <ul>
+          <li><strong>Correction</strong> — Reverse an erroneous credit or fix a system glitch that incorrectly added funds.</li>
+          <li><strong>Penalty</strong> — Deduct a penalty for policy violations (e.g., driver cancellation fees, rider no-show charges).</li>
+          <li><strong>Subscription Fees</strong> — Manually deduct a <a href="management-plans.html">Plan</a> subscription fee if not handled automatically.</li>
+        </ul>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Sufficient Balance Check</div>
+          <p>The system prevents debiting more than the available balance. If you attempt to debit an amount that exceeds the wallet balance, the transaction will fail. For large deductions, verify the current balance first to avoid confusion.</p>
+        </div>
+
+        <hr>
+
+        <h2>Transaction History</h2>
+        <p>Every wallet transaction is logged with full details and is accessible from both the admin panel and the user's app. The transaction history provides complete financial transparency.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Date &amp; Time</strong></td>
+                <td>When the transaction was processed (timestamp in the platform's configured timezone).</td>
+              </tr>
+              <tr>
+                <td><strong>Type</strong></td>
+                <td>Credit (incoming funds) or Debit (outgoing funds). Also includes system-generated entries like ride payments and commission deductions.</td>
+              </tr>
+              <tr>
+                <td><strong>Amount</strong></td>
+                <td>The exact amount involved in the transaction, displayed in the platform's configured currency.</td>
+              </tr>
+              <tr>
+                <td><strong>Balance After</strong></td>
+                <td>The wallet balance immediately after this transaction was processed. Useful for reconciling account statements.</td>
+              </tr>
+              <tr>
+                <td><strong>Reason / Description</strong></td>
+                <td>A human-readable note explaining why the transaction occurred (e.g., "Refund for cancelled ride #1234", "Performance bonus — March 2025").</td>
+              </tr>
+              <tr>
+                <td><strong>Reference</strong></td>
+                <td>Optional reference ID linking the transaction to a ride, order, or admin action for audit purposes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Filtering Transactions</div>
+          <p>Use the date range filter and transaction type filter on the history page to quickly locate specific entries. You can also export transaction data to CSV for accounting and reconciliation purposes.</p>
+        </div>
+
+        <hr>
+
+        <h2>Wallet Balance in Apps</h2>
+        <p>Both riders and drivers can view their wallet balance directly in their respective apps:</p>
+        <ul>
+          <li><strong>Rider App</strong> — The wallet balance is displayed in the profile section. Riders can top up using configured payment methods and see their full transaction history.</li>
+          <li><strong>Driver App</strong> — Drivers see their current earnings balance and can request a withdrawal. The withdrawal is processed to their linked bank account.</li>
+          <li><strong>Fleet Manager Dashboard</strong> — Fleet managers see a consolidated balance for their entire fleet, with per-vehicle and per-driver breakdowns.</li>
+        </ul>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Real-Time Updates</div>
+          <p>Wallet balances update in real-time across all platforms. When an admin credits or debits a wallet, the change is immediately reflected in the user's app without requiring a page refresh or app restart.</p>
+        </div>
+
+        <hr>
+
+        <h2>Use Cases</h2>
+        <p>Below are common scenarios where the Wallet feature is essential for daily operations:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Wallet Type</th>
+                <th>Action</th>
+                <th>Example Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rider disputes a ride fare</td>
+                <td>Rider Wallet</td>
+                <td>Credit (Refund)</td>
+                <td>$15.00</td>
+              </tr>
+              <tr>
+                <td>Driver reaches 500 rides milestone</td>
+                <td>Driver Wallet</td>
+                <td>Credit (Bonus)</td>
+                <td>$50.00</td>
+              </tr>
+              <tr>
+                <td>New rider sign-up promotion</td>
+                <td>Rider Wallet</td>
+                <td>Credit (Promo)</td>
+                <td>$10.00</td>
+              </tr>
+              <tr>
+                <td>System error overcharged a rider</td>
+                <td>Rider Wallet</td>
+                <td>Credit (Refund)</td>
+                <td>$8.50</td>
+              </tr>
+              <tr>
+                <td>Driver cancellation penalty</td>
+                <td>Driver Wallet</td>
+                <td>Debit (Penalty)</td>
+                <td>$5.00</td>
+              </tr>
+              <tr>
+                <td>Monthly fleet earnings payout</td>
+                <td>Fleet Wallet</td>
+                <td>Debit (Payout)</td>
+                <td>$2,500.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-drivers.html">Drivers</a> — View driver profiles and link bank accounts for withdrawals.</li>
+          <li><a href="management-plans.html">Plans</a> — Configure subscription plans that affect driver commission and wallet deductions.</li>
+          <li><a href="management-fleet.html">Fleet Manager</a> — Manage fleet wallets and consolidated earnings.</li>
+          <li><a href="payment-overview.html">Payment Gateways</a> — Configure payment methods for wallet top-ups.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

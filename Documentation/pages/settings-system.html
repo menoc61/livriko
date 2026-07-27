@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Tools - Livriko Documentation</title>
+  <meta name="description" content="Livriko system tools — cache management, queue workers, logs, and database maintenance.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>System Tools</h2>
+        <p>The System Tools section provides utilities for managing and maintaining your Livriko installation. Use these tools carefully, especially in production environments.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Cache Management</h2>
+        <p>Livriko caches configuration, routes, views, and events for performance. When you make changes, clear the relevant cache:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Description</th>
+                <th>Command</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Clear Config</strong></td>
+                <td>Resets cached configuration files</td>
+                <td><code>php artisan config:clear</code></td>
+              </tr>
+              <tr>
+                <td><strong>Clear Cache</strong></td>
+                <td>Clears application cache</td>
+                <td><code>php artisan cache:clear</code></td>
+              </tr>
+              <tr>
+                <td><strong>Clear Routes</strong></td>
+                <td>Resets cached route definitions</td>
+                <td><code>php artisan route:clear</code></td>
+              </tr>
+              <tr>
+                <td><strong>Clear Views</strong></td>
+                <td>Recompiles fresh view templates</td>
+                <td><code>php artisan view:clear</code></td>
+              </tr>
+              <tr>
+                <td><strong>Clear Events</strong></td>
+                <td>Resets cached event listeners</td>
+                <td><code>php artisan event:clear</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Run all cache-clearing commands at once:</p>
+
+        <pre><code>php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+php artisan event:clear</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Do not run cache-clearing commands on a live production server during peak hours. These commands can cause temporary performance degradation as caches are rebuilt. Schedule maintenance windows for these operations.</p>
+        </div>
+
+        <h2>Queue Management</h2>
+        <p>Livriko uses Laravel queues for background jobs like sending notifications and processing payments.</p>
+
+        <h3>Start Queue Worker</h3>
+        <pre><code># Start the queue worker
+php artisan queue:work --sleep=3 --tries=3
+
+# Start with specific connection
+php artisan queue:work redis --sleep=3 --tries=3
+
+# Start with maximum runtime (auto-restart after 3600 seconds)
+php artisan queue:work --max-time=3600</code></pre>
+
+        <h3>Restart Queue Workers</h3>
+        <pre><code># Gracefully restart all queue workers
+php artisan queue:restart
+
+# Check queue status
+php artisan queue:status</code></pre>
+
+        <h3>Process Failed Jobs</h3>
+        <pre><code># Retry a specific failed job
+php artisan queue:retry {job-id}
+
+# Retry all failed jobs
+php artisan queue:retry all
+
+# Clear failed jobs
+php artisan queue:flush</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Production Tip</div>
+          <p>For production environments, use a process manager like <strong>Supervisor</strong> to keep queue workers running. Create a Supervisor configuration file to automatically restart workers if they fail.</p>
+        </div>
+
+        <h2>Log Viewer</h2>
+        <p>Laravel logs are stored in the <code>storage/logs/</code> directory. Use these commands to view and manage logs:</p>
+
+        <pre><code># View the last 100 lines of the log file
+tail -100 storage/logs/laravel.log
+
+# Watch the log file in real-time
+tail -f storage/logs/laravel.log
+
+# Search for errors in the log
+grep -i "error" storage/logs/laravel.log
+
+# View logs for a specific date
+grep "2024-06-20" storage/logs/laravel.log</code></pre>
+
+        <h2>Database Maintenance</h2>
+
+        <h3>Run Migrations</h3>
+        <pre><code># Run all pending migrations
+php artisan migrate
+
+# Run migrations without confirmation
+php artisan migrate --force
+
+# Rollback the last migration batch
+php artisan migrate:rollback
+
+# Rollback and re-run all migrations
+php artisan migrate:refresh</code></pre>
+
+        <h3>Database Backup</h3>
+        <pre><code># Create a database dump
+php artisan db:dump
+
+# Or use mysqldump directly
+mysqldump -u root -p livriko > backup_$(date +%Y%m%d_%H%M%S).sql
+
+# Restore from backup
+mysql -u root -p livriko < backup_file.sql</code></pre>
+
+        <h3>Database Seeding</h3>
+        <pre><code># Seed the database with default data
+php artisan db:seed
+
+# Seed specific table
+php artisan db:seed --class=VehicleTypeSeeder</code></pre>
+
+        <h2>PHP Information</h2>
+        <pre><code># Check PHP version and extensions
+php --version
+
+# View PHP configuration
+php --ini
+
+# Check if a specific extension is loaded
+php -m | grep -i "extension-name"</code></pre>
+
+        <h2>Scheduler (Crontab)</h2>
+        <p>The scheduler handles recurring tasks. Add this to your crontab to run the scheduler every minute:</p>
+
+        <pre><code># Edit crontab
+crontab -e
+
+# Add the following line
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1</code></pre>
+
+        <p>The scheduler runs the following tasks automatically:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Frequency</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Clean expired sessions</td>
+                <td>Every hour</td>
+                <td>Removes expired user sessions from the database</td>
+              </tr>
+              <tr>
+                <td>Generate reports</td>
+                <td>Daily at midnight</td>
+                <td>Generates daily analytics and financial reports</td>
+              </tr>
+              <tr>
+                <td>Send scheduled notifications</td>
+                <td>Every 5 minutes</td>
+                <td>Delivers queued notifications to users</td>
+              </tr>
+              <tr>
+                <td>Clean old logs</td>
+                <td>Weekly</td>
+                <td>Archives and removes old log files</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>When to Use Each Tool</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Tool(s) to Use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Changed .env file</td>
+                <td><code>php artisan config:clear</code></td>
+              </tr>
+              <tr>
+                <td>Added new routes</td>
+                <td><code>php artisan route:clear</code></td>
+              </tr>
+              <tr>
+                <td>Modified blade templates</td>
+                <td><code>php artisan view:clear</code></td>
+              </tr>
+              <tr>
+                <td>Updated database schema</td>
+                <td><code>php artisan migrate</code></td>
+              </tr>
+              <tr>
+                <td>Emails not sending</td>
+                <td>Check queue worker, restart with <code>php artisan queue:work</code></td>
+              </tr>
+              <tr>
+                <td>Performance issues</td>
+                <td>Clear all caches, check queue worker status</td>
+              </tr>
+              <tr>
+                <td>After code deployment</td>
+                <td>Run all cache-clearing commands + <code>composer dump-autoload</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Automation Tips</h2>
+        <ul>
+          <li><strong>Use Supervisor for queue workers</strong> — Automatically restarts failed workers and manages process lifecycle</li>
+          <li><strong>Set up cron for the scheduler</strong> — Ensures recurring tasks run on time</li>
+          <li><strong>Implement deployment scripts</strong> — Automate cache clearing, migrations, and composer install after each deployment</li>
+          <li><strong>Monitor logs</strong> — Use tools like Laravel Telescope or Sentry for real-time error monitoring</li>
+          <li><strong>Automate backups</strong> — Schedule daily database backups using cron or your hosting provider's backup tools</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Example Deployment Script</div>
+          <pre><code>#!/bin/bash
+# deploy.sh — Run after pulling new code
+
+php artisan down
+git pull origin main
+composer install --no-dev --optimize-autoloader
+npm install && npm run build
+php artisan migrate --force
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+php artisan event:clear
+php artisan up</code></pre>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="settings-general.html">Platform Settings</a> — Configure general settings</li>
+          <li><a href="troubleshooting-database.html">Database Upgrade</a> — Upgrade database schema</li>
+          <li><a href="troubleshooting-update.html">Version Update</a> — Update to new versions</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

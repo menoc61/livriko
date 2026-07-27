@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Login - Livriko Documentation</title>
+  <meta name="description" content="Configure social login (Google, Facebook, Apple) in Livriko via Firebase Authentication.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Social Login</h2>
+        <p>Livriko supports Google, Facebook, and Apple Sign-In for seamless user authentication. Each provider requires specific Firebase and platform configuration.</p>
+      </div>
+
+      <div class="prose">
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Prerequisite</div>
+          <p>Social Login providers (Google, Apple) require the Firebase <strong>Blaze (pay-as-you-go)</strong> plan. The Spark (free) plan does not support social authentication. See the <a href="firebase-billing.html">Billing</a> page for details.</p>
+        </div>
+
+        <h2>Google Sign-In</h2>
+        <p>Google Sign-In allows users to sign in with their Google account. This is the most common social login provider.</p>
+
+        <h3>Firebase Setup</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Enable Google Provider</h4>
+              <p>Go to <strong>Firebase Console → Authentication → Sign-in method</strong>. Click on <strong>Google</strong> and enable it. Set a support email address.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Enable Email/Password Fallback</h4>
+              <p>Also enable <strong>Email/Password</strong> as a fallback sign-in method for users who don't have a Google account.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Android Configuration</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Add SHA Key</h4>
+              <p>Add your SHA-1 key to the Firebase project (see <a href="firebase-sha.html">SHA Key</a> page).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Download Updated Config</h4>
+              <p>After adding the SHA key, download an updated <code>google-services.json</code> from Firebase Console.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Replace Config File</h4>
+              <p>Place the updated file in <code>android/app/</code> and rebuild the app.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>iOS Configuration</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Xcode Signing</h4>
+              <p>In Xcode, go to your target's <strong>Signing & Capabilities</strong>. Ensure the correct Team ID and Bundle Identifier are set.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Update GoogleService-Info.plist</h4>
+              <p>Download the updated <code>GoogleService-Info.plist</code> from Firebase and replace the existing file in your <code>ios/</code> directory.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Rebuild</h4>
+              <p>Rebuild the iOS app. Google Sign-In should now work on iOS.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Facebook Login</h2>
+        <p>Facebook Login allows users to sign in with their Facebook account. This requires additional configuration beyond Firebase.</p>
+
+        <h3>Create Facebook App</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Go to Facebook Developers</h4>
+              <p>Visit <a href="https://developers.facebook.com" target="_blank">developers.facebook.com</a> and create a new app of type <strong>"Consumer"</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Add Facebook Login Product</h4>
+              <p>In your Facebook app dashboard, add the <strong>"Facebook Login"</strong> product and configure the OAuth redirect URI.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Get App ID and Secret</h4>
+              <p>Copy the <strong>App ID</strong> and <strong>App Secret</strong> from the Facebook app settings.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Configure in Firebase</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Enable Facebook in Firebase</h4>
+              <p>Go to <strong>Firebase Console → Authentication → Sign-in method</strong>. Enable <strong>Facebook</strong> and enter your Facebook App ID and App Secret.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Configure OAuth Redirect</h4>
+              <p>Set the OAuth redirect URI in your Facebook app settings to the Firebase callback URL.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Configure in Livriko Admin</h3>
+        <p>Enter the Facebook credentials in the Livriko admin panel:</p>
+        <pre><code># In Settings → Social Login:
+Facebook Client ID = your-facebook-app-id
+Facebook Client Secret = your-facebook-app-secret</code></pre>
+
+        <h2>Apple Sign-In</h2>
+        <p>Apple Sign-In is <strong>required</strong> for apps on the App Store if you offer any other social login providers.</p>
+
+        <h3>Apple Developer Setup</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Create an App ID</h4>
+              <p>In the Apple Developer Console, create an App ID with the <strong>"Sign In with Apple"</strong> capability enabled.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Create a Services ID</h4>
+              <p>Create a Services ID for web-based authentication. Configure the redirect URL and return URLs.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Create a Key</h4>
+              <p>Create a new key with the <strong>"Sign in with Apple"</strong> capability. Download the <code>.p8</code> file.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Configure in Firebase</h3>
+        <p>Go to <strong>Firebase Console → Authentication → Sign-in method → Apple</strong> and enable it. Enter the following details:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Service ID</strong></td>
+                <td>Your Apple Services ID (e.g., <code>com.yourcompany.livriko</code>)</td>
+              </tr>
+              <tr>
+                <td><strong>Team ID</strong></td>
+                <td>Your Apple Developer Team ID (10-character string)</td>
+              </tr>
+              <tr>
+                <td><strong>Key ID</strong></td>
+                <td>The Key ID from your Apple Developer account</td>
+              </tr>
+              <tr>
+                <td><strong>Private Key (.p8)</strong></td>
+                <td>Upload the <code>.p8</code> authentication key file</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Configure in Livriko Admin</h3>
+        <pre><code># In Settings → Social Login:
+Apple Client ID = your-apple-services-id
+Apple Team ID = your-team-id
+Apple Key ID = your-key-id
+Apple Private Key = contents-of-your-p8-file</code></pre>
+
+        <h2>Social Login Configuration Summary</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Firebase Requirement</th>
+                <th>Admin Panel Fields</th>
+                <th>Platform Requirements</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Google</strong></td>
+                <td>SHA key + enabled in Auth</td>
+                <td>Client ID, Client Secret</td>
+                <td>SHA-1 in Firebase, <code>google-services.json</code></td>
+              </tr>
+              <tr>
+                <td><strong>Facebook</strong></td>
+                <td>App ID + Secret in Auth</td>
+                <td>Client ID, Client Secret</td>
+                <td>Facebook Developer App, OAuth redirect</td>
+              </tr>
+              <tr>
+                <td><strong>Apple</strong></td>
+                <td>Service ID + Key in Auth</td>
+                <td>Client ID, Team ID, Key ID</td>
+                <td>Apple Developer Account, Services ID</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-billing.html">Billing</a> — Enable the Blaze plan for social login</li>
+          <li><a href="firebase-messaging.html">Cloud Messaging</a> — Configure push notifications</li>
+          <li><a href="firebase-sha.html">SHA Key</a> — Generate SHA fingerprints for Android</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

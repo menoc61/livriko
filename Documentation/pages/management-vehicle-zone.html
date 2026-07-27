@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Zone &amp; Surge Pricing - Livriko Documentation</title>
+  <meta name="description" content="Link vehicles to zones with per-zone pricing and surge multipliers.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-sliders" style="color:var(--primary);margin-right:8px;"></i> Vehicle Zone &amp; Surge Pricing</h2>
+      <p>Vehicle Zone Pricing is where you define the exact fare structure for each vehicle type within each zone. This is the core pricing engine of your Livriko platform &mdash; it determines how much riders pay and how much drivers earn per trip. Configure base fares, per-km rates, per-minute rates, minimum fares, and per-zone surge multipliers.</p>
+    </section>
+
+    <!-- ====== OVERVIEW ====== -->
+    <section class="section-header">
+      <h2>Why Per-Zone Pricing?</h2>
+      <p>Different areas have different market conditions that require tailored pricing.</p>
+    </section>
+
+    <div class="prose">
+      <ul>
+        <li><strong>Urban vs. suburban</strong> &mdash; City centers typically have higher demand and can support higher fares than suburban or rural areas.</li>
+        <li><strong>Competitive markets</strong> &mdash; In areas with strong competition, lower fares may be necessary to attract riders.</li>
+        <li><strong>Operating costs</strong> &mdash; Fuel, tolls, and vehicle maintenance costs vary by region, affecting driver profitability.</li>
+        <li><strong>Currency differences</strong> &mdash; Multi-country deployments require zone-specific pricing in local currencies.</li>
+      </ul>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Independent Configuration</div>
+          Each vehicle type + zone combination is configured independently. This means a "Comfort" sedan can have a base fare of $5 in Paris but $3 in Lyon, with different per-km and per-minute rates for each city.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== CONFIGURATION STEPS ====== -->
+    <section class="section-header">
+      <h2>Configuring Vehicle Zone Pricing</h2>
+      <p>Follow these steps to set up pricing for a vehicle type in a zone.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Vehicle Zone Pricing</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Vehicle Zone Pricing</strong>. You will see a table of all existing vehicle-zone pricing configurations.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Select Zone and Vehicle Type</h4>
+          <p>Choose the zone and vehicle type from the dropdown menus. Each combination creates a unique pricing record. If a pricing record already exists for this combination, you will be taken to edit it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Set Base Fare and Rates</h4>
+          <p>Configure the base fare (starting price), per-km rate, per-minute rate, and minimum fare. These four values form the foundation of fare calculation for this vehicle type in this zone.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Configure Surge Multiplier</h4>
+          <p>Set the default surge multiplier for this vehicle type in this zone. This is the base multiplier applied during surge periods. Time-based surge rules (from Surge Pricing) can override or adjust this value.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Save</h4>
+          <p>Click <strong>Save</strong> to apply the pricing configuration. The new rates take effect immediately for new ride requests. Ongoing rides are not affected by pricing changes.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every pricing field.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Zone</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>The geographic zone where this pricing applies. Must be an existing, active zone. The zone determines the currency and distance unit used for fare calculations.</td>
+          </tr>
+          <tr>
+            <td><strong>Vehicle Type</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>The vehicle type this pricing applies to. Must be an existing, active vehicle type. Each vehicle type can have different pricing in the same zone.</td>
+          </tr>
+          <tr>
+            <td><strong>Base Fare</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>The starting fare charged at the beginning of every trip, regardless of distance or duration. This is the minimum amount before any distance or time charges. Displayed to riders as the "starting at" price.</td>
+          </tr>
+          <tr>
+            <td><strong>Per KM Rate</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Price charged per kilometer (or mile, based on zone distance type) traveled. Multiplied by the total trip distance to calculate the distance component of the fare.</td>
+          </tr>
+          <tr>
+            <td><strong>Per Minute Rate</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Price charged per minute of trip duration. Multiplied by the total trip time (including waiting time in traffic) to calculate the time component of the fare.</td>
+          </tr>
+          <tr>
+            <td><strong>Minimum Fare</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>The minimum amount a rider will be charged for a trip. If the calculated fare (base + distance + time) is less than the minimum fare, the minimum fare is charged instead. Prevents very short trips from being unprofitable.</td>
+          </tr>
+          <tr>
+            <td><strong>Surge Multiplier</strong></td>
+            <td>Number</td>
+            <td>No</td>
+            <td>Default surge multiplier for this vehicle type in this zone. Applied to the total fare during surge periods. Set to 1.0 for no surge, 1.5 for 50% increase, etc. Time-based surge rules can override this value.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== FARE CALCULATION ====== -->
+    <section class="section-header">
+      <h2>Fare Calculation Formula</h2>
+      <p>How the platform calculates the total fare for a ride.</p>
+    </section>
+
+    <div class="prose">
+      <pre><code>Step 1: Calculate base components
+  Distance Charge = Trip Distance × Per KM Rate
+  Time Charge     = Trip Duration × Per Minute Rate
+
+Step 2: Calculate subtotal
+  Subtotal = Base Fare + Distance Charge + Time Charge
+
+Step 3: Apply minimum fare
+  If Subtotal &lt; Minimum Fare → Subtotal = Minimum Fare
+
+Step 4: Apply surge (if active)
+  Surge Amount = Subtotal × (Surge Multiplier - 1)
+  Total Fare   = Subtotal + Surge Amount
+
+Step 5: Apply commission and tax
+  Commission  = Total Fare × Commission %
+  Tax         = Total Fare × Tax %
+
+Step 6: Calculate driver earnings
+  Driver Earnings = Total Fare - Commission + Tax</code></pre>
+
+      <h3>Worked Example</h3>
+      <pre><code>Vehicle:    Comfort
+Zone:       Paris
+Base Fare:  $3.00
+Per KM:     $0.80
+Per Minute: $0.15
+Minimum:    $5.00
+Commission: 20%
+Tax:        10%
+Surge:      None (1.0x)
+
+Trip: 12 km, 20 minutes
+
+Distance Charge: 12 × $0.80 = $9.60
+Time Charge:     20 × $0.15 = $3.00
+Subtotal:        $3.00 + $9.60 + $3.00 = $15.60
+Minimum Check:   $15.60 &gt; $5.00 ✓ (minimum not applied)
+Total Fare:      $15.60
+Commission:      $15.60 × 0.20 = $3.12
+Tax:             $15.60 × 0.10 = $1.56
+Driver Earnings: $15.60 - $3.12 + $1.56 = $14.04</code></pre>
+    </div>
+
+    <hr>
+
+    <!-- ====== SURGE PER ZONE ====== -->
+    <section class="section-header">
+      <h2>Surge Pricing Per Zone</h2>
+      <p>How surge multipliers interact with per-zone pricing.</p>
+    </section>
+
+    <div class="prose">
+      <p>Each vehicle-zone pricing record includes a default surge multiplier. This multiplier interacts with the time-based surge rules configured under <a href="management-surge.html">Surge Pricing</a>.</p>
+
+      <h3>Surge Priority</h3>
+      <ul>
+        <li><strong>Time-based surge rules</strong> take precedence over the default per-zone surge multiplier.</li>
+        <li>If a time-based surge rule is active, its multiplier replaces the per-zone default.</li>
+        <li>If no time-based rule is active, the per-zone surge multiplier is used (typically 1.0x = no surge).</li>
+        <li>When multiple time-based rules overlap, the highest applicable multiplier is used.</li>
+      </ul>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Zone-Specific Surge</div>
+          The per-zone surge multiplier allows you to set different surge levels for different areas. For example, you might set a 1.5x default surge for the downtown zone but only 1.2x for suburban zones, reflecting different demand patterns.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== PRICING STRATEGIES ====== -->
+    <section class="section-header">
+      <h2>Pricing Strategies</h2>
+      <p>Recommended approaches for setting competitive and profitable fares.</p>
+    </section>
+
+    <div class="prose">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-bullseye"></i></div>
+          <h4>Market Research</h4>
+          <p>Research competitor pricing in your market. Set fares within 10-15% of major competitors to remain competitive while maintaining margins.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-chart-pie"></i></div>
+          <h4>Tier Differentiation</h4>
+          <p>Create clear price gaps between vehicle tiers. Economy should be 30-40% cheaper than Comfort, which should be 30-40% cheaper than Premium.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-coins"></i></div>
+          <h4>Minimum Fare Floor</h4>
+          <p>Set minimum fares high enough to cover driver costs for short trips. A $5 minimum ensures even a 1 km trip is worth the driver's time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-percent"></i></div>
+          <h4>Commission Balance</h4>
+          <p>Keep commissions between 15-25%. Higher commissions increase revenue per trip but may reduce driver retention and increase turnover.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>Continue building your pricing and service configuration.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-zones.html" class="feature-card">
+        <div class="icon"><i class="fas fa-map-location-dot"></i></div>
+        <h4>Zones</h4>
+        <p>Create and configure geographic service areas where pricing rules apply.</p>
+      </a>
+      <a href="management-vehicle-types.html" class="feature-card">
+        <div class="icon"><i class="fas fa-car-side"></i></div>
+        <h4>Vehicle Types</h4>
+        <p>Add vehicle categories that are linked to zones for pricing.</p>
+      </a>
+      <a href="management-surge.html" class="feature-card">
+        <div class="icon"><i class="fas fa-chart-line"></i></div>
+        <h4>Surge Pricing</h4>
+        <p>Configure time-based surge rules that override default multipliers.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

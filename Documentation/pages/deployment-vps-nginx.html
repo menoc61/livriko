@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPS Deployment - Nginx Server (LEMP) - Livriko Documentation</title>
+  <meta name="description" content="Recommended production deployment guide for Livriko using Nginx, PHP-FPM, MySQL, and Redis (LEMP stack).">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko" class="mobile-logo">
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko"><span>Docs</span></div>
+      <div class="sidebar-search"><i class="fas fa-search"></i><input type="text" placeholder="Search documentation…" aria-label="Search documentation"></div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-section"><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Introduction</a></div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="laravel"><span><i class="fab fa-laravel" style="margin-right:6px;"></i> Laravel Configuration</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="laravel">
+          <a href="laravel-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="laravel-localhost.html" class="nav-link"><i class="fas fa-circle"></i> Localhost Configuration</a>
+          <a href="laravel-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation Overview</a>
+          <a href="laravel-installation-gui.html" class="nav-link"><i class="fas fa-circle"></i> Installation GUI</a>
+          <a href="laravel-installation-cli.html" class="nav-link"><i class="fas fa-circle"></i> Installation CLI</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="deployment"><span><i class="fas fa-cloud-arrow-up" style="margin-right:6px;"></i> Deployment</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="deployment">
+          <a href="deployment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="deployment-cpanel-gui.html" class="nav-link"><i class="fas fa-circle"></i> cPanel GUI</a>
+          <a href="deployment-cpanel-cli.html" class="nav-link"><i class="fas fa-circle"></i> cPanel CLI</a>
+          <a href="deployment-vps-apache.html" class="nav-link"><i class="fas fa-circle"></i> VPS Apache</a>
+          <a href="deployment-vps-nginx.html" class="nav-link"><i class="fas fa-circle"></i> VPS Nginx</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="app"><span><i class="fas fa-mobile-screen-button" style="margin-right:6px;"></i> App Configuration</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="app">
+          <a href="app-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="app-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation</a>
+          <a href="app-features.html" class="nav-link"><i class="fas fa-circle"></i> Features</a>
+          <a href="app-android.html" class="nav-link"><i class="fas fa-circle"></i> Android Setup</a>
+          <a href="app-ios.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup</a>
+          <a href="app-create-user.html" class="nav-link"><i class="fas fa-circle"></i> Create User App</a>
+          <a href="app-create-driver.html" class="nav-link"><i class="fas fa-circle"></i> Create Driver App</a>
+          <a href="app-change-name.html" class="nav-link"><i class="fas fa-circle"></i> Change App Name</a>
+          <a href="app-change-color.html" class="nav-link"><i class="fas fa-circle"></i> Change App Color</a>
+          <a href="app-change-icon.html" class="nav-link"><i class="fas fa-circle"></i> Change App Icon</a>
+          <a href="app-environment.html" class="nav-link"><i class="fas fa-circle"></i> Environment URL</a>
+          <a href="app-folder-structure.html" class="nav-link"><i class="fas fa-circle"></i> Folder Structure</a>
+          <a href="app-basic-setup.html" class="nav-link"><i class="fas fa-circle"></i> Basic Setup</a>
+          <a href="app-build.html" class="nav-link"><i class="fas fa-circle"></i> Build APK / AAB</a>
+          <a href="app-google-maps.html" class="nav-link"><i class="fas fa-circle"></i> Google Maps</a>
+          <a href="app-services.html" class="nav-link"><i class="fas fa-circle"></i> Service List</a>
+          <a href="app-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="app-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="app-addons.html" class="nav-link"><i class="fas fa-circle"></i> Add-Ons</a>
+          <a href="app-ios-setup.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup Detail</a>
+          <a href="app-ios-build.html" class="nav-link"><i class="fas fa-circle"></i> iOS Build</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="payment"><span><i class="fas fa-credit-card" style="margin-right:6px;"></i> Payment Gateways</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="payment"><a href="payment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a></div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="settings"><span><i class="fas fa-gear" style="margin-right:6px;"></i> Platform Settings</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="settings">
+          <a href="settings-languages.html" class="nav-link"><i class="fas fa-circle"></i> Languages</a>
+          <a href="settings-currencies.html" class="nav-link"><i class="fas fa-circle"></i> Currencies</a>
+          <a href="settings-taxes.html" class="nav-link"><i class="fas fa-circle"></i> Taxes</a>
+          <a href="settings-sms.html" class="nav-link"><i class="fas fa-circle"></i> SMS Gateways</a>
+          <a href="settings-landing.html" class="nav-link"><i class="fas fa-circle"></i> Landing Page</a>
+          <a href="settings-system.html" class="nav-link"><i class="fas fa-circle"></i> System Tools</a>
+          <a href="settings-general.html" class="nav-link"><i class="fas fa-circle"></i> Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="management"><span><i class="fas fa-sliders" style="margin-right:6px;"></i> Livriko Management</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="management">
+          <a href="management-zones.html" class="nav-link"><i class="fas fa-circle"></i> Zones</a>
+          <a href="management-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="management-rental.html" class="nav-link"><i class="fas fa-circle"></i> Rental Vehicles</a>
+          <a href="management-hourly.html" class="nav-link"><i class="fas fa-circle"></i> Hourly Packages</a>
+          <a href="management-airports.html" class="nav-link"><i class="fas fa-circle"></i> Airports</a>
+          <a href="management-surge.html" class="nav-link"><i class="fas fa-circle"></i> Surge Pricing</a>
+          <a href="management-vehicle-zone.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Zone Pricing</a>
+          <a href="management-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="management-sos.html" class="nav-link"><i class="fas fa-circle"></i> SOS</a>
+          <a href="management-plans.html" class="nav-link"><i class="fas fa-circle"></i> Plans</a>
+          <a href="management-drivers.html" class="nav-link"><i class="fas fa-circle"></i> Drivers</a>
+          <a href="management-location.html" class="nav-link"><i class="fas fa-circle"></i> Driver Location</a>
+          <a href="management-wallet.html" class="nav-link"><i class="fas fa-circle"></i> Wallet</a>
+          <a href="management-fleet.html" class="nav-link"><i class="fas fa-circle"></i> Fleet Manager</a>
+          <a href="management-push.html" class="nav-link"><i class="fas fa-circle"></i> Push Notifications</a>
+          <a href="management-templates.html" class="nav-link"><i class="fas fa-circle"></i> Notification Templates</a>
+          <a href="management-settings.html" class="nav-link"><i class="fas fa-circle"></i> App Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="firebase"><span><i class="fas fa-fire" style="margin-right:6px;"></i> Firebase</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="firebase">
+          <a href="firebase-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="firebase-create.html" class="nav-link"><i class="fas fa-circle"></i> Create Project</a>
+          <a href="firebase-rules.html" class="nav-link"><i class="fas fa-circle"></i> Rules</a>
+          <a href="firebase-sha.html" class="nav-link"><i class="fas fa-circle"></i> SHA Key</a>
+          <a href="firebase-admin.html" class="nav-link"><i class="fas fa-circle"></i> Connect Admin</a>
+          <a href="firebase-messaging.html" class="nav-link"><i class="fas fa-circle"></i> Messaging</a>
+          <a href="firebase-social.html" class="nav-link"><i class="fas fa-circle"></i> Social Login</a>
+          <a href="firebase-billing.html" class="nav-link"><i class="fas fa-circle"></i> Billing</a>
+          <a href="firebase-functions.html" class="nav-link"><i class="fas fa-circle"></i> Cloud Functions</a>
+          <a href="firebase-collections.html" class="nav-link"><i class="fas fa-circle"></i> Firestore Collections</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="troubleshooting"><span><i class="fas fa-bug" style="margin-right:6px;"></i> Troubleshooting</span><i class="fas fa-chevron-down chevron"></i></div>
+        <div class="nav-section-links" id="troubleshooting">
+          <a href="troubleshooting-app.html" class="nav-link"><i class="fas fa-circle"></i> App Errors</a>
+          <a href="troubleshooting-admin.html" class="nav-link"><i class="fas fa-circle"></i> Admin Errors</a>
+          <a href="troubleshooting-database.html" class="nav-link"><i class="fas fa-circle"></i> Database Upgrade</a>
+          <a href="troubleshooting-update.html" class="nav-link"><i class="fas fa-circle"></i> Version Update</a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer"><p>Livriko v1.0 &middot; Based on <a href="#">Taxido</a></p></div>
+  </aside>
+
+  <main class="main"><div class="content">
+    <section class="section-header">
+      <h1>VPS Deployment &mdash; Nginx Server (LEMP) &#11088; Recommended</h1>
+      <p>This is the <strong>recommended</strong> deployment method for Livriko. Nginx provides better performance, lower memory usage, and superior handling of concurrent connections compared to Apache. This guide covers the complete LEMP stack setup with PHP-FPM, MySQL, Redis, and Supervisor.</p>
+    </section>
+
+    <div class="callout success">
+      <i class="fas fa-circle-check callout-icon"></i>
+      <div><div class="callout-title">Why Nginx?</div>
+      Nginx uses an event-driven architecture that handles thousands of simultaneous connections with minimal memory. For a ride-hailing platform with real-time WebSocket connections and high API traffic, Nginx is the optimal choice.</div>
+    </div>
+
+    <section class="section-header"><h2>Automated Deployment</h2><p>Livriko includes an automated install script that sets up the entire server stack. This is the fastest way to deploy:</p></section>
+    <pre><code># Download the install script
+curl -O https://raw.githubusercontent.com/HitechFacilitator/livriko/main/install.sh
+
+# Make it executable
+chmod +x install.sh
+
+# Run the script (requires root access)
+sudo ./install.sh</code></pre>
+
+    <p>The script will prompt you for:</p>
+    <ul>
+      <li>Domain name</li>
+      <li>Database name, user, and password</li>
+      <li>Whether to install SSL (recommended)</li>
+    </ul>
+
+    <div class="callout info">
+      <i class="fas fa-circle-info callout-icon"></i>
+      <div><div class="callout-title">Manual Setup</div>
+      If you prefer to set up the server manually for full control over every step, follow the detailed instructions below.</div>
+    </div>
+
+    <section class="section-header"><h2>Step 1: Update System</h2><p>Update the system and install Nginx.</p></section>
+    <pre><code># Update system
+sudo apt update &amp;&amp; sudo apt upgrade -y
+
+# Install Nginx
+sudo apt install -y nginx
+
+# Start and enable Nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx</code></pre>
+
+    <section class="section-header"><h2>Step 2: Install PHP 8.2-FPM</h2><p>Install PHP with FPM (FastCGI Process Manager) for Nginx integration.</p></section>
+    <pre><code># Add PHP repository
+sudo add-apt-repository ppa:ondrej/php -y
+sudo apt update
+
+# Install PHP 8.2 and extensions
+sudo apt install -y php8.2 php8.2-cli php8.2-common php8.2-fpm \
+  php8.2-mysql php8.2-xml php8.2-mbstring php8.2-curl \
+  php8.2-zip php8.2-gd php8.2-bcmath php8.2-redis \
+  php8.2-intl php8.2-readline
+
+# Start PHP-FPM
+sudo systemctl start php8.2-fpm
+sudo systemctl enable php8.2-fpm</code></pre>
+
+    <section class="section-header"><h2>Step 3: Install MySQL 8.0</h2><p>Install and configure MySQL database server.</p></section>
+    <pre><code>sudo apt install -y mysql-server
+
+# Secure the installation
+sudo mysql_secure_installation
+
+# Create database and user
+sudo mysql -u root -p
+
+CREATE DATABASE livriko_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'livriko'@'localhost' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON livriko_db.* TO 'livriko'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+
+    <section class="section-header"><h2>Step 4: Install Redis</h2><p>Install Redis for caching, sessions, and queue management.</p></section>
+    <pre><code>sudo apt install -y redis-server
+
+# Start and enable Redis
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+
+# Test Redis connection
+redis-cli ping
+# Should return: PONG</code></pre>
+
+    <section class="section-header"><h2>Step 5: Install Composer and Node.js</h2><p>Install the dependency managers.</p></section>
+    <pre><code># Install Composer
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+
+# Install Node.js via NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 20</code></pre>
+
+    <section class="section-header"><h2>Step 6: Deploy Livriko</h2><p>Clone the repository, install dependencies, and configure the application.</p></section>
+    <pre><code># Clone the repository
+cd /var/www
+sudo git clone https://github.com/HitechFacilitator/livriko.git
+
+# Set ownership
+sudo chown -R www-data:www-data livriko
+sudo chmod -R 755 livriko
+
+# Navigate to Laravel directory
+cd livriko/Taxido_laravel
+
+# Install Composer dependencies
+sudo -u www-data composer install --no-dev --optimize-autoloader
+
+# Configure environment
+sudo -u www-data cp .env.example .env
+sudo -u www-data php artisan key:generate</code></pre>
+
+    <p>Edit the <code>.env</code> file with your production values:</p>
+    <pre><code>APP_NAME=Livriko
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=livriko_db
+DB_USERNAME=livriko
+DB_PASSWORD=your_secure_password
+
+CACHE_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+
+REVERB_APP_KEY=your-reverb-key
+REVERB_APP_SECRET=your-reverb-secret
+REVERB_APP_ID=your-reverb-app-id
+REVERB_HOST=yourdomain.com
+REVERB_PORT=443
+REVERB_SCHEME=https</code></pre>
+
+    <pre><code># Run migrations and seeders
+sudo -u www-data php artisan migrate --seed
+
+# Create storage symlink
+sudo -u www-data php artisan storage:link
+
+# Optimize for production
+sudo -u www-data php artisan config:cache
+sudo -u www-data php artisan route:cache
+sudo -u www-data php artisan view:cache</code></pre>
+
+    <section class="section-header"><h2>Step 7: Configure Nginx Server Block</h2><p>Create the Nginx configuration for Livriko with WebSocket support.</p></section>
+    <pre><code>sudo nano /etc/nginx/sites-available/livriko</code></pre>
+
+    <p>Add the following configuration:</p>
+    <pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name yourdomain.com www.yourdomain.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name yourdomain.com www.yourdomain.com;
+
+    root /var/www/livriko/Taxido_laravel/public;
+    index index.php index.html;
+
+    # Security Headers
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-XSS-Protection "1; mode=block";
+
+    # Laravel URL Routing
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP-FPM Configuration
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+    }
+
+    # Static File Caching
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Deny Hidden Files
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+
+    # WebSocket Proxy for Laravel Reverb
+    location /reverb {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+    }
+}</code></pre>
+
+    <pre><code># Enable the site
+sudo ln -s /etc/nginx/sites-available/livriko /etc/nginx/sites-enabled/
+
+# Remove default site
+sudo rm /etc/nginx/sites-enabled/default
+
+# Test configuration
+sudo nginx -t
+
+# Restart Nginx
+sudo systemctl restart nginx</code></pre>
+
+    <section class="section-header"><h2>Step 8: Set Permissions</h2><p>Set the correct file permissions for the web server.</p></section>
+    <pre><code># Set ownership
+sudo chown -R www-data:www-data /var/www/livriko
+
+# Set directory permissions
+sudo find /var/www/livriko -type d -exec chmod 755 {} \;
+
+# Set file permissions
+sudo find /var/www/livriko -type f -exec chmod 644 {} \;
+
+# Allow web server write access
+sudo chmod -R 775 /var/www/livriko/Taxido_laravel/storage
+sudo chmod -R 775 /var/www/livriko/Taxido_laravel/bootstrap/cache</code></pre>
+
+    <section class="section-header"><h2>Step 9: Configure Supervisor</h2><p>Set up Supervisor to manage the Laravel queue worker and Reverb WebSocket server as background processes.</p></section>
+
+    <div class="prose"><h3>Queue Worker</h3></div>
+    <pre><code>sudo nano /etc/supervisor/conf.d/livriko-worker.conf</code></pre>
+    <pre><code>[program:livriko-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/livriko/Taxido_laravel/artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/www/livriko/Taxido_laravel/storage/logs/worker.log
+stopwaitsecs=3600</code></pre>
+
+    <div class="prose"><h3>Reverb WebSocket Server</h3></div>
+    <pre><code>sudo nano /etc/supervisor/conf.d/livriko-reverb.conf</code></pre>
+    <pre><code>[program:livriko-reverb]
+process_name=%(program_name)s
+command=php /var/www/livriko/Taxido_laravel/artisan reverb:start
+autostart=true
+autorestart=true
+user=www-data
+redirect_stderr=true
+stdout_logfile=/var/www/livriko/Taxido_laravel/storage/logs/reverb.log</code></pre>
+
+    <pre><code># Reload Supervisor
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start "livriko-worker:*"
+sudo supervisorctl start livriko-reverb</code></pre>
+
+    <section class="section-header"><h2>Step 10: Install SSL with Certbot</h2><p>Obtain a free SSL certificate from Let's Encrypt.</p></section>
+    <pre><code># Install Certbot
+sudo apt install -y certbot python3-certbot-nginx
+
+# Obtain SSL certificate
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+
+# Verify auto-renewal
+sudo certbot renew --dry-run</code></pre>
+
+    <section class="section-header"><h2>Step 11: Set Up Cron Job</h2><p>Add the Laravel scheduler cron job.</p></section>
+    <pre><code>sudo crontab -u www-data -e
+
+# Add the following line:
+* * * * * cd /var/www/livriko/Taxido_laravel &amp;&amp; php artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</code></pre>
+
+    <section class="section-header"><h2>Step 12: Configure Firewall</h2><p>Set up UFW firewall to allow only necessary traffic.</p></section>
+    <pre><code># Allow SSH
+sudo ufw allow OpenSSH
+
+# Allow HTTP and HTTPS
+sudo ufw allow 'Nginx Full'
+
+# Enable firewall
+sudo ufw enable
+
+# Check status
+sudo ufw status</code></pre>
+
+    <section class="section-header"><h2>Verify Deployment</h2><p>Run these commands to verify all services are running correctly.</p></section>
+    <pre><code># Check all service statuses
+sudo systemctl status nginx
+sudo systemctl status php8.2-fpm
+sudo systemctl status mysql
+sudo systemctl status redis-server
+
+# Check Supervisor workers
+sudo supervisorctl status
+
+# Test the application
+curl -I https://yourdomain.com</code></pre>
+
+    <div class="callout success">
+      <i class="fas fa-circle-check callout-icon"></i>
+      <div><div class="callout-title">Deployment Complete</div>
+      Access <code>https://yourdomain.com/admin</code> and log in with <code>admin@livriko.com</code> / <code>password</code> to verify the deployment. Remember to change the default password immediately.</div>
+    </div>
+
+    <section class="section-header"><h2>Next Steps</h2></section>
+    <div class="steps">
+      <div class="step"><div class="step-content">
+        <h4>Set Up Firebase</h4>
+        <p>Configure push notifications and real-time messaging with Firebase.</p>
+        <a href="firebase-create.html">Firebase Setup &rarr;</a>
+      </div></div>
+      <div class="step"><div class="step-content">
+        <h4>Enable Payments</h4>
+        <p>Configure Stripe, PayPal, or other payment gateways for your region.</p>
+        <a href="payment-overview.html">Payment Gateways &rarr;</a>
+      </div></div>
+      <div class="step"><div class="step-content">
+        <h4>Configure Mobile Apps</h4>
+        <p>Set up the User App and Driver App to connect to your production API.</p>
+        <a href="app-prerequisites.html">App Configuration &rarr;</a>
+      </div></div>
+    </div>
+
+    <footer class="footer">
+      <img src="../livriko png 0.5x/Forme monochrome noir@0.5x.png" alt="Livriko" class="footer-logo">
+      <p>&copy; 2024&ndash;2026 Livriko. All rights reserved.</p>
+      <p>Version 1.0 &middot; Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+      <div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div>
+    </footer>
+  </div></main>
+
+  <script>
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active', 'visible'); hamburger.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); hamburger.classList.remove('active'); setTimeout(() => overlay.classList.remove('active'), 300); }
+    hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.nav-section-header[data-toggle]').forEach(header => { header.addEventListener('click', () => { header.closest('.nav-section').classList.toggle('collapsed'); }); });
+    document.querySelectorAll('.nav-link').forEach(link => { if (link.href === window.location.href) { link.classList.add('active'); } else { link.classList.remove('active'); } });
+  </script>
+</body>
+</html>

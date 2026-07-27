@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fleet Manager - Livriko Documentation</title>
+  <meta name="description" content="Organize drivers into fleets and assign fleet managers in Livriko for scalable operations.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Fleet Manager</h2>
+        <p>Organize drivers into fleets and assign dedicated fleet managers for scalable, structured operations across your platform.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Why Fleet Management Matters</h2>
+        <p>As your platform grows, managing individual drivers becomes increasingly time-consuming. Fleet management introduces a hierarchical structure where a fleet manager oversees a group of drivers and vehicles, handling day-to-day operations while you focus on platform strategy.</p>
+        <p>Fleet management is ideal for:</p>
+        <ul>
+          <li><strong>Large Operations</strong> — Platforms with hundreds or thousands of drivers benefit from delegated management.</li>
+          <li><strong>Corporate Partners</strong> — Taxi companies, transport businesses, and corporate fleets that operate multiple vehicles.</li>
+          <li><strong>Regional Management</strong> — Assigning fleet managers to specific geographic zones for localized oversight.</li>
+          <li><strong>Scalability</strong> — Adding new drivers and vehicles without increasing admin workload proportionally.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Fleet Manager Fields Reference</h2>
+        <p>When creating or editing a fleet, the following fields define the fleet and its manager.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Fleet Name</strong></td>
+                <td>Text</td>
+                <td>A unique name for the fleet (e.g., "City Express", "Premium Fleet Alpha"). Used for identification across the admin panel and fleet dashboard.</td>
+              </tr>
+              <tr>
+                <td><strong>Manager Name</strong></td>
+                <td>Text</td>
+                <td>Full name of the fleet manager responsible for this fleet.</td>
+              </tr>
+              <tr>
+                <td><strong>Email</strong></td>
+                <td>Email</td>
+                <td>Fleet manager's email address for login credentials and notifications.</td>
+              </tr>
+              <tr>
+                <td><strong>Phone</strong></td>
+                <td>Phone</td>
+                <td>Contact phone number for the fleet manager.</td>
+              </tr>
+              <tr>
+                <td><strong>Description</strong></td>
+                <td>Text</td>
+                <td>A brief description of the fleet — its focus area, vehicle types, or operational scope.</td>
+              </tr>
+              <tr>
+                <td><strong>Status</strong></td>
+                <td>Toggle</td>
+                <td>Enable or disable the fleet. Disabled fleets cannot have drivers assigned and are hidden from the fleet dashboard.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Creating a Fleet Manager Account</h2>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Navigate to Fleet Manager</h4>
+              <p>Log in to the admin panel and go to <strong>Livriko Management</strong> → <strong>Fleet Manager</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Click "Add New Fleet"</h4>
+              <p>Click the <strong>Add New Fleet</strong> button to open the fleet creation form.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Enter Fleet Details</h4>
+              <p>Fill in the fleet name, manager name, email, phone, and description. Ensure the email is valid — login credentials will be sent to this address.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Save the Fleet</h4>
+              <p>Click <strong>Save</strong>. The fleet manager receives an email with their login credentials and can access the fleet dashboard immediately.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Assign Drivers</h4>
+              <p>Go to the fleet's detail page and assign drivers from the list of available approved drivers. Each driver can belong to only one fleet at a time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Driver Assignment</div>
+          <p>Drivers must be in <strong>Approved</strong> status before they can be assigned to a fleet. If a driver is still pending verification, complete the <a href="management-drivers.html">verification process</a> first.</p>
+        </div>
+
+        <hr>
+
+        <h2>Fleet Manager Dashboard</h2>
+        <p>Once a fleet is set up, the fleet manager has access to a dedicated dashboard that provides comprehensive visibility into their fleet's operations.</p>
+
+        <h3>Dashboard Features</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Rides Analytics</h3>
+            <p>View total rides completed, average ride duration, peak hours, and ride completion rates for the fleet.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-coins"></i></div>
+            <h3>Revenue Reports</h3>
+            <p>Track total revenue generated by the fleet, earnings per driver, commission deductions, and net income.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <h3>Driver Performance</h3>
+            <p>Monitor individual driver ratings, acceptance rates, cancellation rates, and average response times.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
+            <h3>Live Locations</h3>
+            <p>See real-time positions of all fleet drivers on a map, filtered by status and vehicle type.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Driver-Fleet Association</h2>
+        <p>Drivers assigned to a fleet operate under the fleet manager's oversight while retaining their individual driver accounts. The association provides several benefits:</p>
+        <ul>
+          <li><strong>Centralized Earnings</strong> — Fleet-level earnings are aggregated in the <a href="management-wallet.html">Fleet Wallet</a>, simplifying accounting and payout processes.</li>
+          <li><strong>Performance Tracking</strong> — Fleet managers can compare driver performance within their fleet and identify top performers and underperformers.</li>
+          <li><strong>Operational Control</strong> — Fleet managers can communicate with their drivers, manage schedules, and handle day-to-day issues without admin intervention.</li>
+          <li><strong>Document Management</strong> — Track vehicle registration, insurance, and license expiry dates for all fleet vehicles in one place.</li>
+        </ul>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">One Fleet Per Driver</div>
+          <p>A driver can only belong to one fleet at a time. To move a driver to a different fleet, you must first remove them from their current fleet before assigning them to a new one.</p>
+        </div>
+
+        <hr>
+
+        <h2>Fleet-Level Analytics</h2>
+        <p>The fleet dashboard provides detailed analytics that help fleet managers optimize their operations.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Description</th>
+                <th>Available To</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Total Rides</strong></td>
+                <td>Number of rides completed by the fleet within a selected time period.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Revenue</strong></td>
+                <td>Total fare amount collected from rides, before commission deduction.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Net Earnings</strong></td>
+                <td>Revenue after platform commission and subscription fees are deducted.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Average Rating</strong></td>
+                <td>Mean customer rating across all drivers in the fleet.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Acceptance Rate</strong></td>
+                <td>Percentage of ride requests accepted vs. total requests received by the fleet.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Cancellation Rate</strong></td>
+                <td>Percentage of rides cancelled by fleet drivers after acceptance.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Online Hours</strong></td>
+                <td>Total hours fleet drivers spent online and available for rides.</td>
+                <td>Fleet Manager &amp; Admin</td>
+              </tr>
+              <tr>
+                <td><strong>Active Vehicles</strong></td>
+                <td>Number of vehicles currently assigned to the fleet with valid documents.</td>
+                <td>Admin only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Fleet Manager Permissions</h2>
+        <p>Fleet managers have a limited set of permissions compared to platform admins. They can manage their fleet's operations but cannot access platform-wide settings or other fleets' data.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Permission</th>
+                <th>Fleet Manager</th>
+                <th>Platform Admin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>View fleet drivers</td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>Assign / remove drivers from fleet</td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>View fleet analytics</td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>View fleet wallet &amp; transactions</td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>View live driver locations</td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>Create / delete fleets</td>
+                <td><i class="fas fa-times" style="color: #ef4444;"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>Configure platform settings</td>
+                <td><i class="fas fa-times" style="color: #ef4444;"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>Approve / reject drivers</td>
+                <td><i class="fas fa-times" style="color: #ef4444;"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+              <tr>
+                <td>Send push notifications</td>
+                <td><i class="fas fa-times" style="color: #ef4444;"></i></td>
+                <td><i class="fas fa-check" style="color: var(--secondary);"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Benefits of Fleet Management</h2>
+        <ol>
+          <li><strong>Reduced Admin Workload</strong> — Fleet managers handle driver onboarding, scheduling, and performance monitoring, freeing up platform administrators for strategic tasks.</li>
+          <li><strong>Better Accountability</strong> — Clear ownership of driver groups means issues are resolved faster and performance is tracked more accurately.</li>
+          <li><strong>Simplified Payouts</strong> — Fleet wallets enable bulk payout processing instead of handling individual driver withdrawals one by one.</li>
+          <li><strong>Data-Driven Decisions</strong> — Fleet-level analytics help identify trends, optimize driver allocation, and improve overall service quality.</li>
+          <li><strong>Professional Operations</strong> — Corporate fleet partners expect structured management tools. Fleet management makes your platform more attractive to business clients.</li>
+        </ol>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Scaling Tip</div>
+          <p>Start with fleet management once you have more than 50 active drivers. Below that threshold, direct driver management through the admin panel is usually sufficient. As you scale, introduce fleets strategically — one per major zone or business partner.</p>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-drivers.html">Drivers</a> — Manage individual driver accounts and verification.</li>
+          <li><a href="management-wallet.html">Wallet</a> — View fleet wallet, earnings, and transaction history.</li>
+          <li><a href="management-location.html">Driver Location</a> — Monitor real-time positions of fleet drivers on the map.</li>
+          <li><a href="management-plans.html">Plans</a> — Configure subscription plans for fleet drivers.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

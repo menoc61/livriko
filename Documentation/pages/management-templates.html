@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Templates - Livriko Documentation</title>
+  <meta name="description" content="Customize email, SMS, and push notification templates in Livriko for all platform events.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Notification Templates</h2>
+        <p>Customize email, SMS, and push notification templates for every platform event — ensure consistent, professional messaging across all channels.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Overview</h2>
+        <p>Notification templates define the content and format of automated messages sent to riders and drivers. Livriko uses templates for three communication channels: <strong>Email</strong>, <strong>SMS</strong>, and <strong>Push Notification</strong>. Each template is triggered by a specific platform event and can be customized to match your brand voice.</p>
+        <p>Templates use <strong>variables</strong> (placeholders) that are dynamically replaced with real data at the time of sending. For example, <code>{{user_name}}</code> is replaced with the recipient's actual name.</p>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Multi-Channel Support</div>
+          <p>Most events trigger notifications across multiple channels. For example, a ride completion sends a push notification to the rider, an email receipt, and an SMS confirmation. Each channel's template can be edited independently.</p>
+        </div>
+
+        <hr>
+
+        <h2>Template Types</h2>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <h3>Email</h3>
+            <p>Rich HTML email templates for detailed communications. Supports images, links, and formatted text. Ideal for receipts, welcome emails, and promotional campaigns.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-comment-sms"></i></div>
+            <h3>SMS</h3>
+            <p>Plain text SMS templates for concise, time-sensitive messages. Used for OTPs, ride confirmations, and critical alerts. Character count is limited to 160 per segment.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-bell"></i></div>
+            <h3>Push Notification</h3>
+            <p>Short-form push notification templates delivered via FCM. Displayed on the device lock screen and notification center. Used for real-time ride updates and promotions.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Available Events</h2>
+        <p>Livriko provides templates for the following platform events. Each event can have up to three template variants (email, SMS, push).</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Description</th>
+                <th>Channels</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>User Registration</strong></td>
+                <td>Sent when a new rider creates an account.</td>
+                <td>Email, Push</td>
+              </tr>
+              <tr>
+                <td><strong>Driver Registration</strong></td>
+                <td>Sent when a new driver registers and submits documents.</td>
+                <td>Email, Push</td>
+              </tr>
+              <tr>
+                <td><strong>Driver Approved</strong></td>
+                <td>Notifies a driver that their account has been verified and approved.</td>
+                <td>Email, Push</td>
+              </tr>
+              <tr>
+                <td><strong>Driver Rejected</strong></td>
+                <td>Notifies a driver that their application was rejected with a reason.</td>
+                <td>Email</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Booking</strong></td>
+                <td>Confirms a ride booking to the rider with ride details.</td>
+                <td>Email, SMS, Push</td>
+              </tr>
+              <tr>
+                <td><strong>Driver Assigned</strong></td>
+                <td>Notifies the rider when a driver accepts their ride request.</td>
+                <td>SMS, Push</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Started</strong></td>
+                <td>Confirms to both rider and driver that the ride has begun.</td>
+                <td>Push</td>
+              </tr>
+              <tr>
+                <td><strong>Ride Completed</strong></td>
+                <td>Sent to both parties when the ride ends, including fare summary.</td>
+                <td>Email, Push</td>
+              </tr>
+              <tr>
+                <td><strong>Payment Processed</strong></td>
+                <td>Receipt sent to rider after payment is successfully processed.</td>
+                <td>Email</td>
+              </tr>
+              <tr>
+                <td><strong>Driver Earnings</strong></td>
+                <td>Notifies the driver of earnings deposited to their wallet.</td>
+                <td>Push</td>
+              </tr>
+              <tr>
+                <td><strong>Password Reset</strong></td>
+                <td>Sent when a user requests a password reset with a reset link or OTP.</td>
+                <td>Email, SMS</td>
+              </tr>
+              <tr>
+                <td><strong>Promotional</strong></td>
+                <td>Custom promotional messages sent via <a href="management-push.html">Push Notifications</a>.</td>
+                <td>Email, Push</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Template Variables</h2>
+        <p>Variables are placeholders in template content that are dynamically replaced with real data when the notification is sent. Use double curly braces <code>{{variable_name}}</code> to insert variables.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Variable</th>
+                <th>Description</th>
+                <th>Available In</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>{{user_name}}</code></td>
+                <td>The recipient's full name.</td>
+                <td>All events</td>
+              </tr>
+              <tr>
+                <td><code>{{user_email}}</code></td>
+                <td>The recipient's email address.</td>
+                <td>Registration, Password Reset</td>
+              </tr>
+              <tr>
+                <td><code>{{ride_id}}</code></td>
+                <td>The unique ride identifier.</td>
+                <td>Ride events</td>
+              </tr>
+              <tr>
+                <td><code>{{driver_name}}</code></td>
+                <td>The assigned driver's name.</td>
+                <td>Driver Assigned, Ride Completed</td>
+              </tr>
+              <tr>
+                <td><code>{{driver_phone}}</code></td>
+                <td>The assigned driver's phone number.</td>
+                <td>Driver Assigned</td>
+              </tr>
+              <tr>
+                <td><code>{{pickup_location}}</code></td>
+                <td>The ride pickup address.</td>
+                <td>Ride Booking, Driver Assigned</td>
+              </tr>
+              <tr>
+                <td><code>{{dropoff_location}}</code></td>
+                <td>The ride drop-off address.</td>
+                <td>Ride Booking, Ride Completed</td>
+              </tr>
+              <tr>
+                <td><code>{{ride_fare}}</code></td>
+                <td>The total fare amount for the ride.</td>
+                <td>Ride Completed, Payment Processed</td>
+              </tr>
+              <tr>
+                <td><code>{{vehicle_type}}</code></td>
+                <td>The vehicle type used for the ride.</td>
+                <td>Ride events</td>
+              </tr>
+              <tr>
+                <td><code>{{amount}}</code></td>
+                <td>A generic amount field (used for wallet credits, refunds, etc.).</td>
+                <td>Payment, Wallet events</td>
+              </tr>
+              <tr>
+                <td><code>{{otp_code}}</code></td>
+                <td>The one-time password for ride verification or password reset.</td>
+                <td>Password Reset, Ride Verification</td>
+              </tr>
+              <tr>
+                <td><code>{{promo_code}}</code></td>
+                <td>The promotional discount code.</td>
+                <td>Promotional</td>
+              </tr>
+              <tr>
+                <td><code>{{app_name}}</code></td>
+                <td>The platform name as configured in <a href="management-settings.html">App Settings</a>.</td>
+                <td>All events</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Variable Validation</div>
+          <p>Always test your templates before saving. Invalid or misspelled variables will appear as raw text (e.g., <code>{{user_nmae}}</code>) in the notification, which looks unprofessional and confuses users.</p>
+        </div>
+
+        <hr>
+
+        <h2>Editing a Template</h2>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Navigate to Notification Templates</h4>
+              <p>Go to <strong>Livriko Management</strong> → <strong>Notification Templates</strong>. You will see a list of all available templates grouped by event.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Select a Template</h4>
+              <p>Click on the event you want to customize. You will see tabs for each channel (Email, SMS, Push) that can be edited independently.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Edit the Content</h4>
+              <p>Modify the subject line (for email), message body, and any other content fields. Insert variables using <code>{{variable_name}}</code> syntax where dynamic data should appear.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Preview and Save</h4>
+              <p>Use the preview function to see how the notification will look with sample data. When satisfied, click <strong>Save</strong> to apply the changes.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Default Templates</h2>
+        <p>Livriko ships with pre-configured templates for every event. These defaults are professionally written and follow best practices for clarity and tone. You can use them as-is or customize them to match your brand.</p>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">Reset to Defaults</div>
+          <p>If you heavily customize a template and want to revert, most templates include a <strong>Reset to Default</strong> option. This restores the original Livriko-provided content while preserving your other template settings.</p>
+        </div>
+
+        <hr>
+
+        <h2>Multi-Language Template Support</h2>
+        <p>If your platform supports multiple languages through <a href="settings-languages.html">Platform Languages</a>, each template can have language-specific variants. When a notification is sent, the system automatically selects the template variant matching the recipient's preferred language.</p>
+        <ul>
+          <li><strong>Language Variants</strong> — Create separate template content for each enabled language (e.g., English, French, Arabic).</li>
+          <li><strong>Fallback</strong> — If a template variant is missing for a language, the system falls back to the default language (typically English).</li>
+          <li><strong>RTL Support</strong> — Email and push templates support right-to-left text direction for languages like Arabic and Hebrew.</li>
+        </ul>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Localization Tip</div>
+          <p>When creating multi-language templates, avoid hardcoding text outside of variables. Keep all user-facing text in the template content so translators can localize it without touching the code.</p>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-push.html">Push Notifications</a> — Send manual push notifications to targeted audiences.</li>
+          <li><a href="settings-languages.html">Languages</a> — Configure multi-language support for templates.</li>
+          <li><a href="settings-sms.html">SMS Gateways</a> — Set up SMS providers for delivery of SMS templates.</li>
+          <li><a href="management-settings.html">App Settings</a> — Configure notification preferences and channel toggles.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

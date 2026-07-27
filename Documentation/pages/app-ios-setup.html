@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iOS Setup Detail - Livriko Documentation</title>
+  <meta name="description" content="Detailed iOS configuration — provisioning, entitlements, permissions.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>iOS Setup Detail</h2>
+      <p>This guide covers the detailed iOS-specific configuration for both the User and Driver apps, including provisioning profiles, certificates, entitlements, permissions, and APNs setup.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Mac computer (Intel or Apple Silicon) with macOS Ventura or later</li>
+        <li>Xcode 15+ installed from the Mac App Store</li>
+        <li>CocoaPods installed (<code>sudo gem install cocoapods</code>)</li>
+        <li>Apple Developer Program membership ($99/year) for production builds</li>
+        <li>React Native environment set up (<a href="app-prerequisites.html">see prerequisites</a>)</li>
+      </ul>
+
+      <div class="callout danger">
+        <i class="fas fa-times-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Apple Developer Program Required</p>
+          <p>You must be enrolled in the Apple Developer Program to create provisioning profiles, push notification certificates, and submit to the App Store. Free accounts are limited to simulators and device debugging only.</p>
+        </div>
+      </div>
+
+      <h2>Step 1: Install CocoaPods</h2>
+      <p>CocoaPods manages native iOS dependencies for React Native. Install it globally on your Mac:</p>
+      <pre><code># Install CocoaPods
+sudo gem install cocoapods
+
+# Verify installation
+pod --version
+# Should output: 1.15.x or similar</code></pre>
+
+      <h2>Step 2: Install Pods</h2>
+      <p>Navigate to the iOS directory of each app and install the CocoaPods dependencies:</p>
+
+      <p><strong>User App:</strong></p>
+      <pre><code>cd Taxido_user/ios
+pod install</code></pre>
+
+      <p><strong>Driver App:</strong></p>
+      <pre><code>cd Taxido_driver/ios
+pod install</code></pre>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Open the .xcworkspace File</p>
+          <p>Always open the <code>.xcworkspace</code> file (not the <code>.xcodeproj</code> file) in Xcode after running <code>pod install</code>. Opening the wrong file will cause build errors because CocoaPods-managed dependencies will not be linked.</p>
+        </div>
+      </div>
+
+      <h2>Step 3: Provisioning Profiles & Certificates</h2>
+      <p>iOS requires code signing certificates and provisioning profiles for both development and distribution. Manage these at the <a href="https://developer.apple.com/account/resources/" target="_blank">Apple Developer Portal</a>.</p>
+
+      <h3>Certificate Types</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Certificate</th>
+              <th>Purpose</th>
+              <th>Required For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Apple Distribution</strong></td>
+              <td>Sign the app for App Store or Ad Hoc distribution</td>
+              <td>App Store submission, TestFlight</td>
+            </tr>
+            <tr>
+              <td><strong>Apple Development</strong></td>
+              <td>Sign the app for development and testing on devices</td>
+              <td>Local testing on physical devices</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Provisioning Profile Types</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>Purpose</th>
+              <th>Restriction</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>App Store</strong></td>
+              <td>Submit to the App Store</td>
+              <td>Can only be used for App Store builds</td>
+            </tr>
+            <tr>
+              <td><strong>Ad Hoc</strong></td>
+              <td>Distribute to specific registered devices</td>
+              <td>Limited to listed device UDIDs</td>
+            </tr>
+            <tr>
+              <td><strong>Development</strong></td>
+              <td>Debug on development devices</td>
+              <td>Limited to development team devices</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Configure Signing in Xcode</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Open .xcworkspace</h4>
+            <p>Open <code>LivrikoUser.xcworkspace</code> (or <code>LivrikoDriver.xcworkspace</code>) in Xcode.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Select Project</h4>
+            <p>Click the project in the navigator, then select the target under <strong>Targets</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Signing & Capabilities</h4>
+            <p>Go to the <strong>Signing & Capabilities</strong> tab. Select your <strong>Team</strong> (Apple Developer account).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Set Bundle Identifier</h4>
+            <p>Set the <strong>Bundle Identifier</strong> (e.g., <code>com.yourcompany.livriko.user</code>). Ensure it matches your App ID in the Developer Portal.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Automatic Signing</h4>
+            <p>Ensure <strong>Automatically manage signing</strong> is checked for development. For distribution builds, you may need manual signing with explicit provisioning profiles.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Step 4: Entitlements</h2>
+      <p>Entitlements are capabilities your app requests from iOS. They are configured in Xcode's <strong>Signing & Capabilities</strong> tab.</p>
+
+      <h3>User App Entitlements</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Entitlement</th>
+              <th>Purpose</th>
+              <th>Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Push Notifications</strong></td>
+              <td>Receive ride updates and alerts via APNs</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Associated Domains</strong></td>
+              <td>Universal Links and Apple Sign-In</td>
+              <td>If using Apple Sign-In</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Driver App Entitlements</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Entitlement</th>
+              <th>Purpose</th>
+              <th>Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Push Notifications</strong></td>
+              <td>Receive ride request notifications via APNs</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Background Modes → Location</strong></td>
+              <td>Continuous location tracking while app is backgrounded</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Associated Domains</strong></td>
+              <td>Universal Links and Apple Sign-In</td>
+              <td>If using Apple Sign-In</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>To add a capability: click <strong>+ Capability</strong> in the Signing & Capabilities tab, then select the capability from the list.</p>
+
+      <h2>Step 5: Info.plist Permissions</h2>
+      <p>The <code>Info.plist</code> file must contain usage description strings for every permission the app requests. Missing descriptions will cause the app to crash or be rejected by App Store review.</p>
+
+      <pre><code>&lt;!-- Info.plist --&gt;
+&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko needs your location to find nearby drivers and calculate your route.&lt;/string&gt;
+
+&lt;key&gt;NSLocationAlwaysAndWhenInUseUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko tracks your location in the background to provide real-time ride updates and driver matching.&lt;/string&gt;
+
+&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko uses the camera to scan documents and take profile photos.&lt;/string&gt;
+
+&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko accesses your photo library to upload profile pictures and ride receipts.&lt;/string&gt;
+
+&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko uses the microphone for in-app voice calls with drivers.&lt;/string&gt;
+
+&lt;key&gt;NSFaceIDUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko uses Face ID for secure app authentication.&lt;/string&gt;</code></pre>
+
+      <div class="callout danger">
+        <i class="fas fa-times-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Missing Descriptions = Crash & Rejection</p>
+          <p>If any permission usage description is missing from <code>Info.plist</code>, the app will crash when requesting that permission. App Store review will also reject the app for missing descriptions. Always include all required strings.</p>
+        </div>
+      </div>
+
+      <h2>Step 6: APNs (Apple Push Notification Service)</h2>
+      <p>Push notifications require an APNs key or certificate configured in both Apple Developer Portal and Firebase.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Create APNs Key</h4>
+            <p>In the <a href="https://developer.apple.com/account/resources/authlist/list" target="_blank">Apple Developer Portal</a>, go to <strong>Keys</strong> and click <strong>+</strong>. Enable <strong>Apple Push Notifications service</strong> and download the <code>.p8</code> key file.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Add to Firebase</h4>
+            <p>In the Firebase Console, go to <strong>Project Settings</strong> → <strong>Cloud Messaging</strong> → <strong>Apple app configuration</strong>. Upload the APNs authentication key (.p8 file) and enter your Key ID and Team ID.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Register for Notifications</h4>
+            <p>In the app code, request notification permission and register the device token with Firebase. The token is automatically used by <code>@react-native-firebase/messaging</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Step 7: Google Services Configuration</h2>
+      <p>Add the Google Services plist file for Firebase and Maps integration:</p>
+      <ol>
+        <li>Download <code>GoogleService-Info.plist</code> from the Firebase console</li>
+        <li>Drag the file into the Xcode project navigator</li>
+        <li>Ensure <strong>"Copy items if needed"</strong> is checked</li>
+        <li>Ensure the file is added to the correct target (User or Driver)</li>
+        <li>Add the Google Maps SDK initialization code in <code>AppDelegate.m</code> or <code>AppDelegate.swift</code></li>
+      </ol>
+
+      <h2>Step 8: Run on Simulator</h2>
+      <p>Test the apps on the iOS Simulator:</p>
+      <pre><code># User App
+cd Taxido_user
+npx react-native run-ios
+
+# Driver App
+cd Taxido_driver
+npx react-native run-ios</code></pre>
+
+      <h2>Step 9: Run on Physical Device</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Connect Device</h4>
+            <p>Connect the iPhone to your Mac via USB cable.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Enable Developer Mode</h4>
+            <p>On the iPhone, go to <strong>Settings</strong> → <strong>Privacy &amp; Security</strong> → <strong>Developer Mode</strong> and toggle it on.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Select Device in Xcode</h4>
+            <p>In Xcode, select the connected device from the scheme dropdown in the toolbar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Build and Run</h4>
+            <p>Click the <strong>Run</strong> button (or press <code>Cmd+R</code>) to build and install the app on the device.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Driver App Background Location</p>
+          <p>The Driver app requires background location access for real-time tracking. In Xcode, go to <strong>Signing &amp; Capabilities</strong> → <strong>+ Capability</strong> → <strong>Background Modes</strong> and enable <strong>Location updates</strong>. Also add the <code>UIBackgroundModes</code> key with <code>location</code> value to <code>Info.plist</code>.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-ios-build.html">iOS Build &amp; Release</a> — Build for App Store</li>
+        <li><a href="app-google-maps.html">Google Maps</a> — Configure maps for iOS</li>
+        <li><a href="firebase-create.html">Firebase Setup</a> — Configure push notifications</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

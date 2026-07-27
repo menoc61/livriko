@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Livriko Documentation</title>
+  <meta name="description" content="General platform settings in Livriko — branding, email, social login, reCAPTCHA, and maintenance mode.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Settings</h2>
+        <p>The general settings page contains the core configuration for your Livriko platform. These settings control app behavior, integrations, branding, and system defaults.</p>
+      </div>
+
+      <div class="prose">
+        <h2>General Tab</h2>
+        <p>Configure the basic application settings:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>App Name</strong></td>
+                <td>Your platform name displayed throughout the app and admin panel</td>
+              </tr>
+              <tr>
+                <td><strong>App Logo</strong></td>
+                <td>Upload your brand logo (recommended: 200x50px PNG with transparent background)</td>
+              </tr>
+              <tr>
+                <td><strong>Privacy Policy URL</strong></td>
+                <td>Link to your privacy policy page (shown in the app)</td>
+              </tr>
+              <tr>
+                <td><strong>Terms URL</strong></td>
+                <td>Link to your terms of service page</td>
+              </tr>
+              <tr>
+                <td><strong>App Store URL</strong></td>
+                <td>Link to your iOS app on the Apple App Store</td>
+              </tr>
+              <tr>
+                <td><strong>Play Store URL</strong></td>
+                <td>Link to your Android app on Google Play</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Appearance Tab</h2>
+        <p>Customize the look and feel of your Livriko platform:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Primary Color</strong></td>
+                <td>Main brand color used for buttons, headers, and accents (use the color picker)</td>
+              </tr>
+              <tr>
+                <td><strong>Sidebar Color Type</strong></td>
+                <td>Choose between <strong>Solid</strong> (single color) or <strong>Gradient</strong> (two-color gradient)</td>
+              </tr>
+              <tr>
+                <td><strong>Gradient Colors</strong></td>
+                <td>If using gradient, set the start and end colors for the sidebar</td>
+              </tr>
+              <tr>
+                <td><strong>Font Family</strong></td>
+                <td>Font used in the admin panel (e.g., Inter, Roboto, Open Sans)</td>
+              </tr>
+              <tr>
+                <td><strong>Front Font Family</strong></td>
+                <td>Font used in the mobile apps and landing page</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Choose a primary color that matches your brand identity. This color will be used consistently across the admin panel, mobile apps, and landing page for a cohesive experience.</p>
+        </div>
+
+        <h2>Activations Tab</h2>
+        <p>Toggle features on or off for your platform:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Wallet System</strong></td>
+                <td>Enable/disable in-app wallet for drivers and riders</td>
+              </tr>
+              <tr>
+                <td><strong>Coupon System</strong></td>
+                <td>Enable/disable discount coupon functionality</td>
+              </tr>
+              <tr>
+                <td><strong>Surge Pricing</strong></td>
+                <td>Enable/disable dynamic pricing based on demand</td>
+              </tr>
+              <tr>
+                <td><strong>Rental Vehicles</strong></td>
+                <td>Enable/disable vehicle rental feature</td>
+              </tr>
+              <tr>
+                <td><strong>Hourly Packages</strong></td>
+                <td>Enable/disable hourly ride packages</td>
+              </tr>
+              <tr>
+                <td><strong>Fleet Manager</strong></td>
+                <td>Enable/disable fleet management features</td>
+              </tr>
+              <tr>
+                <td><strong>SOS Button</strong></td>
+                <td>Enable/disable emergency SOS button in the app</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Email Configuration</h2>
+        <p>Configure email sending for notifications and transactional emails:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mailer</strong></td>
+                <td>Email transport: Sendmail, SMTP, or Mailgun</td>
+              </tr>
+              <tr>
+                <td><strong>Host</strong></td>
+                <td>SMTP server hostname (e.g., <code>smtp.gmail.com</code>)</td>
+              </tr>
+              <tr>
+                <td><strong>Port</strong></td>
+                <td>SMTP port (typically 587 for TLS, 465 for SSL)</td>
+              </tr>
+              <tr>
+                <td><strong>Username</strong></td>
+                <td>SMTP authentication username</td>
+              </tr>
+              <tr>
+                <td><strong>Password</strong></td>
+                <td>SMTP authentication password</td>
+              </tr>
+              <tr>
+                <td><strong>Encryption</strong></td>
+                <td>TLS or SSL encryption type</td>
+              </tr>
+              <tr>
+                <td><strong>From Address</strong></td>
+                <td>Sender email address (e.g., <code>noreply@yourdomain.com</code>)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Note</div>
+          <p>Changes to mail settings require clearing the config cache. Run <code>php artisan config:clear</code> after making changes to email configuration.</p>
+        </div>
+
+        <h2>Google reCAPTCHA</h2>
+        <p>Protect your admin panel and API endpoints from spam and abuse with Google reCAPTCHA:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Create reCAPTCHA Keys</h4>
+              <p>Visit <a href="https://www.google.com/recaptcha/admin" target="_blank">Google reCAPTCHA Admin</a> and create new keys. Choose <strong>reCAPTCHA v2</strong> (checkbox) or <strong>v3</strong> (invisible).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Add Keys to Livriko</h4>
+              <p>Enter the <strong>Site Key</strong> and <strong>Secret Key</strong> in the reCAPTCHA settings section.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Test the Integration</h4>
+              <p>Verify reCAPTCHA appears on login forms and registration pages.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Social Login Configuration</h2>
+        <p>Configure social login providers for user authentication:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Required Fields</th>
+                <th>Setup Guide</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Google</strong></td>
+                <td>Client ID, Client Secret</td>
+                <td><a href="firebase-social.html">Social Login Guide</a></td>
+              </tr>
+              <tr>
+                <td><strong>Facebook</strong></td>
+                <td>Client ID, Client Secret</td>
+                <td><a href="firebase-social.html">Social Login Guide</a></td>
+              </tr>
+              <tr>
+                <td><strong>Apple</strong></td>
+                <td>Client ID, Team ID, Key ID</td>
+                <td><a href="firebase-social.html">Social Login Guide</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Maintenance Mode</h2>
+        <p>Enable maintenance mode to take the platform offline for updates:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Enable Maintenance Mode</h4>
+              <p>Toggle the <strong>"Maintenance Mode"</strong> switch. All users will see a maintenance page.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Set Custom Message</h4>
+              <p>Enter a custom message to display during maintenance (e.g., "We're upgrading. Back in 30 minutes.").</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout danger">
+          <div class="callout-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Remember to disable maintenance mode after completing your updates. Users will not be able to access the platform while maintenance mode is active.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="settings-languages.html">Languages</a> — Set up platform languages</li>
+          <li><a href="settings-currencies.html">Currencies</a> — Configure supported currencies</li>
+          <li><a href="settings-landing.html">Landing Page</a> — Customize the landing page</li>
+          <li><a href="settings-system.html">System Tools</a> — Access system utilities</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

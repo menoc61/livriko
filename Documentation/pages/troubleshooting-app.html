@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Common Errors - Livriko Documentation</title>
+  <meta name="description" content="Troubleshoot common Livriko mobile app errors — build failures, crashes, and connectivity issues.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>App Common Errors</h2>
+        <p>Below are the most common errors encountered when building or running the Livriko mobile apps, along with their causes and solutions.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Build Errors — Android</h2>
+
+        <h3>"SDK not found"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Android SDK not installed or not in PATH</td>
+                <td>Install the Android SDK via Android Studio. Ensure <code>ANDROID_HOME</code> environment variable is set correctly.</td>
+              </tr>
+              <tr>
+                <td>Wrong SDK version</td>
+                <td>Check <code>android/build.gradle</code> for required SDK version and install it via Android Studio SDK Manager.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"Could not resolve dependencies"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Corrupted node_modules</td>
+                <td>Run <code>rm -rf node_modules && npm install --force</code></td>
+              </tr>
+              <tr>
+                <td>Package version conflicts</td>
+                <td>Check <code>package.json</code> for conflicting dependencies and resolve version mismatches</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"Gradle build failed"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stale build cache</td>
+                <td>Run <code>cd android && ./gradlew clean</code>, then rebuild the app</td>
+              </tr>
+              <tr>
+                <td>Memory issues</td>
+                <td>Increase Gradle memory in <code>gradle.properties</code>: <code>org.gradle.jvmargs=-Xmx4096m</code></td>
+              </tr>
+              <tr>
+                <td>Missing google-services.json</td>
+                <td>Ensure <code>google-services.json</code> is placed in <code>android/app/</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Build Errors — iOS</h2>
+
+        <h3>"Corrupted CocoaPods cache"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stale or corrupted pod cache</td>
+                <td>Run <code>cd ios && pod deinstall && pod install</code>, then rebuild the app</td>
+              </tr>
+              <tr>
+                <td>Podfile.lock conflicts</td>
+                <td>Delete <code>Podfile.lock</code>, run <code>pod install</code> again</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"No signing certificate found"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Missing Apple Developer account</td>
+                <td>Enroll in the Apple Developer Program and configure signing in Xcode</td>
+              </tr>
+              <tr>
+                <td>Wrong team selected</td>
+                <td>In Xcode, go to your target's Signing & Capabilities and select the correct team</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Runtime Errors</h2>
+
+        <h3>"Network request failed"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Incorrect API URL in <code>config.tsx</code></td>
+                <td>Verify the <code>API_URL</code> value matches your backend URL (e.g., <code>http://192.168.1.100/livriko/public/api</code>)</td>
+              </tr>
+              <tr>
+                <td>Backend server is not running</td>
+                <td>Ensure your Laravel backend is running and accessible from your device or emulator</td>
+              </tr>
+              <tr>
+                <td>Network connectivity issue</td>
+                <td>Check that your device/emulator has internet access and can reach the backend server</td>
+              </tr>
+              <tr>
+                <td>HTTP vs HTTPS mismatch</td>
+                <td>On iOS, ensure you're using HTTPS or configure App Transport Security for HTTP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"Firebase not initialized"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>google-services.json</code> not in the correct location (Android)</td>
+                <td>Ensure the file is placed in <code>android/app/google-services.json</code></td>
+              </tr>
+              <tr>
+                <td><code>GoogleService-Info.plist</code> not in the correct location (iOS)</td>
+                <td>Ensure the file is placed in <code>ios/GoogleService-Info.plist</code></td>
+              </tr>
+              <tr>
+                <td>Missing configuration file</td>
+                <td>Re-download the config file from the Firebase console and rebuild the app</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"Map not loading"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Missing or invalid Google Maps API key</td>
+                <td>Verify the API key in the <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></td>
+              </tr>
+              <tr>
+                <td>Required APIs not enabled</td>
+                <td>Enable <strong>Maps SDK for Android</strong> and <strong>Maps SDK for iOS</strong> in the Cloud Console</td>
+              </tr>
+              <tr>
+                <td>API key restrictions</td>
+                <td>Check that the API key has the correct application restrictions and API restrictions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"Push notification not working"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FCM token not registered</td>
+                <td>Ensure the app successfully registers the FCM token with the backend</td>
+              </tr>
+              <tr>
+                <td>Missing notification permission</td>
+                <td>On Android 13+, check that notification permission is granted. On iOS, check notification settings.</td>
+              </tr>
+              <tr>
+                <td>FCM Server Key not configured</td>
+                <td>Verify the Server Key in the admin panel Settings → Firebase section</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>"Permission denied"</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Missing permissions in <code>AndroidManifest.xml</code></td>
+                <td>Add the required permission entries (e.g., <code>ACCESS_FINE_LOCATION</code>, <code>INTERNET</code>)</td>
+              </tr>
+              <tr>
+                <td>Missing permissions in <code>Info.plist</code> (iOS)</td>
+                <td>Add the required <code>NSLocationWhenInUseUsageDescription</code> and other permission descriptions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Quick Fix Reference</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Error</th>
+                <th>Quick Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stale build cache</td>
+                <td><code>cd android && ./gradlew clean</code></td>
+              </tr>
+              <tr>
+                <td>Corrupted node_modules</td>
+                <td><code>rm -rf node_modules && npm install --force</code></td>
+              </tr>
+              <tr>
+                <td>CocoaPods issues</td>
+                <td><code>cd ios && pod deinstall && pod install</code></td>
+              </tr>
+              <tr>
+                <td>Firebase config missing</td>
+                <td>Re-download config files from Firebase Console</td>
+              </tr>
+              <tr>
+                <td>Maps not loading</td>
+                <td>Verify API key and enable required APIs in Cloud Console</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="troubleshooting-admin.html">Admin Errors</a> — Common admin panel errors</li>
+          <li><a href="troubleshooting-database.html">Database Upgrade</a> — Migration and backup procedures</li>
+          <li><a href="troubleshooting-update.html">Version Update</a> — Updating Livriko</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

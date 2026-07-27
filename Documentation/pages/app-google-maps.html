@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Maps - Livriko Documentation</title>
+  <meta name="description" content="Integrate Google Maps in Livriko apps.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <div class="section-header">
+      <h2>Google Maps</h2>
+      <p>Google Maps is required for map display, geolocation, route calculation, and driver tracking in both the User and Driver apps. Follow these steps to configure Google Maps for Livriko.</p>
+    </div>
+
+    <div class="prose">
+
+      <h2>Create a Google Cloud Project</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Open Google Cloud Console</h4>
+            <p>Go to <a href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a> and sign in with your Google account.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Create New Project</h4>
+            <p>Click <strong>Select a project</strong> → <strong>New Project</strong>. Enter a project name (e.g., "Livriko Maps") and click <strong>Create</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Select the Project</h4>
+            <p>Ensure the newly created project is selected in the project dropdown at the top of the console.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Enable Required APIs</h2>
+      <p>Livriko requires several Google Maps APIs. Enable each one in the <strong>APIs &amp; Services → Library</strong> section.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>API</th>
+              <th>Purpose</th>
+              <th>Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Maps SDK for Android</strong></td>
+              <td>Map display on Android devices</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Maps SDK for iOS</strong></td>
+              <td>Map display on iOS devices</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Geocoding API</strong></td>
+              <td>Convert addresses to coordinates and vice versa</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Directions API</strong></td>
+              <td>Route calculation, turn-by-turn directions, and ETA</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Distance Matrix API</strong></td>
+              <td>Calculate distances and travel times between multiple points</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Places API</strong></td>
+              <td>Place search, autocomplete, and place details</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Maps JavaScript API</strong></td>
+              <td>Map display on the admin panel web interface</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <p class="callout-title">Enabling APIs</p>
+          <p>Go to <strong>APIs &amp; Services → Library</strong>, search for each API name, click on it, and then click <strong>Enable</strong>. Repeat for all seven APIs listed above.</p>
+        </div>
+      </div>
+
+      <h2>Create and Restrict API Key</h2>
+      <p>Create a single API key that will be shared across both apps and the admin panel, then restrict it for security.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Create API Key</h4>
+            <p>Go to <strong>APIs &amp; Services → Credentials</strong>. Click <strong>Create Credentials</strong> → <strong>API key</strong>. Copy the generated key immediately.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Add Application Restrictions</h4>
+            <p>Click on the newly created key. Under <strong>Application restrictions</strong>, add your Android package name + SHA-1 fingerprint and your iOS bundle ID.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Add API Restrictions</h4>
+            <p>Under <strong>API restrictions</strong>, select <strong>Restrict key</strong> and choose only the 7 APIs listed above. This prevents abuse if the key is exposed.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Save and Distribute</h4>
+            <p>Click <strong>Save</strong>. Use this same key in both apps and the admin panel.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Never Leave an API Key Unrestricted</p>
+          <p>Unrestricted keys can be abused by anyone, leading to unexpected charges on your Google Cloud account. Always apply both application and API restrictions.</p>
+        </div>
+      </div>
+
+      <h2>Configure Key in Apps</h2>
+      <p>Add the API key to both apps in three places:</p>
+
+      <h3>1. React Native Config</h3>
+      <pre><code>// src/config/config.js (both User and Driver apps)
+export const GOOGLE_MAPS_API_KEY = 'AIzaSy...YOUR_KEY';</code></pre>
+
+      <h3>2. Android Manifest</h3>
+      <pre><code>&lt;!-- android/app/src/main/AndroidManifest.xml --&gt;
+&lt;application&gt;
+    &lt;meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="YOUR_GOOGLE_MAPS_API_KEY"/&gt;
+&lt;/application&gt;</code></pre>
+
+      <h3>3. iOS AppDelegate</h3>
+      <pre><code>// ios/LivrikoUser/AppDelegate.m  (or AppDelegate.swift)
+// For Objective-C:
+#import &lt;GoogleMaps/GoogleMaps.h&gt;
+
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [GMSServices provideAPIKey:@"YOUR_GOOGLE_MAPS_API_KEY"];
+  // ... rest of initialization
+  return YES;
+}
+
+// For Swift:
+import GoogleMaps
+GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")</code></pre>
+
+      <h2>Configure in Admin Panel</h2>
+      <p>The admin panel uses Google Maps for the dashboard map, zone visualization, and driver location tracking.</p>
+      <ol>
+        <li>Log in to the admin panel at <code>https://yourdomain.com/admin</code></li>
+        <li>Go to <strong>Settings</strong> → <strong>Google Maps</strong></li>
+        <li>Enter your Google Maps API key</li>
+        <li>Click <strong>Save</strong></li>
+      </ol>
+
+      <h2>Map Customization</h2>
+      <p>Customize the map appearance in the apps through the admin panel or config files:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>Location</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Map Style</strong></td>
+              <td>Admin → Settings → Google Maps</td>
+              <td>Custom JSON map style (day/night theme, colors, labels)</td>
+            </tr>
+            <tr>
+              <td><strong>Default Zoom</strong></td>
+              <td><code>src/config/config.js</code></td>
+              <td>Initial zoom level when the map loads</td>
+            </tr>
+            <tr>
+              <td><strong>Marker Icons</strong></td>
+              <td><code>src/assets/images/</code></td>
+              <td>Custom marker images for pickup, destination, and driver location</td>
+            </tr>
+            <tr>
+              <td><strong>Polyline Color</strong></td>
+              <td><code>src/components/map/RoutePolyline.js</code></td>
+              <td>Route line color and width on the map</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Testing Your Maps Configuration</h2>
+      <p>After configuring the API key in all locations, verify that maps load correctly in both apps:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Test User App</h4>
+            <p>Open the User App. The home screen should display a Google Map centered on the user's current location. Verify the map tiles load and the location marker appears.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Test Driver App</h4>
+            <p>Open the Driver App. The home screen map should load with the online/offline toggle. Verify driver location updates appear in real-time.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Test Route Drawing</h4>
+            <p>Request a ride in the User App and verify that the route polyline draws correctly between pickup and destination. Confirm ETA and distance are displayed.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Check Console for Errors</h4>
+            <p>If the map does not load, check the React Native console and logcat (Android) or Xcode console (iOS) for API key errors or billing alerts.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <p class="callout-title">Billing Warning</p>
+          <p>Google Maps APIs require a billing account. Google provides $200/month free credit, which covers most small to medium deployments. Monitor your usage in the Google Cloud Console → <strong>Billing</strong> to avoid unexpected charges. Set up budget alerts to get notified before exceeding free tier limits.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li><a href="app-basic-setup.html">Basic App Setup</a> — Complete the remaining setup steps</li>
+        <li><a href="app-build.html">Build APK / AAB</a> — Generate production builds</li>
+        <li><a href="firebase-create.html">Firebase Setup</a> — Configure push notifications</li>
+      </ul>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

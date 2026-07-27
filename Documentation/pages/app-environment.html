@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Environment URL - Livriko Documentation</title>
+  <meta name="description" content="Configure API endpoint URLs for dev and production.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Environment URL</h2>
+        <p>Configure the API endpoint URLs that connect your Livriko mobile apps to the backend. This page covers development vs. production environments, Firebase URLs, and debugging tips for connection issues.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Environment Overview</h2>
+        <p>The Livriko apps support two primary environments:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>API URL</th>
+                <th>Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Development</strong></td>
+                <td><code>http://192.168.x.x/livriko/public</code></td>
+                <td>Local development and testing</td>
+              </tr>
+              <tr>
+                <td><strong>Production</strong></td>
+                <td><code>https://livriko.fr/api</code></td>
+                <td>Live production deployment</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Never use <code>http://localhost</code> or <code>http://127.0.0.1</code> when running on a physical device or emulator. The emulator and device use a different network context. Always use your machine's actual IP address for development.</p>
+        </div>
+
+        <h2>User App Configuration</h2>
+
+        <h3>API URL</h3>
+        <p>Edit the config file to set your backend API endpoint:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/config/config.tsx</code></p>
+
+<pre><code>// Taxido_user/src/config/config.tsx
+export const URL = 'https://livriko.fr';</code></pre>
+
+        <p>For local development, use your machine's local IP address:</p>
+
+<pre><code>// Local development
+export const URL = 'http://192.168.1.100/livriko/public';</code></pre>
+
+        <h3>Google Maps API Key</h3>
+        <p>Edit the context file to set your Google Maps key:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/context/index.tsx</code></p>
+
+<pre><code>// Taxido_user/src/context/index.tsx
+export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';</code></pre>
+
+        <h2>Driver App Configuration</h2>
+
+        <h3>API URL</h3>
+        <p>Edit the same config file in the Driver App directory:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/src/config/config.tsx</code></p>
+
+<pre><code>// Taxido_driver/src/config/config.tsx
+export const URL = 'https://livriko.fr';</code></pre>
+
+        <h3>Google Maps API Key</h3>
+        <p>Edit the context file in the Driver App directory:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/src/context/index.tsx</code></p>
+
+<pre><code>// Taxido_driver/src/context/index.tsx
+export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';</code></pre>
+
+        <h2>Environment Variables Summary</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Variable</th>
+                <th>File Location</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>URL</code></td>
+                <td><code>src/config/config.tsx</code></td>
+                <td>Backend API base URL for all HTTP requests</td>
+              </tr>
+              <tr>
+                <td><code>GOOGLE_MAPS_API_KEY</code></td>
+                <td><code>src/context/index.tsx</code></td>
+                <td>Google Maps API key for maps, geocoding, and directions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Firebase URL</h2>
+        <p>If you are using Firebase for real-time data (e.g., driver location tracking), you also need to configure the Firebase Realtime Database URL:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/config/config.tsx</code></p>
+
+<pre><code>// Firebase Realtime Database URL
+export const FIREBASE_URL = 'https://your-project.firebaseio.com';</code></pre>
+
+        <p>Find this URL in the Firebase Console under <strong>Project Settings &rarr; General &rarr; Realtime Database URL</strong>.</p>
+
+        <h2>Debugging Connection Issues</h2>
+        <p>If the app cannot reach the backend, use these debugging steps:</p>
+
+        <h3>Verify the Backend is Running</h3>
+<pre><code># From your development machine
+curl -I https://livriko.fr/api/v1/ping
+# Should return HTTP 200</code></pre>
+
+        <h3>Check Network Accessibility</h3>
+<pre><code># From the emulator/device terminal
+adb shell ping -c 4 192.168.1.100
+# Should show successful pings</code></pre>
+
+        <h3>Test API Endpoint Directly</h3>
+<pre><code># Test the API endpoint from the command line
+curl -X GET https://livriko.fr/api/v1/vehicle-types \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json"</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>Use the React Native Debugger or Flipper to inspect network requests in real-time. Enable network logging to see all API calls made by the app.</p>
+        </div>
+
+        <h3>Common Connection Errors</h3>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Error</th>
+                <th>Cause</th>
+                <th>Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Network request failed</code></td>
+                <td>Incorrect API URL or backend not running</td>
+                <td>Verify the URL and ensure the backend is accessible</td>
+              </tr>
+              <tr>
+                <td><code>SSL handshake failed</code></td>
+                <td>Invalid SSL certificate</td>
+                <td>Ensure the backend uses a valid SSL certificate from a trusted CA</td>
+              </tr>
+              <tr>
+                <td><code>Connection refused</code></td>
+                <td>Backend server is not running</td>
+                <td>Start the Laravel backend server</td>
+              </tr>
+              <tr>
+                <td><code>Timeout</code></td>
+                <td>Slow network or server overload</td>
+                <td>Check network latency and server response times</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Full Rebuild Required</h2>
+        <div class="callout danger">
+          <div class="callout-icon"><i class="fas fa-circle-exclamation"></i></div>
+          <div class="callout-title">Important</div>
+          <p>After changing the API URL or Google Maps API key, you must perform a <strong>full rebuild</strong>. Hot reloading will not pick up changes to these constants. Stop the Metro bundler, clean the build, and rebuild.</p>
+        </div>
+
+<pre><code># Stop Metro bundler (Ctrl+C), then:
+cd Taxido_user
+
+# Android
+cd android && ./gradlew clean && cd ..
+npm run android
+
+# iOS
+cd ios && pod install && cd ..
+npm run ios</code></pre>
+
+        <h2>Quick Reference</h2>
+        <p>The following table summarizes all configuration files that reference the API URL and environment settings:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>App</th>
+                <th>File</th>
+                <th>Variable</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>User App</td>
+                <td><code>src/config/config.tsx</code></td>
+                <td><code>URL</code></td>
+                <td>API base URL</td>
+              </tr>
+              <tr>
+                <td>User App</td>
+                <td><code>src/context/index.tsx</code></td>
+                <td><code>GOOGLE_MAPS_API_KEY</code></td>
+                <td>Maps API key</td>
+              </tr>
+              <tr>
+                <td>Driver App</td>
+                <td><code>src/config/config.tsx</code></td>
+                <td><code>URL</code></td>
+                <td>API base URL</td>
+              </tr>
+              <tr>
+                <td>Driver App</td>
+                <td><code>src/context/index.tsx</code></td>
+                <td><code>GOOGLE_MAPS_API_KEY</code></td>
+                <td>Maps API key</td>
+              </tr>
+              <tr>
+                <td>Both Apps</td>
+                <td><code>android/app/google-services.json</code></td>
+                <td>Firebase config</td>
+                <td>Project credentials</td>
+              </tr>
+              <tr>
+                <td>Both Apps</td>
+                <td><code>ios/GoogleService-Info.plist</code></td>
+                <td>Firebase config</td>
+                <td>Project credentials</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-google-maps.html">Google Maps</a> — Detailed Google Maps configuration</li>
+          <li><a href="app-build.html">Build APK / AAB</a> — Build release binaries</li>
+          <li><a href="app-folder-structure.html">Folder Structure</a> — Understand the project structure</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

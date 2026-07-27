@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hourly Packages - Livriko Documentation</title>
+  <meta name="description" content="Configure hourly rental packages with flexible pricing.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-clock" style="color:var(--primary);margin-right:8px;"></i> Hourly Packages</h2>
+      <p>Hourly packages let riders book vehicles for a fixed number of hours at a set price, with included base distance and charges for extra kilometers. This is ideal for tourists exploring a city, business professionals with multiple meetings, families running errands, or anyone needing a vehicle for several stops throughout the day.</p>
+    </section>
+
+    <!-- ====== OVERVIEW ====== -->
+    <section class="section-header">
+      <h2>How Hourly Packages Work</h2>
+      <p>Understanding the hourly package model before creating packages.</p>
+    </section>
+
+    <div class="prose">
+      <p>Unlike per-trip ride-hailing where fares are calculated dynamically, hourly packages provide <strong>predictable, upfront pricing</strong>. The rider pays a fixed amount for a set duration and gets a base distance allowance included. Any distance beyond the allowance is charged at a per-km rate.</p>
+
+      <h3>Package Components</h3>
+      <ul>
+        <li><strong>Duration</strong> &mdash; The number of hours included in the package (e.g., 2h, 4h, 8h).</li>
+        <li><strong>Price</strong> &mdash; The total upfront cost for the package.</li>
+        <li><strong>Base Distance</strong> &mdash; Kilometers included in the package price (e.g., 30 km for a 2-hour package).</li>
+        <li><strong>Extra Distance Charge</strong> &mdash; Per-km rate for distance exceeding the base allowance.</li>
+        <li><strong>Vehicle Type</strong> &mdash; The vehicle type assigned to the package.</li>
+      </ul>
+
+      <h3>Pricing Example</h3>
+      <pre><code>Package:         4-Hour City Explorer
+Duration:        4 hours
+Price:           $60.00
+Base Distance:   50 km
+Extra Distance:  $1.20/km
+
+Scenario A: Rider travels 40 km in 3 hours
+  Total cost: $60.00 (within base distance)
+
+Scenario B: Rider travels 65 km in 4 hours
+  Extra km: 65 - 50 = 15 km
+  Extra charge: 15 × $1.20 = $18.00
+  Total cost: $60.00 + $18.00 = $78.00</code></pre>
+    </div>
+
+    <hr>
+
+    <!-- ====== CREATING A PACKAGE (STEPS) ====== -->
+    <section class="section-header">
+      <h2>Creating an Hourly Package</h2>
+      <p>Follow these steps to add a new hourly rental package.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Hourly Packages</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Hourly Packages</strong>. You will see a list of existing packages.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Package"</h4>
+          <p>Click the <strong>Add New Package</strong> button to open the package creation form.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Fill In Package Details</h4>
+          <p>Enter the package name, select the vehicle type, set duration and pricing, configure the base distance allowance and extra distance charge rate.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Write a Description</h4>
+          <p>Add a clear description explaining what the package includes, ideal use cases, and any restrictions. This is shown to riders when they view the package details.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Save and Activate</h4>
+          <p>Set the <strong>Status</strong> to <em>Active</em> and click <strong>Save</strong>. The package will now appear in the rider app's hourly rental section.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the hourly package form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Package Name</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>Display name for the package (e.g., "2-Hour City Tour", "8-Hour Full Day", "Quick errand"). Should clearly communicate the duration and purpose.</td>
+          </tr>
+          <tr>
+            <td><strong>Vehicle Type</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>The vehicle type assigned to this package. Only vehicle types with the <strong>Ride</strong> or <strong>Schedule</strong> service enabled are available for selection.</td>
+          </tr>
+          <tr>
+            <td><strong>Duration</strong></td>
+            <td>Number (hours)</td>
+            <td>Yes</td>
+            <td>Number of hours included in the package. The rental period starts when the rider confirms pickup and ends after the specified duration. Examples: 1, 2, 4, 8.</td>
+          </tr>
+          <tr>
+            <td><strong>Price</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Total upfront price for the package in the zone's currency. This is the fixed amount charged to the rider at booking time.</td>
+          </tr>
+          <tr>
+            <td><strong>Base Distance</strong></td>
+            <td>Number (km/miles)</td>
+            <td>Yes</td>
+            <td>Distance included in the package price, measured in the zone's distance unit (km or miles). Travel within this distance incurs no additional charges.</td>
+          </tr>
+          <tr>
+            <td><strong>Extra Distance Charge</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Per-unit charge for distance exceeding the base allowance. Charged in the zone's currency per km or mile. Set to 0 to allow unlimited distance within the time limit.</td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td>Textarea</td>
+            <td>No</td>
+            <td>Package description shown to riders. Include what is included, ideal use cases, and any restrictions or notes about the package.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Active</strong> makes the package available for booking. <strong>Inactive</strong> hides it from the app without deleting it.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== USE CASES ====== -->
+    <section class="section-header">
+      <h2>Use Cases</h2>
+      <p>Common scenarios where hourly packages provide value.</p>
+    </section>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-umbrella-beach"></i></div>
+        <h4>Tourist City Tours</h4>
+        <p>Visitors exploring a new city can book a 4-hour or 8-hour package to visit multiple attractions without worrying about per-trip costs accumulating.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-briefcase"></i></div>
+        <h4>Business Meetings</h4>
+        <p>Professionals with multiple meetings across the city book a half-day or full-day package. The vehicle waits between stops, eliminating rebooking hassle.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-cart-shopping"></i></div>
+        <h4>Errand Running</h4>
+        <p>Families or individuals running multiple errands &mdash; grocery shopping, pharmacy, bank, school pickup &mdash; save money with a 2-4 hour package.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-plane-arrival"></i></div>
+        <h4>Airport Transfers</h4>
+        <p>Travelers arriving at the airport can book a package that covers the ride to the hotel, a shopping trip, and the return journey &mdash; all in one booking.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== BEST PRACTICES ====== -->
+    <section class="section-header">
+      <h2>Best Practices</h2>
+      <p>Tips for creating effective hourly packages.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Offer Tiered Packages</div>
+          Create 3-4 packages with increasing durations (2h, 4h, 8h) at progressively better per-hour rates. This encourages riders to choose longer, higher-value packages.
+        </div>
+      </div>
+
+      <h3>Pricing Strategy</h3>
+      <ul>
+        <li><strong>Per-hour rate should decrease with duration</strong> &mdash; A 2-hour package at $30/hour, 4-hour at $20/hour, and 8-hour at $15/hour incentivizes longer bookings.</li>
+        <li><strong>Set base distance generously</strong> &mdash; Include enough distance that most riders stay within the allowance. This avoids bill-shock from extra charges.</li>
+        <li><strong>Extra distance charge should be competitive</strong> &mdash; The per-km charge for excess distance should be reasonable to avoid rider frustration.</li>
+      </ul>
+
+      <h3>Naming Tips</h3>
+      <ul>
+        <li>Include the duration in the name: "2-Hour Quick Trip", "4-Hour Explorer", "8-Hour Full Day".</li>
+        <li>Use action-oriented descriptions: "Perfect for city tours", "Ideal for business meetings".</li>
+        <li>Avoid technical jargon &mdash; keep names simple and rider-friendly.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>Continue configuring your rental and ride services.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-rental.html" class="feature-card">
+        <div class="icon"><i class="fas fa-key"></i></div>
+        <h4>Rental Vehicles</h4>
+        <p>Set up individual rental vehicles with hourly, daily, and weekly pricing tiers.</p>
+      </a>
+      <a href="management-vehicle-types.html" class="feature-card">
+        <div class="icon"><i class="fas fa-car-side"></i></div>
+        <h4>Vehicle Types</h4>
+        <p>Configure the base vehicle types used for hourly packages.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

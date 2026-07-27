@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental Vehicles - Livriko Documentation</title>
+  <meta name="description" content="Manage rental vehicles and packages in Livriko.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-key" style="color:var(--primary);margin-right:8px;"></i> Rental Vehicles</h2>
+      <p>Rental vehicles allow riders to rent vehicles for a specific duration &mdash; by the hour, day, or week. Configure the vehicles available for rental, set pricing tiers, manage security deposits, and control zone availability. The rental service is a revenue-generating add-on that complements standard ride-hailing.</p>
+    </section>
+
+    <!-- ====== OVERVIEW ====== -->
+    <section class="section-header">
+      <h2>How Rental Works</h2>
+      <p>The rental flow differs from standard ride-hailing in several key ways.</p>
+    </section>
+
+    <div class="prose">
+      <ul>
+        <li><strong>Duration-based pricing</strong> &mdash; Instead of per-km/per-minute fares, rentals charge by the hour, day, or week.</li>
+        <li><strong>Security deposit</strong> &mdash; A refundable deposit is collected at booking time to cover potential damages.</li>
+        <li><strong>Vehicle handoff</strong> &mdash; The driver delivers the vehicle to the rider's location or a designated pickup point.</li>
+        <li><strong>Insurance options</strong> &mdash; Optional insurance packages can be offered to riders for additional protection.</li>
+        <li><strong>Zone availability</strong> &mdash; Rental vehicles can be limited to specific zones where they are available.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== CREATING A RENTAL VEHICLE (STEPS) ====== -->
+    <section class="section-header">
+      <h2>Adding a Rental Vehicle</h2>
+      <p>Follow these steps to add a new rental vehicle to your platform.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Rental Vehicles</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Rental Vehicles</strong>. You will see a list of existing rental vehicles.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Vehicle"</h4>
+          <p>Click the <strong>Add New Vehicle</strong> button. The rental vehicle creation form opens with all configurable fields.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Upload Vehicle Image</h4>
+          <p>Upload a clear photo of the rental vehicle. This image is displayed to riders when they browse available rental options. Use a high-resolution photo (minimum 800&times;600px) with good lighting.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Configure Pricing &amp; Deposit</h4>
+          <p>Set the hourly, daily, and weekly rental rates. Configure the security deposit amount that will be held on the rider's payment method during the rental period.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Assign to Zones</h4>
+          <p>Select the zones where this rental vehicle is available. Only riders in selected zones will see this vehicle in the rental section.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>6. Save and Activate</h4>
+          <p>Set the <strong>Status</strong> to <em>Active</em> and click <strong>Save</strong>. The rental vehicle will now appear in the rider app's rental section.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the rental vehicle form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Vehicle</strong></td>
+            <td>Dropdown</td>
+            <td>Yes</td>
+            <td>Select the base vehicle type from the list of configured vehicle types. This links the rental vehicle to a vehicle type for map icons and basic configuration.</td>
+          </tr>
+          <tr>
+            <td><strong>Name</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>Display name for the rental vehicle (e.g., "Toyota Corolla", "Honda Civic", "BMW 3 Series"). This name is shown to riders in the rental listing.</td>
+          </tr>
+          <tr>
+            <td><strong>Image</strong></td>
+            <td>File upload</td>
+            <td>Yes</td>
+            <td>Photo of the rental vehicle displayed in the rider app. Use a clear, well-lit photo showing the vehicle's exterior. Minimum 800&times;600px.</td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td>Textarea</td>
+            <td>No</td>
+            <td>Brief description of the vehicle features, specifications, and included amenities (e.g., "5 seats, automatic, AC, Bluetooth, 2 bags capacity").</td>
+          </tr>
+          <tr>
+            <td><strong>Price Per Hour</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Rental rate per hour. Used when riders book the vehicle for hourly rentals. Set to 0 if hourly rentals are not offered.</td>
+          </tr>
+          <tr>
+            <td><strong>Price Per Day</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Rental rate per 24-hour period. Typically lower than 24 &times; hourly rate to incentivize longer rentals.</td>
+          </tr>
+          <tr>
+            <td><strong>Price Per Week</strong></td>
+            <td>Number</td>
+            <td>No</td>
+            <td>Rental rate per 7-day period. Offer the best value for long-term rentals. Leave at 0 if weekly rentals are not offered.</td>
+          </tr>
+          <tr>
+            <td><strong>Security Deposit</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Refundable deposit collected at booking time via the rider's payment method. Returned after the vehicle is returned in good condition. Set to 0 if no deposit is required.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Active</strong> makes the rental vehicle available for bookings. <strong>Inactive</strong> hides it from the rental section without deleting it.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== ZONE AVAILABILITY ====== -->
+    <section class="section-header">
+      <h2>Zone Availability</h2>
+      <p>Control where rental vehicles can be booked and returned.</p>
+    </section>
+
+    <div class="prose">
+      <p>When configuring rental vehicles, you assign them to specific zones. This ensures that:</p>
+      <ul>
+        <li><strong>Only riders in enabled zones</strong> can see and book the rental vehicle.</li>
+        <li><strong>Pickup and return</strong> are restricted to the assigned zone boundaries.</li>
+        <li><strong>Inventory management</strong> is simplified by limiting vehicles to areas where they are physically available.</li>
+      </ul>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Multi-Zone Rentals</div>
+          A single rental vehicle can be assigned to multiple zones. This is useful for vehicles available across a city or region. However, ensure the vehicle is physically present or deployable in all assigned zones.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== INSURANCE ====== -->
+    <section class="section-header">
+      <h2>Insurance Options</h2>
+      <p>Offer optional insurance packages to protect riders during rental periods.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Insurance Types</h3>
+      <ul>
+        <li><strong>Basic Coverage</strong> &mdash; Covers third-party liability. Typically included in the base rental price or offered at a small daily fee.</li>
+        <li><strong>Comprehensive Coverage</strong> &mdash; Covers damage to the rental vehicle itself (collision, theft, vandalism). Higher daily fee but provides peace of mind.</li>
+        <li><strong>Zero Deductible</strong> &mdash; Eliminates the rider's deductible in case of a claim. Premium pricing option for risk-averse renters.</li>
+      </ul>
+
+      <h3>Configuring Insurance</h3>
+      <ol>
+        <li>Navigate to <strong>Livriko Management</strong> &rarr; <strong>Rental Vehicles</strong>.</li>
+        <li>Edit the rental vehicle you want to add insurance to.</li>
+        <li>In the insurance section, add insurance packages with name, daily rate, and coverage description.</li>
+        <li>Save the changes. Insurance options will now appear as add-ons during the rental booking flow.</li>
+      </ol>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">Legal Compliance</div>
+          Insurance requirements vary by jurisdiction. Consult local regulations to determine mandatory insurance coverage for vehicle rentals in your operating region. Some areas require minimum liability coverage by law.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== EXAMPLE ====== -->
+    <section class="section-header">
+      <h2>Example Configuration</h2>
+      <p>A sample rental vehicle setup for a popular economy sedan.</p>
+    </section>
+
+    <div class="prose">
+      <pre><code>Vehicle:          Economy Sedan (from Vehicle Types)
+Name:             Toyota Corolla 2024
+Image:            corolla-rental.jpg
+Description:      "5 seats, automatic transmission, AC, Bluetooth,
+                   USB charging, 2 large bags capacity. Ideal for
+                   city driving and short trips."
+Price Per Hour:   $8.00
+Price Per Day:    $45.00
+Price Per Week:   $250.00
+Security Deposit: $200.00
+Status:           Active</code></pre>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>After setting up rental vehicles, configure related features.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-hourly.html" class="feature-card">
+        <div class="icon"><i class="fas fa-clock"></i></div>
+        <h4>Hourly Packages</h4>
+        <p>Create structured hourly rental packages with fixed pricing and distance allowances.</p>
+      </a>
+      <a href="management-vehicle-types.html" class="feature-card">
+        <div class="icon"><i class="fas fa-car-side"></i></div>
+        <h4>Vehicle Types</h4>
+        <p>Configure the base vehicle types that rental vehicles are linked to.</p>
+      </a>
+      <a href="management-zones.html" class="feature-card">
+        <div class="icon"><i class="fas fa-map-location-dot"></i></div>
+        <h4>Zones</h4>
+        <p>Define geographic areas where rental vehicles are available for pickup and return.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Cloud Functions - Livriko Documentation</title>
+  <meta name="description" content="Deploy serverless functions for Livriko — automated notifications and background processing.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Firebase Cloud Functions</h2>
+        <p>Cloud Functions for Firebase allow you to run backend code in response to events triggered by Firebase features and HTTP requests. Livriko uses Cloud Functions for automated notifications and background processing.</p>
+      </div>
+
+      <div class="prose">
+        <h2>What Are Cloud Functions?</h2>
+        <p>Cloud Functions are serverless functions that execute in a managed environment. They scale automatically and you only pay for what you use.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Trigger Type</th>
+                <th>Description</th>
+                <th>Livriko Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Firestore changes</strong></td>
+                <td>Created, updated, or deleted documents</td>
+                <td>Trigger notifications when ride status changes</td>
+              </tr>
+              <tr>
+                <td><strong>Auth events</strong></td>
+                <td>User creation, deletion, or password reset</td>
+                <td>Initialize rider/driver profiles on sign-up</td>
+              </tr>
+              <tr>
+                <td><strong>HTTP requests</strong></td>
+                <td>Custom API endpoints</td>
+                <td>Webhook endpoints for payment confirmations</td>
+              </tr>
+              <tr>
+                <td><strong>Scheduled (Cron)</strong></td>
+                <td>Time-based triggers</td>
+                <td>Periodic cleanup of expired sessions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Use Cases in Livriko</h2>
+        <p>Cloud Functions power several critical features in the Livriko platform:</p>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4><i class="fas fa-bell"></i> Ride Notifications</h4>
+            <p>Automatically send push notifications when a ride is requested, accepted, started, or completed.</p>
+          </div>
+          <div class="feature-card">
+            <h4><i class="fas fa-location-dot"></i> Location Updates</h4>
+            <p>Broadcast driver location changes to connected riders in real time.</p>
+          </div>
+          <div class="feature-card">
+            <h4><i class="fas fa-credit-card"></i> Payment Webhooks</h4>
+            <p>Process payment confirmations from external payment gateways.</p>
+          </div>
+          <div class="feature-card">
+            <h4><i class="fas fa-broom"></i> Data Cleanup</h4>
+            <p>Periodically clean up expired sessions, old notifications, and stale data.</p>
+          </div>
+        </div>
+
+        <h2>Setup</h2>
+
+        <h3>Install Firebase CLI</h3>
+        <pre><code># Install Firebase CLI globally
+npm install -g firebase-tools
+
+# Verify installation
+firebase --version</code></pre>
+
+        <h3>Login to Firebase</h3>
+        <pre><code># Authenticate with your Firebase account
+firebase login
+
+# This opens a browser for Google OAuth authentication
+# After login, your credentials are stored locally</code></pre>
+
+        <h3>Initialize Functions in Your Project</h3>
+        <pre><code># Navigate to your Livriko project root
+cd your-livriko-project
+
+# Initialize Firebase Functions
+firebase init functions
+
+# Select your Firebase project when prompted
+# Choose JavaScript as the language
+# Choose No for ESLint (unless you prefer it)
+# Choose Yes to install dependencies</code></pre>
+
+        <h3>Update Project Configuration</h3>
+        <p>Update the <code>.firebaserc</code> file in your project root with your Firebase project ID:</p>
+        <pre><code>{
+  "projects": {
+    "default": "your-firebase-project-id"
+  }
+}</code></pre>
+
+        <h2>Livriko Cloud Functions</h2>
+        <p>Livriko includes the following pre-configured Cloud Functions:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Function</th>
+                <th>Trigger</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>trackOrder</code></td>
+                <td>Firestore write</td>
+                <td>Updates order status and notifies riders of delivery progress</td>
+              </tr>
+              <tr>
+                <td><code>updateLocation</code></td>
+                <td>Firestore write</td>
+                <td>Broadcasts driver location changes to connected riders</td>
+              </tr>
+              <tr>
+                <td><code>sendNotification</code></td>
+                <td>Firestore write</td>
+                <td>Sends FCM push notifications when new documents are created in the notifications collection</td>
+              </tr>
+              <tr>
+                <td><code>cleanUpSessions</code></td>
+                <td>Scheduled (daily)</td>
+                <td>Removes expired user sessions and stale data from Firestore</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Function Example</h2>
+        <p>Here's an example of how Livriko's Cloud Functions are structured:</p>
+
+        <pre><code>const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+
+admin.initializeApp();
+
+// Send notification when a ride is requested
+exports.onRideRequested = functions.firestore
+    .document('rides/{rideId}')
+    .onCreate(async (snap, context) => {
+      const ride = snap.data();
+
+      // Find nearby drivers
+      const driversSnapshot = await admin.firestore()
+          .collection('drivers')
+          .where('status', '==', 'online')
+          .get();
+
+      const tokens = [];
+      driversSnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.fcmToken) {
+          tokens.push(data.fcmToken);
+        }
+      });
+
+      // Send notification to all online drivers
+      const notification = {
+        notification: {
+          title: 'New Ride Request',
+          body: `Ride from ${ride.pickupAddress}`,
+        },
+        data: {
+          rideId: context.params.rideId,
+          type: 'ride_requested',
+        },
+      };
+
+      return admin.messaging().sendEachForMulticast({
+        tokens,
+        ...notification,
+      });
+    });</code></pre>
+
+        <h2>Deploying Functions</h2>
+        <pre><code># Deploy all functions
+firebase deploy --only functions
+
+# Deploy a specific function
+firebase deploy --only functions:onRideRequested
+
+# Deploy with project flag
+firebase deploy --only functions --project your-project-id</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Note</div>
+          <p>The Cloud Functions source code is located in the <code>functions/</code> directory of your Livriko project. Do not modify function files unless you are familiar with Node.js and Firebase APIs.</p>
+        </div>
+
+        <h2>Testing Functions</h2>
+        <p>Test your Cloud Functions before deploying to production:</p>
+
+        <pre><code># Start the Firebase emulator suite
+firebase emulators:start
+
+# Functions will be available at:
+# http://localhost:5001/your-project-id/us-central1/functionName
+
+# Test Firestore-triggered functions by writing to Firestore
+# Use the Firebase Console or the admin SDK</code></pre>
+
+        <h2>Viewing Function Logs</h2>
+        <pre><code># View real-time function logs
+firebase functions:log
+
+# View logs for a specific function
+firebase functions:log --only onRideRequested
+
+# View logs from the last 24 hours
+firebase functions:log --since 24h</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Cloud Functions have execution time limits. Firestore-triggered functions have a 60-second limit, while HTTP functions have a 60-minute limit. Optimize your functions to complete within these timeframes.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-collections.html">Firestore Collections</a> — Learn about the data structure</li>
+          <li><a href="firebase-messaging.html">Cloud Messaging</a> — Configure push notification delivery</li>
+          <li><a href="firebase-admin.html">Connect Admin</a> — Link Firebase to your Laravel backend</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

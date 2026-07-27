@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plans - Livriko Documentation</title>
+  <meta name="description" content="Configure subscription plans for drivers in Livriko — set up commission structures and premium tiers.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Plans</h2>
+        <p>Subscription plans allow you to configure driver commission structures and offer premium tiers that drive loyalty and revenue growth.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Why Plans Matter</h2>
+        <p>Plans give you fine-grained control over how drivers interact with your platform. Instead of a single flat commission rate for every driver, you can offer multiple tiers that incentivize commitment, reward loyalty, and generate recurring subscription revenue.</p>
+        <p>Key benefits of a well-structured plan system include:</p>
+        <ul>
+          <li><strong>Commission Control</strong> — Lower commission rates for higher-tier plans encourage drivers to commit long-term.</li>
+          <li><strong>Revenue Diversification</strong> — Earn subscription income on top of per-ride commissions.</li>
+          <li><strong>Driver Retention</strong> — Drivers subscribed to a plan are less likely to churn because switching means losing their benefits.</li>
+          <li><strong>Premium Features</strong> — Offer exclusive perks like priority ride matching, advanced analytics, or reduced cancellation penalties.</li>
+        </ul>
+
+        <hr>
+
+        <h2>Plan Fields Reference</h2>
+        <p>Every plan you create contains the following fields. Configure each one carefully to define the exact value proposition for your drivers.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Name</strong></td>
+                <td>Text</td>
+                <td>Display name of the plan (e.g., "Basic", "Premium", "Pro"). This is visible to drivers in the app when they browse available plans.</td>
+              </tr>
+              <tr>
+                <td><strong>Description</strong></td>
+                <td>Rich Text</td>
+                <td>A detailed description of what the plan includes. Explain the benefits clearly so drivers understand the value.</td>
+              </tr>
+              <tr>
+                <td><strong>Price</strong></td>
+                <td>Number</td>
+                <td>The subscription cost the driver pays to activate the plan. Displayed in the platform's configured currency.</td>
+              </tr>
+              <tr>
+                <td><strong>Duration</strong></td>
+                <td>Select</td>
+                <td>How long the plan lasts before renewal is required. Options: <strong>Daily</strong>, <strong>Weekly</strong>, <strong>Monthly</strong>, or <strong>Yearly</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>Commission Percentage</strong></td>
+                <td>Number (%)</td>
+                <td>The platform commission the driver pays per ride while subscribed. This should be lower than the default (unsubscribed) commission rate.</td>
+              </tr>
+              <tr>
+                <td><strong>Features</strong></td>
+                <td>List</td>
+                <td>A list of premium features included in the plan (e.g., priority rides, analytics access, reduced cancellation penalties).</td>
+              </tr>
+              <tr>
+                <td><strong>Status</strong></td>
+                <td>Toggle</td>
+                <td>Enable or disable the plan. Disabled plans are not visible to drivers and cannot be subscribed to.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Commission vs. Subscription Model</h2>
+        <p>Livriko supports a hybrid revenue model where you earn both per-ride commissions and subscription fees. Understanding how these interact is critical for pricing your plans effectively.</p>
+
+        <div class="callout info">
+          <i class="fas fa-info-circle callout-icon"></i>
+          <div class="callout-title">How It Works</div>
+          <p>When a driver subscribes to a plan, the <strong>Commission Percentage</strong> defined in the plan replaces the default platform commission for that driver. The driver continues to pay the plan subscription fee on top of the reduced per-ride commission.</p>
+        </div>
+
+        <h3>Example Scenario</h3>
+        <p>Consider a platform where the default commission is 25%. You create a "Premium" plan at $49/month with a 15% commission rate.</p>
+        <ul>
+          <li>Without a plan, a driver earning $1,000 in rides pays $250 in commission.</li>
+          <li>With the Premium plan, the same driver pays $150 in commission + $49 subscription = $199 total.</li>
+          <li>The driver saves $51 per month, while you earn a guaranteed $49 subscription fee regardless of ride volume.</li>
+        </ul>
+
+        <div class="callout warning">
+          <i class="fas fa-exclamation-triangle callout-icon"></i>
+          <div class="callout-title">Pricing Caution</div>
+          <p>Ensure the subscription price and reduced commission still make financial sense. If the commission reduction is too steep and the subscription is too low, you may lose revenue compared to the default commission model. Model your expected ride volumes before finalizing plan prices.</p>
+        </div>
+
+        <hr>
+
+        <h2>Creating a Plan — Step by Step</h2>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Navigate to the Plans Section</h4>
+              <p>Log in to your admin panel, then go to <strong>Livriko Management</strong> → <strong>Plans</strong>. You will see a list of all existing plans with their status, price, and subscriber count.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Click "Add New Plan"</h4>
+              <p>Click the <strong>Add New Plan</strong> button in the top-right corner of the Plans page. This opens the plan creation form.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Fill in Plan Details</h4>
+              <p>Enter the plan name, description, and price. Choose the appropriate duration (daily, weekly, monthly, or yearly) based on your target driver segment.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Set the Commission Rate</h4>
+              <p>Define the commission percentage for this plan. This must be lower than the default platform commission to provide genuine value to subscribing drivers.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Add Feature Highlights</h4>
+              <p>List the premium features included in this plan. These appear in the driver app to help drivers compare plans and make informed decisions.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <h4>Save and Enable</h4>
+              <p>Toggle the plan status to <strong>Active</strong> and click <strong>Save</strong>. The plan is now visible to drivers in the app and available for subscription.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Recommended Plan Tiers</h2>
+        <p>Below is a suggested plan structure you can adapt for your market. Adjust prices and commission rates based on your local economics and driver expectations.</p>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-seedling"></i></div>
+            <h3>Basic</h3>
+            <p><strong>Price:</strong> Free<br>
+            <strong>Commission:</strong> 25%<br>
+            Default plan for all drivers. No subscription fee, standard commission rate. Ideal for occasional or trial drivers.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-bolt"></i></div>
+            <h3>Premium</h3>
+            <p><strong>Price:</strong> $49/month<br>
+            <strong>Commission:</strong> 18%<br>
+            Priority ride matching, weekly analytics reports, and reduced cancellation penalties.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-crown"></i></div>
+            <h3>Pro</h3>
+            <p><strong>Price:</strong> $99/month<br>
+            <strong>Commission:</strong> 12%<br>
+            Lowest commission, real-time analytics, priority support, and exclusive promotions.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Managing Existing Plans</h2>
+        <p>Once plans are created, you can perform the following actions from the Plans list page:</p>
+        <ul>
+          <li><strong>Edit</strong> — Modify plan details, pricing, or commission rates. Changes take effect for new subscriptions; existing subscribers retain their current plan until renewal.</li>
+          <li><strong>Disable</strong> — Temporarily hide a plan from the driver app without deleting it. Current subscribers continue to benefit until their subscription expires.</li>
+          <li><strong>Delete</strong> — Permanently remove a plan. This action cannot be undone, and any active subscribers will be moved to the default commission tier.</li>
+        </ul>
+
+        <div class="callout danger">
+          <i class="fas fa-trash-can callout-icon"></i>
+          <div class="callout-title">Deletion Warning</div>
+          <p>Deleting a plan immediately reverts all subscribers to the default commission rate. Inform affected drivers before deleting popular plans to maintain trust and reduce churn.</p>
+        </div>
+
+        <hr>
+
+        <h2>Best Practices</h2>
+        <ol>
+          <li><strong>Start Simple</strong> — Begin with two or three plan tiers (e.g., Free, Premium, Pro) and expand based on driver feedback and subscription data.</li>
+          <li><strong>Clear Value Proposition</strong> — Each plan should have a clear, quantifiable benefit. Drivers should immediately understand why upgrading is worth the cost.</li>
+          <li><strong>Monitor Adoption</strong> — Track subscription rates, churn, and the relationship between plan type and driver activity. Adjust pricing if adoption is lower than expected.</li>
+          <li><strong>Offer a Free Tier</strong> — Always provide a no-cost option. Drivers who cannot afford a subscription should still be able to operate on your platform at the standard commission rate.</li>
+          <li><strong>Annual Discounts</strong> — Consider offering a discounted yearly rate to lock in long-term commitments and reduce subscription churn.</li>
+          <li><strong>Promote Seasonally</strong> — Run limited-time promotions (e.g., "First month free" or "50% off annual plans") during peak seasons to boost subscriber acquisition.</li>
+        </ol>
+
+        <div class="callout success">
+          <i class="fas fa-check-circle callout-icon"></i>
+          <div class="callout-title">Pro Tip</div>
+          <p>Use the <a href="management-push.html">Push Notifications</a> feature to announce new plans or promotional discounts directly to drivers. Targeted notifications to unsubscribed drivers can significantly boost conversion rates.</p>
+        </div>
+
+        <hr>
+
+        <h2>Related Pages</h2>
+        <ul>
+          <li><a href="management-drivers.html">Drivers</a> — Manage driver accounts and view their subscription status.</li>
+          <li><a href="management-wallet.html">Wallet</a> — View driver earnings and how commission deductions appear in transaction history.</li>
+          <li><a href="management-push.html">Push Notifications</a> — Send targeted messages to promote plan subscriptions.</li>
+          <li><a href="management-settings.html">App Settings</a> — Configure the default commission rate used for unsubscribed drivers.</li>
+        </ul>
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

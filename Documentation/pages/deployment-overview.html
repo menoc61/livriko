@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deployment Overview - Livriko Documentation</title>
+  <meta name="description" content="Overview of deployment options for the Livriko backend, including cPanel, VPS Apache, and VPS Nginx configurations with pre-deployment checklists.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="mobile-header">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko" class="mobile-logo">
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko">
+        <span>Docs</span>
+      </div>
+      <div class="sidebar-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search documentation…" aria-label="Search documentation">
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-section">
+        <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Introduction</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="laravel">
+          <span><i class="fab fa-laravel" style="margin-right:6px;"></i> Laravel Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="laravel">
+          <a href="laravel-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="laravel-localhost.html" class="nav-link"><i class="fas fa-circle"></i> Localhost Configuration</a>
+          <a href="laravel-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation Overview</a>
+          <a href="laravel-installation-gui.html" class="nav-link"><i class="fas fa-circle"></i> Installation GUI</a>
+          <a href="laravel-installation-cli.html" class="nav-link"><i class="fas fa-circle"></i> Installation CLI</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="deployment">
+          <span><i class="fas fa-cloud-arrow-up" style="margin-right:6px;"></i> Deployment</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="deployment">
+          <a href="deployment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="deployment-cpanel-gui.html" class="nav-link"><i class="fas fa-circle"></i> cPanel GUI</a>
+          <a href="deployment-cpanel-cli.html" class="nav-link"><i class="fas fa-circle"></i> cPanel CLI</a>
+          <a href="deployment-vps-apache.html" class="nav-link"><i class="fas fa-circle"></i> VPS Apache</a>
+          <a href="deployment-vps-nginx.html" class="nav-link"><i class="fas fa-circle"></i> VPS Nginx</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="app">
+          <span><i class="fas fa-mobile-screen-button" style="margin-right:6px;"></i> App Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="app">
+          <a href="app-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="app-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation</a>
+          <a href="app-features.html" class="nav-link"><i class="fas fa-circle"></i> Features</a>
+          <a href="app-android.html" class="nav-link"><i class="fas fa-circle"></i> Android Setup</a>
+          <a href="app-ios.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup</a>
+          <a href="app-create-user.html" class="nav-link"><i class="fas fa-circle"></i> Create User App</a>
+          <a href="app-create-driver.html" class="nav-link"><i class="fas fa-circle"></i> Create Driver App</a>
+          <a href="app-change-name.html" class="nav-link"><i class="fas fa-circle"></i> Change App Name</a>
+          <a href="app-change-color.html" class="nav-link"><i class="fas fa-circle"></i> Change App Color</a>
+          <a href="app-change-icon.html" class="nav-link"><i class="fas fa-circle"></i> Change App Icon</a>
+          <a href="app-environment.html" class="nav-link"><i class="fas fa-circle"></i> Environment URL</a>
+          <a href="app-folder-structure.html" class="nav-link"><i class="fas fa-circle"></i> Folder Structure</a>
+          <a href="app-basic-setup.html" class="nav-link"><i class="fas fa-circle"></i> Basic Setup</a>
+          <a href="app-build.html" class="nav-link"><i class="fas fa-circle"></i> Build APK / AAB</a>
+          <a href="app-google-maps.html" class="nav-link"><i class="fas fa-circle"></i> Google Maps</a>
+          <a href="app-services.html" class="nav-link"><i class="fas fa-circle"></i> Service List</a>
+          <a href="app-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="app-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="app-addons.html" class="nav-link"><i class="fas fa-circle"></i> Add-Ons</a>
+          <a href="app-ios-setup.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup Detail</a>
+          <a href="app-ios-build.html" class="nav-link"><i class="fas fa-circle"></i> iOS Build</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="payment">
+          <span><i class="fas fa-credit-card" style="margin-right:6px;"></i> Payment Gateways</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="payment">
+          <a href="payment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="settings">
+          <span><i class="fas fa-gear" style="margin-right:6px;"></i> Platform Settings</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="settings">
+          <a href="settings-languages.html" class="nav-link"><i class="fas fa-circle"></i> Languages</a>
+          <a href="settings-currencies.html" class="nav-link"><i class="fas fa-circle"></i> Currencies</a>
+          <a href="settings-taxes.html" class="nav-link"><i class="fas fa-circle"></i> Taxes</a>
+          <a href="settings-sms.html" class="nav-link"><i class="fas fa-circle"></i> SMS Gateways</a>
+          <a href="settings-landing.html" class="nav-link"><i class="fas fa-circle"></i> Landing Page</a>
+          <a href="settings-system.html" class="nav-link"><i class="fas fa-circle"></i> System Tools</a>
+          <a href="settings-general.html" class="nav-link"><i class="fas fa-circle"></i> Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="management">
+          <span><i class="fas fa-sliders" style="margin-right:6px;"></i> Livriko Management</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="management">
+          <a href="management-zones.html" class="nav-link"><i class="fas fa-circle"></i> Zones</a>
+          <a href="management-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="management-rental.html" class="nav-link"><i class="fas fa-circle"></i> Rental Vehicles</a>
+          <a href="management-hourly.html" class="nav-link"><i class="fas fa-circle"></i> Hourly Packages</a>
+          <a href="management-airports.html" class="nav-link"><i class="fas fa-circle"></i> Airports</a>
+          <a href="management-surge.html" class="nav-link"><i class="fas fa-circle"></i> Surge Pricing</a>
+          <a href="management-vehicle-zone.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Zone Pricing</a>
+          <a href="management-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="management-sos.html" class="nav-link"><i class="fas fa-circle"></i> SOS</a>
+          <a href="management-plans.html" class="nav-link"><i class="fas fa-circle"></i> Plans</a>
+          <a href="management-drivers.html" class="nav-link"><i class="fas fa-circle"></i> Drivers</a>
+          <a href="management-location.html" class="nav-link"><i class="fas fa-circle"></i> Driver Location</a>
+          <a href="management-wallet.html" class="nav-link"><i class="fas fa-circle"></i> Wallet</a>
+          <a href="management-fleet.html" class="nav-link"><i class="fas fa-circle"></i> Fleet Manager</a>
+          <a href="management-push.html" class="nav-link"><i class="fas fa-circle"></i> Push Notifications</a>
+          <a href="management-templates.html" class="nav-link"><i class="fas fa-circle"></i> Notification Templates</a>
+          <a href="management-settings.html" class="nav-link"><i class="fas fa-circle"></i> App Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="firebase">
+          <span><i class="fas fa-fire" style="margin-right:6px;"></i> Firebase</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="firebase">
+          <a href="firebase-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="firebase-create.html" class="nav-link"><i class="fas fa-circle"></i> Create Project</a>
+          <a href="firebase-rules.html" class="nav-link"><i class="fas fa-circle"></i> Rules</a>
+          <a href="firebase-sha.html" class="nav-link"><i class="fas fa-circle"></i> SHA Key</a>
+          <a href="firebase-admin.html" class="nav-link"><i class="fas fa-circle"></i> Connect Admin</a>
+          <a href="firebase-messaging.html" class="nav-link"><i class="fas fa-circle"></i> Messaging</a>
+          <a href="firebase-social.html" class="nav-link"><i class="fas fa-circle"></i> Social Login</a>
+          <a href="firebase-billing.html" class="nav-link"><i class="fas fa-circle"></i> Billing</a>
+          <a href="firebase-functions.html" class="nav-link"><i class="fas fa-circle"></i> Cloud Functions</a>
+          <a href="firebase-collections.html" class="nav-link"><i class="fas fa-circle"></i> Firestore Collections</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="troubleshooting">
+          <span><i class="fas fa-bug" style="margin-right:6px;"></i> Troubleshooting</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="troubleshooting">
+          <a href="troubleshooting-app.html" class="nav-link"><i class="fas fa-circle"></i> App Errors</a>
+          <a href="troubleshooting-admin.html" class="nav-link"><i class="fas fa-circle"></i> Admin Errors</a>
+          <a href="troubleshooting-database.html" class="nav-link"><i class="fas fa-circle"></i> Database Upgrade</a>
+          <a href="troubleshooting-update.html" class="nav-link"><i class="fas fa-circle"></i> Version Update</a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <p>Livriko v1.0 &middot; Based on <a href="#">Taxido</a></p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <section class="section-header">
+        <h1>Deployment Overview</h1>
+        <p>This guide covers the different methods available for deploying the Livriko Backend API to a production environment. Choose the method that best fits your hosting infrastructure, budget, and technical expertise.</p>
+      </section>
+
+      <section class="section-header">
+        <h2>Deployment Options</h2>
+        <p>Livriko supports four deployment methods. Select the one that matches your hosting setup.</p>
+      </section>
+
+      <div class="feature-grid">
+        <a href="deployment-cpanel-gui.html" class="feature-card">
+          <div class="icon"><i class="fas fa-upload"></i></div>
+          <h3>cPanel GUI</h3>
+          <p>Upload files via cPanel File Manager and use the web-based installer. The simplest method with no command-line access required.</p>
+          <span class="badge badge-success">Easy</span>
+        </a>
+        <a href="deployment-cpanel-cli.html" class="feature-card">
+          <div class="icon"><i class="fas fa-terminal"></i></div>
+          <h3>cPanel CLI</h3>
+          <p>Deploy via SSH using Git and Composer. Faster than the GUI method and gives more control over the installation process.</p>
+          <span class="badge badge-warning">Intermediate</span>
+        </a>
+        <a href="deployment-vps-apache.html" class="feature-card">
+          <div class="icon"><i class="fab fa-php"></i></div>
+          <h3>VPS Apache (LAMP)</h3>
+          <p>Full VPS deployment with Apache, MySQL, and PHP. A complete LAMP stack setup for maximum compatibility.</p>
+          <span class="badge badge-warning">Intermediate</span>
+        </a>
+        <a href="deployment-vps-nginx.html" class="feature-card">
+          <div class="icon"><i class="fas fa-server"></i></div>
+          <h3>VPS Nginx (LEMP) &#11088;</h3>
+          <p>Recommended for production. Nginx with PHP-FPM provides better performance, lower memory usage, and superior concurrency handling.</p>
+          <span class="badge badge-primary">Recommended</span>
+        </a>
+      </div>
+
+      <section class="section-header">
+        <h2>Pre-Deployment Checklist</h2>
+        <p>Complete this checklist before deploying to production. Missing any item may cause deployment failures or security vulnerabilities.</p>
+      </section>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Complete Local Installation &amp; Testing</h4>
+            <p>Ensure the Backend API is fully installed and working locally. Verify you can access the admin panel, create rides, and all features function correctly before deploying.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Prepare a Domain Name</h4>
+            <p>Have a domain name ready (e.g., <code>api.yourdomain.com</code>). Point the domain's A record to your server's IP address using your DNS provider's dashboard.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Gather All Credentials</h4>
+            <p>Have your server SSH credentials, MySQL database credentials, Firebase project credentials, and payment gateway API keys ready before starting.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Prepare Production .env Values</h4>
+            <p>Prepare production-safe values for your <code>.env</code> file: set <code>APP_DEBUG=false</code>, configure the production <code>APP_URL</code>, and use strong database passwords.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Disable Debug Mode</h4>
+            <p>Set <code>APP_DEBUG=false</code> in production. Debug mode exposes sensitive environment variables and stack traces to users, which is a serious security risk.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout danger">
+        <i class="fas fa-circle-xmark callout-icon"></i>
+        <div>
+          <div class="callout-title">Security Warning</div>
+          Never deploy with <code>APP_DEBUG=true</code> in production. This exposes your application encryption key, database credentials, and API keys to anyone who triggers an error page.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Production .env Template</h2>
+        <p>Use this template as a starting point for your production <code>.env</code> configuration. Replace all placeholder values with your actual credentials.</p>
+      </section>
+
+      <pre><code># =============================================
+# APPLICATION SETTINGS (Production)
+# =============================================
+APP_NAME=Livriko
+APP_ENV=production
+APP_KEY=base64:YOUR_GENERATED_KEY
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+# =============================================
+# DATABASE
+# =============================================
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=livriko_db
+DB_USERNAME=livriko_user
+DB_PASSWORD=your_strong_password
+
+# =============================================
+# CACHE &amp; QUEUE (Redis recommended)
+# =============================================
+BROADCAST_DRIVER=redis
+CACHE_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
+SESSION_LIFETIME=120
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+# =============================================
+# MAIL
+# =============================================
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailgun.org
+MAIL_PORT=587
+MAIL_USERNAME=your_mail_username
+MAIL_PASSWORD=your_mail_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="noreply@yourdomain.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+# =============================================
+# FIREBASE
+# =============================================
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_CREDENTIALS=firebase_credentials.json
+
+# =============================================
+# REVERB (WebSockets)
+# =============================================
+REVERB_APP_KEY=your-reverb-key
+REVERB_APP_SECRET=your-reverb-secret
+REVERB_APP_ID=your-reverb-app-id
+REVERB_HOST=yourdomain.com
+REVERB_PORT=443
+REVERB_SCHEME=https</code></pre>
+
+      <section class="section-header">
+        <h2>SSL Configuration</h2>
+        <p>HTTPS is mandatory for production deployments. Mobile apps communicating with your API require a valid SSL certificate. Use Let's Encrypt (via Certbot) for free, auto-renewing certificates.</p>
+      </section>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">SSL Setup</div>
+          The VPS deployment guides (<a href="deployment-vps-apache.html">Apache</a>, <a href="deployment-vps-nginx.html">Nginx</a>) include complete SSL setup with Certbot. For cPanel, use the built-in SSL/TLS wizard or AutoSSL feature.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Domain Configuration</h2>
+        <p>Before deploying, ensure your domain's DNS records point to your server:</p>
+      </section>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>DNS Record</th><th>Host</th><th>Value</th><th>TTL</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A</strong></td><td>@ (or api)</td><td>Your server IP address</td><td>3600</td></tr>
+            <tr><td><strong>CNAME</strong></td><td>www</td><td>yourdomain.com</td><td>3600</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-triangle-exclamation callout-icon"></i>
+        <div>
+          <div class="callout-title">DNS Propagation</div>
+          DNS changes can take up to 48 hours to propagate globally, though most updates take effect within 1&ndash;4 hours. You can check propagation status at <a href="https://dnschecker.org" target="_blank">dnschecker.org</a>.
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Post-Deployment Checklist</h2>
+        <p>After deploying, verify the following items to ensure your production environment is fully operational:</p>
+      </section>
+
+      <div class="services-list">
+        <div class="service-item">
+          <div class="service-icon ride"><i class="fas fa-lock"></i></div>
+          <div>
+            <h4>SSL Certificate Active</h4>
+            <p>Verify the HTTPS lock icon appears in your browser. All API traffic must be encrypted.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon rental"><i class="fas fa-gauge-high"></i></div>
+          <div>
+            <h4>Admin Panel Accessible</h4>
+            <p>Log in to the admin panel and verify all settings, drivers, and ride data are accessible.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon delivery"><i class="fas fa-gears"></i></div>
+          <div>
+            <h4>Queue Worker Running</h4>
+            <p>Verify background jobs are being processed. Check Supervisor status or queue worker logs.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon ride"><i class="fas fa-plug"></i></div>
+          <div>
+            <h4>WebSockets Connected</h4>
+            <p>Test real-time features like ride status updates and driver location pings.</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon rental"><i class="fas fa-mobile-screen"></i></div>
+          <div>
+            <h4>Mobile Apps Connected</h4>
+            <p>Verify both the User App and Driver App can connect to the production API endpoint.</p>
+          </div>
+        </div>
+      </div>
+
+      <section class="section-header">
+        <h2>Next Steps</h2>
+        <p>Choose the deployment guide that matches your hosting environment:</p>
+      </section>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>cPanel GUI</h4>
+            <p>Simple web-based file upload &mdash; the easiest method for shared hosting.</p>
+            <a href="deployment-cpanel-gui.html">cPanel GUI &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>cPanel CLI</h4>
+            <p>Command-line deployment via SSH for faster, more controlled setup.</p>
+            <a href="deployment-cpanel-cli.html">cPanel CLI &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>VPS Apache</h4>
+            <p>Full LAMP stack deployment on a VPS with Apache web server.</p>
+            <a href="deployment-vps-apache.html">VPS Apache &rarr;</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>VPS Nginx (Recommended)</h4>
+            <p>Full LEMP stack deployment with Nginx for maximum performance.</p>
+            <a href="deployment-vps-nginx.html">VPS Nginx &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <img src="../livriko png 0.5x/Forme monochrome noir@0.5x.png" alt="Livriko" class="footer-logo">
+        <p>&copy; 2024&ndash;2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 &middot; Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active', 'visible'); hamburger.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); hamburger.classList.remove('active'); setTimeout(() => overlay.classList.remove('active'), 300); }
+    hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.nav-section-header[data-toggle]').forEach(header => {
+      header.addEventListener('click', () => { header.closest('.nav-section').classList.toggle('collapsed'); });
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.href === window.location.href) { link.classList.add('active'); } else { link.classList.remove('active'); }
+    });
+  </script>
+</body>
+</html>

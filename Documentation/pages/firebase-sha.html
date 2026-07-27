@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHA Key - Livriko Documentation</title>
+  <meta name="description" content="Generate and add SHA certificate fingerprints for Livriko Android apps in Firebase.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>SHA Key</h2>
+        <p>SHA certificate fingerprints are required by Firebase to verify your Android app's identity. You need to generate and register both SHA-1 and SHA-256 keys.</p>
+      </div>
+
+      <div class="prose">
+        <h2>Why SHA Keys Are Needed</h2>
+        <p>Firebase uses SHA certificate fingerprints to verify the identity of your Android app. SHA keys are required for:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Requirement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Google Sign-In</strong></td>
+                <td>SHA-1 key is required to authenticate with Google services</td>
+              </tr>
+              <tr>
+                <td><strong>App Links / Dynamic Links</strong></td>
+                <td>SHA-256 key is required for deep linking and app verification</td>
+              </tr>
+              <tr>
+                <td><strong>Firebase App Check</strong></td>
+                <td>SHA keys help verify that requests come from your genuine app</td>
+              </tr>
+              <tr>
+                <td><strong>Play App Signing</strong></td>
+                <td>Google Play uses SHA keys to verify your app's identity</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Generate SHA Keys</h2>
+        <p>You need both <strong>SHA-1</strong> and <strong>SHA-256</strong> fingerprints. Use the <code>keytool</code> command (included with Java JDK) to generate them.</p>
+
+        <h3>Generate Debug SHA Keys</h3>
+        <p>For development and testing, use the debug keystore:</p>
+
+        <pre><code># Generate SHA-1 and SHA-256 from debug keystore
+keytool -list -v \
+  -alias androiddebugkey \
+  -keystore ~/.android/debug.keystore \
+  -storepass android</code></pre>
+
+        <p>The output will display both fingerprints:</p>
+
+        <pre><code>Certificate fingerprints:
+  SHA1: XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX
+  SHA256: XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX:XX</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Note</div>
+          <p>The debug keystore password is <code>android</code> by default. The debug keystore is located at <code>~/.android/debug.keystore</code> on macOS/Linux and <code>C:\Users\&lt;username&gt;\.android\debug.keystore</code> on Windows.</p>
+        </div>
+
+        <h3>Generate Release SHA Keys</h3>
+        <p>For production builds, use your release keystore:</p>
+
+        <pre><code># Generate SHA-1 and SHA-256 from release keystore
+keytool -list -v \
+  -alias your-key-alias \
+  -keystore /path/to/your-release.keystore \
+  -storepass your-keystore-password</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Keep your release keystore password secure. Never commit it to version control. Store it in a secure password manager or environment variable.</p>
+        </div>
+
+        <h2>Add SHA Keys to Firebase</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Open Firebase Console</h4>
+              <p>Go to <strong>Firebase Console → Project Settings</strong> (gear icon in the top-left).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Select Your Android App</h4>
+              <p>Scroll down to the <strong>"Your apps"</strong> section and select your Android app.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Add SHA Fingerprint</h4>
+              <p>Click <strong>"Add fingerprint"</strong>, paste the SHA-1 key, and click <strong>"Save"</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Add SHA-256</h4>
+              <p>Repeat the process for the SHA-256 key. Both fingerprints should now be listed.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Download Updated Config</h4>
+              <p>After adding SHA keys, download an updated <code>google-services.json</code> and replace the existing file in your project.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Debug vs Release Keystores</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Keystore</th>
+                <th>Location</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Debug</strong></td>
+                <td><code>~/.android/debug.keystore</code></td>
+                <td>Development and testing on local devices/emulators</td>
+              </tr>
+              <tr>
+                <td><strong>Release</strong></td>
+                <td>Your custom path (e.g., <code>android/app/release.keystore</code>)</td>
+                <td>Production builds uploaded to the Play Store</td>
+              </tr>
+              <tr>
+                <td><strong>Google Play App Signing</strong></td>
+                <td>Managed by Google Play Console</td>
+                <td>Automatically managed when using Play App Signing</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Google Play App Signing</div>
+          <p>If you use Google Play App Signing, you also need the <strong>upload certificate SHA-1</strong> from the Play Console (Release → Setup → App signing). Add this to Firebase as well.</p>
+        </div>
+
+        <h2>Common Issues with Missing SHA Keys</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Symptom</th>
+                <th>Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Google Sign-In fails</td>
+                <td>Error: "12500" or sign-in popup closes immediately</td>
+                <td>Add SHA-1 key to Firebase and download updated <code>google-services.json</code></td>
+              </tr>
+              <tr>
+                <td>Dynamic Links not working</td>
+                <td>App doesn't open when clicking a link</td>
+                <td>Add SHA-256 key to Firebase</td>
+              </tr>
+              <tr>
+                <td>Firebase Auth fails silently</td>
+                <td>Social login works in debug but not in release</td>
+                <td>Add release SHA keys to Firebase</td>
+              </tr>
+              <tr>
+                <td>Play Store rejection</td>
+                <td>App crashes on sign-in for Play Store users</td>
+                <td>Add the Play Console upload certificate SHA-1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-admin.html">Connect Admin</a> — Link Firebase to your Laravel backend</li>
+          <li><a href="firebase-social.html">Social Login</a> — Configure Google and Apple sign-in</li>
+          <li><a href="firebase-create.html">Create Firebase Project</a> — Project creation guide</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

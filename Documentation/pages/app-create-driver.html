@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Driver App - Livriko Documentation</title>
+  <meta name="description" content="Set up the Livriko Driver mobile application.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Create Driver App</h2>
+        <p>Set up and configure the Livriko Driver mobile application. The Driver App has some important differences from the User App, including background location tracking, navigation integration, and earnings management.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>Driver App Directory</h2>
+        <p>The Driver App is located in the <code>Taxido_driver/</code> directory of the Livriko repository. It is a standalone React Native project with its own dependencies and configuration:</p>
+
+<pre><code>livriko/
+├── Taxido_user/          # User App (passenger-facing)
+└── Taxido_driver/        # Driver App (driver-facing)
+    ├── android/          # Android native project
+    ├── ios/              # iOS native project
+    ├── src/              # React Native source code
+    │   ├── config/       # API and app configuration
+    │   ├── context/      # React context providers
+    │   ├── screens/      # Screen components
+    │   ├── components/   # Reusable UI components
+    │   ├── assets/       # Images, fonts, animations
+    │   └── theme/        # Color themes and styles (singular)
+    ├── app.json          # App metadata
+    ├── package.json      # Dependencies
+    └── tsconfig.json     # TypeScript configuration</code></pre>
+
+        <h2>Key Differences from User App</h2>
+        <p>The Driver App includes several features not present in the User App:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Driver App</th>
+                <th>User App</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Background Location</td>
+                <td>Required for ride matching while app is in background</td>
+                <td>Not required</td>
+              </tr>
+              <tr>
+                <td>Turn-by-Turn Navigation</td>
+                <td>Integrated Google Maps navigation for route planning</td>
+                <td>Basic map view only</td>
+              </tr>
+              <tr>
+                <td>Earnings Dashboard</td>
+                <td>Daily, weekly, and monthly earnings tracking</td>
+                <td>Not applicable</td>
+              </tr>
+              <tr>
+                <td>Online / Offline Toggle</td>
+                <td>Driver controls availability status</td>
+                <td>Not applicable</td>
+              </tr>
+              <tr>
+                <td>Document Management</td>
+                <td>Upload and manage license, insurance, registration</td>
+                <td>Not applicable</td>
+              </tr>
+              <tr>
+                <td>ProGuard Minification</td>
+                <td>Enabled in release builds for smaller APK</td>
+                <td>Disabled by default</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Step 1: Install Dependencies</h2>
+        <p>Navigate to the Driver App directory and install all required packages:</p>
+
+<pre><code>cd Taxido_driver
+npm install</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>The Driver App has a slightly different dependency set than the User App, including additional packages for background location tracking and navigation. Do not share <code>node_modules</code> between the two projects.</p>
+        </div>
+
+        <h2>Step 2: Configure API URL</h2>
+        <p>Set the same backend API endpoint used by the User App. Both apps must connect to the same backend to share ride data and user information:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/src/config/config.tsx</code></p>
+
+<pre><code>// Taxido_driver/src/config/config.tsx
+export const URL = 'https://your-backend-url.com';</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Note</div>
+          <p>For local development, use your machine's actual IP address (e.g., <code>http://192.168.1.100/livriko/public</code>) instead of <code>localhost</code>, as emulators and devices cannot reach localhost.</p>
+        </div>
+
+        <h2>Step 3: Configure Firebase</h2>
+        <p>The Driver App uses Firebase for push notifications and location services. Use the same Firebase project as the User App, but with a separate app registration:</p>
+
+        <h3>Android — google-services.json</h3>
+<pre><code>Taxido_driver/android/app/google-services.json</code></pre>
+
+        <h3>iOS — GoogleService-Info.plist</h3>
+<pre><code>Taxido_driver/ios/GoogleService-Info.plist</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>The Driver App must use a <strong>different bundle identifier</strong> than the User App (e.g., <code>com.livriko.driver</code> instead of <code>com.livriko.user</code>). Register a separate app in the Firebase Console for the Driver App.</p>
+        </div>
+
+        <h2>Step 4: Configure Google Maps Key</h2>
+        <p>Set your Google Maps API key for map rendering and navigation:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/src/context/index.tsx</code></p>
+
+<pre><code>// Taxido_driver/src/context/index.tsx
+export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';</code></pre>
+
+        <h2>Step 5: Background Location Permissions</h2>
+        <p>The Driver App requires background location access for continuous driver tracking. Ensure the following permissions are configured:</p>
+
+        <h3>Android — AndroidManifest.xml</h3>
+<pre><code>&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;</code></pre>
+
+        <h3>iOS — Info.plist</h3>
+<pre><code>&lt;key&gt;UIBackgroundModes&lt;/key&gt;
+&lt;array&gt;
+    &lt;string&gt;location&lt;/string&gt;
+&lt;/array&gt;
+
+&lt;key&gt;NSLocationAlwaysAndWhenInUseUsageDescription&lt;/key&gt;
+&lt;string&gt;Livriko needs your location to match you with nearby rides.&lt;/string&gt;</code></pre>
+
+        <h2>Step 6: Android Build Configuration</h2>
+        <p>The Driver App enables ProGuard minification and resource shrinking in release builds to reduce APK size and improve performance:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/android/app/build.gradle</code></p>
+
+<pre><code>android {
+    namespace "com.livriko.driver"
+    defaultConfig {
+        applicationId "com.livriko.driver"
+        versionCode 1
+        versionName "3.0.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile(
+              "proguard-android-optimize.txt"
+            ), "proguard-rules.pro"
+        }
+    }
+}</code></pre>
+
+        <h2>Step 7: Run on Emulator</h2>
+        <p>With all configuration complete, run the Driver App:</p>
+
+        <h3>Android</h3>
+<pre><code>cd Taxido_driver
+npm run android</code></pre>
+
+        <h3>iOS</h3>
+<pre><code>cd Taxido_driver/ios
+pod install
+cd ..
+npm run ios</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>To test the full ride flow, run both the User App and Driver App on separate emulators or devices connected to the same backend.</p>
+        </div>
+
+        <h2>Splash Screen</h2>
+        <p>Replace the default splash screen image with your custom Driver App branding:</p>
+
+        <p><strong>File:</strong> <code>Taxido_driver/src/assets/images/splash.png</code></p>
+
+        <p>The splash screen should match the Driver App's branding and be distinct from the User App to help drivers quickly identify the correct app on their device.</p>
+
+        <h2>Testing the Driver App</h2>
+        <p>Once configuration is complete, verify the following features work correctly on a running emulator or device:</p>
+
+        <ul>
+          <li><strong>Driver login</strong> — Test driver authentication and profile loading</li>
+          <li><strong>Online/Offline toggle</strong> — Verify the driver can go online and appear on the map</li>
+          <li><strong>Background location</strong> — Confirm location is shared while the app is in the background</li>
+          <li><strong>Ride requests</strong> — Test receiving and responding to ride requests from the User App</li>
+          <li><strong>Navigation</strong> — Verify Google Maps navigation launches correctly</li>
+          <li><strong>Earnings</strong> — Check that the earnings dashboard displays trip data</li>
+          <li><strong>Document upload</strong> — Test uploading license and insurance documents</li>
+          <li><strong>Push notifications</strong> — Confirm ride request notifications arrive promptly</li>
+          <li><strong>Location accuracy</strong> — Verify the driver's position updates smoothly on the map</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>To test the full ride flow, run both the User App and Driver App on separate emulators or devices connected to the same backend. This allows you to simulate a complete ride from booking to completion.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-change-name.html">Change App Name</a> — Customize the display name</li>
+          <li><a href="app-change-color.html">Change App Color</a> — Customize the theme colors</li>
+          <li><a href="app-change-icon.html">Change App Icon</a> — Replace the app icon</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

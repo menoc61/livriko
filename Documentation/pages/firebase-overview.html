@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Overview - Livriko Documentation</title>
+  <meta name="description" content="Overview of Firebase integration in Livriko — services, setup steps, and configuration.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Firebase Overview</h2>
+        <p>Firebase is the backbone of Livriko's real-time communication and authentication layer. It powers push notifications, user authentication, cloud functions, and real-time data synchronization between the admin panel and mobile apps.</p>
+      </div>
+
+      <div class="prose">
+        <h2>What Firebase Provides for Livriko</h2>
+        <p>Livriko integrates the following Firebase services to deliver a complete mobility experience:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Purpose in Livriko</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Firebase Authentication</strong></td>
+                <td>User sign-up and sign-in via email/password, Google, Facebook, and Apple. Handles session management and identity verification.</td>
+              </tr>
+              <tr>
+                <td><strong>Firebase Cloud Messaging (FCM)</strong></td>
+                <td>Push notifications for ride updates, promotions, alerts, driver assignments, and payment confirmations.</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Firestore</strong></td>
+                <td>Real-time NoSQL database for driver locations, ride data, messaging, and session tracking.</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Functions</strong></td>
+                <td>Serverless backend logic for order tracking, notification triggers, payment webhooks, and data cleanup.</td>
+              </tr>
+              <tr>
+                <td><strong>Firebase Hosting</strong></td>
+                <td>Fast, secure hosting for the Livriko landing page and static assets with global CDN.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Setup Checklist</h2>
+        <p>Complete the following steps to fully configure Firebase for Livriko:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Status</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Create a Firebase project at <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Add Android app (User) with package name <code>com.livriko.user</code> and download <code>google-services.json</code></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Add iOS app (User) with bundle ID and download <code>GoogleService-Info.plist</code></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Repeat steps 2–3 for the Driver app (<code>com.livriko.driver</code>)</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Generate SHA-1 and SHA-256 keys and add them to Firebase</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Connect the Laravel admin panel via Service Account credentials</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Configure Firebase Cloud Messaging server key in admin settings</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Enable Social Login providers (Google, Apple) and configure billing if required</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td><i class="far fa-square"></i></td>
+                <td>Deploy Firestore security rules and Cloud Functions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>How Firebase Connects to Livriko</h2>
+        <p>Firebase acts as the real-time bridge between three components of the Livriko platform:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Admin Panel → Firebase</h4>
+              <p>The Laravel admin panel connects to Firebase using the <strong>Firebase Admin SDK</strong> (via Service Account credentials). This allows the admin to send push notifications, manage user accounts, and query Firestore data directly from the server.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Mobile Apps → Firebase</h4>
+              <p>Both the User and Driver apps use the <strong>Firebase Client SDK</strong> to authenticate users, receive push notifications, store ride data in Firestore, and listen for real-time location updates.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Firebase → Cloud Functions</h4>
+              <p>Cloud Functions respond to Firestore document changes and authentication events, automatically triggering notifications, updating ride statuses, and cleaning up expired data.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Firebase Project Structure</h2>
+        <p>When you create your Firebase project, it will contain the following key components:</p>
+
+        <pre><code>your-firebase-project/
+├── Authentication/
+│   ├── Sign-in methods (Email/Password, Google, Apple)
+│   └── Users list
+├── Firestore Database/
+│   ├── riders/
+│   ├── drivers/
+│   ├── rides/
+│   ├── locations/
+│   ├── messages/
+│   └── notifications/
+├── Cloud Functions/
+│   └── functions/ (Node.js source)
+├── Hosting/
+│   └── public/ (static files)
+└── Project Settings/
+    ├── General (project ID, API keys)
+    ├── Service Accounts (credentials for Laravel)
+    └── Cloud Messaging (server key, sender ID)</code></pre>
+
+        <h2>Prerequisites</h2>
+        <p>Before starting the Firebase setup, ensure you have:</p>
+        <ul>
+          <li><strong>Google Account</strong> — Required to access the Firebase Console</li>
+          <li><strong>Laravel Backend</strong> — The Livriko admin panel must be installed and running</li>
+          <li><strong>Mobile App Source Code</strong> — Access to the User and Driver app projects</li>
+          <li><strong>Node.js (v18+)</strong> — Required for Cloud Functions deployment</li>
+          <li><strong>Firebase CLI</strong> — Will be installed during Cloud Functions setup</li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Social Login (Google Sign-In and Apple Sign-In) requires the <strong>Firebase Blaze (pay-as-you-go)</strong> plan. Make sure billing is enabled before attempting to configure social authentication. See the <a href="firebase-billing.html">Billing</a> page for details.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <p>Start by creating your Firebase project:</p>
+        <ul>
+          <li><a href="firebase-create.html">Create Firebase Project</a> — Step-by-step project creation and app registration</li>
+          <li><a href="firebase-sha.html">SHA Key</a> — Generate and register your SHA fingerprints</li>
+          <li><a href="firebase-admin.html">Connect Admin</a> — Link Firebase to your Laravel backend</li>
+          <li><a href="firebase-rules.html">Firebase Rules</a> — Configure Firestore security rules</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create User App - Livriko Documentation</title>
+  <meta name="description" content="Set up the Livriko User mobile application.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Create User App</h2>
+        <p>Set up and configure the Livriko User mobile application. This guide covers the initial project configuration, API connection, Firebase setup, and running the app on a simulator or device.</p>
+      </div>
+
+      <div class="prose">
+
+        <h2>User App Directory</h2>
+        <p>The User App is located in the <code>Taxido_user/</code> directory of the Livriko repository. This is a standalone React Native project that can be built and run independently from the Driver App:</p>
+
+<pre><code>livriko/
+├── Taxido_user/          # User App (passenger-facing)
+│   ├── android/          # Android native project
+│   ├── ios/              # iOS native project
+│   ├── src/              # React Native source code
+│   │   ├── config/       # API and app configuration
+│   │   ├── context/      # React context providers
+│   │   ├── screens/      # Screen components
+│   │   ├── components/   # Reusable UI components
+│   │   ├── assets/       # Images, fonts, animations
+│   │   └── themes/       # Color themes and styles
+│   ├── app.json          # App metadata
+│   ├── package.json      # Dependencies
+│   └── tsconfig.json     # TypeScript configuration
+└── Taxido_driver/        # Driver App</code></pre>
+
+        <h2>Step 1: Install Dependencies</h2>
+        <p>Navigate to the User App directory and install all required packages:</p>
+
+<pre><code>cd Taxido_user
+npm install</code></pre>
+
+        <p>This installs all React Native dependencies including navigation, maps, state management, and UI components. The process may take a few minutes.</p>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>If you encounter dependency resolution errors, try <code>npm install --force</code> or delete <code>node_modules</code> and <code>package-lock.json</code> before retrying.</p>
+        </div>
+
+        <h2>Step 2: Configure API URL</h2>
+        <p>Set the backend API endpoint that the app will communicate with:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/config/config.tsx</code></p>
+
+<pre><code>// Taxido_user/src/config/config.tsx
+export const URL = 'https://your-backend-url.com';</code></pre>
+
+        <p>For local development, use your machine's local IP address (not <code>localhost</code>) so the emulator can reach the backend:</p>
+
+<pre><code>// Local development example
+export const URL = 'http://192.168.1.100/livriko/public';</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>Do not use <code>http://localhost</code> when running on a physical device or Android emulator. The emulator uses a different network context. Use your machine's actual IP address instead.</p>
+        </div>
+
+        <h2>Step 3: Configure Firebase</h2>
+        <p>The User App uses Firebase for push notifications, authentication, and analytics. You need to configure the Firebase project for both platforms:</p>
+
+        <h3>Android — google-services.json</h3>
+        <p>Download <code>google-services.json</code> from the Firebase Console and place it in:</p>
+
+<pre><code>Taxido_user/android/app/google-services.json</code></pre>
+
+        <h3>iOS — GoogleService-Info.plist</h3>
+        <p>Download <code>GoogleService-Info.plist</code> from the Firebase Console and place it in:</p>
+
+<pre><code>Taxido_user/ios/GoogleService-Info.plist</code></pre>
+
+        <div class="callout danger">
+          <div class="callout-icon"><i class="fas fa-circle-exclamation"></i></div>
+          <div class="callout-title">Important</div>
+          <p>Ensure the Firebase project's <strong>bundle identifier</strong> matches the one configured in your iOS and Android projects (e.g., <code>com.livriko.user</code>). A mismatch will cause authentication and push notification failures.</p>
+        </div>
+
+        <h2>Step 4: Configure Google Maps Key</h2>
+        <p>Set your Google Maps API key for map rendering and geocoding:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/context/index.tsx</code></p>
+
+<pre><code>// Taxido_user/src/context/index.tsx
+export const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';</code></pre>
+
+        <p>You also need to configure the key in the native projects:</p>
+
+        <h3>Android</h3>
+        <p>Add the key to <code>Taxido_user/android/app/src/main/AndroidManifest.xml</code>:</p>
+
+<pre><code>&lt;meta-data
+  android:name="com.google.android.geo.API_KEY"
+  android:value="YOUR_GOOGLE_MAPS_API_KEY"/&gt;</code></pre>
+
+        <h3>iOS</h3>
+        <p>Add the key to <code>Taxido_user/ios/Taxido_user/AppDelegate.mm</code> or via <code>Info.plist</code> depending on your setup.</p>
+
+        <h2>Step 5: Run on Emulator</h2>
+        <p>With all configuration complete, run the app on your target platform:</p>
+
+        <h3>Android</h3>
+<pre><code>cd Taxido_user
+npm run android</code></pre>
+
+        <h3>iOS</h3>
+<pre><code>cd Taxido_user/ios
+pod install
+cd ..
+npm run ios</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>The first build may take several minutes as React Native compiles native code. Subsequent builds will be faster due to caching.</p>
+        </div>
+
+        <h2>Configuration Summary</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Setting</th>
+                <th>File Location</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>API URL</td>
+                <td><code>src/config/config.tsx</code></td>
+                <td>Backend API base URL</td>
+              </tr>
+              <tr>
+                <td>Google Maps Key</td>
+                <td><code>src/context/index.tsx</code></td>
+                <td>Maps, geocoding, and directions</td>
+              </tr>
+              <tr>
+                <td>Firebase (Android)</td>
+                <td><code>android/app/google-services.json</code></td>
+                <td>Push notifications and auth</td>
+              </tr>
+              <tr>
+                <td>Firebase (iOS)</td>
+                <td><code>ios/GoogleService-Info.plist</code></td>
+                <td>Push notifications and auth</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Splash Screen</h2>
+        <p>Replace the default splash screen image with your custom branding:</p>
+
+        <p><strong>File:</strong> <code>Taxido_user/src/assets/images/splash.png</code></p>
+
+        <p>The splash screen image should be at least 1080 x 1920 px for high-resolution displays. Use a PNG file with a transparent or solid background. Ensure the image is centered and looks good on both small phones and large tablets.</p>
+
+        <h2>App Metadata</h2>
+        <p>Update the app metadata in <code>app.json</code> to reflect your branding. This file controls the app name as React Native sees it and is used during the build process:</p>
+
+<pre><code>{
+  "name": "YourAppName",
+  "displayName": "Your App Name",
+  "expo": {
+    "name": "YourAppName",
+    "slug": "your-app-name",
+    "version": "1.0.0"
+  }
+}</code></pre>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="callout-title">Warning</div>
+          <p>The <code>name</code> field in <code>app.json</code> must not contain spaces. Use camelCase or PascalCase instead. The <code>displayName</code> field can contain spaces and is shown to the user.</p>
+        </div>
+
+        <h2>Splash Screen Configuration</h2>
+        <p>The splash screen is configured in the React Native project. Check the splash screen library configuration for customization options such as background color, resize mode, and duration:</p>
+
+        <ul>
+          <li><strong>Background color</strong> — Match your primary brand color</li>
+          <li><strong>Resize mode</strong> — <code>cover</code> fills the screen, <code>contain</code> keeps the image visible</li>
+          <li><strong>Duration</strong> — How long the splash screen displays before transitioning to the app</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-circle-info"></i></div>
+          <div class="callout-title">Tip</div>
+          <p>After configuring the User App, run it on an emulator to verify all changes are applied correctly before moving on to the Driver App.</p>
+        </div>
+
+        <h2>Testing the User App</h2>
+        <p>Once configuration is complete, verify the following features work correctly on a running emulator or device:</p>
+
+        <ul>
+          <li><strong>Login/Registration</strong> — Test email, phone, Google, and Apple sign-in flows</li>
+          <li><strong>Map loading</strong> — Verify Google Maps renders correctly with your API key</li>
+          <li><strong>API connection</strong> — Check that vehicle types and pricing load from the backend</li>
+          <li><strong>Push notifications</strong> — Test receiving notifications via Firebase Cloud Messaging</li>
+          <li><strong>Ride booking</strong> — Complete a test ride flow from pickup to dropoff</li>
+          <li><strong>Payments</strong> — Verify payment methods work correctly for your configured gateways</li>
+          <li><strong>Location services</strong> — Confirm the app requests and receives location permissions</li>
+          <li><strong>Error handling</strong> — Test with no internet connection to verify offline behavior</li>
+        </ul>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="app-create-driver.html">Create Driver App</a> — Configure the Driver App identity</li>
+          <li><a href="app-change-name.html">Change App Name</a> — Customize the display name</li>
+          <li><a href="app-change-color.html">Change App Color</a> — Customize the theme colors</li>
+          <li><a href="app-change-icon.html">Change App Icon</a> — Replace the app icon</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

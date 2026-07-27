@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Types - Livriko Documentation</title>
+  <meta name="description" content="Configure vehicle categories with images, pricing, and zone assignments.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main"><div class="content">
+
+    <!-- ====== PAGE HEADER ====== -->
+    <section class="section-header">
+      <h2><i class="fas fa-car-side" style="color:var(--primary);margin-right:8px;"></i> Vehicle Types</h2>
+      <p>Vehicle types define the different ride and delivery options available to riders. Each vehicle type has its own image, icon, pricing, capacity, and zone assignments. Riders see these options when requesting a ride or delivery, and drivers are matched based on the selected vehicle type.</p>
+    </section>
+
+    <!-- ====== OVERVIEW ====== -->
+    <section class="section-header">
+      <h2>What Are Vehicle Types?</h2>
+      <p>Vehicle types are the core building blocks of your service catalog.</p>
+    </section>
+
+    <div class="prose">
+      <p>Every ride request, rental booking, and parcel delivery in Livriko is tied to a vehicle type. The vehicle type determines what riders see in the app, how fares are calculated, which drivers can accept trips, and what images appear on the map.</p>
+
+      <h3>Livriko Service Categories</h3>
+      <p>Vehicle types can be assigned to one or more of the following service categories:</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-car"></i></div>
+          <h4>Cab (Ride)</h4>
+          <p>Standard point-to-point rides. Includes <strong>Ride</strong> (on-demand), <strong>Intercity</strong> (long-distance between cities), and <strong>Schedule</strong> (advance booking) sub-services.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-truck"></i></div>
+          <h4>Freight</h4>
+          <p>Heavy goods and large-item delivery. Suitable for moving furniture, appliances, construction materials, and bulk cargo. Vehicles with larger cargo capacity.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><i class="fas fa-box"></i></div>
+          <h4>Parcel</h4>
+          <p>Small package and document delivery. Ideal for couriers, e-commerce deliveries, and food logistics. Vehicles range from bikes to vans depending on parcel size.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== CREATING A VEHICLE TYPE (STEPS) ====== -->
+    <section class="section-header">
+      <h2>Creating a Vehicle Type</h2>
+      <p>Follow these steps to add a new vehicle category to your platform.</p>
+    </section>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>1. Navigate to Vehicle Types</h4>
+          <p>Log in to the admin panel. Go to <strong>Livriko Management</strong> &rarr; <strong>Vehicle Types</strong>. You will see a list of all existing vehicle types with their status.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>2. Click "Add New Vehicle Type"</h4>
+          <p>Click the <strong>Add New Vehicle Type</strong> button. The vehicle type creation form opens with all configurable fields.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>3. Upload Vehicle Image</h4>
+          <p>Upload a clear, high-resolution image of the vehicle type. This image is shown to riders in the app when they select their ride option. Use a transparent PNG for best results. Recommended size: 512&times;512px.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>4. Set Map Icon</h4>
+          <p>Upload a small icon that represents the vehicle on the live map. This icon appears as the marker for drivers of this vehicle type. Recommended size: 64&times;64px. Use a distinctive shape or color to differentiate vehicle types on the map.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>5. Configure Pricing &amp; Services</h4>
+          <p>Enter the vehicle name, base amount, vehicle charge, assign zones, select applicable services and categories, set commission and tax rates. See the field reference table below for detailed descriptions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>6. Save and Activate</h4>
+          <p>Set the <strong>Status</strong> to <em>Active</em> and click <strong>Save</strong>. The vehicle type will now appear as an option in the rider app for the assigned zones.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== FIELD REFERENCE TABLE ====== -->
+    <section class="section-header">
+      <h2>Field Reference</h2>
+      <p>Complete reference for every field on the vehicle type form.</p>
+    </section>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Image</strong></td>
+            <td>File upload</td>
+            <td>Yes</td>
+            <td>Vehicle image shown to riders in the app when selecting a ride option. Use a transparent PNG with a white or neutral background for consistency.</td>
+          </tr>
+          <tr>
+            <td><strong>Map Icon</strong></td>
+            <td>File upload</td>
+            <td>Yes</td>
+            <td>Small icon displayed on the live map for drivers of this vehicle type. Helps riders visually identify their assigned driver on the map.</td>
+          </tr>
+          <tr>
+            <td><strong>Name</strong></td>
+            <td>Text</td>
+            <td>Yes</td>
+            <td>Display name for the vehicle type (e.g., "Economy", "Comfort", "Premium", "Bike", "Van"). Must be unique and descriptive.</td>
+          </tr>
+          <tr>
+            <td><strong>Base Amount</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>The starting fare charged at the beginning of every trip. This is a fixed amount regardless of distance or duration. Set to 0 if all pricing is distance-based.</td>
+          </tr>
+          <tr>
+            <td><strong>Vehicle Charge</strong></td>
+            <td>Number</td>
+            <td>Yes</td>
+            <td>Additional per-trip charge for using this vehicle type. Added on top of the base fare and distance/time charges. Use for premium vehicle surcharges.</td>
+          </tr>
+          <tr>
+            <td><strong>Zones</strong></td>
+            <td>Multi-select</td>
+            <td>Yes</td>
+            <td>Zones where this vehicle type operates. Only riders in selected zones will see this option. A vehicle type must be assigned to at least one zone to be visible.</td>
+          </tr>
+          <tr>
+            <td><strong>Services</strong></td>
+            <td>Multi-select</td>
+            <td>Yes</td>
+            <td>Service types this vehicle supports: <strong>Ride</strong> (on-demand), <strong>Intercity</strong> (long-distance), <strong>Schedule</strong> (advance booking), <strong>Freight</strong>, and <strong>Parcel</strong>.</td>
+          </tr>
+          <tr>
+            <td><strong>Service Categories</strong></td>
+            <td>Multi-select</td>
+            <td>No</td>
+            <td>Sub-categories for finer control. For example, under "Ride" you can specify "Standard" or "Premium". Useful for organizing vehicle types in the rider app.</td>
+          </tr>
+          <tr>
+            <td><strong>Commission</strong></td>
+            <td>Percentage</td>
+            <td>Yes</td>
+            <td>Platform commission percentage deducted from each trip fare for this vehicle type. Applied after the base fare and distance charges are calculated.</td>
+          </tr>
+          <tr>
+            <td><strong>Tax</strong></td>
+            <td>Percentage</td>
+            <td>No</td>
+            <td>Tax percentage applied to trips for this vehicle type. Calculated on top of the fare. Leave at 0 if taxes are handled at the zone or platform level.</td>
+          </tr>
+          <tr>
+            <td><strong>Status</strong></td>
+            <td>Toggle</td>
+            <td>Yes</td>
+            <td><strong>Active</strong> makes the vehicle type visible to riders and available for trips. <strong>Inactive</strong> hides it from the app without deleting the configuration.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- ====== EXAMPLE CONFIGURATION ====== -->
+    <section class="section-header">
+      <h2>Example Configuration</h2>
+      <p>A sample vehicle type setup for a mid-tier ride option.</p>
+    </section>
+
+    <div class="prose">
+      <h3>Configuration: "Comfort"</h3>
+      <pre><code>Vehicle Name:     Comfort
+Image:            comfort-car.png (512x512, transparent)
+Map Icon:         comfort-icon.png (64x64)
+Base Amount:      $3.00
+Vehicle Charge:   $1.50
+Zones:            Paris, Lyon
+Services:         Ride, Schedule
+Service Categories: Standard
+Commission:       20%
+Tax:              10%
+Status:           Active</code></pre>
+
+      <div class="callout info">
+        <i class="fas fa-circle-info callout-icon"></i>
+        <div>
+          <div class="callout-title">Fare Calculation</div>
+          For a 12 km, 20-minute Comfort ride in Paris with a base per-km rate of $0.80 and per-minute rate of $0.15: <br>
+          <strong>$3.00</strong> (base) + <strong>$1.50</strong> (vehicle charge) + <strong>$9.60</strong> (12 &times; $0.80) + <strong>$3.00</strong> (20 &times; $0.15) = <strong>$17.10</strong> before commission and tax.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- ====== BEST PRACTICES ====== -->
+    <section class="section-header">
+      <h2>Best Practices</h2>
+      <p>Guidelines for configuring vehicle types effectively.</p>
+    </section>
+
+    <div class="prose">
+      <div class="callout success">
+        <i class="fas fa-circle-check callout-icon"></i>
+        <div>
+          <div class="callout-title">Image Consistency</div>
+          Use a consistent visual style for all vehicle type images. If one vehicle uses a side-view illustration, all should use side-view illustrations. This creates a polished, professional rider experience.
+        </div>
+      </div>
+
+      <h3>Naming Conventions</h3>
+      <ul>
+        <li><strong>Use descriptive names</strong> &mdash; "Economy Sedan" is better than "Type A". Riders need to understand what they are booking.</li>
+        <li><strong>Keep names short</strong> &mdash; Names are displayed on small mobile screens. Aim for 1-2 words.</li>
+        <li><strong>Use consistent naming across zones</strong> &mdash; If "Premium" exists in Paris, use the same name in Lyon for consistency.</li>
+      </ul>
+
+      <h3>Pricing Tips</h3>
+      <ul>
+        <li><strong>Set base amounts low</strong> &mdash; A low base amount makes the ride feel more accessible. Compensate with per-km and per-minute rates.</li>
+        <li><strong>Vehicle charge for premium options</strong> &mdash; Use the vehicle charge to create clear price differentiation between economy and premium tiers.</li>
+        <li><strong>Commission flexibility</strong> &mdash; Higher-tier vehicles (Premium, SUV) can support higher commission rates since riders in these segments are less price-sensitive.</li>
+      </ul>
+
+      <h3>Service Assignment</h3>
+      <ul>
+        <li>Bikes and scooters should typically only be assigned to <strong>Ride</strong> and <strong>Parcel</strong> services.</li>
+        <li>Vans and trucks should be assigned to <strong>Freight</strong> and <strong>Parcel</strong> services.</li>
+        <li>Sedans and SUVs can be assigned to all services including <strong>Intercity</strong> and <strong>Schedule</strong>.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- ====== NEXT STEPS ====== -->
+    <section class="section-header">
+      <h2>Next Steps</h2>
+      <p>After configuring vehicle types, continue with these related settings.</p>
+    </section>
+
+    <div class="feature-grid">
+      <a href="management-vehicle-zone.html" class="feature-card">
+        <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+        <h4>Vehicle Zone Pricing</h4>
+        <p>Set base fare, per-km, per-minute, and minimum fare rates for each vehicle type in each zone.</p>
+      </a>
+      <a href="management-zones.html" class="feature-card">
+        <div class="icon"><i class="fas fa-map-location-dot"></i></div>
+        <h4>Zones</h4>
+        <p>Create and configure geographic service areas where vehicle types operate.</p>
+      </a>
+      <a href="management-rental.html" class="feature-card">
+        <div class="icon"><i class="fas fa-key"></i></div>
+        <h4>Rental Vehicles</h4>
+        <p>Configure rental vehicle packages for hourly, daily, and weekly bookings.</p>
+      </a>
+    </div>
+
+    <footer class="footer"><p>&copy; 2024-2026 Livriko. All rights reserved.</p><p>Version 1.0</p><div class="footer-links"><a href="../index.html">Documentation</a><a href="laravel-installation.html">Installation</a><a href="troubleshooting-app.html">Troubleshooting</a></div></footer>
+  </div></main>
+  <script src="shared.js"></script>
+</body></html>

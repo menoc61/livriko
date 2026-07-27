@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Messaging - Livriko Documentation</title>
+  <meta name="description" content="Configure Firebase Cloud Messaging (FCM) for Livriko push notifications.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+
+      <div class="section-header">
+        <h2>Firebase Cloud Messaging</h2>
+        <p>Firebase Cloud Messaging (FCM) is used by Livriko to deliver push notifications to both the User and Driver apps in real time.</p>
+      </div>
+
+      <div class="prose">
+        <h2>FCM Setup Overview</h2>
+        <p>FCM is enabled by default when you create a Firebase project. No additional configuration is needed beyond connecting Firebase to your apps and the admin panel.</p>
+
+        <h3>Configuring the Server Key</h3>
+        <p>To configure the server key in the admin panel:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Get Server Key</h4>
+              <p>Go to <strong>Firebase Console → Project Settings → Cloud Messaging</strong></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Copy Server Key</h4>
+              <p>Copy the <strong>Server key</strong> value from the Cloud Messaging settings.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Paste in Admin Panel</h4>
+              <p>In the Livriko admin panel, navigate to <strong>Settings → Firebase</strong> and paste the server key in the <strong>FCM Server Key</strong> field.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Save Settings</h4>
+              <p>Click <strong>Save</strong> to apply the configuration. Clear config cache if needed.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>FCM Token Generation</h2>
+        <p>When users open the Livriko apps, FCM generates a unique token for each device. This token is used to target notifications to specific devices.</p>
+
+        <pre><code>// Token registration flow (handled automatically by Livriko apps):
+1. App starts and requests notification permission
+2. Firebase generates a unique FCM token
+3. Token is sent to the Laravel backend via API
+4. Token is stored in the user's Firestore document
+5. Backend uses the token to send targeted notifications</code></pre>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Token Refresh</div>
+          <p>FCM tokens can change when the app is reinstalled, the device is factory reset, or the token is refreshed by Firebase. The Livriko apps automatically handle token refresh and update the backend.</p>
+        </div>
+
+        <h2>Sending Notifications</h2>
+        <p>Livriko supports three notification targeting methods:</p>
+
+        <h3>1. Device-Based (Single Device)</h3>
+        <pre><code>// Send to a specific device using its FCM token
+$messaging->send([
+    'token' => 'device-fcm-token-here',
+    'notification' => [
+        'title' => 'Ride Confirmed',
+        'body' => 'Your ride has been confirmed. Driver is on the way.',
+    ],
+    'data' => [
+        'ride_id' => '12345',
+        'type' => 'ride_confirmed',
+    ],
+]);</code></pre>
+
+        <h3>2. Topic-Based (All Subscribers)</h3>
+        <pre><code>// Send to all devices subscribed to a topic
+$messaging->send([
+    'topic' => 'promotions',
+    'notification' => [
+        'title' => 'Weekend Special!',
+        'body' => 'Get 20% off all rides this weekend.',
+    ],
+]);</code></pre>
+
+        <h3>3. Condition-Based (Multiple Topics)</h3>
+        <pre><code>// Send to devices matching a condition
+$messaging->send([
+    'condition' => "'riders' in topics || 'drivers' in topics",
+    'notification' => [
+        'title' => 'System Update',
+        'body' => 'Livriko will be under maintenance tonight.',
+    ],
+]);</code></pre>
+
+        <h2>Notification Payload Structure</h2>
+        <p>FCM supports two payload types:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Payload Type</th>
+                <th>Behavior</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Notification Payload</strong></td>
+                <td>System tray notification, handled by OS</td>
+                <td>Simple messages shown when app is in background</td>
+              </tr>
+              <tr>
+                <td><strong>Data Payload</strong></td>
+                <td>Custom data, handled by app code</td>
+                <td>Ride updates, deep links, custom UI actions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="callout-title">Best Practice</div>
+          <p>Livriko uses <strong>data-only payloads</strong> for most notifications. This gives the app full control over notification display and handling, including foreground delivery and custom actions.</p>
+        </div>
+
+        <h2>Handling Notifications</h2>
+
+        <h3>Foreground (App Open)</h3>
+        <p>When the app is open, notifications are intercepted by the app code and displayed as in-app banners:</p>
+        <pre><code>// Livriko handles foreground notifications automatically
+// App displays an in-app banner and processes the data payload
+// User can tap the banner to navigate to the relevant screen</code></pre>
+
+        <h3>Background (App Closed)</h3>
+        <p>When the app is closed, notifications are handled by the OS and shown in the notification tray. Tapping opens the app at the relevant screen.</p>
+
+        <h2>Notification Channels (Android)</h2>
+        <p>Android 8.0+ uses notification channels to let users control notification preferences:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Channel</th>
+                <th>Priority</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ride Updates</strong></td>
+                <td>High</td>
+                <td>Ride status changes, driver arrivals, ride completion</td>
+              </tr>
+              <tr>
+                <td><strong>Messages</strong></td>
+                <td>High</td>
+                <td>Chat messages from riders/drivers</td>
+              </tr>
+              <tr>
+                <td><strong>Promotions</strong></td>
+                <td>Low</td>
+                <td>Discount offers and promotional messages</td>
+              </tr>
+              <tr>
+                <td><strong>System</strong></td>
+                <td>Default</td>
+                <td>Account updates, system announcements</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Badge Count (iOS)</h2>
+        <p>iOS displays a badge count on the app icon. Livriko automatically manages the badge count based on unread notifications:</p>
+        <ul>
+          <li>Badge increments when a new notification arrives</li>
+          <li>Badge resets to 0 when the user opens the app</li>
+          <li>Badge can be set via the <code>badge</code> field in the FCM payload</li>
+        </ul>
+
+        <h2>Testing Push Notifications</h2>
+        <p>Use the Livriko admin panel to send test notifications:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h4>Open Push Notifications</h4>
+              <p>Navigate to <strong>Management → Push Notifications</strong> in the admin panel.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Create Notification</h4>
+              <p>Enter the notification title, body, and select the target audience (riders, drivers, or all).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h4>Send Test</h4>
+              <p>Click <strong>"Send Test"</strong> to deliver the notification to a specific device or user.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="callout-title">Permission Required</div>
+          <p>Users must grant notification permissions on their device for push notifications to work. On <strong>Android 13+</strong>, this requires a runtime permission request. On <strong>iOS</strong>, this is handled during app installation.</p>
+        </div>
+
+        <hr>
+
+        <h2>Next Steps</h2>
+        <ul>
+          <li><a href="firebase-social.html">Social Login</a> — Configure Google and Apple sign-in</li>
+          <li><a href="firebase-functions.html">Cloud Functions</a> — Set up serverless notification triggers</li>
+          <li><a href="management-push.html">Push Notification Management</a> — Send notifications from admin</li>
+        </ul>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <script src="shared.js"></script>
+</body>
+</html>

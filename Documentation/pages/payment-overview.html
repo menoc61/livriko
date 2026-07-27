@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Gateways - Livriko Documentation</title>
+  <meta name="description" content="Configure payment gateways in Livriko: Stripe, PayPal, Razorpay, Paystack, cash, wallet, and more. Step-by-step integration guide.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="mobile-header">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko" class="mobile-logo">
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="../livriko png 0.5x/Forme texte monochrome blanc@0.5x.png" alt="Livriko">
+        <span>Docs</span>
+      </div>
+      <div class="sidebar-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search documentation…" aria-label="Search documentation">
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-section">
+        <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Introduction</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="laravel">
+          <span><i class="fab fa-laravel" style="margin-right:6px;"></i> Laravel Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="laravel">
+          <a href="laravel-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="laravel-localhost.html" class="nav-link"><i class="fas fa-circle"></i> Localhost Configuration</a>
+          <a href="laravel-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation Overview</a>
+          <a href="laravel-installation-gui.html" class="nav-link"><i class="fas fa-circle"></i> Installation GUI</a>
+          <a href="laravel-installation-cli.html" class="nav-link"><i class="fas fa-circle"></i> Installation CLI</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="deployment">
+          <span><i class="fas fa-cloud-arrow-up" style="margin-right:6px;"></i> Deployment</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="deployment">
+          <a href="deployment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="deployment-cpanel-gui.html" class="nav-link"><i class="fas fa-circle"></i> cPanel GUI</a>
+          <a href="deployment-cpanel-cli.html" class="nav-link"><i class="fas fa-circle"></i> cPanel CLI</a>
+          <a href="deployment-vps-apache.html" class="nav-link"><i class="fas fa-circle"></i> VPS Apache</a>
+          <a href="deployment-vps-nginx.html" class="nav-link"><i class="fas fa-circle"></i> VPS Nginx</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="app">
+          <span><i class="fas fa-mobile-screen-button" style="margin-right:6px;"></i> App Configuration</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="app">
+          <a href="app-prerequisites.html" class="nav-link"><i class="fas fa-circle"></i> Prerequisites</a>
+          <a href="app-installation.html" class="nav-link"><i class="fas fa-circle"></i> Installation</a>
+          <a href="app-features.html" class="nav-link"><i class="fas fa-circle"></i> Features</a>
+          <a href="app-android.html" class="nav-link"><i class="fas fa-circle"></i> Android Setup</a>
+          <a href="app-ios.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup</a>
+          <a href="app-create-user.html" class="nav-link"><i class="fas fa-circle"></i> Create User App</a>
+          <a href="app-create-driver.html" class="nav-link"><i class="fas fa-circle"></i> Create Driver App</a>
+          <a href="app-change-name.html" class="nav-link"><i class="fas fa-circle"></i> Change App Name</a>
+          <a href="app-change-color.html" class="nav-link"><i class="fas fa-circle"></i> Change App Color</a>
+          <a href="app-change-icon.html" class="nav-link"><i class="fas fa-circle"></i> Change App Icon</a>
+          <a href="app-environment.html" class="nav-link"><i class="fas fa-circle"></i> Environment URL</a>
+          <a href="app-folder-structure.html" class="nav-link"><i class="fas fa-circle"></i> Folder Structure</a>
+          <a href="app-basic-setup.html" class="nav-link"><i class="fas fa-circle"></i> Basic Setup</a>
+          <a href="app-build.html" class="nav-link"><i class="fas fa-circle"></i> Build APK / AAB</a>
+          <a href="app-google-maps.html" class="nav-link"><i class="fas fa-circle"></i> Google Maps</a>
+          <a href="app-services.html" class="nav-link"><i class="fas fa-circle"></i> Service List</a>
+          <a href="app-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="app-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="app-addons.html" class="nav-link"><i class="fas fa-circle"></i> Add-Ons</a>
+          <a href="app-ios-setup.html" class="nav-link"><i class="fas fa-circle"></i> iOS Setup Detail</a>
+          <a href="app-ios-build.html" class="nav-link"><i class="fas fa-circle"></i> iOS Build</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="payment">
+          <span><i class="fas fa-credit-card" style="margin-right:6px;"></i> Payment Gateways</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="payment">
+          <a href="payment-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="settings">
+          <span><i class="fas fa-gear" style="margin-right:6px;"></i> Platform Settings</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="settings">
+          <a href="settings-languages.html" class="nav-link"><i class="fas fa-circle"></i> Languages</a>
+          <a href="settings-currencies.html" class="nav-link"><i class="fas fa-circle"></i> Currencies</a>
+          <a href="settings-taxes.html" class="nav-link"><i class="fas fa-circle"></i> Taxes</a>
+          <a href="settings-sms.html" class="nav-link"><i class="fas fa-circle"></i> SMS Gateways</a>
+          <a href="settings-landing.html" class="nav-link"><i class="fas fa-circle"></i> Landing Page</a>
+          <a href="settings-system.html" class="nav-link"><i class="fas fa-circle"></i> System Tools</a>
+          <a href="settings-general.html" class="nav-link"><i class="fas fa-circle"></i> Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="management">
+          <span><i class="fas fa-sliders" style="margin-right:6px;"></i> Livriko Management</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="management">
+          <a href="management-zones.html" class="nav-link"><i class="fas fa-circle"></i> Zones</a>
+          <a href="management-vehicle-types.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Types</a>
+          <a href="management-rental.html" class="nav-link"><i class="fas fa-circle"></i> Rental Vehicles</a>
+          <a href="management-hourly.html" class="nav-link"><i class="fas fa-circle"></i> Hourly Packages</a>
+          <a href="management-airports.html" class="nav-link"><i class="fas fa-circle"></i> Airports</a>
+          <a href="management-surge.html" class="nav-link"><i class="fas fa-circle"></i> Surge Pricing</a>
+          <a href="management-vehicle-zone.html" class="nav-link"><i class="fas fa-circle"></i> Vehicle Zone Pricing</a>
+          <a href="management-coupons.html" class="nav-link"><i class="fas fa-circle"></i> Coupons</a>
+          <a href="management-sos.html" class="nav-link"><i class="fas fa-circle"></i> SOS</a>
+          <a href="management-plans.html" class="nav-link"><i class="fas fa-circle"></i> Plans</a>
+          <a href="management-drivers.html" class="nav-link"><i class="fas fa-circle"></i> Drivers</a>
+          <a href="management-location.html" class="nav-link"><i class="fas fa-circle"></i> Driver Location</a>
+          <a href="management-wallet.html" class="nav-link"><i class="fas fa-circle"></i> Wallet</a>
+          <a href="management-fleet.html" class="nav-link"><i class="fas fa-circle"></i> Fleet Manager</a>
+          <a href="management-push.html" class="nav-link"><i class="fas fa-circle"></i> Push Notifications</a>
+          <a href="management-templates.html" class="nav-link"><i class="fas fa-circle"></i> Notification Templates</a>
+          <a href="management-settings.html" class="nav-link"><i class="fas fa-circle"></i> App Settings</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="firebase">
+          <span><i class="fas fa-fire" style="margin-right:6px;"></i> Firebase</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="firebase">
+          <a href="firebase-overview.html" class="nav-link"><i class="fas fa-circle"></i> Overview</a>
+          <a href="firebase-create.html" class="nav-link"><i class="fas fa-circle"></i> Create Project</a>
+          <a href="firebase-rules.html" class="nav-link"><i class="fas fa-circle"></i> Rules</a>
+          <a href="firebase-sha.html" class="nav-link"><i class="fas fa-circle"></i> SHA Key</a>
+          <a href="firebase-admin.html" class="nav-link"><i class="fas fa-circle"></i> Connect Admin</a>
+          <a href="firebase-messaging.html" class="nav-link"><i class="fas fa-circle"></i> Messaging</a>
+          <a href="firebase-social.html" class="nav-link"><i class="fas fa-circle"></i> Social Login</a>
+          <a href="firebase-billing.html" class="nav-link"><i class="fas fa-circle"></i> Billing</a>
+          <a href="firebase-functions.html" class="nav-link"><i class="fas fa-circle"></i> Cloud Functions</a>
+          <a href="firebase-collections.html" class="nav-link"><i class="fas fa-circle"></i> Firestore Collections</a>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" data-toggle="troubleshooting">
+          <span><i class="fas fa-bug" style="margin-right:6px;"></i> Troubleshooting</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="nav-section-links" id="troubleshooting">
+          <a href="troubleshooting-app.html" class="nav-link"><i class="fas fa-circle"></i> App Errors</a>
+          <a href="troubleshooting-admin.html" class="nav-link"><i class="fas fa-circle"></i> Admin Errors</a>
+          <a href="troubleshooting-database.html" class="nav-link"><i class="fas fa-circle"></i> Database Upgrade</a>
+          <a href="troubleshooting-update.html" class="nav-link"><i class="fas fa-circle"></i> Version Update</a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <p>Livriko v1.0 &middot; Based on <a href="#">Taxido</a></p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <h1 style="font-size:32px; font-weight:800; color:var(--dark); margin-bottom:8px; letter-spacing:-0.5px;">Payment Gateways</h1>
+      <p style="font-size:17px; color:var(--text-secondary); margin-bottom:32px; max-width:700px;">Livriko supports a wide range of payment gateways to process ride payments, rental fees, delivery charges, and wallet top-ups. This guide covers every supported gateway, how to configure it, and best practices for managing payments on your platform.</p>
+
+      <!-- ============================================================
+           OVERVIEW
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Supported Payment Gateways</h2>
+        <p>Livriko ships with 15+ payment gateways pre-integrated. Enable the ones relevant to your operational region.</p>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Gateway</th>
+              <th>Status</th>
+              <th>Payment Types</th>
+              <th>Key Required</th>
+              <th>Test Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cash</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cash on delivery</td>
+              <td>No</td>
+              <td>N/A</td>
+            </tr>
+            <tr>
+              <td><strong>Stripe</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Credit/Debit Cards</td>
+              <td>Yes (3 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>PayPal</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>PayPal Balance, Cards</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Razorpay</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, UPI, Wallets</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Paystack</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Bank Transfer</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Flutterwave</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Bank, Mobile Money</td>
+              <td>Yes (3 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Midtrans</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Bank Transfer, E-Wallet</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>MyFatoorah</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, KNET, BENEFIT</td>
+              <td>Yes (1 key)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>PayTabs</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Apple Pay</td>
+              <td>Yes (3 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>PhonePe</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>UPI, Wallet</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>PayU</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Net Banking, UPI</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Mercado Pago</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Cash, Bank</td>
+              <td>Yes (1 key)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tap</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, Apple Pay</td>
+              <td>Yes (1 key)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cashfree</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>Cards, UPI, Net Banking</td>
+              <td>Yes (2 keys)</td>
+              <td><span class="badge badge-success">Yes</span></td>
+            </tr>
+            <tr>
+              <td><strong>Wallet</strong></td>
+              <td><span class="badge badge-success">Included</span></td>
+              <td>In-app Wallet Balance</td>
+              <td>No</td>
+              <td>N/A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ============================================================
+           CASH PAYMENT
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Cash Payment</h2>
+        <p>Cash is the default payment method and requires zero configuration. It is always available as a fallback option.</p>
+      </div>
+
+      <p>When cash is enabled, riders pay the driver directly at the end of the trip. The driver marks the ride as "Completed - Cash" in the app, and the platform records the transaction. Cash payments work offline and are ideal for markets where digital payments are not yet widespread.</p>
+
+      <h3>How Cash Works</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Rider selects "Cash" at checkout</h4>
+            <p>The rider chooses Cash as the payment method before confirming the ride.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Ride is completed</h4>
+            <p>The driver drops off the rider and taps "Complete Ride" in the driver app.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Driver confirms cash collection</h4>
+            <p>The driver enters the amount received and confirms the cash payment.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Platform records the transaction</h4>
+            <p>The fare is logged in the admin panel. The driver's earnings include the cash amount minus the platform commission.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Configuring Cash in Admin</h3>
+      <ol style="margin-left:24px; list-style:decimal;">
+        <li>Navigate to <strong>Settings &rarr; General</strong></li>
+        <li>Scroll to the <strong>Payment Settings</strong> section</li>
+        <li>Toggle <strong>Cash</strong> to enabled (it is on by default)</li>
+        <li>Optionally set Cash as the <strong>default payment method</strong></li>
+        <li>Click <strong>Save</strong></li>
+      </ol>
+
+      <div class="callout success">
+        <i class="fas fa-check-circle callout-icon"></i>
+        <div>
+          <div class="callout-title">Cash is always available</div>
+          <p>Even if you disable Cash in settings, drivers can still collect cash as a fallback. The toggle only controls whether Cash appears as an option in the rider app checkout screen.</p>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           STRIPE
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Stripe Integration</h2>
+        <p>Stripe is the most widely supported gateway, available in 46+ countries. It supports credit cards, debit cards, Apple Pay, Google Pay, and local payment methods.</p>
+      </div>
+
+      <h3>Step-by-Step Stripe Setup</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Create a Stripe account</h4>
+            <p>Visit <a href="https://dashboard.stripe.com/register" target="_blank">stripe.com/register</a> and create a business account. Complete the verification process for your country.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Get your API keys</h4>
+            <p>In the Stripe Dashboard, go to <strong>Developers &rarr; API Keys</strong>. You will see your test keys by default. Copy the <strong>Publishable Key</strong> (starts with <code>pk_test_</code>) and the <strong>Secret Key</strong> (starts with <code>sk_test_</code>).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Set up Webhooks</h4>
+            <p>Go to <strong>Developers &rarr; Webhooks</strong> and add a new endpoint. Set the URL to <code>https://yourdomain.com/api/stripe/webhook</code>. Select events: <code>payment_intent.succeeded</code>, <code>payment_intent.payment_failed</code>, and <code>charge.refunded</code>. Copy the <strong>Webhook Signing Secret</strong> (starts with <code>whsec_</code>).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure .env file</h4>
+            <p>Add the Stripe keys to your Laravel <code>.env</code> file:</p>
+          </div>
+        </div>
+      </div>
+
+      <pre><code><span class="cmt"># Stripe Configuration</span>
+<span class="var">STRIPE_KEY</span>=<span class="str">YOUR_STRIPE_KEY</span>
+<span class="var">STRIPE_SECRET</span>=<span class="str">YOUR_STRIPE_SECRET_KEY</span>
+<span class="var">STRIPE_WEBHOOK_SECRET</span>=<span class="str">YOUR_STRIPE_WEBHOOK_KEY</span></code></pre>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Enter keys in Admin Panel</h4>
+            <p>Go to <strong>Payment Settings &rarr; Stripe</strong> in the admin panel. Paste the Publishable Key, Secret Key, and Webhook Secret. Toggle Stripe to <strong>Enabled</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Test in Sandbox</h4>
+            <p>Use Stripe's test card number <code>XXXX XXXX XXXX XXXX</code> with any future expiry date and any CVC. Process a test ride and verify the payment appears in the Stripe Dashboard under <strong>Payments</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Switch to Live Mode</h4>
+            <p>Once testing is complete, toggle the Stripe Dashboard to <strong>Live mode</strong>. Generate new live API keys and update your <code>.env</code> and admin panel with the live credentials (prefixed with <code>pk_live_</code> and <code>sk_live_</code>).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Stripe Setting</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Publishable Key</strong></td>
+              <td>Public key for client-side card tokenization</td>
+              <td><code>pk_test_51abc...</code></td>
+            </tr>
+            <tr>
+              <td><strong>Secret Key</strong></td>
+              <td>Private key for server-side charges (never expose in client code)</td>
+              <td><code>sk_test_51abc...</code></td>
+            </tr>
+            <tr>
+              <td><strong>Webhook Secret</strong></td>
+              <td>Used to verify that webhook events genuinely come from Stripe</td>
+              <td><code>whsec_abc123...</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout danger">
+        <i class="fas fa-exclamation-triangle callout-icon"></i>
+        <div>
+          <div class="callout-title">Never commit live keys to Git</div>
+          <p>Always store Stripe Secret Keys and Webhook Secrets in your <code>.env</code> file, which should be listed in <code>.gitignore</code>. Exposing a live Secret Key can lead to unauthorized charges on your account.</p>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PAYPAL
+           ============================================================ -->
+      <div class="section-header">
+        <h2>PayPal Integration</h2>
+        <p>PayPal is available in 200+ countries and supports PayPal balance, bank accounts, and credit/debit cards through the PayPal wallet.</p>
+      </div>
+
+      <h3>PayPal Developer Setup</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Create a PayPal Business account</h4>
+            <p>Go to <a href="https://www.paypal.com/business" target="_blank">paypal.com/business</a> and sign up for a Business account if you do not already have one.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Access the Developer Dashboard</h4>
+            <p>Visit <a href="https://developer.paypal.com/dashboard/" target="_blank">developer.paypal.com/dashboard</a> and log in with your Business account credentials.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Create a REST API App</h4>
+            <p>Under <strong>My Apps &amp; Credentials</strong>, click <strong>Create App</strong>. Name it (e.g., "Livriko Production") and click <strong>Create App</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Copy Client ID and Secret</h4>
+            <p>Under the <strong>Sandbox</strong> tab, copy the <strong>Client ID</strong> and <strong>Secret</strong>. For production, switch to the <strong>Live</strong> tab and copy those credentials instead.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure in Livriko Admin</h4>
+            <p>Go to <strong>Payment Settings &rarr; PayPal</strong>. Paste the Client ID and Secret, set the mode to <strong>Sandbox</strong> for testing, and toggle to <strong>Enabled</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>PayPal Setting</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Business Email</strong></td>
+              <td>The email address associated with your PayPal Business account</td>
+            </tr>
+            <tr>
+              <td><strong>Client ID</strong></td>
+              <td>REST API Client ID from the Developer Dashboard</td>
+            </tr>
+            <tr>
+              <td><strong>Secret</strong></td>
+              <td>REST API Secret (keep this confidential)</td>
+            </tr>
+            <tr>
+              <td><strong>Mode</strong></td>
+              <td><code>Sandbox</code> for testing or <code>Live</code> for production transactions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <i class="fas fa-exclamation-circle callout-icon"></i>
+        <div>
+          <div class="callout-title">Sandbox vs Live credentials</div>
+          <p>PayPal Sandbox and Live environments use completely different Client IDs and Secrets. Using Sandbox credentials in Live mode (or vice versa) will cause payment failures. Always double-check which mode you are configuring.</p>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           RAZORPAY
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Razorpay Integration</h2>
+        <p>Razorpay is the leading payment gateway for India, supporting UPI, credit/debit cards, net banking, and popular wallets like PhonePe, Google Pay, and Paytm.</p>
+      </div>
+
+      <h3>Razorpay Setup</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h4>Create a Razorpay account</h4>
+            <p>Sign up at <a href="https://razorpay.com" target="_blank">razorpay.com</a> and complete your KYC verification as a business.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Get API Keys</h4>
+            <p>Go to <strong>Settings &rarr; API Keys</strong> in the Razorpay Dashboard. Generate a new key pair. Copy the <strong>Key ID</strong> and <strong>Key Secret</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Configure Webhook</h4>
+            <p>Set up a webhook URL at <code>https://yourdomain.com/api/razorpay/webhook</code> for events like <code>payment.authorized</code> and <code>payment.captured</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Enter keys in Admin Panel</h4>
+            <p>Go to <strong>Payment Settings &rarr; Razorpay</strong>. Paste the Key ID and Key Secret. Toggle Razorpay to <strong>Enabled</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <pre><code><span class="cmt"># Razorpay Configuration</span>
+<span class="var">RAZORPAY_KEY</span>=<span class="str">rzp_test_xxxxxxxxxxxxxxxxxx</span>
+<span class="var">RAZORPAY_SECRET</span>=<span class="str">xxxxxxxxxxxxxxxxxxxxxxxx</span></code></pre>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <div class="callout-title">Razorpay Test Mode</div>
+          <p>Razorpay test keys always start with <code>rzp_test_</code> and live keys with <code>rzp_live_</code>. Use the Razorpay test cards and UPI IDs from their <a href="https://razorpay.com/docs/payments/payments/test-card-upi-details/" target="_blank">testing guide</a> to simulate payments.</p>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           WALLET SYSTEM
+           ============================================================ -->
+      <div class="section-header">
+        <h2>In-App Wallet System</h2>
+        <p>Livriko includes a built-in digital wallet that allows riders and drivers to store credit, receive refunds, and pay for rides without an external payment gateway.</p>
+      </div>
+
+      <p>The wallet system is a core feature of the platform and operates independently from external payment gateways. Here is how it works:</p>
+
+      <ul style="margin-left:24px; list-style:disc; margin-bottom:20px;">
+        <li><strong>Top-Up:</strong> Riders can add money to their wallet using any enabled online payment gateway (Stripe, PayPal, Razorpay, etc.).</li>
+        <li><strong>Auto-Deduction:</strong> When a rider pays with the wallet, the fare is deducted automatically upon ride completion.</li>
+        <li><strong>Refunds:</strong> When a ride is cancelled, the refund amount is credited back to the rider's wallet instantly.</li>
+        <li><strong>Driver Wallet:</strong> Drivers have a separate wallet for receiving earnings. They can transfer funds to their bank account or use wallet credit for platform fees.</li>
+        <li><strong>Transaction History:</strong> Both riders and drivers can view their complete wallet transaction history in the app.</li>
+        <li><strong>Minimum Balance:</strong> You can configure a minimum wallet balance requirement for drivers.</li>
+      </ul>
+
+      <div class="callout info">
+        <i class="fas fa-info-circle callout-icon"></i>
+        <div>
+          <div class="callout-title">Wallet + Payment Gateways work together</div>
+          <p>When both Wallet and an online payment gateway are enabled, the rider sees both options at checkout. If the wallet balance is insufficient, the rider can either top up or choose the payment gateway instead.</p>
+        </div>
+      </div>
+
+      <p>For detailed wallet configuration including commission settings, withdrawal limits, and fleet wallet management, see the <a href="management-wallet.html">Wallet Management</a> page.</p>
+
+      <!-- ============================================================
+           SECURITY BEST PRACTICES
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Security Best Practices</h2>
+        <p>Payment security is critical. Follow these guidelines to protect your platform and your users.</p>
+      </div>
+
+      <div class="callout danger">
+        <i class="fas fa-shield-halved callout-icon"></i>
+        <div>
+          <div class="callout-title">Never store card details directly</div>
+          <p>Livriko uses tokenization through payment gateways. Card details are never stored on your server. All card data is handled by Stripe, PayPal, or Razorpay's secure infrastructure.</p>
+        </div>
+      </div>
+
+      <ul style="margin-left:24px; list-style:disc; margin-bottom:20px;">
+        <li><strong>Always use HTTPS:</strong> All payment pages and API endpoints must be served over HTTPS. Configure SSL/TLS on your server before enabling online payments.</li>
+        <li><strong>Keep API keys secret:</strong> Store all gateway keys in the <code>.env</code> file. Never hardcode keys in source code or expose them in client-side JavaScript.</li>
+        <li><strong>Verify webhooks:</strong> Always validate webhook signatures using the webhook secret provided by each gateway. This prevents spoofed payment confirmations.</li>
+        <li><strong>Use test mode first:</strong> Process at least 20-30 test transactions before going live. Verify amounts, receipts, and refund flows.</li>
+        <li><strong>Monitor transactions:</strong> Check the Stripe/PayPal dashboard daily for failed payments, disputes, and unusual activity.</li>
+        <li><strong>Enable 3D Secure:</strong> For Stripe, enable Strong Customer Authentication (SCA) to comply with European PSD2 regulations.</li>
+      </ul>
+
+      <!-- ============================================================
+           TROUBLESHOOTING
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Common Payment Issues</h2>
+        <p>Solutions for frequently encountered payment gateway problems.</p>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Issue</th>
+              <th>Likely Cause</th>
+              <th>Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Payment fails immediately</td>
+              <td>Incorrect API keys or wrong mode (test vs live)</td>
+              <td>Double-check keys match the mode. Regenerate keys if needed.</td>
+            </tr>
+            <tr>
+              <td>Webhook not received</td>
+              <td>URL misconfigured or firewall blocking</td>
+              <td>Verify webhook URL in gateway dashboard. Check server logs for 4xx/5xx errors.</td>
+            </tr>
+            <tr>
+              <td>Payment successful but ride not updated</td>
+              <td>Webhook signature verification failing</td>
+              <td>Ensure <code>STRIPE_WEBHOOK_SECRET</code> matches the webhook endpoint secret.</td>
+            </tr>
+            <tr>
+              <td>Currency mismatch</td>
+              <td>Gateway account currency differs from platform currency</td>
+              <td>Ensure your Stripe/PayPal account supports the currency set in <a href="settings-currencies.html">Currencies</a>.</td>
+            </tr>
+            <tr>
+              <td>Wallet balance not deducting</td>
+              <td>Wallet feature disabled or cache issue</td>
+              <td>Enable Wallet in admin settings. Run <code>php artisan cache:clear</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ============================================================
+           NEXT STEPS
+           ============================================================ -->
+      <div class="section-header">
+        <h2>Next Steps</h2>
+      </div>
+
+      <ul style="margin-left:24px; list-style:disc; margin-bottom:20px;">
+        <li><a href="settings-currencies.html">Currencies</a> &mdash; Configure the currencies your gateways will process</li>
+        <li><a href="management-wallet.html">Wallet Management</a> &mdash; Set up driver/rider wallet settings</li>
+        <li><a href="settings-general.html">General Settings</a> &mdash; Configure email receipts and other platform settings</li>
+        <li><a href="troubleshooting-admin.html">Admin Errors</a> &mdash; Troubleshoot payment-related admin issues</li>
+      </ul>
+
+      <footer class="footer">
+        <img src="../livriko png 0.5x/Forme monochrome noir@0.5x.png" alt="Livriko" class="footer-logo">
+        <p>&copy; 2024–2026 Livriko. All rights reserved.</p>
+        <p>Version 1.0 · Built with <i class="fas fa-heart" style="color: var(--secondary);"></i> by the Livriko Team</p>
+        <div class="footer-links">
+          <a href="../index.html">Documentation</a>
+          <a href="laravel-installation.html">Installation</a>
+          <a href="troubleshooting-app.html">Troubleshooting</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active', 'visible'); hamburger.classList.add('active'); }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); hamburger.classList.remove('active'); setTimeout(() => overlay.classList.remove('active'), 300); }
+    hamburger.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+    document.querySelectorAll('.nav-section-header[data-toggle]').forEach(header => {
+      header.addEventListener('click', () => { header.closest('.nav-section').classList.toggle('collapsed'); });
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.href === window.location.href) { link.classList.add('active'); } else { link.classList.remove('active'); }
+    });
+  </script>
+</body>
+</html>
