@@ -75,3 +75,4 @@ android/google-services.json
 local.properties
 *.iml
 storage/framework/views/
+Taxido_laravel/storage/framework/views/
