@@ -46,6 +46,9 @@ export function Onboarding() {
 
   const imageDarkBottom = isDark ? Images.bgDarkOnboard : Images.bgOnboarding;
 
+  const onboardingData = taxidoSettingData?.cabbooking_values?.onboarding;
+  const onboardingReady = Array.isArray(onboardingData) && onboardingData.length > 0;
+
   const [open, setOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -142,12 +145,20 @@ export function Onboarding() {
   };
 
   const handleNext = (index: number) => {
-    if (index < taxidoSettingData?.cabbooking_values?.onboarding?.length - 1) {
+    if (index < (onboardingData?.length ?? 0) - 1) {
       swiperRef.current?.scrollBy(1);
     } else {
       handleNavigation();
     }
   };
+
+  if (!onboardingReady) {
+    return (
+      <View style={[external.fx_1, external.ai_center, external.js_center, { backgroundColor: isDark ? appColors.bgDark : appColors.whiteColor }]}>
+        <ActivityIndicator size="large" color={appColors.primary} />
+      </View>
+    );
+  }
 
   return (
     <Swiper
@@ -160,123 +171,122 @@ export function Onboarding() {
       dotColor={isDark ? appColors.dotDark : appColors.dotLight}
       dotStyle={styles.dotStyles}
       paginationStyle={styles.paginationStyle}>
-      {Array.isArray(taxidoSettingData?.cabbooking_values?.onboarding) &&
-        taxidoSettingData.cabbooking_values.onboarding.map(
-          (slide: any, index: number) => (
-            <TouchableWithoutFeedback
-              key={index}
-              onPress={() => {
-                setOpen(false);
-                Keyboard.dismiss();
-              }}>
+      {onboardingData.map(
+        (slide: any, index: number) => (
+          <TouchableWithoutFeedback
+            key={index}
+            onPress={() => {
+              setOpen(false);
+              Keyboard.dismiss();
+            }}>
+            <View
+              style={[
+                styles.slideContainer,
+                {
+                  backgroundColor: isDark
+                    ? appColors.bgDark
+                    : appColors.lightGray,
+                },
+              ]}>
               <View
                 style={[
-                  styles.slideContainer,
+                  styles.languageContainer,
+                  { flexDirection: viewRTLStyle },
+                ]}>
+                <DropDownPicker
+                  open={open}
+                  value={selectedLanguage}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setSelectedLanguage}
+                  setItems={setItems}
+                  placeholder={"Select Language"}
+
+                  onSelectItem={item => handleLanguageChange(item?.value)}
+                  onChangeValue={handleLanguageChange}
+                  onOpen={handleOpenDropdown}
+                  loading={loading}
+                  listMode="SCROLLVIEW"
+                  dropDownContainerStyle={[
+                    styles.dropdownManu,
+                    { backgroundColor: bgFullStyle },
+                  ]}
+                  labelStyle={[styles.labelStyle, { color: textColorStyle }]}
+                  containerStyle={styles.dropdownContainer}
+                  style={styles.dropdown}
+                  textStyle={{ color: textColorStyle }}
+                  theme={isDark ? "DARK" : "LIGHT"}
+                  ActivityIndicatorComponent={({ color }) => (
+                    <ActivityIndicator color={color} size="small" />
+                  )}
+                />
+                <TouchableOpacity
+                  style={{
+                    borderWidth: windowHeight(1),
+                    borderColor: colors.border,
+                    justifyContent: "center",
+                    paddingHorizontal: windowWidth(12),
+                    paddingVertical: windowHeight(8),
+                    borderRadius: windowHeight(4),
+                    marginHorizontal: windowWidth(15),
+                  }}
+                  activeOpacity={0.7}
+                  onPress={handleNavigation}>
+                  <Text
+                    style={[styles.skipText, { color: appColors.regularText }]}>
+                    {translateData?.skip || "Skip"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={{
+                  height:
+                    Platform.OS === "ios"
+                      ? windowHeight(370)
+                      : windowHeight(435),
+                }}>
+                <Image
+                  style={styles.imageBackground}
+                  source={{ uri: slide?.onboarding_image_url }}
+                />
+              </View>
+
+              <View
+                style={[
+                  styles.imageBgView,
                   {
                     backgroundColor: isDark
                       ? appColors.bgDark
                       : appColors.lightGray,
                   },
                 ]}>
-                <View
-                  style={[
-                    styles.languageContainer,
-                    { flexDirection: viewRTLStyle },
-                  ]}>
-                  <DropDownPicker
-                    open={open}
-                    value={selectedLanguage}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setSelectedLanguage}
-                    setItems={setItems}
-                    placeholder={"Select Language"}
-
-                    onSelectItem={item => handleLanguageChange(item?.value)}
-                    onChangeValue={handleLanguageChange}
-                    onOpen={handleOpenDropdown}
-                    loading={loading}
-                    listMode="SCROLLVIEW"
-                    dropDownContainerStyle={[
-                      styles.dropdownManu,
-                      { backgroundColor: bgFullStyle },
-                    ]}
-                    labelStyle={[styles.labelStyle, { color: textColorStyle }]}
-                    containerStyle={styles.dropdownContainer}
-                    style={styles.dropdown}
-                    textStyle={{ color: textColorStyle }}
-                    theme={isDark ? "DARK" : "LIGHT"}
-                    ActivityIndicatorComponent={({ color }) => (
-                      <ActivityIndicator color={color} size="small" />
-                    )}
-                  />
+                <ImageBackground
+                  resizeMode="stretch"
+                  style={styles.img}
+                  source={imageDarkBottom}>
+                  <Text style={[styles.title, { color: textColorStyle }]}>
+                    {slide?.title}
+                  </Text>
+                  <Text style={[styles.description, external.as_center]}>
+                    {slide?.description}
+                  </Text>
                   <TouchableOpacity
-                    style={{
-                      borderWidth: windowHeight(1),
-                      borderColor: colors.border,
-                      justifyContent: "center",
-                      paddingHorizontal: windowWidth(12),
-                      paddingVertical: windowHeight(8),
-                      borderRadius: windowHeight(4),
-                      marginHorizontal: windowWidth(15),
-                    }}
-                    activeOpacity={0.7}
-                    onPress={handleNavigation}>
-                    <Text
-                      style={[styles.skipText, { color: appColors.regularText }]}>
-                      {translateData?.skip || "Skip"}
-                    </Text>
+                    style={styles.backArrow}
+                    onPress={() => handleNext(index)}
+                    activeOpacity={0.7}>
+                    <BackArrow
+                      colors={appColors.whiteColor}
+                      width={21}
+                      height={21}
+                    />
                   </TouchableOpacity>
-                </View>
-
-                <View
-                  style={{
-                    height:
-                      Platform.OS === "ios"
-                        ? windowHeight(370)
-                        : windowHeight(435),
-                  }}>
-                  <Image
-                    style={styles.imageBackground}
-                    source={{ uri: slide?.onboarding_image_url }}
-                  />
-                </View>
-
-                <View
-                  style={[
-                    styles.imageBgView,
-                    {
-                      backgroundColor: isDark
-                        ? appColors.bgDark
-                        : appColors.lightGray,
-                    },
-                  ]}>
-                  <ImageBackground
-                    resizeMode="stretch"
-                    style={styles.img}
-                    source={imageDarkBottom}>
-                    <Text style={[styles.title, { color: textColorStyle }]}>
-                      {slide?.title}
-                    </Text>
-                    <Text style={[styles.description, external.as_center]}>
-                      {slide?.description}
-                    </Text>
-                    <TouchableOpacity
-                      style={styles.backArrow}
-                      onPress={() => handleNext(index)}
-                      activeOpacity={0.7}>
-                      <BackArrow
-                        colors={appColors.whiteColor}
-                        width={21}
-                        height={21}
-                      />
-                    </TouchableOpacity>
-                  </ImageBackground>
-                </View>
+                </ImageBackground>
               </View>
-            </TouchableWithoutFeedback>
-          ),
-        )}
+            </View>
+          </TouchableWithoutFeedback>
+        ),
+      )}
     </Swiper>
   );
 }
