@@ -123,7 +123,7 @@ export function Login() {
           )
 
           if (match) {
-            setCountryCode(taxidoSettingData.cabbooking_values.ride.country_code)
+            setCountryCode(taxidoSettingData?.cabbooking_values?.ride?.country_code)
           }
         } catch (err) { }
       }

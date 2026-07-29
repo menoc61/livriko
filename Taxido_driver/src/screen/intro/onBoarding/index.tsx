@@ -143,7 +143,11 @@ export function OnBoarding() {
   const onboardingData = taxidoSettingData?.cabbooking_values?.onboarding || []
 
   if (!onboardingData.length) {
-    return <View style={{ flex: 1, backgroundColor: colors.background }} />
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color={appColors.primary} />
+      </View>
+    )
   }
 
   return (
