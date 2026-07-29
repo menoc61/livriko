@@ -43,7 +43,7 @@ export function BalanceTopup({
   const maskNumber = (amount: string): string => {
     const numericPart = amount.replace(/[^0-9.]/g, '')
     const masked = numericPart.replace(/[0-9]/g, '*')
-    return `${zoneValue.currency_symbol} ${masked}`
+    return `${zoneValue?.currency_symbol} ${masked}`
   }
   const { selfDriver } = useSelector((state: any) => state.account)
 

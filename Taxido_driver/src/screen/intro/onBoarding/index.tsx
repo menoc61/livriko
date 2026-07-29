@@ -61,7 +61,7 @@ export function OnBoarding() {
 
   useEffect(() => {
     if (languageData?.data?.length) {
-      const formattedItems = languageData?.data.map((lang: any) => ({
+      const formattedItems = languageData?.data?.map((lang: any) => ({
         label: lang.name,
         value: lang.locale,
         icon: () => (

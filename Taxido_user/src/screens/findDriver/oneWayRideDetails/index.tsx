@@ -92,11 +92,11 @@ export function OneWayRideDetails() {
     setBookLoading(true);
     try {
       const formData = new FormData();
-      payload?.location_coordinates.forEach((coord: any, index: number) => {
+      payload?.location_coordinates?.forEach((coord: any, index: number) => {
         formData.append(`location_coordinates[${index}][lat]`, coord.lat);
         formData.append(`location_coordinates[${index}][lng]`, coord.lng);
       });
-      payload?.locations.forEach((loc: any, index: number) => {
+      payload?.locations?.forEach((loc: any, index: number) => {
         formData.append(`locations[${index}]`, loc);
       });
       formData.append("service_id", payload?.service_id);

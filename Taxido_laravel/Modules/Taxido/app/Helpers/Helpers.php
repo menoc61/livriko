@@ -645,7 +645,7 @@ if (! function_exists('getAirportByPoints')) {
 if (! function_exists('getTaxidoSettings')) {
     function getTaxidoSettings()
     {
-        return TaxidoSetting::pluck('cabbooking_values')?->first();
+        return TaxidoSetting::pluck('cabbooking_values')?->first() ?? [];
     }
 }
 

@@ -330,10 +330,10 @@ export function RentalLocation() {
       navigate("SavedLocation", { selectedLocation: "RentalLocation", savefield: activeField, service_ID: service_ID, service_name: service_name, service_category_ID: service_category_ID, service_category_slug: service_category_slug, formattedDate: formattedDate, formattedTime: formattedTime });
     } else {
       let screenName = "RentalLocation";
-      if (settingData.values.activation.login_number == 1) {
+      if (settingData?.values?.activation?.login_number == 1) {
         setValue("CountinueScreen", screenName);
         replace("SignIn");
-      } else if (settingData.values.activation.login_number == 0) {
+      } else if (settingData?.values?.activation?.login_number == 0) {
         setValue("CountinueScreen", screenName);
         replace("SignInWithMail");
       }

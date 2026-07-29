@@ -270,7 +270,7 @@ const DriverList = () => {
 
   const gotoAddDriver = useCallback(() => {
 
-    if (fleetVehicle?.data.length === 0) {
+    if (fleetVehicle?.data?.length === 0) {
       notificationHelper('', 'Please add a vehicle to your fleet before creating a driver.', 'error')
       return
     }

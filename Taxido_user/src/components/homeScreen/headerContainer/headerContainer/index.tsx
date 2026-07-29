@@ -28,10 +28,10 @@ export function HeaderComponent() {
     } else {
       let screenName = "Wallet";
 
-      if (settingData.values.activation.login_number == 1) {
+      if (settingData?.values?.activation?.login_number == 1) {
         setValue("CountinueScreen", screenName);
         replace("SignIn");
-      } else if (settingData.values.activation.login_number == 0) {
+      } else if (settingData?.values?.activation?.login_number == 0) {
         setValue("CountinueScreen", screenName);
         replace("SignInWithMail");
       }
