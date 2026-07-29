@@ -613,7 +613,7 @@ return array(
     'noteTitle' => 'ملاحظة',
     'referralNoteData' => 'كل عملة في حسابك تساوي 1 روبية ويمكن استخدامها للحصول على خصومات على الرحلات.',
     'shareReferral' => 'مشاركة',
-    'referralInvite' => 'ادعُ إلى تاكسيدو',
+    'referralInvite' => 'ادعُ إلى ليفريكو',
     'referralShare1' => 'انضم إلي على',
     'referralShare2' => 'استخدم رمز إحالتي',
     'referralShare3' => 'للحصول على مكافآت رائعة',
@@ -706,7 +706,7 @@ return array(
     "referralNoteData" => "كل عملة في حسابك تساوي 1 روبية ويمكن استخدامها للحصول على خصومات على الرحلات.",
 
     "shareReferral" => "مشاركة",
-    "referralInvite" => "ادعُ إلى تاكسيدو",
+    "referralInvite" => "ادعُ إلى ليفريكو",
 
     "referralShare1" => "انضم إلي على",
     "referralShare2" => "استخدم رمز إحالتي",

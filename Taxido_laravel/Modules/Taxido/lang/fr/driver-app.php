@@ -630,7 +630,7 @@ return array(
     'referralTerm2' => 'immédiatement sur votre compte.',
     'referralEarn' => 'Gagnez',
     'referralTerm3' => 'Utilisez vos pièces pour obtenir des réductions sur les trajets.',
-    'referralShare1' => 'Rejoignez-moi sur *Taxido*! Utilisez mon code de parrainage :',
+    'referralShare1' => 'Rejoignez-moi sur *Livriko*! Utilisez mon code de parrainage :',
     'referralShare2' => 'pour obtenir des récompenses exclusives.',
     'referralShare3' => 'Téléchargez l\'application maintenant et profitez d\'une expérience de trajet plus fluide !',
     'referralWork' => 'Comment ça marche ?',

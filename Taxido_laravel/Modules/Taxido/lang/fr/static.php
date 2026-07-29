@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'taxido' => 'Taxido',
+    'taxido' => 'Livriko',
     'status' => 'Statut',
     'search' => 'Rechercher',
     'clear' => 'Effacer',
@@ -15,7 +15,7 @@ return [
     'vehicles' => 'Véhicules',
     'demo_mode' => 'Mode démo',
     'save' => 'Enregistrer',
-    'section' => 'Gestion de Taxido',
+    'section' => 'Gestion de Livriko',
     'save_and_exit' => 'Enregistrer et quitter',
     'active' => 'Actif',
     'deactive' => 'Désactivé',
@@ -1007,8 +1007,8 @@ return [
         'select_fleet_commission_type' => 'Sélectionnez le type de commission de la flotte',
         'enter_fleet_commission_rate' => 'Entrez le taux de commission de la flotte',
         'footer_hashtag' => 'Hashtag du pied de page',
-        'footer_hashtag_help' => 'Entrez le hashtag de marque (#GoTaxido) à afficher dans le pied de page de la page d’accueil de l’application',
-        'enter_hashtag' => '#GoTaxido',
+        'footer_hashtag_help' => 'Entrez le hashtag de marque (#GoLivriko) à afficher dans le pied de page de la page d’accueil de l’application',
+        'enter_hashtag' => '#GoLivriko',
         'driver_verification' => 'Vérification du pilote',
         'driver_verifications_span' => "La vérification du conducteur ne sera activée qu'après avoir vérifié tous les documents du véhicule requis.",
         'footer_attribution' => 'Attribution du pied de page',

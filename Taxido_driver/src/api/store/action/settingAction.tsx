@@ -31,7 +31,7 @@ export const settingDataGet = createAsyncThunk(SETTING, async () => {
   return response?.data;
 });
 
-// Fetching Taxido setting data
+// Fetching Livriko setting data
 export const taxidosettingDataGet = createAsyncThunk(
   TAXIDOSETTING,
   async () => {

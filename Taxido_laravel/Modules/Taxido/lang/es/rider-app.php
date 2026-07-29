@@ -669,7 +669,7 @@ return array(
     "noteTitle" => "Nota",
     "referralNoteData" => "Cada moneda en tu cuenta equivale a ₹1 y puede usarse para obtener descuentos en viajes.",
     "shareReferral" => "Compartir",
-    "referralInvite" => "Invitar a Taxido",
+    "referralInvite" => "Invitar a Livriko",
     "referralShare1" => "Únete a mí en",
     "referralShare2" => "Usa mi código de referido",
     "referralShare3" => "para obtener recompensas emocionantes",

@@ -20,7 +20,7 @@ export function DriverData({ driverData, driverDetail, rideData }: DriverDataPro
 const handleShare = async () => {
   try {
     const message = 
-`🚖 Taxido Ride Details
+`🚖 Livriko Ride Details
 
 👨‍✈️ Driver Name : ${rideData?.driver?.name ?? "N/A"}
 🚗 Vehicle Model : ${rideData?.vehicle_model ?? "N/A"}

@@ -613,7 +613,7 @@ return array(
     'noteTitle' => 'Note',
     'referralNoteData' => 'Each coin in your account is equal to ₹1 and can be used for discounts on rides.',
     'shareReferral' => 'Share',
-    'referralInvite' => 'Invite to Taxido',
+    'referralInvite' => 'Invite to Livriko',
     'referralShare1' => 'Join me on',
     'referralShare2' => 'Use my referral code',
     'referralShare3' => 'to get exciting rewards',
@@ -706,7 +706,7 @@ return array(
     "referralNoteData" => "Each coin in your account is equal to ₹1 and can be used for discounts on rides.",
 
     "shareReferral" => "Share",
-    "referralInvite" => "Invite to Taxido",
+    "referralInvite" => "Invite to Livriko",
 
     "referralShare1" => "Join me on",
     "referralShare2" => "Use my referral code",

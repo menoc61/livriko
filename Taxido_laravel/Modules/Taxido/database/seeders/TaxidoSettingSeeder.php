@@ -16,7 +16,7 @@ class TaxidoSettingSeeder extends Seeder
         {
                 $values = [
                         'general' => [
-                                'footer_branding_hashtag' => '#GoTaxido',
+                                'footer_branding_hashtag' => '#GoLivriko',
                                 'footer_branding_attribution' => '❤️ Made by Pixelstrap',
                                 'greetings' => [
                                         'Hello',

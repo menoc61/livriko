@@ -620,7 +620,7 @@ return array(
     'referralTerm2' => 'al instante en tu cuenta.',
     'referralEarn' => 'Gana',
     'referralTerm3' => 'Usa tus monedas para obtener descuentos en tus viajes.',
-    'referralShare1' => '¡Únete a mí en *Taxido*! Usa mi código de referencia:',
+    'referralShare1' => '¡Únete a mí en *Livriko*! Usa mi código de referencia:',
     'referralShare2' => 'para obtener recompensas increíbles.',
     'referralShare3' => '¡Descarga la aplicación ahora y disfruta de una experiencia de viaje más fluida!',
     'referralWork' => '¿Cómo funciona?',

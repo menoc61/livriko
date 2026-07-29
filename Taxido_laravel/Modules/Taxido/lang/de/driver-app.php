@@ -635,7 +635,7 @@ return [
     "referralTerm2" => "sofort auf dein Konto.",
     "referralEarn" => "Verdiene",
     "referralTerm3" => "Verwende deine Coins für Rabatte auf Fahrten.",
-    "referralShare1" => "Tritt mir bei *Taxido* bei! Verwende meinen Empfehlungscode:",
+    "referralShare1" => "Tritt mir bei *Livriko* bei! Verwende meinen Empfehlungscode:",
     "referralShare2" => "um tolle Belohnungen zu erhalten.",
     "referralShare3" => "Lade die App jetzt herunter und genieße eine reibungslosere Fahrerfahrung! ",
     "referralWork" => "So funktioniert's",

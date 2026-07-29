@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'taxido' => 'Taxido',
+    'taxido' => 'Livriko',
     'status' => 'Status',
     'yes' => 'Ja',
     'no' => 'Nein',
@@ -332,7 +332,7 @@ return [
     'vehicles' => 'Fahrzeuge',
     'demo_mode' => 'Demomodus',
     'save' => '',
-    'section' => 'Taxido-Verwaltung',
+    'section' => 'Livriko-Verwaltung',
     'save_and_exit' => 'Speichern und Beenden',
     'active' => 'Aktiv',
     'deactive' => 'Inaktiv',
@@ -1104,8 +1104,8 @@ return [
         'select_fleet_commission_type' => 'Flottenprovisionstyp auswählen',
         'enter_fleet_commission_rate' => 'Flottenprovisionssatz eingeben',
         'footer_hashtag' => 'Footer-Hashtag',
-        'footer_hashtag_help' => 'Geben Sie den Branding-Hashtag (#GoTaxido) ein, der im Footer der Startseite der App angezeigt wird',
-        'enter_hashtag' => '#GoTaxido',
+        'footer_hashtag_help' => 'Geben Sie den Branding-Hashtag (z.B. #GoLivriko) ein, der im Footer der Startseite der App angezeigt wird',
+        'enter_hashtag' => '#GoLivriko',
         'footer_attribution' => 'Footer-Zuschreibung',
         'footer_attribution_help' => 'Geben Sie den Entwickler-Credit (❤️ Erstellt von Pixelstrap) ein, der im Footer der Startseite der App angezeigt wird',
         'enter_attribution' => '❤️ Erstellt von Pixelstrap',

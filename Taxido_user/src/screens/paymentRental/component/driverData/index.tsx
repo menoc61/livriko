@@ -35,7 +35,7 @@ export function DriverData({ driverDetails }: { driverDetails: any }) {
   const handleShare = async () => {
     try {
       const message =
-        `🚖 Taxido Ride Details
+        `🚖 Livriko Ride Details
 
 📍 Pickup        : ${driverDetails?.locations?.[0] ?? "N/A"}
 👨‍✈️ Driver Name   : ${driverDetails?.driver?.name ?? "N/A"}

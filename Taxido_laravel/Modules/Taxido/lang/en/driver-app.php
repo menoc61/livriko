@@ -635,7 +635,7 @@ return [
     "referralTerm2" => "instantly in your account.",
     "referralEarn" => "Earn",
     "referralTerm3" => "Use your coins for discounts on rides.",
-    "referralShare1" => "Join me on *Taxido*! Use my referral code:",
+    "referralShare1" => "Join me on *Livriko*! Use my referral code:",
     "referralShare2" => "to get exciting rewards.",
     "referralShare3" => "Download the app now and enjoy a smoother ride experience! ",
     "referralWork" => "How it works?",
