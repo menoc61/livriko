@@ -23,7 +23,7 @@ export function Splash() {
   const [showNoInternet, setShowNoInternet] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const { zoneValue } = useSelector((state: any) => state.zoneUpdate)
-  const { setRtl } = useValues()
+  const { setRtl, isDark } = useValues()
 
 
   useEffect(() => {
@@ -201,7 +201,7 @@ export function Splash() {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={splashImage ? { uri: splashImage } : images.splashDriver}
+          source={splashImage ? { uri: splashImage } : isDark ? images.splashDark : images.splash}
           style={styles.img}
           onError={() => {
             setSplashImage(null)

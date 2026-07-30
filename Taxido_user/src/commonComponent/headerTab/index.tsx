@@ -3,16 +3,17 @@ import { Text, View } from "react-native";
 import { commonStyles } from "../../styles/commonStyle";
 import { external } from "../../styles/externalStyle";
 import { IconBackground } from "../iconBackground/index";
-import { Notification, Wallet } from "@utils/icons";
+import { Notification, Wallet, DarkTheme } from "@utils/icons";
 import { useValues } from '@src/utils/context/index';
 import { getValue, setValue } from "@src/utils/localstorage";
 import { useSelector } from "react-redux";
 import { useAppNavigation } from "@src/utils/navigation";
 import { appColors, windowHeight } from "@src/themes";
 import { HeaderTabProps } from "../type";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function HeaderTab({ tabName }: HeaderTabProps) {
-  const { textColorStyle, linearColorStyleTwo, iconColorStyle, viewRTLStyle, textRTLStyle, isDark } = useValues();
+  const { textColorStyle, linearColorStyleTwo, iconColorStyle, viewRTLStyle, textRTLStyle, isDark, setIsDark } = useValues();
   const { navigate, replace } = useAppNavigation();
   const { settingData } = useSelector((state: any) => state.setting);
 
@@ -60,6 +61,18 @@ export function HeaderTab({ tabName }: HeaderTabProps) {
       >
         {tabName}
       </Text>
+      <View style={[external.mh_10]}>
+        <IconBackground
+          icon={<DarkTheme />}
+          backgroundColor={linearColorStyleTwo}
+          borderColor={isDark ? appColors.darkBorder : appColors.border}
+          onPress={() => {
+            const newDark = !isDark;
+            setIsDark(newDark);
+            AsyncStorage.setItem("darkTheme", JSON.stringify(newDark));
+          }}
+        />
+      </View>
       <View style={[external.mh_10]}>
         <IconBackground
           icon={<Notification colors={iconColorStyle} />}

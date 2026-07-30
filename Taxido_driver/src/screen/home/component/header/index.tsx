@@ -11,6 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../../navigation/main/types'
 import { windowWidth } from '../../../../theme/appConstant'
 import { useSelector } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface HeaderProps {
   isOn: boolean
@@ -22,7 +23,7 @@ type navigation = NativeStackNavigationProp<RootStackParamList>
 
 export function Header({ isOn, toggleSwitch, setDriverModal }: HeaderProps) {
   const { colors } = useTheme()
-  const { viewRtlStyle } = useValues()
+  const { viewRtlStyle, isDark, setIsDark } = useValues()
   const { navigate } = useNavigation<navigation>()
   const { translateData } = useSelector((state: any) => state.setting)
   const { selfDriver } = useSelector((state: any) => state.account)
@@ -37,6 +38,17 @@ export function Header({ isOn, toggleSwitch, setDriverModal }: HeaderProps) {
             <Image source={images.splash} style={styles.logo} />
           </View>
           <View style={{ flexDirection: viewRtlStyle }}>
+            <TouchableOpacity
+              style={[styles.notificationIcon, { marginHorizontal: windowWidth(4) }]}
+              activeOpacity={0.7}
+              onPress={() => {
+                const newDark = !isDark;
+                setIsDark(newDark);
+                AsyncStorage.setItem("darkTheme", JSON.stringify(newDark));
+              }}
+            >
+              <Icons.Theme color={isDark ? appColors.white : appColors.black} />
+            </TouchableOpacity>
             {selfDriver?.fleet_manager?.name && (
               <TouchableOpacity
                 style={[

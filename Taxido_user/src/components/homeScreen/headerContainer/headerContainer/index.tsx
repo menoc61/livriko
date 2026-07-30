@@ -1,7 +1,7 @@
 import { View, Image } from 'react-native';
 import React from 'react';
 import { external } from '../../../../styles/externalStyle';
-import { Notification, Wallet } from '@utils/icons';
+import { Notification, Wallet, DarkTheme } from '@utils/icons';
 import { IconBackground } from '@src/commonComponent';
 import { styles } from './style';
 import { appColors } from '@src/themes';
@@ -10,10 +10,11 @@ import { getValue, setValue } from '@src/utils/localstorage';
 import { useSelector } from 'react-redux';
 import { useAppNavigation } from '@src/utils/navigation';
 import { useValues } from '@src/utils/context/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function HeaderComponent() {
   const { navigate, replace } = useAppNavigation();
-  const { viewRTLStyle } = useValues();
+  const { viewRTLStyle, isDark, setIsDark } = useValues();
   const { settingData } = useSelector((state: any) => state.setting);
 
   const gotoWallet = async () => {
@@ -52,6 +53,17 @@ export function HeaderComponent() {
     >
       <Image source={Images.splash} style={styles.logo} />
       <View style={[external.fd_row, external.ai_center]}>
+        <View style={[external.mh_8]}>
+          <IconBackground
+            icon={<DarkTheme />}
+            borderColor={appColors.categoryTitle}
+            onPress={() => {
+              const newDark = !isDark;
+              setIsDark(newDark);
+              AsyncStorage.setItem("darkTheme", JSON.stringify(newDark));
+            }}
+          />
+        </View>
         <View style={[external.mh_8]}>
           <IconBackground
             icon={<Notification />
