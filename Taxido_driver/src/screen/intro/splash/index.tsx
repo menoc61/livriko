@@ -201,7 +201,7 @@ export function Splash() {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={splashImage ? { uri: splashImage } : isDark ? images.splashDark : images.splash}
+          source={splashImage ? { uri: splashImage } : images.splashDriver}
           style={styles.img}
           onError={() => {
             setSplashImage(null)
