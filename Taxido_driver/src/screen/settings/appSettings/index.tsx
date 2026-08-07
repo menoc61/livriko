@@ -7,7 +7,8 @@ import {
   BackHandler,
 } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { LanguageModal, Notification, DarkTheme, Rtl } from './component/'
+import { LanguageModal, Notification, DarkTheme } from './component/'
+// import { LanguageModal, Notification, DarkTheme, Rtl } from './component/' // Rtl kept for future RTL support (D8)
 import styles from './styles'
 import { CustomRadioButton, Header } from '../../../commonComponents'
 import { useNavigation, useTheme } from '@react-navigation/native'
@@ -118,8 +119,8 @@ export function AppSettings() {
           ]}
         >
           <>
+            {/* <Rtl /> */} {/* RTL toggle kept for future RTL support (D8) */}
             <DarkTheme />
-            <Rtl />
             <LanguageModal
               openSheet={openSheet}
               tempSelectedLanguage={selectedLanguage}

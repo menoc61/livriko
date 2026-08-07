@@ -134,7 +134,7 @@ export function PaymentSelect() {
                   },
                 ]}
               >
-                {item.name}
+                {item.title || item.name}
               </Text>
             </View>
           </View>

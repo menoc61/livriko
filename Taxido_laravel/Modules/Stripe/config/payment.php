@@ -4,7 +4,7 @@ return array (
   'name' => 'Stripe',
   'slug' => 'stripe',
   'image' => 'modules/stripe/images/logo.png',
-  'title' => 'Stripe',
+  'title' => 'Compte bancaire',
   'processing_fee' => '1',
   'subscription' => 0,
   'configs' => 

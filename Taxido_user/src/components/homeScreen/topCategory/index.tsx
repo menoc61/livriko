@@ -5,22 +5,26 @@ import {
   TouchableOpacity,
   View,
   Vibration,
-  ActivityIndicator,
+  // ActivityIndicator, // kept for future "recent search" loader reuse (see commented recent-search block below)
 } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import { styles } from "./styles";
 import { TitleRenderItem } from "./titleRenderItem/index";
-import { appColors, windowHeight } from "@src/themes";
-import { BackArrow, History, Search } from "@src/utils/icons";
+import { appColors } from "@src/themes";
+// import { appColors, windowHeight } from "@src/themes"; // windowHeight kept for future "recent search" layout reuse
+import { BackArrow } from "@src/utils/icons";
+// import { BackArrow, History, Search } from "@src/utils/icons"; // History/Search kept for future "recent search" UI reuse
 import { useValues } from "@src/utils/context/index";
 import { useAppNavigation } from "@src/utils/navigation";
 import Images from "@src/utils/images";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux"; // useDispatch kept for future "recent search" quick-book reuse
 import { getValue } from "@src/utils/localstorage";
-import { useIsFocused } from "@react-navigation/native";
+// import { useIsFocused } from "@react-navigation/native"; // kept for future "recent search" focus reload
 import { notificationHelper } from "@src/commonComponent";
-import { vehicleTypeDataGet } from "@src/api/store/actions";
-import { AppDispatch, RootState } from "@src/api/store";
+import { RootState } from "@src/api/store";
+// import { AppDispatch, RootState } from "@src/api/store"; // AppDispatch kept for future "recent search" quick-book reuse
+// import { vehicleTypeDataGet } from "@src/api/store/actions"; // kept for future "recent search" quick-book reuse
 import useStoredLocation from "@src/components/helper/useStoredLocation";
 
 export function TopCategory({ categoryData }: any) {
@@ -39,14 +43,10 @@ export function TopCategory({ categoryData }: any) {
   const { navigate }: any = useAppNavigation();
   const isScrollable = categoryData?.length > 4;
   const { translateData } = useSelector((state: any) => state.setting);
-  const [recentDatas, setRecentDatas] = useState<string[]>([]);
   const flatListRef = useRef<any>(null);
-  const isFocused = useIsFocused();
   const { walletTypedata }: any = useSelector(
     (state: RootState) => state.wallet,
   );
-  const dispatch = useDispatch<AppDispatch>();
-  const [isLoadingOverlay, setIsLoadingOverlay] = useState<boolean>(false);
   const { latitude, longitude } = useStoredLocation();
   const { taxidoSettingData } = useSelector((state: any) => state.setting);
   const [fullAddress, setFullAddress] = useState<string>("");
@@ -54,6 +54,10 @@ export function TopCategory({ categoryData }: any) {
     lat: null,
     lng: null,
   });
+  // const [recentDatas, setRecentDatas] = useState<string[]>([]); // kept for future "recent search" UI reuse (D3)
+  // const isFocused = useIsFocused(); // kept for future "recent search" focus reload (D3)
+  // const dispatch = useDispatch<AppDispatch>(); // kept for future "recent search" quick-book reuse (D3)
+  // const [isLoadingOverlay, setIsLoadingOverlay] = useState<boolean>(false); // kept for future "recent search" loader reuse (D3)
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(
     categoryData?.length > 4,
@@ -99,33 +103,33 @@ export function TopCategory({ categoryData }: any) {
     }
   }, [categoryData]);
 
-  useEffect(() => {
-    const fetchRecentData = async () => {
-      try {
-        const stored = await getValue("locations");
-        let parsedLocations = [];
-        if (stored) {
-          parsedLocations = JSON.parse(stored);
-          if (!Array.isArray(parsedLocations)) {
-            parsedLocations = [parsedLocations];
-          }
-        }
-        setRecentDatas(parsedLocations);
-      } catch (error) {
-        console.error("Error parsing recent locations:", error);
-        setRecentDatas([]); // fallback
-      }
-    };
-    if (isFocused) {
-      fetchRecentData(); // only run when screen is focused
-    }
-  }, [isFocused]);
+  // useEffect(() => { // kept for future "recent search" UI reuse (D3)
+  //   const fetchRecentData = async () => {
+  //     try {
+  //       const stored = await getValue("locations");
+  //       let parsedLocations = [];
+  //       if (stored) {
+  //         parsedLocations = JSON.parse(stored);
+  //         if (!Array.isArray(parsedLocations)) {
+  //           parsedLocations = [parsedLocations];
+  //         }
+  //       }
+  //       setRecentDatas(parsedLocations);
+  //     } catch (error) {
+  //       console.error("Error parsing recent locations:", error);
+  //       setRecentDatas([]); // fallback
+  //     }
+  //   };
+  //   if (isFocused) {
+  //     fetchRecentData(); // only run when screen is focused
+  //   }
+  // }, [isFocused]);
 
-  const handlePress = () => {
+  const handlePress = (itemParam?: any) => {
     if (walletTypedata?.balance < 0) {
       notificationHelper("", translateData?.walletLow, "error");
     } else {
-      const item: any = selectedSubcategory;
+      const item: any = itemParam || selectedSubcategory;
 
       if (!item) return;
       if (
@@ -192,133 +196,129 @@ export function TopCategory({ categoryData }: any) {
     setShowRightArrow(scrollX + visibleWidth < totalWidth);
   };
 
-  const convertToCoords = async (address: string) => {
-    try {
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${Google_Map_Key}`,
-      );
-      const data = await res.json();
-      if (data.status === "OK" && data?.results?.length > 0) {
-        const { lat, lng } = data?.results[0].geometry.location;
-        return { latitude: lat, longitude: lng };
-      } else {
-        console.warn("No results for:", address, data?.status);
-        return null;
-      }
-    } catch (err) {
-      console.error("Geocoding error:", err);
-      return null;
-    }
-  };
+  // const convertToCoords = async (address: string) => { // kept for future "recent search" quick-book reuse (D3)
+  //   try {
+  //     const res = await fetch(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+  //         address,
+  //       )}&key=${Google_Map_Key}`,
+  //     );
+  //     const data = await res.json();
+  //     if (data.status === "OK" && data?.results?.length > 0) {
+  //       const { lat, lng } = data?.results[0].geometry.location;
+  //       return { latitude: lat, longitude: lng };
+  //     } else {
+  //       console.warn("No results for:", address, data?.status);
+  //       return null;
+  //     }
+  //   } catch (err) {
+  //     console.error("Geocoding error:", err);
+  //     return null;
+  //   }
+  // };
 
-  const convertStopsToCoords = async (stopList: any[]) => {
-    if (!stopList || stopList.length === 0) return [];
+  // const convertStopsToCoords = async (stopList: any[]) => { // kept for future "recent search" quick-book reuse (D3)
+  //   if (!stopList || stopList.length === 0) return [];
 
-    const promises = stopList.map(async stop => {
-      try {
-        const res = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            stop,
-          )}&key=${Google_Map_Key}`,
-        );
-        const data = await res.json();
-        if (data.status === "OK" && data.results?.length > 0) {
-          const { lat, lng } = data.results[0].geometry.location;
-          return { latitude: lat, longitude: lng };
-        }
-        return null;
-      } catch (err) {
-        console.error("Stop geocoding error:", err);
-        return null;
-      }
-    });
+  //   const promises = stopList.map(async stop => {
+  //     try {
+  //       const res = await fetch(
+  //         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+  //           stop,
+  //         )}&key=${Google_Map_Key}`,
+  //       );
+  //       const data = await res.json();
+  //       if (data.status === "OK" && data.results?.length > 0) {
+  //         const { lat, lng } = data.results[0].geometry.location;
+  //         return { latitude: lat, longitude: lng };
+  //       }
+  //       return null;
+  //     } catch (err) {
+  //       console.error("Stop geocoding error:", err);
+  //       return null;
+  //     }
+  //   });
 
-    return Promise.all(promises);
-  };
+  //   return Promise.all(promises);
+  // };
 
-  const gotoBook = async (item: any) => {
-    setIsLoadingOverlay(true);
+  // const gotoBook = async (item: any) => { // kept for future "recent search" quick-book reuse (D3)
+  //   setIsLoadingOverlay(true);
 
-    try {
-      // 1. Get Pickup Coords - Use existing if available
-      let pickupPromise;
-      if (item?.pickupCoords?.lat && item?.pickupCoords?.lng) {
-        pickupPromise = Promise.resolve({
-          latitude: item.pickupCoords.lat,
-          longitude: item.pickupCoords.lng,
-        });
-      } else {
-        pickupPromise = convertToCoords(item?.pickupLocation);
-      }
+  //   try {
+  //     let pickupPromise;
+  //     if (item?.pickupCoords?.lat && item?.pickupCoords?.lng) {
+  //       pickupPromise = Promise.resolve({
+  //         latitude: item.pickupCoords.lat,
+  //         longitude: item.pickupCoords.lng,
+  //       });
+  //     } else {
+  //       pickupPromise = convertToCoords(item?.pickupLocation);
+  //     }
 
-      // 2. Get Destination Coords - Use existing if available
-      let destPromise;
-      if (item?.destinationCoords?.lat && item?.destinationCoords?.lng) {
-        destPromise = Promise.resolve({
-          latitude: item.destinationCoords.lat,
-          longitude: item.destinationCoords.lng,
-        });
-      } else {
-        destPromise = convertToCoords(
-          item?.destinationFullAddress?.shortAddress,
-        );
-      }
+  //     let destPromise;
+  //     if (item?.destinationCoords?.lat && item?.destinationCoords?.lng) {
+  //       destPromise = Promise.resolve({
+  //         latitude: item.destinationCoords.lat,
+  //         longitude: item.destinationCoords.lng,
+  //       });
+  //     } else {
+  //       destPromise = convertToCoords(
+  //         item?.destinationFullAddress?.shortAddress,
+  //       );
+  //     }
 
-      // 3. Get Stops Coords
-      const stopsPromise = convertStopsToCoords(item?.stops || []);
+  //     const stopsPromise = convertStopsToCoords(item?.stops || []);
 
-      // Execute all in parallel
-      const [pickup, destination, stops] = await Promise.all([
-        pickupPromise,
-        destPromise,
-        stopsPromise,
-      ]);
+  //     const [pickup, destination, stops] = await Promise.all([
+  //       pickupPromise,
+  //       destPromise,
+  //       stopsPromise,
+  //     ]);
 
-      const rawLocations = [pickup, ...(stops || []), destination];
+  //     const rawLocations = [pickup, ...(stops || []), destination];
 
-      const filteredLocations = rawLocations
-        .filter(
-          coord => coord && coord.latitude != null && coord.longitude != null,
-        )
-        .map((coord: any) => ({
-          lat: coord.latitude,
-          lng: coord.longitude,
-        }));
+  //     const filteredLocations = rawLocations
+  //       .filter(
+  //         coord => coord && coord.latitude != null && coord.longitude != null,
+  //       )
+  //       .map((coord: any) => ({
+  //         lat: coord.latitude,
+  //         lng: coord.longitude,
+  //       }));
 
-      const payload: any = {
-        locations: filteredLocations,
-        service_id: item?.service_ID,
-        service_category_id: item?.service_category_ID,
-      };
+  //     const payload: any = {
+  //       locations: filteredLocations,
+  //       service_id: item?.service_ID,
+  //       service_category_id: item?.service_category_ID,
+  //     };
 
-      dispatch(vehicleTypeDataGet(payload)).then((res: any) => {
-        if (walletTypedata?.balance < 0) {
-          notificationHelper("", translateData?.walletLow, "error");
-          setIsLoadingOverlay(false);
-        } else {
-          navigate("BookRide", {
-            destination: item?.destinationFullAddress?.shortAddress,
-            stops: item?.stops,
-            pickupLocation: item?.pickupLocation,
-            service_ID: item?.service_ID,
-            zoneValue: item?.zoneValue,
-            scheduleDate: item?.scheduleDate,
-            service_category_ID: item?.service_category_ID,
-            service_name: item?.service_name,
-            filteredLocations: filteredLocations,
-            destinationCoords: item?.destinationCoords,
-            pickupCoords: item?.pickupCoords,
-          });
-          setIsLoadingOverlay(false);
-        }
-      });
-    } catch (error) {
-      console.error("Error in gotoBook:", error);
-      setIsLoadingOverlay(false);
-    }
-  };
+  //     dispatch(vehicleTypeDataGet(payload)).then((res: any) => {
+  //       if (walletTypedata?.balance < 0) {
+  //         notificationHelper("", translateData?.walletLow, "error");
+  //         setIsLoadingOverlay(false);
+  //       } else {
+  //         navigate("BookRide", {
+  //           destination: item?.destinationFullAddress?.shortAddress,
+  //           stops: item?.stops,
+  //           pickupLocation: item?.pickupLocation,
+  //           service_ID: item?.service_ID,
+  //           zoneValue: item?.zoneValue,
+  //           scheduleDate: item?.scheduleDate,
+  //           service_category_ID: item?.service_category_ID,
+  //           service_name: item?.service_name,
+  //           filteredLocations: filteredLocations,
+  //           destinationCoords: item?.destinationCoords,
+  //           pickupCoords: item?.pickupCoords,
+  //         });
+  //         setIsLoadingOverlay(false);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error("Error in gotoBook:", error);
+  //     setIsLoadingOverlay(false);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -386,21 +386,7 @@ export function TopCategory({ categoryData }: any) {
                 setSelectedIndex(index);
                 setSelectedSubcategory(item);
                 Vibration.vibrate(42);
-                if (item?.slug == "package") {
-                  navigate("RentalLocation", {
-                    service_ID: item?.service_id,
-                    service_name: item?.service_type,
-                    service_category_ID: item?.id,
-                    service_category_slug: item?.slug,
-                  });
-                } else if (item?.slug == "rental") {
-                  navigate("RentalBooking", {
-                    service_ID: item?.service_id,
-                    service_name: item?.service_type,
-                    service_category_ID: item?.id,
-                    service_category_slug: item?.slug,
-                  });
-                }
+                handlePress(item);
               }}
               isScrollable={isScrollable}
               totalItems={categoryData?.length}
@@ -416,7 +402,10 @@ export function TopCategory({ categoryData }: any) {
 
       {categoryData?.length > 0 && (
         <>
-          {selectedSubcategory?.slug != "rental" &&
+          {/* "Where to go next" field + recent search block removed per D3. 
+              Kept as comments for future reuse. Uncomment to restore the 
+              intermediate booking field and recent-search quick-book list. */}
+          {/* {selectedSubcategory?.slug != "rental" &&
             selectedSubcategory?.slug != "package" && (
               <TouchableOpacity
                 onPress={handlePress}
@@ -553,14 +542,20 @@ export function TopCategory({ categoryData }: any) {
             <View style={styles.loaderAddress}>
               <ActivityIndicator size="large" color={appColors.primary} />
             </View>
-          )}
+          )} */}
           {selectedSubcategory?.slug == "rental" && (
-            <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => handlePress()}
+              activeOpacity={0.7}
+            >
               <Image source={Images.rentalBanner} style={styles.rentalImage} />
             </TouchableOpacity>
           )}
           {selectedSubcategory?.slug == "package" && (
-            <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
+            <TouchableOpacity
+              onPress={() => handlePress()}
+              activeOpacity={0.7}
+            >
               <Image source={Images.packagebanner} style={styles.rentalImage} />
             </TouchableOpacity>
           )}

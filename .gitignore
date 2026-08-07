@@ -76,3 +76,5 @@ local.properties
 *.iml
 storage/framework/views/
 Taxido_laravel/storage/framework/views/
+
+Livriko_Project_Summary_and_Action_Plan.txt

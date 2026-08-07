@@ -225,7 +225,7 @@ export function PaymentMethod() {
                 styles.mail,
                 { color: textColorStyle, textAlign: textRTLStyle },
               ]}>
-              {item.name}
+              {item.title || item.name}
             </Text>
           </View>
         </View>

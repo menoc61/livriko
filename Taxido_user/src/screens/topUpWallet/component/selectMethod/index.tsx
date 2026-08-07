@@ -90,7 +90,7 @@ const SelectMethod = () => {
           </View>
           <View style={styles.mailInfo}>
             <Text style={[styles.mail, { color: appColors.primaryText }]}>
-              {item.name}
+              {item.title || item.name}
             </Text>
           </View>
         </View>

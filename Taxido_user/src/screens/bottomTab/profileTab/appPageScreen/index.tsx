@@ -2,7 +2,8 @@ import {useValues} from "@src/utils/context/index";
 import React, {useEffect, useState} from "react";
 import {View, TouchableOpacity, Text} from "react-native";
 import {styles} from "./style";
-import {BackArrow, ChangeLanguage, DarkTheme, RTL} from "@src/utils/icons";
+import {BackArrow, ChangeLanguage, DarkTheme} from "@src/utils/icons";
+// import {BackArrow, ChangeLanguage, DarkTheme, RTL} from "@src/utils/icons"; // RTL icon kept for future RTL support (D8)
 import {external} from "@src/styles/externalStyle";
 import {commonStyles} from "@src/styles/commonStyle";
 import {LanguageBottomSheet} from "./component/languageBottomSheet";
@@ -18,8 +19,8 @@ import {languageDataGet} from "@src/api/store/actions";
 
 export function AppPageScreen() {
   const {
-    isRTL,
     setIsRTL,
+    // isRTL, // kept for future RTL toggle support (D8)
     isDark,
     textRTLStyle,
     viewRTLStyle,
@@ -82,15 +83,16 @@ export function AppPageScreen() {
         onPress: () => handleToggle("toggle4"),
         icon: <DarkTheme />,
       },
-      {
-        id: "toggle5",
-        title: translateData.rtl,
-        value: isRTL,
-        onPress: () => handleToggle("toggle5"),
-        icon: <RTL />,
-      },
+      // RTL toggle kept for future RTL support (D8)
+      // {
+      //   id: "toggle5",
+      //   title: translateData.rtl,
+      //   value: isRTL,
+      //   onPress: () => handleToggle("toggle5"),
+      //   icon: <RTL />,
+      // },
     ]);
-  }, [translateData, isDark, isRTL, notificationValue]);
+  }, [translateData, isDark, notificationValue]);
 
   const handleToggle = async (toggleId: string) => {
     try {

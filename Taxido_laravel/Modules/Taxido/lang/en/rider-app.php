@@ -723,6 +723,7 @@ return array(
     "addressnot" => "Address not found",
     "cityerror" => "City error",
     "addresserror" => "Address error",
+    "myPosition" => "My Position",
     "fecthing" => "fetching....",
     "fecthinglocation" => "Fetching location...",
     "emailerror" => "Please Enter Valid Email",

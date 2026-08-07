@@ -56,18 +56,18 @@ const styles = StyleSheet.create({
   listContainer: {
     width: "100%",
     alignItems: "center",
-    height: windowHeight(75),
+    height: windowHeight(100),
   },
   flatListContent: {
     alignItems: "center",
   },
   item: {
-    paddingHorizontal: windowWidth(20),
+    paddingHorizontal: windowWidth(24),
     alignItems: "center",
   },
   highlightLine: {
     height: windowHeight(1.8),
-    width: windowWidth(80),
+    width: windowWidth(100),
     backgroundColor: appColors.primary,
     marginTop: windowHeight(5),
     position: "absolute",
@@ -97,20 +97,20 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   image: {
-    height: windowHeight(50),
-    width: windowHeight(50),
+    height: windowHeight(70),
+    width: windowHeight(70),
     resizeMode: "contain",
   },
   image1: {
-    height: windowHeight(50),
-    width: windowHeight(50),
+    height: windowHeight(70),
+    width: windowHeight(70),
     resizeMode: "contain",
   },
   text: {
-    fontSize: fontSizes.FONT18,
+    fontSize: fontSizes.FONT20,
     color: appColors.primaryText,
     fontFamily: appFonts.medium,
-    width: windowWidth(100),
+    width: windowWidth(130),
     textAlign: "center",
   },
   rentalImage: {

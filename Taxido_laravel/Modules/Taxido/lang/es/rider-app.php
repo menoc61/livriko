@@ -684,6 +684,7 @@ return array(
     "addressnot" => "Dirección no encontrada",
     "cityerror" => "Error de ciudad",
     "addresserror" => "Error de dirección",
+    "myPosition" => "Mi posición",
     "fecthing" => "Cargando...",
     "fecthinglocation" => "Cargando ubicación...",
     "emailerror" => "Por favor, introduce un correo electrónico válido",

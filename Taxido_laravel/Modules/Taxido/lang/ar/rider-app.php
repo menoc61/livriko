@@ -723,6 +723,7 @@ return array(
     "addressnot" => "لم يتم العثور على العنوان",
     "cityerror" => "خطأ في المدينة",
     "addresserror" => "خطأ في العنوان",
+    "myPosition" => "موقعي",
     "fecthing" => "جاري الجلب...",
     "fecthinglocation" => "جاري جلب الموقع...",
     "emailerror" => "الرجاء إدخال بريد إلكتروني صالح",

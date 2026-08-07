@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useValues } from "@src/utils/context/index";;
 import styles from "./styles";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ArrowDown, LocationMarker } from "@src/utils/icons";
+import { ArrowDown, Gps } from "@src/utils/icons";
 import { appColors } from "@src/themes";
 import { getValue } from "@src/utils/localstorage";
 import useStoredLocation from "@src/components/helper/useStoredLocation";
@@ -16,7 +16,6 @@ export function ProfileContainer() {
   const { taxidoSettingData, translateData } = useSelector((state: any) => state.setting);
   const { latitude, longitude } = useStoredLocation();
   const char = self?.name ? self.name.charAt(0) : "";
-  const [city, setCity] = useState<string>('');
   const [fullAddress, setFullAddress] = useState<string>('');
   const [localImageUri, setLocalImageUri] = useState<string | null>(null);
 
@@ -37,24 +36,14 @@ export function ProfileContainer() {
         const data = await response.json();
 
         if (data.status === 'OK') {
-          const components = data.results[0].address_components;
-
-          const foundCity = components.find((c: any) =>
-            c.types.includes('locality') || c.types.includes('administrative_area_level_2')
-          )?.long_name;
-
           const fullAddr = data.results[0]?.formatted_address;
-
-          setCity(foundCity || 'City not found');
           setFullAddress(fullAddr || 'Address not found');
         } else {
-          setCity(translateData?.npfoundcity);
           setFullAddress(translateData?.addressnot);
           console.warn('Geocoding failed:', data.status);
         }
       } catch (error) {
         console.error('Error fetching address:', error);
-        setCity(translateData?.cityerror);
         setFullAddress(translateData?.addresserror);
       }
     };
@@ -101,7 +90,7 @@ export function ProfileContainer() {
 
       <TouchableOpacity onPress={gotoLocation} style={styles.viewText}>
         <Text style={[styles.selfName, { textAlign: isRTL ? 'right' : 'left' }]}>
-          <LocationMarker /> {city?.split(" ")[0] || translateData?.fecthing} <ArrowDown color={appColors.whiteColor} />
+          <Gps colors={appColors.whiteColor} /> {translateData?.myPosition} <ArrowDown color={appColors.whiteColor} />
         </Text>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>

@@ -145,7 +145,7 @@ export function TopUp() {
                   { color: isDark ? appColors.white : appColors.black },
                 ]}
               >
-                {item.name}
+                {item.title || item.name}
               </Text>
             </View>
           </View>

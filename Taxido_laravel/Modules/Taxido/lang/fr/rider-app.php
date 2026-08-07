@@ -708,6 +708,7 @@ return array(
   "addressnot" => "Adresse introuvable",
   "cityerror" => "Erreur de ville",
   "addresserror" => "Erreur d'adresse",
+  "myPosition" => "Ma position",
   "fecthing" => "Chargement...",
   "fecthinglocation" => "Chargement de la localisation...",
   "emailerror" => "Veuillez entrer une adresse e-mail valide",

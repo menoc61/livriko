@@ -139,7 +139,7 @@ export function TopUpWallet() {
               </View>
               <View style={styles.mailInfo}>
                 <Text style={[styles.mail, { color: textColorStyle }]}>
-                  {item.name}
+                  {item.title || item.name}
                 </Text>
               </View>
             </View>
