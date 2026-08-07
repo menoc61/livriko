@@ -23,4 +23,5 @@ export interface RideRequestData {
     };
     selectedImage?: string | { uri: string };
     parcelWeight?: string | number;
+    packageType?: string;
 }

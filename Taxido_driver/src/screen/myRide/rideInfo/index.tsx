@@ -326,6 +326,16 @@ export function RideInfo({ route }) {
                 <Text style={styles.packageDescription}>
                   {ride?.description}
                 </Text>
+                {ride?.package_type && (
+                  <View style={styles.details}>
+                    <Text style={{ color: colors.text }}>
+                      {translateData.packageType}
+                    </Text>
+                    <Text style={{ color: colors.text }}>
+                      {translateData[`packageType${ride?.package_type?.charAt(0)?.toUpperCase()}${ride?.package_type?.slice(1)}`] || ride?.package_type}
+                    </Text>
+                  </View>
+                )}
                 {ride?.service?.service_type === 'package' && (
                   <>
                     <View

@@ -216,6 +216,7 @@ trait RideRequestTrait
                             'service_category_id' => $request->service_category_id,
                             'rider' => $rider,
                             'description' => $request->description,
+                            'package_type' => $request->package_type,
                             'duration' => $zoneRideDistance?->ride_distance['duration'] ?? $request?->duration,
                             'distance' => $zoneRideDistance?->ride_distance['distance_value'] ?? $request?->distance,
                             'distance_unit' => $zoneRideDistance?->ride_distance['distance_unit'] ?? $request?->distance_unit,

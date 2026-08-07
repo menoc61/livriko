@@ -44,6 +44,7 @@ class RideRequest extends Model
         'created_by_id',
         'hourly_package_id',
         'description',
+        'package_type',
         'weight',
         'start_time',
         'end_time',

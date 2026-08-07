@@ -5,6 +5,8 @@ namespace Modules\Taxido\Http\Requests\Api;
 use App\Exceptions\ExceptionHandler;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
+use Modules\Taxido\Enums\PackageTypeEnum;
 
 class CreateRideRequest extends FormRequest
 {
@@ -32,6 +34,7 @@ class CreateRideRequest extends FormRequest
             'location_coordinates' => ['required'],
             'cargo_image_id' => ['nullable'],
             'description' => ['nullable'],
+            'package_type' => ['nullable', Rule::in(PackageTypeEnum::values())],
             'preferences.*' => ['nullable','exists:preferences,id,deleted_at,NULL'],
         ];
     }

@@ -4,6 +4,7 @@ import { Button, CommonModal } from "@src/commonComponent";
 import { external } from "../../../styles/externalStyle";
 import { DescriptionText } from "./descriptionText/index";
 import { PictureCargo } from "./pictureCargo/index";
+import { PackageTypeSelector } from "./packageTypeSelector/index";
 import { useValues } from "@src/utils/context/index";
 import { Calander } from "../../dateTimeSchedule/index";
 import { appColors } from "@src/themes";
@@ -25,8 +26,9 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
   const [receiverName, setReceiverName] = useState("");
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [packageType, setPackageType] = useState("");
   const { translateData, taxidoSettingData } = useSelector(state => state.setting);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState("");
   const [bookloading, setBookLoading] = useState(false);
 
@@ -38,12 +40,16 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
     setSelectedImage(imageUri);
   };
 
+  const handlePackageTypeSelect = type => {
+    setPackageType(type);
+  };
+
   const closeModal = () => {
     setSelected(false);
   };
 
   const validateParcel = () => {
-    const newErrors = {};
+    const newErrors: { [key: string]: string } = {};
 
     if (!receiverName?.trim())
       newErrors.receiverName = translateData.enterReceiverName;
@@ -56,6 +62,10 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
       if (isNaN(weight) || weight > taxidoSettingData?.cabbooking_values?.ride?.parcel_weight_limit) {
         newErrors.parcelWeight = `max ${taxidoSettingData?.cabbooking_values?.ride?.parcel_weight_limit}kg Allow`;
       }
+    }
+
+    if (!packageType) {
+      newErrors.packageType = translateData.packageTypeRequired;
     }
 
     setErrors(newErrors);
@@ -90,6 +100,7 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
         receiverName,
         countryCode,
         phoneNumber,
+        packageType,
         service_category_ID,
         scheduleDate,
         pickupCoords,
@@ -170,6 +181,17 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
           />
           {errors.parcelWeight && (
             <Text style={styles.errorText}>{errors.parcelWeight}</Text>
+          )}
+
+          <PackageTypeSelector
+            selected={packageType}
+            onSelect={handlePackageTypeSelect}
+            translateData={translateData}
+            textColorStyle={textColorStyle}
+            isDark={isDark}
+          />
+          {errors.packageType && (
+            <Text style={styles.errorText}>{errors.packageType}</Text>
           )}
         </View>
       )}

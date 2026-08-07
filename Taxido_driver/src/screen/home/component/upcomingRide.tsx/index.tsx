@@ -606,6 +606,24 @@ export const UpcomingRide = forwardRef(function UpcomingRide(
               </View>
             </>
           )}
+          {ride?.package_type && (
+            <View
+              style={[
+                styles.packageTypeBadge,
+                {
+                  backgroundColor: isDark ? appColors.bgDark : appColors.white,
+                  flexDirection: viewRtlStyle,
+                },
+              ]}
+            >
+              <Text style={[styles.packageTypeBadgeLabel, { color: appColors.secondaryFont }]}>
+                {translateData?.packageType || 'Package Type'}:
+              </Text>
+              <Text style={[styles.packageTypeBadgeValue, { color: appColors.primary }]}>
+                {translateData?.[`packageType${ride?.package_type?.charAt(0)?.toUpperCase()}${ride?.package_type?.slice(1)}`] || ride?.package_type}
+              </Text>
+            </View>
+          )}
           <View style={[styles.mainContainer, { flexDirection: viewRtlStyle }]}>
             <View>
               <Icons.location color={colors.text} />

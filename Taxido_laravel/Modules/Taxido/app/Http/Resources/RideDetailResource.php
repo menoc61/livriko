@@ -89,6 +89,7 @@ class RideDetailResource extends BaseResource
             'assigned_driver' => $this->assigned_driver,
             'description' => $this->description,
             'currency_symbol' => $this?->currency_symbol,
+            'package_type' => $this->package_type,
             'parcel_receiver' => $this->parcel_receiver,
             'parcel_delivered_otp' => $this?->parcel_delivered_otp,
             'cargo_image_url' => $this?->cargo_image?->original_url,

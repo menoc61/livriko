@@ -62,6 +62,7 @@ class RideResource  extends BaseResource
             'vehicle_model' => $this->driver?->vehicle_info?->model,
             'plate_number' => $this->driver?->vehicle_info?->plate_number,
             'weight' => $this->weight,
+            'package_type' => $this->package_type,
             'parcel_receiver' => $this->parcel_receiver,
             'parcel_delivered_otp' => $this?->parcel_delivered_otp,
             'cargo_image_url' => $this?->cargo_image?->original_url,

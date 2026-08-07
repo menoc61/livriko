@@ -17,6 +17,7 @@ interface UserDetailsProps {
 
 export function UserDetails({ RideData }: UserDetailsProps) {
   const { zoneValue } = useSelector((state: any) => state.zoneUpdate)
+  const { translateData } = useSelector((state: any) => state.setting)
   const { viewRtlStyle, isDark } = useValues()
   const { colors } = useTheme()
 
@@ -142,6 +143,26 @@ export function UserDetails({ RideData }: UserDetailsProps) {
       <View style={[styles.address, { flexDirection: viewRtlStyle }]}>
         <AddressData locationDetails={RideData?.locations} />
       </View>
+
+      {RideData?.package_type && (
+        <View
+          style={[
+            styles.packageTypeRow,
+            {
+              backgroundColor: colors.background,
+              borderColor: colors.border,
+              flexDirection: viewRtlStyle,
+            },
+          ]}
+        >
+          <Text style={[styles.packageTypeLabel, { color: colors.text }]}>
+            {translateData?.packageType || 'Package Type'}
+          </Text>
+          <Text style={[styles.packageTypeValue, { color: colors.text }]}>
+            {translateData?.[`packageType${RideData?.package_type?.charAt(0)?.toUpperCase()}${RideData?.package_type?.slice(1)}`] || RideData?.package_type}
+          </Text>
+        </View>
+      )}
     </View>
   )
 }

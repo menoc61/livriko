@@ -68,6 +68,10 @@ class RideRequestTable
             $rideRequests->where('ride_requests.service_id', getServiceIdBySlug($this->request->get('filter')));
         }
 
+        if ($this->request->has('package_type') && $this->request->get('package_type') !== 'all') {
+            $rideRequests->where('ride_requests.package_type', $this->request->get('package_type'));
+        }
+
         $rideRequests->whereNull('ride_requests.deleted_at');
 
         if ($this->request->has('s')) {
@@ -119,6 +123,7 @@ class RideRequestTable
 
             $rideRequest->service = $rideRequest->service?->name;
             $rideRequest->service_category = $rideRequest->service_category?->name ?? 'N/A';
+            $rideRequest->package_type = $rideRequest->package_type ? ucfirst(str_replace('_', ' ', $rideRequest->package_type)) : 'N/A';
             $rideRequest->payment_method = ucfirst($rideRequest->payment_method);
             $rideRequest->status = ucfirst(optional($rideRequest->ride_status_activities()->latest()->first())->status ?? 'N/A');
         });
@@ -131,6 +136,7 @@ class RideRequestTable
                 ['title' => 'Rider', 'field' => 'rider_name', 'route' => 'admin.rider.show', 'email' => 'rider_email', 'profile_image' => 'rider_profile', 'sortable' => true, 'profile_id' => 'rider_id', 'sortField' => 'rider.name'],
                 ['title' => 'Service', 'field' => 'service', 'sortable' => true, 'sortField' => 'service.name'],
                 ['title' => 'Service Category', 'field' => 'service_category', 'sortable' => true, 'sortField' => 'service_category.name'],
+                ['title' => 'Package Type', 'field' => 'package_type', 'sortable' => false],
                 ['title' => 'Total', 'field' => 'formatted_total', 'sortable' => true, 'sortField' => 'ride_fare'],
                 ['title' => 'Created At', 'field' => 'date', 'sortable' => true, 'sortField' => 'created_at'],
                 ['title' => 'Action', 'type' => 'action', 'permission' => ['ride_request.index'], 'sortable' => false],

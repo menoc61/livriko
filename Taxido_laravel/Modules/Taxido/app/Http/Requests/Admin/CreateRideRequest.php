@@ -4,6 +4,8 @@ namespace Modules\Taxido\Http\Requests\Admin;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Modules\Taxido\Enums\PackageTypeEnum;
 
 
 class CreateRideRequest extends FormRequest
@@ -29,6 +31,7 @@ class CreateRideRequest extends FormRequest
             'location_coordinates' => ['required'],
             'cargo_image_id' => ['nullable'],
             'description' => ['nullable'],
+            'package_type' => ['nullable', Rule::in(PackageTypeEnum::values())],
         ];
     }
 }

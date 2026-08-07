@@ -121,6 +121,23 @@ const styles = StyleSheet.create({
     fontFamily: appFonts.regular,
     marginHorizontal: windowWidth(1),
   },
+  packageTypeRow: {
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: windowWidth(3),
+    paddingVertical: windowHeight(1.5),
+    borderTopWidth: windowHeight(0.1),
+  },
+  packageTypeLabel: {
+    fontFamily: appFonts.regular,
+    fontSize: fontSizes.FONT3HALF,
+    color: appColors.secondaryFont,
+  },
+  packageTypeValue: {
+    fontFamily: appFonts.bold,
+    fontSize: fontSizes.FONT3HALF,
+  },
 })
 
 export default styles

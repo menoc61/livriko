@@ -508,6 +508,31 @@ $ambulances = getAmbulances();
                             @enderror
                         </div>
                     </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-4 col-sm-6 package-type-container">
+                        <div class="form-group row">
+                            <label class="col-12"
+                                for="package_type">{{ __('taxido::static.rides.package_type') }}</label>
+                            <div class="col-12 select-item">
+                                <select class="form-select form-select-transparent select2-option"
+                                    data-placeholder="{{ __('taxido::static.rides.package_type') }}"
+                                    id="package_type" name="package_type">
+                                    <option value="">{{ __('taxido::static.rides.package_type_other') }}</option>
+                                    <option value="documents" @selected(old('package_type') == 'documents')>{{ __('taxido::static.rides.package_type_documents') }}</option>
+                                    <option value="clothing" @selected(old('package_type') == 'clothing')>{{ __('taxido::static.rides.package_type_clothing') }}</option>
+                                    <option value="food" @selected(old('package_type') == 'food')>{{ __('taxido::static.rides.package_type_food') }}</option>
+                                    <option value="electronics" @selected(old('package_type') == 'electronics')>{{ __('taxido::static.rides.package_type_electronics') }}</option>
+                                    <option value="fragile" @selected(old('package_type') == 'fragile')>{{ __('taxido::static.rides.package_type_fragile') }}</option>
+                                    <option value="other" @selected(old('package_type') == 'other')>{{ __('taxido::static.rides.package_type_other') }}</option>
+                                </select>
+                            </div>
+                            @error('package_type')
+                            <span class="invalid-feedback d-block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group row">

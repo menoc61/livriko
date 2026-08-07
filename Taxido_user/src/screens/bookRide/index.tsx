@@ -111,6 +111,7 @@ export function BookRide() {
     destinationCoords,
     selectedImage,
     parcelWeight,
+    packageType,
   } = route.params;
   const { countinueRide = false } = route.params ?? {};
   const { countinueRideId = "" } = route.params ?? {};
@@ -995,6 +996,7 @@ export function BookRide() {
     coupon: coupon || null,
     description: descriptionText ?? null,
     weight: parcelWeight,
+    package_type: packageType ?? null,
     name: receiverName,
     currency_code: zoneValue?.currency_code,
     country_code: countryCode,
@@ -1094,6 +1096,7 @@ export function BookRide() {
       formData.append("coupon", forms.coupon || "");
       formData.append("description", forms.description);
       formData.append("weight", forms.weight || "");
+      formData.append("package_type", forms.package_type || "");
       formData.append("parcel_receiver[name]", forms.name || "");
       formData.append("parcel_receiver[phone]", forms.phone || "");
       formData.append(

@@ -232,6 +232,22 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.white,
     borderRadius: windowHeight(0.6),
   },
+  packageTypeBadge: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: windowHeight(2),
+    paddingHorizontal: windowWidth(3),
+    paddingVertical: windowHeight(1),
+    borderRadius: windowHeight(0.6),
+  },
+  packageTypeBadgeLabel: {
+    fontFamily: appFonts.regular,
+    fontSize: fontSizes.FONT3SMALL,
+  },
+  packageTypeBadgeValue: {
+    fontFamily: appFonts.bold,
+    fontSize: fontSizes.FONT3SMALL,
+  },
   borderLine: {
     borderStartWidth: windowHeight(0.1),
     marginHorizontal: windowHeight(1.3),

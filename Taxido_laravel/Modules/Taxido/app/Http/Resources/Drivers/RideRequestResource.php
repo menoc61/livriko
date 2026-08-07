@@ -41,6 +41,7 @@ class RideRequestResource extends BaseResource
       'created_at' => $this->created_at,
       'is_with_driver' => $this->is_with_driver,
       'description' => $this->description,
+      'package_type' => $this->package_type,
       'parcel_receiver' => $this->parcel_receiver,
       'parcel_delivered_otp' => $this?->parcel_delivered_otp,
       'rider_id' => $this->rider_id,

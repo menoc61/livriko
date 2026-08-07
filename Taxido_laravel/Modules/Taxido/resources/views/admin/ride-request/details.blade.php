@@ -48,6 +48,12 @@
                                     <span id="parcel-otp">{{ $rideRequest?->parcel_delivered_otp }}</span>
                                 </li>
                                 @endif
+                                @if($rideRequest?->package_type)
+                                <li>
+                                    {{ __('taxido::static.rides.package_type') }} :
+                                    <span id="package-type">{{ ucfirst(str_replace('_', ' ', $rideRequest?->package_type)) }}</span>
+                                </li>
+                                @endif
                                 <li>
                                     {{ __('taxido::static.rides.ride_distance') }} :
                                     <span id="ride-distance">{{ $rideRequest?->distance }} {{ $rideRequest?->distance_unit ?? 'KM' }}</span>
