@@ -20,7 +20,11 @@ export function CategoryDetail() {
       "https://res.cloudinary.com/dwsbvqylx/image/upload/v1748931493/Mask_group_bxh2hr.png",
   };
 
-  const combinedData = [...(serviceData?.data || []), additionalItem];
+  const visibleServices = (serviceData?.data || []).filter(
+    (item: any) => item?.visible !== false,
+  );
+
+  const combinedData = [...visibleServices, additionalItem];
 
   const renderItem = ({ item }: { item: any }) => {
     const service = item.type;

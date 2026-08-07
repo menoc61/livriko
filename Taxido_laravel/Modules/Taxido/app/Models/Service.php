@@ -34,12 +34,14 @@ class Service extends Model implements HasMedia
         'service_icon_id',
         'service_image_id',
         'status',
+        'visible',
         'is_primary',
         'created_by_id'
     ];
 
     protected $casts = [
         'status' => 'integer',
+        'visible' => 'boolean',
         'is_primary' => 'integer',
         'service_image_id' => 'integer',
     ];

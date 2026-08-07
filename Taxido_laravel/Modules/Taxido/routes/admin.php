@@ -173,6 +173,7 @@ Route::group(['middleware' => ['localization'], 'namespace' => 'Admin', 'as' => 
     // Services
     Route::resource('service', 'ServiceController', ['except' => ['show', 'destroy']]);
     Route::put('service/primary/{id}', 'ServiceController@primary')->name('service.primary')->middleware('can:service.edit');
+    Route::put('service/visible/{id}', 'ServiceController@visible')->name('service.visible')->middleware('can:service.edit');
 
     // Service Categories
     Route::resource('service-category', 'ServiceCategoryController', ['except' => ['index','show', 'destroy', 'edit']]);
@@ -186,6 +187,7 @@ Route::group(['middleware' => ['localization'], 'namespace' => 'Admin', 'as' => 
     Route::get('service-category/{serviceCategory}/freight/edit', 'ServiceCategoryController@freightEdit')->name('service-category.freight.edit')->middleware('can:service_category.edit');
     Route::get('service-category/freight', 'ServiceCategoryController@freightIndex')->name('service-category.freight.index')->middleware('can:service_category.index');
     Route::put('service-category/status/{id}', 'ServiceCategoryController@status')->name('service-category.status')->middleware('can:service_category.edit');
+    Route::put('service-category/visible/{id}', 'ServiceCategoryController@visible')->name('service-category.visible')->middleware('can:service_category.edit');
 
     //find  driver
     Route::get('service-category/find-driver', 'ServiceCategoryController@finddriverIndex')->name('service-category.finddriver.index')->middleware('can:service_category.index');

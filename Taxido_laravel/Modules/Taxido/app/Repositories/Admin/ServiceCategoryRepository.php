@@ -77,4 +77,20 @@ class ServiceCategoryRepository extends BaseRepository
         }
 
     }
+
+    public function changeVisibility($id, $visible)
+    {
+        try {
+
+            $serviceCategory = $this->model->findOrFail($id);
+            $serviceCategory->update(['visible' => $visible]);
+
+            return json_encode(["resp" => $serviceCategory]);
+
+        } catch (Exception $e) {
+
+            throw new ExceptionHandler($e->getMessage(), $e->getCode());
+        }
+
+    }
 }

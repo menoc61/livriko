@@ -63,6 +63,7 @@ class ServiceTable
                 ['title' => 'Title', 'field' => 'name', 'imageField' => 'service_image_id', 'action' => true, 'sortable' => true],
                 ['title' => 'Type', 'field' => 'type', 'sortable' => true],
                 ['title' => 'Status', 'field' => 'status', 'route' => 'admin.service.status', 'type' => 'status', 'sortable' => true],
+                ['title' => 'Visible', 'field' => 'visible', 'route' => 'admin.service.visible', 'type' => 'status', 'sortable' => true],
                 ['title' => 'Created At', 'field' => 'date', 'sortable' => true, 'sortField' => 'created_at']
             ],
             'data' => $services,

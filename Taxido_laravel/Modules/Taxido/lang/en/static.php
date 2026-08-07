@@ -4,6 +4,7 @@ return [
     'taxido' => 'Livriko',
     'all' => 'All',
     'status' => 'Status',
+    'visible' => 'Visible',
     'search' => 'Search',
     'clear' => 'Clear',
     'yes' => 'Yes',

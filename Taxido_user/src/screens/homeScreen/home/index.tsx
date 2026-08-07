@@ -218,7 +218,9 @@ export function HomeScreen() {
               )}
               {homeScreenDataPrimary?.service_categories?.length > 0 && (
                 <TopCategory
-                  categoryData={homeScreenDataPrimary.service_categories}
+                  categoryData={(homeScreenDataPrimary.service_categories || []).filter(
+                    (item: any) => item?.visible !== false,
+                  )}
                 />
               )}
 

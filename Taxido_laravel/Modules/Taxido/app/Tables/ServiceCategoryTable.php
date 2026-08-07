@@ -77,6 +77,7 @@ class ServiceCategoryTable
         ['title' => 'Name', 'field' => 'name', 'imageField' => 'service_category_image_id', 'action' => true, 'sortable' => true],
         ['title' => 'Service', 'field' => 'services', 'sortable' => false],
         ['title' => 'Status', 'field' => 'status', 'route' => 'admin.service-category.status', 'type' => 'status', 'sortable' => true],
+        ['title' => 'Visible', 'field' => 'visible', 'route' => 'admin.service-category.visible', 'type' => 'status', 'sortable' => true],
         ['title' => 'Created At', 'field' => 'date', 'sortable' => true, 'sortField' => 'created_at']
       ],
       'data' => $serviceCategories,

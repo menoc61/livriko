@@ -66,6 +66,20 @@ class ServiceRepository extends BaseRepository
         }
     }
 
+    public function changeVisibility($id, $visible)
+    {
+        try {
+
+            $service = $this->model->findOrFail($id);
+            $service->update(['visible' => $visible]);
+
+            return json_encode(["resp" => $service]);
+        } catch (Exception $e) {
+
+            throw new ExceptionHandler($e->getMessage(), $e->getCode());
+        }
+    }
+
     public function primary($id, $status)
     {
         try {

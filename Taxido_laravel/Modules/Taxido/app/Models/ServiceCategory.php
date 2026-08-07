@@ -28,6 +28,7 @@ class ServiceCategory extends Model implements HasMedia
         'name',
         'slug',
         'status',
+        'visible',
         'type',
         'description',
         'service_id',
@@ -40,11 +41,13 @@ class ServiceCategory extends Model implements HasMedia
         'name',
         'description',
         'status',
+        'visible',
         'service_id'
     ];
 
     protected $casts = [
         'status' => 'integer',
+        'visible' => 'boolean',
         'service_category_image_id' => 'integer',
     ];
 

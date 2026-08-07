@@ -109,4 +109,12 @@ class ServiceCategoryController extends Controller
     {
         return $this->repository->status($id, $request->status);
     }
+
+    /**
+     * Change visible of the specified resource.
+     */
+    public function visible(Request $request, $id)
+    {
+        return $this->repository->changeVisibility($id, $request->status);
+    }
 }

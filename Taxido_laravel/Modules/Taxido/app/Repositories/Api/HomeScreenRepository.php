@@ -49,7 +49,7 @@ class HomeScreenRepository extends BaseRepository
             if($request->service) {
                 $service_id = getServiceIdBySlug($request?->service);
             } else {
-                $service_id = $this->model?->whereNull('deleted_at')?->where('status', true)?->where('is_primary', true)?->value('id');
+                $service_id = $this->model?->whereNull('deleted_at')?->where('status', true)?->where('visible', true)?->where('is_primary', true)?->value('id');
             }
 
             if($service_id) {
@@ -58,6 +58,7 @@ class HomeScreenRepository extends BaseRepository
                 })?->get();
 
                 $serviceCategories = ServiceCategory::whereNull('deleted_at')?->where('status', true)
+                    ?->where('visible', true)
                     ?->where('service_id', $service_id)?->get();
 
                 $user = $this->isUserTokenable($request);

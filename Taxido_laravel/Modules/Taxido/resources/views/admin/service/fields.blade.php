@@ -128,6 +128,25 @@
                     </div>
 
                     <div class="form-group row">
+                        <label class="col-md-2" for="visible">{{ __('taxido::static.visible') }}</label>
+                        <div class="col-md-10">
+                            <div class="editor-space">
+                                <label class="switch">
+                                    <input class="form-control" type="hidden" name="visible" value="0">
+                                    <input class="form-check-input" type="checkbox" name="visible" id=""
+                                        value="1" @checked(@$service?->visible ?? true)>
+                                    <span class="switch-state"></span>
+                                </label>
+                            </div>
+                            @error('visible')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <div class="col-12">
                             <div class="submit-btn">
                                 <button type="submit" name="save" class="btn btn-solid spinner-btn">

@@ -22,6 +22,7 @@ class ServiceCategoryResource extends BaseResource
       'id' => $this->id,
       'name' => $this->name,
       'status' => $this->status,
+      'visible' => $this->visible,
       'slug' => $this->slug,
       'service_id' => $this->service_id,
       'type' => $this->type,
