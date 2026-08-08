@@ -19,7 +19,6 @@ const ensureGPSIsEnabled = async (): Promise<boolean> => {
 
         await promptForEnableLocationIfNeeded({
             interval: 10000,
-            fastInterval: 5000,
         });
 
         const recheck = await isLocationEnabled();

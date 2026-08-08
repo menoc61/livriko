@@ -19,11 +19,33 @@ import {
   requestUserPermission,
   NotificationServices,
 } from "@src/utils/pushNotificationHandler";
+import { ensureLocationAccess, getDeviceLocation } from "@src/components/helper/permissionHelper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 enableScreens();
 
 const AppContent = () => {
   const { isDark } = useValues();
+  const [locationReady, setLocationReady] = React.useState(false);
+
+  React.useEffect(() => {
+    const initLocation = async () => {
+      await ensureLocationAccess();
+      
+      // After permissions, fetch and store initial location
+      try {
+        const position = await getDeviceLocation();
+        await AsyncStorage.setItem('user_latitude', position.lat.toString());
+        await AsyncStorage.setItem('user_longitude', position.lng.toString());
+        console.log('[App] Initial location stored:', position);
+      } catch (error) {
+        console.warn('[App] Failed to fetch initial location:', error);
+      }
+      
+      setLocationReady(true);
+    };
+    initLocation();
+  }, []);
 
   return (
     <SafeAreaProvider>
