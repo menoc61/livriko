@@ -19,8 +19,8 @@ export const resend_it = 'Resend it';
 export const enter_Your_Phone_Number = 'Enter your phone number';
 export const phone_Number = 'Phone Number';
 export const then_Let_Srollnow = 'Then let’s roll now.';
-export const pickup_location = 'Pickup location';
-export const enter_destination = 'Enter destination';
+export const pickup_location = 'Departure point';
+export const enter_destination = 'Enter Delivery address';
 export const minimumPrice =
   'Minimum price for this fare is $80 per ride. you can bid your price below.';
 export const or = 'OR';
