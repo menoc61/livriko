@@ -8,10 +8,11 @@ import { ArrowDown, Gps } from "@src/utils/icons";
 import { appColors } from "@src/themes";
 import { getValue } from "@src/utils/localstorage";
 import useStoredLocation from "@src/components/helper/useStoredLocation";
+import { reverseGeocode } from "@src/components/helper/geocoder";
 
 export function ProfileContainer() {
   const navigation = useNavigation<any>();
-  const { viewRTLStyle, Google_Map_Key, isRTL } = useValues();
+  const { viewRTLStyle, isRTL } = useValues();
   const { self } = useSelector((state: any) => state.account);
   const { taxidoSettingData, translateData } = useSelector((state: any) => state.setting);
   const { latitude, longitude } = useStoredLocation();
@@ -28,16 +29,14 @@ export function ProfileContainer() {
       let finalLat = lat ? parseFloat(lat) : latitude;
       let finalLng = lng ? parseFloat(lng) : longitude;
 
-      if (!finalLat || !finalLng || !Google_Map_Key) return;
+      if (!finalLat || !finalLng) return;
 
       try {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${finalLat},${finalLng}&key=${Google_Map_Key}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const data = await reverseGeocode(finalLat, finalLng);
 
         if (data.status === 'OK') {
           const fullAddr = data.results[0]?.formatted_address;
-          setFullAddress(fullAddr || 'Address not found');
+          setFullAddress(fullAddr || translateData?.addressnot);
         } else {
           setFullAddress(translateData?.addressnot);
           console.warn('Geocoding failed:', data.status);
@@ -48,7 +47,7 @@ export function ProfileContainer() {
       }
     };
     getAddress();
-  }, [latitude, longitude, taxidoSettingData, Google_Map_Key]);
+  }, [latitude, longitude, taxidoSettingData]);
 
   const handleImagePress = async () => {
     const token = await getValue("token")

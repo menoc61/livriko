@@ -8,6 +8,7 @@ import { appColors, windowHeight, windowWidth } from "@src/themes";
 import { HeaderContainer, HomeSlider } from "@src/components";
 import { BannerLoader } from "../bannerLoader";
 import useStoredLocation from "@src/components/helper/useStoredLocation";
+import { reverseGeocode, geocodeAddress, autocompletePlaces } from "@src/components/helper/geocoder";
 import { useValues } from "@src/utils/context/index";;
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -49,10 +50,8 @@ export function AmbulanceHome() {
 
     const fetchAddressFromCoords = async (latitude: number | null, longitude: number | null) => {
         if (!latitude || !longitude) return;
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Google_Map_Key}&result_type=street_address`;
         try {
-            const response = await fetch(url);
-            const json = await response.json();
+            const json = await reverseGeocode(latitude, longitude);
             if (json.status === "OK" && json.results?.length > 0) {
                 const address = json.results[0].formatted_address;
                 setPickup(address);
@@ -64,10 +63,8 @@ export function AmbulanceHome() {
     };
 
     const fetchCoordinates = async (address: string | number | boolean, isPickup: any) => {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${Google_Map_Key}`;
         try {
-            const response = await fetch(url);
-            const json = await response.json();
+            const json = await geocodeAddress(address.toString());
             if (json.status === "OK" && json?.results?.length > 0) {
                 const location = json.results[0].geometry.location;
                 const coords = { latitude: location.lat, longitude: location.lng };
@@ -97,10 +94,8 @@ export function AmbulanceHome() {
             setSuggestions([]);
             return;
         }
-        const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${text}&key=${Google_Map_Key}&types=geocode`;
         try {
-            const response = await fetch(url);
-            const json = await response.json();
+            const json = await autocompletePlaces(text);
             if (json.status === "OK" && json?.predictions?.length > 0) {
                 setSuggestions(json.predictions.slice(0, 2));
             } else {
@@ -141,9 +136,8 @@ export function AmbulanceHome() {
             const locationData = { 0: pickup };
             await setValue("ambulanceLocations", JSON.stringify(locationData));
             try {
-                const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(pickup)}&key=${Google_Map_Key}`);
-                const dataMap = await response.json();
-                if (dataMap?.results?.length > 0) {
+                const dataMap = await geocodeAddress(pickup);
+                if (dataMap?.status === "OK" && dataMap?.results?.length > 0) {
                     const location = dataMap?.results[0]?.geometry?.location;
                     dispatch(ambulanceAction({ lat: location.lat, lng: location.lng }));
                     navigation.navigate("BookAmbulance", { location: pickup, lat: location.lat, lng: location.lng });

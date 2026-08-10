@@ -15,6 +15,7 @@ import { useAppNavigation } from "@src/utils/navigation";
 import { getDistance } from "geolib";
 import useSmartLocation from "@src/components/helper/locationHelper";
 import { useValues } from "@src/utils/context/index";
+import { reverseGeocode, geocodeAddress, autocompletePlaces } from "@src/components/helper/geocoder";
 
 export function LocationDrop() {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export function LocationDrop() {
   const [proceedLoading, setProceedLoading] = useState(false);
   const { currentLatitude, currentLongitude } = useSmartLocation();
   const [isdesFocused, setIsdesFocused] = useState(false);
-  const { linearColorStyle, viewRTLStyle, textColorStyle, bgFullLayout, textRTLStyle, isDark, isRTL, Google_Map_Key } = useValues();
+  const { linearColorStyle, viewRTLStyle, textColorStyle, bgFullLayout, textRTLStyle, isDark, isRTL } = useValues();
   const [wasAutoFilled, setWasAutoFilled] = useState(false);
   const [destinationFullAddress, setDestinationFullAddress] = useState();
   const [hasNavigated, setHasNavigated] = useState(false);
@@ -127,12 +128,7 @@ export function LocationDrop() {
     }
 
     const fetchCoords = async (query: string) => {
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          query,
-        )}&key=${Google_Map_Key}`,
-      );
-      return res.json();
+      return geocodeAddress(query);
     };
 
     try {
@@ -174,12 +170,7 @@ export function LocationDrop() {
     for (const stop of stopList) {
       if (stop && stop.trim().length > 0) {
         try {
-          const res = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-              stop,
-            )}&key=${Google_Map_Key}`,
-          );
-          const data = await res.json();
+          const data = await geocodeAddress(stop);
           if (data?.status === "OK" && data?.results?.length > 0) {
             const { lat, lng } = data?.results[0].geometry.location;
             coordsArray.push({ lat: lat, lng: lng });
@@ -212,10 +203,8 @@ export function LocationDrop() {
 
   const fetchAddressFromCoords = async (latitude, longitude) => {
     if (!latitude || !longitude) return;
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Google_Map_Key}&result_type=street_address`;
     try {
-      const response = await fetch(url);
-      const json = await response.json();
+      const json = await reverseGeocode(latitude, longitude);
       if (json.status === "OK" && json?.results?.length > 0) {
         const addressComponents = json.results[0].address_components;
         const route = addressComponents.find(comp =>
@@ -345,11 +334,8 @@ export function LocationDrop() {
 
   const fetchAddressSuggestions = async input => {
     if (input?.length >= 3) {
-      const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&location=${currentLatitude},${currentLongitude}&radius=50000&key=${Google_Map_Key}`;
-
       try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        const data = await autocompletePlaces(input);
 
         if (data.status !== "OK") {
           console.error(
@@ -360,17 +346,14 @@ export function LocationDrop() {
           return;
         }
 
-        const promises = data.predictions.map(async prediction => {
-          const placeDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${prediction?.place_id}&fields=geometry&key=${Google_Map_Key}`;
-          const placeDetailsRes = await fetch(placeDetailsUrl);
-          const placeDetailsData = await placeDetailsRes.json();
-
-          const location = placeDetailsData?.result?.geometry?.location;
-          if (!location) return null;
-
+        const places = data.predictions.map((prediction, index) => {
+          const latLng = prediction as any;
           const distanceInMeters = getDistance(
             { latitude: currentLatitude, longitude: currentLongitude },
-            { latitude: location?.lat, longitude: location?.lng },
+            {
+              latitude: latLng?.latitude ?? currentLatitude,
+              longitude: latLng?.longitude ?? currentLongitude,
+            },
           );
           return {
             id: prediction?.place_id,
@@ -380,7 +363,6 @@ export function LocationDrop() {
           };
         });
 
-        const places = (await Promise.all(promises)).filter(Boolean);
         const sortedPlaces = places.sort(
           (a, b) => parseFloat(a.distanceKm) - parseFloat(b.distanceKm),
         );
@@ -514,15 +496,10 @@ export function LocationDrop() {
   }, [stops, pickupLocation, destination]);
 
   const coordsData = async () => {
-    const geocodeAddress = async address => {
+    const geocodeAddressLocal = async address => {
       try {
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            address,
-          )}&key=${Google_Map_Key}`,
-        );
-        const dataMap = await response.json();
-        if (dataMap?.results?.length > 0) {
+        const dataMap = await geocodeAddress(address);
+        if (dataMap?.status === "OK" && dataMap?.results?.length > 0) {
           const location = dataMap?.results[0].geometry.location;
           return {
             latitude: location?.lat,
@@ -537,7 +514,7 @@ export function LocationDrop() {
 
     const fetchCoordinates = async () => {
       try {
-        const pickup = await geocodeAddress(pickupLocation);
+        const pickup = await geocodeAddressLocal(pickupLocation);
         if (pickup?.latitude && pickup?.longitude) {
           dispatch(userZone({ lat: pickup?.latitude, lng: pickup?.longitude }));
           setIsInitialFetchDone(true);

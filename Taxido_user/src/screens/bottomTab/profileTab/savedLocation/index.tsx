@@ -10,6 +10,7 @@ import {
 import { Button, notificationHelper, VerticalLine } from "@src/commonComponent";
 import { NoInternet } from "@src/components";
 import { useValues } from "@src/utils/context/index";
+import { geocodeAddress } from "@src/components/helper/geocoder";
 import { styles } from "./style";
 import { external } from "../../../../styles/externalStyle";
 import { commonStyles } from "../../../../styles/commonStyle";
@@ -43,7 +44,6 @@ export function SavedLocation() {
     viewRTLStyle,
     textRTLStyle,
     isDark,
-    Google_Map_Key,
   } = useValues();
   const { translateData } = useSelector((state: any) => state.setting);
   const navigation = useNavigation();
@@ -132,11 +132,7 @@ export function SavedLocation() {
 
   const getCoordinatesFromAddress = async (address: string) => {
     try {
-      const encodedAddress = encodeURIComponent(address);
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${Google_Map_Key}`;
-
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await geocodeAddress(address);
 
       if (data.status === "OK" && data.results?.length > 0) {
         const location = data.results[0].geometry.location;

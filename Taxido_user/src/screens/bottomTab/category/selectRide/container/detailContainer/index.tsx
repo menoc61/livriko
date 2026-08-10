@@ -39,6 +39,7 @@ import { ModalContainer } from "../../../../../../components/modalContainer/inde
 import { feesPolicies, modelData } from "../../../../../../data/modelData/index";
 import Images from "@utils/images";
 import { useValues } from "@src/utils/context/index";
+import { geocodeAddress } from "@src/components/helper/geocoder";
 import { BookRideItem } from "../../../../../bookRide/bookRideItem/index";
 import { fontSizes, windowHeight } from "@src/themes";
 import { ModalContainers } from "../../../../../bookRide/modalContainer/index";
@@ -295,15 +296,10 @@ export function DetailContainer() {
   }, []);
 
   useEffect(() => {
-    const geocodeAddress = async (address: string) => {
+    const geocodeAddressLocal = async (address: string) => {
       try {
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            address,
-          )}&key=${Google_Map_Key}`,
-        );
-        const dataMap = await response.json();
-        if (dataMap.results?.length > 0) {
+        const dataMap = await geocodeAddress(address);
+        if (dataMap.status === "OK" && dataMap.results?.length > 0) {
           const location = dataMap.results[0].geometry.location;
           return {
             lat: location.lat,
@@ -318,7 +314,7 @@ export function DetailContainer() {
 
     const fetchCoordinates = async () => {
       try {
-        const pickup = await geocodeAddress(pickupLocation);
+        const pickup = await geocodeAddressLocal(pickupLocation);
         setPickupCoords(pickup);
       } catch (error) {
         console.error("Error fetching coordinates:", error);

@@ -44,9 +44,10 @@ import {
 } from "@src/api/store/actions/finddriverAction";
 import { notificationHelper } from "@src/commonComponent/notificationHelper";
 import useSmartLocation from "@src/components/helper/locationHelper";
+import { reverseGeocode, geocodeAddress, autocompletePlaces } from "@src/components/helper/geocoder";
 
 export function FindLocationScreen() {
-  const { isDark, textRTLStyle, viewRTLStyle, textColorStyle, Google_Map_Key } =
+  const { isDark, textRTLStyle, viewRTLStyle, textColorStyle } =
     useValues();
 
   const route = useRoute<any>();
@@ -167,10 +168,8 @@ export function FindLocationScreen() {
 
   const fetchAddressFromCoords = async (latitude: any, longitude: any) => {
     if (!latitude || !longitude) return;
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Google_Map_Key}`;
     try {
-      const response = await fetch(url);
-      const json = await response.json();
+      const json = await reverseGeocode(latitude, longitude);
       if (json.status === "OK" && json?.results?.length > 0) {
         const fullAddress = json.results[0]?.formatted_address;
         const targetField = activeField || "pickup";
@@ -291,18 +290,10 @@ export function FindLocationScreen() {
       }
 
       try {
-        const origin = defultCoords
-          ? `&origin=${defultCoords.lat},${defultCoords.lng}`
-          : "";
-        const res = await fetch(
-          `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
-            query,
-          )}${origin}&key=${Google_Map_Key}`,
-        );
-        const json = await res.json();
-        if (json?.status === "OK") {
+        const data = await autocompletePlaces(query);
+        if (data?.status === "OK") {
           setSuggestions(
-            json.predictions.map((item: any) => ({
+            data.predictions.map((item: any) => ({
               shortAddress: item.structured_formatting.main_text,
               detailAddress: item.structured_formatting.secondary_text,
               distance: item.distance_meters
@@ -321,12 +312,7 @@ export function FindLocationScreen() {
 
   const convertToCoords = async (address: string, setter: any) => {
     try {
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${Google_Map_Key}`,
-      );
-      const json = await res.json();
+      const json = await geocodeAddress(address);
       if (json?.status === "OK" && json?.results?.length > 0) {
         const { lat, lng } = json.results[0].geometry.location;
         setter({ lat, lng });

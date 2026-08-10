@@ -6,6 +6,7 @@ import { commonStyles } from "../../styles/commonStyle";
 import { external } from "../../styles/externalStyle";
 import { SolidLine, Button, Header, InputText } from "@src/commonComponent";
 import { useValues } from "@src/utils/context/index";
+import { reverseGeocode, geocodeAddress, autocompletePlaces } from "@src/components/helper/geocoder";
 import { useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { userZone } from "../../api/store/actions/index";
@@ -40,7 +41,7 @@ export function RentalLocation() {
   const { translateData, settingData } = useSelector((state) => state.setting);
   const context = useContext(LocationContext);
   const { latitude, longitude } = useStoredLocation();
-  const { linearColorStyleTwo, linearColorStyle, viewRTLStyle, textColorStyle, bgFullLayout, textRTLStyle, isDark, Google_Map_Key } = useValues();
+  const { linearColorStyleTwo, linearColorStyle, viewRTLStyle, textColorStyle, bgFullLayout, textRTLStyle, isDark } = useValues();
   const [pickupCoords, setPickupCoords] = useState();
   const { pickupLocationLocal, setPickupLocationLocal } = context;
   const pickupRef = useRef<TextInput>(null);
@@ -53,11 +54,8 @@ export function RentalLocation() {
   const fetchAddressFromCoords = async (latitude, longitude) => {
     if (!latitude || !longitude) return;
 
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Google_Map_Key}`;
-
     try {
-      const response = await fetch(url);
-      const json = await response.json();
+      const json = await reverseGeocode(latitude, longitude);
 
       if (json.status === "OK" && json.results?.length > 0) {
         const addressComponents = json.results[0].address_components;
@@ -104,10 +102,7 @@ export function RentalLocation() {
 
   const convertToCoords = async (address, setter) => {
     try {
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${Google_Map_Key}`
-      );
-      const data = await res.json();
+      const data = await geocodeAddress(address);
       if (data.status === 'OK' && data.results?.length > 0) {
         const { lat, lng } = data.results[0].geometry.location;
         setter({ latitude: lat, longitude: lng });
@@ -135,10 +130,8 @@ export function RentalLocation() {
 
   const fetchAddressSuggestions = async (input: string) => {
     if (input?.length >= 3) {
-      const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${Google_Map_Key}`;
       try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+        const data = await autocompletePlaces(input);
 
         if (data.status !== "OK") {
           console.error("API Error:", data.status, data.error_message || "");
@@ -201,15 +194,10 @@ export function RentalLocation() {
   }, [activeField, stops, pickupLocation, destination]);
 
   const coordsData = async () => {
-    const geocodeAddress = async (address) => {
+    const geocodeAddressLocal = async (address) => {
       try {
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            address
-          )}&key=${Google_Map_Key}`
-        );
-        const dataMap = await response.json();
-        if (dataMap.results?.length > 0) {
+        const dataMap = await geocodeAddress(address);
+        if (dataMap.status === 'OK' && dataMap.results?.length > 0) {
           const location = dataMap.results[0].geometry.location;
           return {
             latitude: location.lat,
@@ -224,7 +212,7 @@ export function RentalLocation() {
 
     const fetchCoordinates = async () => {
       try {
-        const pickup = await geocodeAddress(pickupLocation);
+        const pickup = await geocodeAddressLocal(pickupLocation);
         if (pickup?.latitude && pickup?.longitude) {
           dispatch(userZone({ lat: pickup.latitude, lng: pickup.longitude }));
           getVehicleTypes(pickup.latitude, pickup.longitude);

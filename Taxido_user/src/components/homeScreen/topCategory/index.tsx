@@ -26,6 +26,7 @@ import { RootState } from "@src/api/store";
 // import { AppDispatch, RootState } from "@src/api/store"; // AppDispatch kept for future "recent search" quick-book reuse
 // import { vehicleTypeDataGet } from "@src/api/store/actions"; // kept for future "recent search" quick-book reuse
 import useStoredLocation from "@src/components/helper/useStoredLocation";
+import { reverseGeocode } from "@src/components/helper/geocoder";
 
 export function TopCategory({ categoryData }: any) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -37,7 +38,6 @@ export function TopCategory({ categoryData }: any) {
     isDark,
     viewRTLStyle,
     textRTLStyle,
-    Google_Map_Key,
     isRTL,
   } = useValues();
   const { navigate }: any = useAppNavigation();
@@ -74,12 +74,10 @@ export function TopCategory({ categoryData }: any) {
         lat: finalLat,
         lng: finalLng,
       });
-      if (!finalLat || !finalLng || !Google_Map_Key) return;
+      if (!finalLat || !finalLng) return;
 
       try {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${finalLat},${finalLng}&key=${Google_Map_Key}&result_type=street_address`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const data = await reverseGeocode(finalLat, finalLng);
 
         if (data.status === "OK") {
           const fullAddr = data.results[0]?.formatted_address;
@@ -95,7 +93,7 @@ export function TopCategory({ categoryData }: any) {
       }
     };
     getAddress();
-  }, [latitude, longitude, taxidoSettingData, Google_Map_Key]);
+  }, [latitude, longitude, taxidoSettingData]);
 
   useEffect(() => {
     if (categoryData?.length > 0) {

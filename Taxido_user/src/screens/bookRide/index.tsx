@@ -35,6 +35,7 @@ import { styles } from "./styles";
 import { BookRideItem } from "./bookRideItem/index";
 import { ModalContainers } from "./modalContainer/index";
 import { useValues } from "@src/utils/context";
+import { geocodeAddress } from "@src/components/helper/geocoder";
 import { appColors, appFonts, windowWidth } from "@src/themes";
 import { fontSizes, windowHeight } from "@src/themes";
 import {
@@ -848,15 +849,10 @@ export function BookRide() {
   };
 
   useEffect(() => {
-    const geocodeAddress = async (address: string) => {
+    const geocodeAddressLocal = async (address: string) => {
       try {
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            address,
-          )}&key=${Google_Map_Key}`,
-        );
-        const dataMap = await response.json();
-        if (dataMap.results?.length > 0) {
+        const dataMap = await geocodeAddress(address);
+        if (dataMap.status === "OK" && dataMap.results?.length > 0) {
           const location = dataMap.results[0].geometry.location;
           return {
             lat: location.lat,
@@ -871,7 +867,7 @@ export function BookRide() {
 
     const fetchCoordinates = async () => {
       try {
-        const stopsCoordsPromises = stops.map(geocodeAddress);
+        const stopsCoordsPromises = stops.map(geocodeAddressLocal);
         const stopsResults = await Promise.all(stopsCoordsPromises);
         setStopsCoords(
           stopsResults.filter(coords => coords !== null) as Array<{

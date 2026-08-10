@@ -9,6 +9,7 @@ import { rentalvehicleRequest } from '@src/api/store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles';
 import { useValues } from '@src/utils/context/index';
+import { geocodeAddress } from '@src/components/helper/geocoder';
 import { external } from '@src/styles/externalStyle';
 import { Calender1 } from '@src/assets/icons/calender1';
 import { getValue } from '@src/utils/localstorage';
@@ -29,7 +30,7 @@ export function RentalBooking() {
   const [dropCoords, setDropCoords] = useState();
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(true);
-  const { linearColorStyle, textColorStyle, viewRTLStyle, textRTLStyle, bgContainer, isDark, Google_Map_Key } = useValues();
+  const { linearColorStyle, textColorStyle, viewRTLStyle, textRTLStyle, bgContainer, isDark } = useValues();
   const { DateValue, TimeValue, field, service_category_ID, service_category_slug, service_name, service_ID }: any = route.params || {};
   const { selectedAddress, fieldValue }: any = route.params || {};
   const date = new Date(startDate);
@@ -130,15 +131,10 @@ export function RentalBooking() {
     });
   };
 
-  const geocodeAddress = async address => {
+  const geocodeAddressLocal = async address => {
     try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${Google_Map_Key}`,
-      );
-      const dataMap = await response.json();
-      if (dataMap.results?.length > 0) {
+      const dataMap = await geocodeAddress(address);
+      if (dataMap.status === "OK" && dataMap.results?.length > 0) {
         const location = dataMap.results[0].geometry.location;
         return {
           lat: location.lat,
@@ -172,9 +168,9 @@ export function RentalBooking() {
   useEffect(() => {
     const fetchCoordinates = async () => {
       try {
-        const pickup = await geocodeAddress(pickupLocation);
+        const pickup = await geocodeAddressLocal(pickupLocation);
         setPickupCoords(pickup);
-        const drop = await geocodeAddress(dropLocation);
+        const drop = await geocodeAddressLocal(dropLocation);
         setDropCoords(drop);
       } catch (error) {
         console.error('Error fetching coordinates:', error);
@@ -263,7 +259,7 @@ export function RentalBooking() {
     }
     !errors && setFindLoading(true);
     try {
-      const pickup = await geocodeAddress(pickupLocation);
+      const pickup = await geocodeAddressLocal(pickupLocation);
 
       if (pickup) {
         let payload: RentalInterface = {

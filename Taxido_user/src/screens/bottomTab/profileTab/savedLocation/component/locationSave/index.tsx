@@ -17,6 +17,7 @@ import darkMapStyle from "@src/screens/darkMapStyle";
 import Images from "@utils/images";
 import { useValues } from "@src/utils/context/index";
 import styles from "./styles";
+import { reverseGeocode } from "@src/components/helper/geocoder";
 import { Back, AddressMarker } from "@src/utils/icons";
 import {
   appColors,
@@ -313,17 +314,9 @@ export function LocationSave() {
   // Memoize fetchAddress to prevent recreation
   const fetchAddress = useCallback(
     async (lat: number, lng: number) => {
-      if (!Google_Map_Key) {
-        console.warn("[fetchAddress] Missing Google Map Key");
-        setCurrentAddress("Google Map Key is missing");
-        return;
-      }
-
       try {
         setFetchingAddress(true);
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Map_Key}&result_type=street_address`;
-        const res = await fetch(url);
-        const json = await res.json();
+        const json = await reverseGeocode(lat, lng);
 
         if (json?.results?.length > 0) {
           const formattedAddress = json.results[0].formatted_address;
@@ -338,7 +331,7 @@ export function LocationSave() {
         setFetchingAddress(false);
       }
     },
-    [Google_Map_Key],
+    [],
   );
 
   // Optimize useEffect dependencies

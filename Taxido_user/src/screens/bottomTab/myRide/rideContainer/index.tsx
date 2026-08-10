@@ -4,6 +4,7 @@ import Images from "@utils/images";
 import { styles } from "./style";
 import { commonStyles } from "../../../../styles/commonStyle";
 import { useValues } from '@src/utils/context/index';
+import { geocodeAddress } from '@src/components/helper/geocoder';
 import { Call, Info, Message, PickLocation, RatingEmptyStart, RatingHalfStar, RatingStar, Rebook, SafetyCall } from "@utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@react-navigation/native";
@@ -19,7 +20,7 @@ import { useCallback } from "react";
 
 export default function RideContainer({ status }: { status: string }) {
   const { navigate } = useAppNavigation();
-  const { bgFullStyle, textColorStyle, viewRTLStyle, textRTLStyle, isDark, iconColorStyle, Google_Map_Key } = useValues();
+  const { bgFullStyle, textColorStyle, viewRTLStyle, textRTLStyle, isDark, iconColorStyle } = useValues();
   const { colors } = useTheme();
   const { rideDatas } = useSelector(state => state.allRide);
   const { allVehicle } = useSelector(state => state.vehicleType);
@@ -176,10 +177,7 @@ export default function RideContainer({ status }: { status: string }) {
 
   const convertToCoords = async (address) => {
     try {
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${Google_Map_Key}`
-      );
-      const data = await res.json();
+      const data = await geocodeAddress(address);
       if (data.status === 'OK' && data.results?.length > 0) {
         const { lat, lng } = data.results[0].geometry.location;
         return { latitude: lat, longitude: lng };
@@ -197,10 +195,7 @@ export default function RideContainer({ status }: { status: string }) {
     const coordsArray = [];
     for (const stop of stopList) {
       try {
-        const res = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(stop)}&key=${Google_Map_Key}`
-        );
-        const data = await res.json();
+        const data = await geocodeAddress(stop);
         if (data.status === 'OK' && data.results?.length > 0) {
           const { lat, lng } = data.results[0].geometry.location;
           coordsArray.push({ latitude: lat, longitude: lng });

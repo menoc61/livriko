@@ -5,6 +5,7 @@ import { CalenderSmall, ClockSmall, Gps, PickLocation } from "@src/utils/icons";
 import { external } from "@src/styles/externalStyle";
 import { styles } from "./styles";
 import { useValues } from "@src/utils/context/index";
+import { geocodeAddress } from "@src/components/helper/geocoder";
 import {
   Button,
   formatDateTime,
@@ -22,7 +23,6 @@ export function Recentbooking({ recentRideData }: any) {
     viewRTLStyle,
     isDark,
     textRTLStyle,
-    Google_Map_Key,
   } = useValues();
   const dispatch = useDispatch<AppDispatch>();
   const [loadingIndex, setLoadingIndex] = useState(null);
@@ -36,12 +36,7 @@ export function Recentbooking({ recentRideData }: any) {
 
   const convertToCoords = async (address: any) => {
     try {
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-          address,
-        )}&key=${Google_Map_Key}`,
-      );
-      const data = await res.json();
+      const data = await geocodeAddress(address);
       if (data.status === "OK" && data.results?.length > 0) {
         const { lat, lng } = data.results[0].geometry.location;
         return { latitude: lat, longitude: lng };
@@ -59,12 +54,7 @@ export function Recentbooking({ recentRideData }: any) {
     const coordsArray = [];
     for (const stop of stopList) {
       try {
-        const res = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            stop,
-          )}&key=${Google_Map_Key}`,
-        );
-        const data = await res.json();
+        const data = await geocodeAddress(stop);
         if (data.status === "OK" && data.results?.length > 0) {
           const { lat, lng } = data.results[0].geometry.location;
           coordsArray.push({ latitude: lat, longitude: lng });

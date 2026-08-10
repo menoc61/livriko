@@ -18,6 +18,7 @@ import { useValues } from "@src/utils/context/index";
 import { external } from "@src/styles/externalStyle";
 import { useDispatch, useSelector } from "react-redux";
 import useSmartLocation from "@src/components/helper/locationHelper";
+import { reverseGeocode } from "@src/components/helper/geocoder";
 import { locationChanges, rideDataPut } from "@src/api/store/actions";
 import { AppDispatch } from "@src/api/store";
 import {
@@ -83,25 +84,9 @@ export function AddressChange() {
 
   const fetchAddress = useCallback(
     async (lat: number, lng: number) => {
-      if (!Google_Map_Key) {
-        console.error("[fetchAddress] Google Maps API Key is missing!");
-        setCurrentAddress("Configuration error: Missing API Key.");
-        return;
-      }
-
       setFetchingAddress(true);
       try {
-        let response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Map_Key}&result_type=street_address|route|intersection`,
-        );
-        let json = await response.json();
-
-        if (json.status === "OK" && json.results?.length === 0) {
-          response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Map_Key}`,
-          );
-          json = await response.json();
-        }
+        let json = await reverseGeocode(lat, lng);
 
         if (json.status === "OK" && json.results?.length > 0) {
           const bestResult = json.results[0];
@@ -116,7 +101,7 @@ export function AddressChange() {
         setFetchingAddress(false);
       }
     },
-    [Google_Map_Key],
+    [],
   );
 
   useEffect(() => {
