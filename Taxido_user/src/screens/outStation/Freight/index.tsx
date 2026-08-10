@@ -1,4 +1,4 @@
-import { TextInput, View, Text } from "react-native";
+import { TextInput, View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { Button, CommonModal } from "@src/commonComponent";
 import { external } from "../../../styles/externalStyle";
@@ -6,7 +6,7 @@ import { DescriptionText } from "./descriptionText/index";
 import { PictureCargo } from "./pictureCargo/index";
 import { PackageTypeSelector } from "./packageTypeSelector/index";
 import { useValues } from "@src/utils/context/index";
-import { Calander } from "../../dateTimeSchedule/index";
+import { DateTimeSchedule } from "../../dateTimeSchedule/index";
 import { appColors } from "@src/themes";
 import { CountryCodeContainer } from "@src/screens/auth/signIn/signInComponents";
 import { useAppNavigation } from "@src/utils/navigation";
@@ -14,7 +14,7 @@ import styles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { vehicleTypeDataGet } from "@src/api/store/actions";
 
-export function Freight({ pickupLocation, stops, destination, service_ID, zoneValue, service_name, service_category_ID, scheduleDate, filteredLocations,
+export function Freight({ pickupLocation, stops, destination, service_ID, zoneValue, service_name, service_category_ID, scheduleDate: scheduleDateProp, filteredLocations,
   pickupCoords, destinationCoords }) {
   const dispatch = useDispatch();
   const { navigate } = useAppNavigation();
@@ -27,6 +27,7 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
   const [countryCode, setCountryCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [packageType, setPackageType] = useState("");
+  const [scheduleDate, setScheduleDate] = useState(scheduleDateProp || { DateValue: "", TimeValue: "" });
   const { translateData, taxidoSettingData } = useSelector(state => state.setting);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState("");
@@ -202,6 +203,35 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
         service_name={service_name}
       />
 
+      <Text
+        style={[
+          styles.weightText,
+          { color: textColorStyle, textAlign: textRTLStyle },
+        ]}>
+        {translateData.dateAndTime}
+      </Text>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => setSelected(true)}
+      >
+        <TextInput
+          style={[styles.inputView, {
+            backgroundColor: bgContainer,
+            borderColor: isDark ? appColors.darkBorder : appColors.border,
+            color: isDark ? appColors.darkText : appColors.blackColor,
+            textAlign: textRTLStyle,
+          }]}
+          editable={false}
+          placeholder={translateData.selectDateTime}
+          placeholderTextColor={appColors.regularText}
+          value={
+            scheduleDate.DateValue && scheduleDate.TimeValue
+              ? `${scheduleDate.DateValue} ${scheduleDate.TimeValue}`
+              : ""
+          }
+        />
+      </TouchableOpacity>
+
       <View style={[external.mv_15]}>
         <Button title={translateData.bookRide} onPress={gotoRide} loading={bookloading} />
       </View>
@@ -211,10 +241,7 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
         onPress={closeModal}
         value={
           <View>
-            <Calander onPress={closeModal} />
-            <View style={styles.buttonView}>
-              <Button title={translateData.Continue} onPress={closeModal} />
-            </View>
+            <DateTimeSchedule onPress={closeModal} onConfirm={setScheduleDate} />
           </View>
         }
       />

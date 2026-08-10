@@ -375,6 +375,17 @@ export function RentalVehicleSelect() {
       OCT: 9,
       NOV: 10,
       DEC: 11,
+      JANUARY: 0,
+      FEBRUARY: 1,
+      MARCH: 2,
+      APRIL: 3,
+      JUNE: 5,
+      JULY: 6,
+      AUGUST: 7,
+      SEPTEMBER: 8,
+      OCTOBER: 9,
+      NOVEMBER: 10,
+      DECEMBER: 11,
     };
 
     const parts = dateString.split(' ');
@@ -463,9 +474,11 @@ export function RentalVehicleSelect() {
     const [day, monthName, year] = dateStr.split(" ");
     const months: { [key: string]: number } = {
       January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
-      July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
+      July: 6, August: 7, September: 8, October: 9, November: 10, December: 11,
+      Jan: 0, Feb: 1, Mar: 2, Apr: 3, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
     };
-    return new Date(Number(year), months[monthName], Number(day));
+    const monthIndex = months[monthName];
+    return new Date(Number(year), monthIndex ?? 0, Number(day));
   }, []);
 
   const startDateValue = useMemo(() => parseDate(startDate), [startDate, parseDate]);

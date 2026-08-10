@@ -71,8 +71,13 @@ export function RentalBooking() {
           "January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"
         ];
+        const shortMonthNames = [
+          "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
         const day = parseInt(parts[0], 10);
-        const monthIndex = monthNames.indexOf(parts[1]);
+        let monthIndex = monthNames.indexOf(parts[1]);
+        if (monthIndex === -1) monthIndex = shortMonthNames.indexOf(parts[1]);
         const year = parseInt(parts[2], 10);
         if (monthIndex === -1) return null;
         return new Date(year, monthIndex, day);

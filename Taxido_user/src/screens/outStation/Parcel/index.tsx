@@ -16,6 +16,7 @@ export function Parcel() {
   const [selected, setSelected] = useState(false);
   const [selectedGender, setSelectedGender] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scheduleDate, setScheduleDate] = useState({ DateValue: '', TimeValue: '' });
   const { translateData } = useSelector((state) => state.setting);
   const { bgContainer } = useValues();
 
@@ -42,6 +43,11 @@ export function Parcel() {
         placeholder={translateData.selectDateTime}
         rightIcon={<Calender />}
         onPress={() => setSelected(true)}
+        value={
+          scheduleDate.DateValue && scheduleDate.TimeValue
+            ? `${scheduleDate.DateValue} ${scheduleDate.TimeValue}`
+            : ""
+        }
       />
       <InputText
         showTitle={true}
@@ -80,10 +86,7 @@ export function Parcel() {
         onPress={() => setSelected(false)}
         value={
           <View>
-            <Calander onPress={closeModal} />
-            <View style={{ marginVertical: 20, }}>
-              <Button title={translateData.continue} onPress={() => setSelected(false)} />
-            </View>
+            <Calander onPress={closeModal} onConfirm={setScheduleDate} />
           </View>
         }
       />
