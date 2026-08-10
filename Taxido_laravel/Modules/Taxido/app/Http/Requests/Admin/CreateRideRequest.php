@@ -32,6 +32,13 @@ class CreateRideRequest extends FormRequest
             'cargo_image_id' => ['nullable'],
             'description' => ['nullable'],
             'package_type' => ['nullable', Rule::in(PackageTypeEnum::values())],
+            'total_seats' => ['nullable', 'integer', 'min:1'],
+            'booked_seats' => [
+                'nullable',
+                'integer',
+                'min:1',
+                Rule::when($this->has('total_seats'), 'lte:total_seats'),
+            ],
         ];
     }
 }

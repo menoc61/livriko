@@ -21,6 +21,9 @@ export interface RideRequestDataPayload {
   created_by_id: number
   created_at: string
   package_type?: string
+  total_seats?: number
+  booked_seats?: number
+  available_seats?: number
 }
 
 export interface RideDataInterface {

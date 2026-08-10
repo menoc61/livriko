@@ -479,6 +479,8 @@ return array(
     "packageTypeFragile"=>"Fragile Object/Glass",
     "packageTypeOther"=>"Other",
     "packageTypeOtherDescription"=>"Describe your package",
+    "seatSelector"=>"Number of seats",
+    "seatRemaining"=>"{value} of {total} seats remaining",
     "cash"=>"Cash",
     "selectAnEndTime"=>"Select an end time.",
     "selectAnEndDate"=>"Select an end date.",

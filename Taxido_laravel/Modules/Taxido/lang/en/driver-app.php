@@ -264,6 +264,7 @@ return [
     "bagCount" => "Bag Count",
     "moreInformation" => "More Information",
     "packageType" => "Package Type",
+    "seats" => "Seats",
     "packageTypeDocuments" => "Documents/Papers",
     "packageTypeClothing" => "Clothing & Textile",
     "packageTypeFood" => "Food",

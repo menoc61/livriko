@@ -207,6 +207,14 @@ trait RideRequestTrait
 
 
                     if ($this->verifyRideWalletBalance($rider_id)) {
+                        $vehicleTypeSeat = VehicleType::where('id', $request->vehicle_type_id)?->whereNull('deleted_at')?->value('max_seat');
+                        $totalSeats = $request->total_seats ?? $vehicleTypeSeat ?? 1;
+                        $bookedSeats = $request->booked_seats ?? 1;
+                        if ((int) $bookedSeats > (int) $totalSeats) {
+                            throw new Exception(__('taxido::static.rides.booked_seats_exceed_total'), 422);
+                        }
+                        $availableSeats = (int) $totalSeats - (int) $bookedSeats;
+
                         $rideRequest = RideRequest::create([
                             'ride_number' => 100000 + ((RideRequest::max('id') + 1) + Ride::max('id') + 1),
                             'rider_id' => $rider_id,
@@ -217,6 +225,9 @@ trait RideRequestTrait
                             'rider' => $rider,
                             'description' => $request->description,
                             'package_type' => $request->package_type,
+                            'total_seats' => $totalSeats,
+                            'booked_seats' => $bookedSeats,
+                            'available_seats' => $availableSeats,
                             'duration' => $zoneRideDistance?->ride_distance['duration'] ?? $request?->duration,
                             'distance' => $zoneRideDistance?->ride_distance['distance_value'] ?? $request?->distance,
                             'distance_unit' => $zoneRideDistance?->ride_distance['distance_unit'] ?? $request?->distance_unit,

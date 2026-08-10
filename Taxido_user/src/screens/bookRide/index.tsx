@@ -34,6 +34,7 @@ import {
 import { styles } from "./styles";
 import { BookRideItem } from "./bookRideItem/index";
 import { ModalContainers } from "./modalContainer/index";
+import { SeatSelector } from "../outStation/Freight/seatSelector/index";
 import { useValues } from "@src/utils/context";
 import { geocodeAddress } from "@src/components/helper/geocoder";
 import { appColors, appFonts, windowWidth } from "@src/themes";
@@ -153,6 +154,7 @@ export function BookRide() {
   const { self } = useSelector((state: any) => state.account);
   const riderId = self?.id;
   const activePaymentMethods = zoneValue?.payment_method;
+  const [bookedSeats, setBookedSeats] = useState<number>(1);
   const [fareValue, setFareValue] = useState<any>(0);
   const [Warning, setWarning] = useState<boolean>(false);
   const [distance, _setDistance] = useState<boolean | any>(false);
@@ -993,6 +995,8 @@ export function BookRide() {
     description: descriptionText ?? null,
     weight: parcelWeight,
     package_type: packageType ?? null,
+    total_seats: selectedItemData?.max_seat ?? selectedItemData?.seat ?? null,
+    booked_seats: bookedSeats,
     name: receiverName,
     currency_code: zoneValue?.currency_code,
     country_code: countryCode,
@@ -1093,6 +1097,10 @@ export function BookRide() {
       formData.append("description", forms.description);
       formData.append("weight", forms.weight || "");
       formData.append("package_type", forms.package_type || "");
+      if (forms.total_seats) {
+        formData.append("total_seats", String(forms.total_seats));
+      }
+      formData.append("booked_seats", String(forms.booked_seats || 1));
       formData.append("parcel_receiver[name]", forms.name || "");
       formData.append("parcel_receiver[phone]", forms.phone || "");
       formData.append(
@@ -1666,6 +1674,22 @@ export function BookRide() {
                 style={{ maxHeight: windowHeight(180) }}
               />
             </View>
+
+            {selectedItemData?.id &&
+              (selectedItemData?.max_seat || selectedItemData?.seat) && (
+                <View style={external.mh_10}>
+                  <SeatSelector
+                    totalSeats={
+                      selectedItemData?.max_seat || selectedItemData?.seat || 1
+                    }
+                    value={bookedSeats}
+                    onChange={setBookedSeats}
+                    translateData={translateData}
+                    textColorStyle={textColorStyle}
+                    isDark={isDark}
+                  />
+                </View>
+              )}
 
             <BottomSheetScrollView
               horizontal

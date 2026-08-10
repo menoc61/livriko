@@ -264,6 +264,7 @@ return [
     "bagCount" => "Anzahl der Taschen",
     "moreInformation" => "Weitere Informationen",
     "packageType" => "Pakettyp",
+    "seats" => "Sitzplätze",
     "packageTypeDocuments" => "Dokumente/Papiere",
     "packageTypeClothing" => "Kleidung & Textilien",
     "packageTypeFood" => "Lebensmittel",

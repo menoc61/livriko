@@ -262,6 +262,7 @@ return array(
   "bagCount" => "عدد الحقائب",
   "moreInformation" => "معلومات إضافية",
   "packageType" => "نوع الطرد",
+  "seats" => "المقاعد",
   "packageTypeDocuments" => "مستندات/أوراق",
   "packageTypeClothing" => "ملابس ومنسوجات",
   "packageTypeFood" => "طعام",

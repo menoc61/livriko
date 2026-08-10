@@ -124,6 +124,9 @@ class RideRequestTable
             $rideRequest->service = $rideRequest->service?->name;
             $rideRequest->service_category = $rideRequest->service_category?->name ?? 'N/A';
             $rideRequest->package_type = $rideRequest->package_type ? ucfirst(str_replace('_', ' ', $rideRequest->package_type)) : 'N/A';
+            $rideRequest->seats = $rideRequest->total_seats
+                ? ($rideRequest->booked_seats ?? 1) . '/' . $rideRequest->total_seats
+                : 'N/A';
             $rideRequest->payment_method = ucfirst($rideRequest->payment_method);
             $rideRequest->status = ucfirst(optional($rideRequest->ride_status_activities()->latest()->first())->status ?? 'N/A');
         });
@@ -137,6 +140,7 @@ class RideRequestTable
                 ['title' => 'Service', 'field' => 'service', 'sortable' => true, 'sortField' => 'service.name'],
                 ['title' => 'Service Category', 'field' => 'service_category', 'sortable' => true, 'sortField' => 'service_category.name'],
                 ['title' => 'Package Type', 'field' => 'package_type', 'sortable' => false],
+                ['title' => 'Seats', 'field' => 'seats', 'sortable' => false],
                 ['title' => 'Total', 'field' => 'formatted_total', 'sortable' => true, 'sortField' => 'ride_fare'],
                 ['title' => 'Created At', 'field' => 'date', 'sortable' => true, 'sortField' => 'created_at'],
                 ['title' => 'Action', 'type' => 'action', 'permission' => ['ride_request.index'], 'sortable' => false],

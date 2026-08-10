@@ -479,6 +479,8 @@ return array(
     "packageTypeFragile"=>"جسم قابل للكسر/زجاج",
     "packageTypeOther"=>"أخرى",
     "packageTypeOtherDescription"=>"صف طردك",
+    "seatSelector"=>"عدد المقاعد",
+    "seatRemaining"=>"تبقى {value} من أصل {total} مقاعد",
     "cash"=>"نقداً",
     "selectAnEndTime"=>"اختر وقت الانتهاء.",
     "selectAnEndDate"=>"اختر تاريخ الانتهاء.",

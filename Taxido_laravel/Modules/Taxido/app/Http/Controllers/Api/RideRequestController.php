@@ -120,6 +120,9 @@ class RideRequestController extends Controller
         if ($roleName == RoleEnum::DRIVER) {
             $rideRequests = $rideRequests->whereHas('drivers', function (Builder $query) {
                 $query->where('driver_id', getCurrentUserId());
+            })->where(function (Builder $query) {
+                $query->whereNull('total_seats')
+                    ->orWhere('available_seats', '>', 0);
             });
         }
 

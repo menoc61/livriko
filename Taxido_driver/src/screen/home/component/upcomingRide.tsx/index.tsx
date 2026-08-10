@@ -624,6 +624,24 @@ export const UpcomingRide = forwardRef(function UpcomingRide(
               </Text>
             </View>
           )}
+          {ride?.total_seats > 0 && (
+            <View
+              style={[
+                styles.packageTypeBadge,
+                {
+                  backgroundColor: isDark ? appColors.bgDark : appColors.white,
+                  flexDirection: viewRtlStyle,
+                },
+              ]}
+            >
+              <Text style={[styles.packageTypeBadgeLabel, { color: appColors.secondaryFont }]}>
+                {translateData?.seats || 'Seats'}:
+              </Text>
+              <Text style={[styles.packageTypeBadgeValue, { color: appColors.primary }]}>
+                {ride?.booked_seats || 1}/{ride?.total_seats}
+              </Text>
+            </View>
+          )}
           <View style={[styles.mainContainer, { flexDirection: viewRtlStyle }]}>
             <View>
               <Icons.location color={colors.text} />

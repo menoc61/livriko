@@ -189,6 +189,8 @@ return array(
   "packageTypeFragile" => "Objeto frágil/Vidrio",
   "packageTypeOther" => "Otro",
   "packageTypeOtherDescription" => "Describe tu paquete",
+  "seatSelector" => "Número de asientos",
+  "seatRemaining" => "{value} de {total} asientos restantes",
   "exitTitle" => "¿Estás segura de que quieres salir de la aplicación?",
   "submit" => "Entregar",
   "validNo"=>"Por favor, ingrese un número de móvil válido",

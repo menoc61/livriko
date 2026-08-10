@@ -45,6 +45,9 @@ class RideRequest extends Model
         'hourly_package_id',
         'description',
         'package_type',
+        'total_seats',
+        'booked_seats',
+        'available_seats',
         'weight',
         'start_time',
         'end_time',
@@ -100,7 +103,10 @@ class RideRequest extends Model
         'created_by_id' => 'integer',
         'cargo_image_id' => 'integer',
         'rental_vehicle_id' => 'integer',
-        'no_of_days' => 'integer'
+        'no_of_days' => 'integer',
+        'total_seats' => 'integer',
+        'booked_seats' => 'integer',
+        'available_seats' => 'integer'
     ];
 
     protected $hidden = [

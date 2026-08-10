@@ -336,6 +336,16 @@ export function RideInfo({ route }) {
                     </Text>
                   </View>
                 )}
+                {ride?.total_seats > 0 && (
+                  <View style={styles.details}>
+                    <Text style={{ color: colors.text }}>
+                      {translateData.seats}
+                    </Text>
+                    <Text style={{ color: colors.text }}>
+                      {ride?.booked_seats || 1}/{ride?.total_seats}
+                    </Text>
+                  </View>
+                )}
                 {ride?.service?.service_type === 'package' && (
                   <>
                     <View

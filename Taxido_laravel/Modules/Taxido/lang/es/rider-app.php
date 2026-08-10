@@ -479,6 +479,8 @@ return array(
     "packageTypeFragile" => "Objeto frágil/Vidrio",
     "packageTypeOther" => "Otro",
     "packageTypeOtherDescription" => "Describe tu paquete",
+    "seatSelector" => "Número de asientos",
+    "seatRemaining" => "{value} de {total} asientos restantes",
     "cash" => "Efectivo",
     "selectAnEndTime" => "Selecciona una hora de fin",
     "selectAnEndDate" => "Selecciona una fecha de fin",

@@ -261,6 +261,7 @@ return array(
     "bagCount"=> "Nombre de bagages",
     "moreInformation"=> "Plus d'informations",
     "packageType" => "Type de colis",
+    "seats" => "Sièges",
     "packageTypeDocuments" => "Documents/papiers",
     "packageTypeClothing" => "Vêtements et textiles",
     "packageTypeFood" => "Nourriture",

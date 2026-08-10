@@ -479,6 +479,8 @@ return array(
   "packageTypeFragile" => "Objet fragile/Verre",
   "packageTypeOther" => "Autre",
   "packageTypeOtherDescription" => "Décrivez votre colis",
+  "seatSelector" => "Nombre de sièges",
+  "seatRemaining" => "{value} siège(s) restant(s) sur {total}",
   "cash" => "Espèces",
   "selectAnEndTime" => "Sélectionnez une heure de fin.",
   "selectAnEndDate" => "Sélectionnez une date de fin.",

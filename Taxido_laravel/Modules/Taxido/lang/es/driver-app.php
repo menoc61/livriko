@@ -264,6 +264,7 @@ return array(
     "bagCount" => "Conteo de maletas",
     "moreInformation" => "Más información",
     "packageType" => "Tipo de Paquete",
+    "seats" => "Asientos",
     "packageTypeDocuments" => "Documentos/Papeles",
     "packageTypeClothing" => "Ropa y textiles",
     "packageTypeFood" => "Comida",

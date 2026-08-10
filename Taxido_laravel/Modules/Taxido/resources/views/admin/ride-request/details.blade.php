@@ -54,6 +54,12 @@
                                     <span id="package-type">{{ ucfirst(str_replace('_', ' ', $rideRequest?->package_type)) }}</span>
                                 </li>
                                 @endif
+                                @if($rideRequest?->total_seats)
+                                <li>
+                                    {{ __('taxido::static.rides.seats') }} :
+                                    <span id="seats">{{ $rideRequest?->booked_seats ?? 1 }}/{{ $rideRequest?->total_seats }}</span>
+                                </li>
+                                @endif
                                 <li>
                                     {{ __('taxido::static.rides.ride_distance') }} :
                                     <span id="ride-distance">{{ $rideRequest?->distance }} {{ $rideRequest?->distance_unit ?? 'KM' }}</span>
