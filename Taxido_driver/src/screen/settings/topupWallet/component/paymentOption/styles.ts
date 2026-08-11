@@ -1,9 +1,6 @@
 import { StyleSheet } from 'react-native'
 import appColors from '../../../../../theme/appColors'
 import { windowHeight, windowWidth } from '../../../../../theme/appConstant'
-import { useValues } from '../../../../../utils/context'
-
-const { viewRtlStyle } = useValues()
 
 const styles = StyleSheet.create({
   main: {
@@ -12,7 +9,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   imgMaincontainer: {
-    flexDirection: viewRtlStyle,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,4 +1,4 @@
-import { ride, payment, invoice, locationChange } from "../endpoints/allRIdeEndpoint";
+import { ride, payment, locationChange } from "../endpoints/allRIdeEndpoint";
 import { GET_API, POST_API, PUT_API } from "../methods";
 import { PaymentInterface } from "../interface/allRideInterface";
 
@@ -52,7 +52,7 @@ export const rideUpdate = async ({ payload, ride_id }: { payload: any; ride_id: 
 
 
 export const allInvoice = async (ride_number: number) => {
-  const endpointWithParams = `${invoice}/${ride_number}`;
+  const endpointWithParams = `ride/rider-invoice/${ride_number}`;
   return GET_API(endpointWithParams)
     .then((res) => {
       return res;

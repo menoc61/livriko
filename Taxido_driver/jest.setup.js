@@ -45,47 +45,15 @@ jest.mock('react-native-reanimated', () => ({
   },
 }));
 
-
-jest.mock('react-native-google-mobile-ads', () => ({
-  MobileAds: { configure: jest.fn().mockResolvedValue(undefined) },
-  BannerAd: () => null,
-  BannerAdSize: {},
-  AdEventType: {},
-  RewardedAd: { createForAdRequest: jest.fn() },
-  NativeAd: () => null,
-  NativeAdView: ({ children }) => children,
-  NativeAsset: ({ children }) => children,
-  NativeAdMedia: () => null,
-  TestIds: {},
+jest.mock('react-native-get-location', () => ({
+  getCurrentPosition: jest.fn().mockResolvedValue({ latitude: 0, longitude: 0 }),
 }));
-jest.mock('@invertase/react-native-apple-authentication', () => ({
-  performRequest: jest.fn().mockResolvedValue({ identityToken: 'test-token' }),
-  AppleAuthRequestScope: { FULL_NAME: 0, EMAIL: 1 },
-  AppleAuthRequestOperation: { LOGIN: 0, REFRESH: 1 },
-  AppleAuthError: { CANCELED: 1, INVALID_RESPONSE: 2, NOT_HANDLED: 3, UNKNOWN: 4 },
-  AppleAuthCredentialState: { REVOKED: 0, AUTHORIZED: 1, NOT_FOUND: 2 },
-}));
-
-jest.mock('@react-native-google-signin/google-signin', () => ({
-  GoogleSignin: {
-    configure: jest.fn(),
-    signIn: jest.fn().mockResolvedValue({ user: { email: 'test@test.com' } }),
-    signOut: jest.fn(),
-    revokeAccess: jest.fn(),
-    hasPlayServices: jest.fn().mockResolvedValue(true),
-    getTokens: jest.fn().mockResolvedValue({ idToken: 'test-id-token' }),
-  },
-  GoogleSigninButton: () => 'GoogleSigninButton',
-  statusCodes: { SIGN_IN_CANCELLED: 'SIGN_IN_CANCELLED' },
-}));
-
 jest.mock('@react-native-clipboard/clipboard', () => ({
   default: {
     setString: jest.fn(),
     getString: jest.fn().mockResolvedValue(''),
   },
 }));
-
 jest.mock('@notifee/react-native', () => ({
   requestPermission: jest.fn().mockResolvedValue({ granted: true }),
   createChannel: jest.fn(),
@@ -163,11 +131,6 @@ jest.mock('react-native-image-picker', () => ({
   launchCamera: jest.fn(),
   ImagePickerConstants: {},
 }));
-jest.mock('react-native-contacts', () => ({
-  getAll: jest.fn().mockResolvedValue([]),
-  getContactsByPhoneNumber: jest.fn().mockResolvedValue([]),
-  default: { getAll: jest.fn().mockResolvedValue([]) },
-}));
 jest.mock('react-native-fs', () => ({
   DocumentDirectoryPath: '',
   CacheDirectoryPath: '',
@@ -179,7 +142,6 @@ jest.mock('react-native-fs', () => ({
   downloadFile: jest.fn(),
 }));
 jest.mock('react-native-otp-textinput', () => 'OtpTextInput');
-jest.mock('react-native-country-codes-picker', () => 'CountryCodesPicker');
 jest.mock('react-native-country-select', () => 'CountrySelect');
 jest.mock('react-native-popup-menu', () => ({
   MenuProvider: ({ children }) => children,
@@ -194,10 +156,6 @@ jest.mock('react-native-android-location-enabler', () => ({
 jest.mock('@react-native-camera-roll/camera-roll', () => ({
   CameraRoll: { save: jest.fn(), getPhotos: jest.fn() },
 }));
-jest.mock('react-native-circular-progress', () => ({
-  CircularProgress: 'CircularProgress',
-  AnimatedCircularProgress: 'AnimatedCircularProgress',
-}));
 jest.mock('react-native-notifier', () => ({
   Notifier: { showNotification: jest.fn() },
   showNotification: jest.fn(),
@@ -209,7 +167,18 @@ jest.mock('react-native-share', () => ({
   open: jest.fn().mockResolvedValue({}),
   isPackageInstalled: jest.fn().mockResolvedValue(true),
 }));
-
+jest.mock('react-native-google-mobile-ads', () => ({
+  MobileAds: { configure: jest.fn().mockResolvedValue(undefined) },
+  BannerAd: () => null,
+  BannerAdSize: {},
+  AdEventType: {},
+  RewardedAd: { createForAdRequest: jest.fn() },
+  NativeAd: () => null,
+  NativeAdView: ({ children }) => children,
+  NativeAsset: ({ children }) => children,
+  NativeAdMedia: () => null,
+  TestIds: {},
+}));
 jest.mock('react-native-reanimated-carousel', () => 'CarouselMock');
 jest.mock('@react-native-community/geolocation', () => ({
   getCurrentPosition: jest.fn(),
@@ -217,17 +186,14 @@ jest.mock('@react-native-community/geolocation', () => ({
   clearWatch: jest.fn(),
   stopObserving: jest.fn(),
 }));
+jest.mock('react-native-geolocation-service', () => ({
+  getCurrentPosition: jest.fn(),
+  watchPosition: jest.fn(),
+  clearWatch: jest.fn(),
+}));
 jest.mock('react-native-get-location', () => ({
   getCurrentPosition: jest.fn().mockResolvedValue({ latitude: 0, longitude: 0 }),
 }));
-jest.mock('react-native-maps', () => ({
-  default: 'MapView',
-  Marker: 'Marker',
-  MapView: 'MapView',
-  PROVIDER_GOOGLE: 'google',
-  PROVIDER_DEFAULT: 'default',
-}));
-jest.mock('react-native-maps-directions', () => 'MapViewDirections');
 jest.mock('react-native-device-info', () => ({
   getUniqueId: jest.fn().mockResolvedValue('test-device-id'),
   getVersion: jest.fn().mockResolvedValue('1.0.0'),
@@ -254,6 +220,16 @@ jest.mock('@react-native-firebase/auth', () => ({
     signInWithEmailAndPassword: jest.fn(),
     createUserWithEmailAndPassword: jest.fn(),
     signOut: jest.fn(),
+  }),
+}));
+jest.mock('@react-native-firebase/storage', () => ({
+  default: () => ({
+    ref: jest.fn().mockReturnValue({
+      putFile: jest.fn().mockResolvedValue({}),
+      putString: jest.fn().mockResolvedValue({}),
+      getDownloadURL: jest.fn().mockResolvedValue(''),
+      delete: jest.fn().mockResolvedValue({}),
+    }),
   }),
 }));
 jest.mock('@react-native-firebase/messaging', () => {
@@ -284,25 +260,59 @@ jest.mock('react-native-screens', () => {
   }
   return screens;
 });
-jest.mock('@react-native-firebase/firestore', () => ({
-  default: () => ({
-    collection: jest.fn(),
-    doc: jest.fn(),
-    batch: jest.fn(),
-  }),
+jest.mock('react-native-webview', () => 'WebView');
+jest.mock('react-native-svg', () => {
+  const React = require('react');
+  const View = require('react-native').View;
+  const createComponent = (name) => (props) => React.createElement(View, props);
+  return {
+    Svg: createComponent('Svg'),
+    Path: createComponent('Path'),
+    Circle: createComponent('Circle'),
+    Rect: createComponent('Rect'),
+    Line: createComponent('Line'),
+    Polyline: createComponent('Polyline'),
+    Polygon: createComponent('Polygon'),
+    Text: createComponent('Text'),
+    G: createComponent('G'),
+    Defs: createComponent('Defs'),
+    LinearGradient: createComponent('LinearGradient'),
+    Stop: createComponent('Stop'),
+    ClipPath: createComponent('ClipPath'),
+    default: createComponent('Svg'),
+  };
+});
+jest.mock('react-native-swiper', () => 'Swiper');
+jest.mock('react-native-switch-toggle', () => 'SwitchToggle');
+jest.mock('react-native-chat-head', () => ({
+  default: 'ChatHead',
+  ChatHead: 'ChatHead',
 }));
-
-
-jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
-    const turboModuleRegistry = jest.requireActual("react-native/Libraries/TurboModule/TurboModuleRegistry");
-    return {
-      ...turboModuleRegistry,
-      getEnforcing: name => {
-        try {
-          return turboModuleRegistry.getEnforcing(name);
-        } catch (e) {
-          return null;
-        }
-      }
-    };
-  });
+jest.mock('react-native-gifted-charts', () => ({
+  LineChart: 'LineChart',
+  BarChart: 'BarChart',
+  PieChart: 'PieChart',
+  DonutChart: 'DonutChart',
+  PopulationPyramid: 'PopulationPyramid',
+  HorizontalBarChart: 'HorizontalBarChart',
+}));
+jest.mock('react-native-paper', () => ({
+  default: {},
+  Provider: ({ children }) => children,
+  Button: 'PaperButton',
+  Text: 'PaperText',
+  ActivityIndicator: 'PaperActivityIndicator',
+}));
+jest.mock('rn-tourguide', () => ({
+  TourGuideProvider: ({ children }) => children,
+  useTourGuideController: jest.fn().mockReturnValue({ start: jest.fn(), stop: jest.fn() }),
+}));
+jest.mock('lottie-react-native', () => 'LottieView');
+jest.mock('@react-native-community/datetimepicker', () => 'DateTimePicker');
+jest.mock('@react-native-masked-view/masked-view', () => 'MaskedView');
+jest.mock('react-content-loader', () => ({
+  Facebook: 'FacebookLoader',
+  Instagram: 'InstagramLoader',
+  default: 'ContentLoader',
+}));
+jest.mock('react-native-webview', () => 'WebView');
