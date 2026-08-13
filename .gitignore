@@ -66,13 +66,13 @@ ios/build/
 *.xcworkspace
 
 # Android
-android/.gradle/
-android/build/
-android/app/build/
-android/app/.cxx/
-android/app/google-services.json
-android/google-services.json
-local.properties
+**/android/.gradle/
+**/android/build/
+**/android/app/build/
+**/android/app/.cxx/
+**/android/app/google-services.json
+**/android/google-services.json
+**/local.properties
 *.iml
 storage/framework/views/
 Taxido_laravel/storage/framework/views/
