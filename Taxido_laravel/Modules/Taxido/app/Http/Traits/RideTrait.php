@@ -190,7 +190,7 @@ trait RideTrait
                 $ride_request_id = $bid?->ride_request_id;
             }
 
-            $rideRequest = RideRequest::findOrFail($ride_request_id);
+            $rideRequest = $this->lockAssignableRideRequest((int) $ride_request_id, $bid);
             $formattedLocations = $rideRequest->locations;
             if ($rideRequest) {
                 $settings = cache()->remember('taxido_settings', 360, function () {
@@ -362,6 +362,50 @@ trait RideTrait
             DB::rollBack();
             throw new ExceptionHandler($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Atomically claim a ride request before a ride is created from it.
+     *
+     * SELECT ... FOR UPDATE serializes concurrent acceptances of the same
+     * request (direct driver accept + bid accept), so a ride can only be
+     * created once and seat counters can never be double-booked. Throws a
+     * 409 when the request is no longer assignable.
+     */
+    public function lockAssignableRideRequest(int $rideRequestId, $bid = null)
+    {
+        $rideRequest = RideRequest::query()->where('id', $rideRequestId)->lockForUpdate()->firstOrFail();
+
+        $currentStatus = $rideRequest->ride_status_activities()
+            ->latest('changed_at')
+            ->value('status');
+
+        $rideAlreadyExists = Ride::query()->where('ride_number', $rideRequest->ride_number)->exists();
+        if (!in_array($currentStatus, [RideStatusEnum::REQUESTED, RideStatusEnum::PENDING, RideStatusEnum::SCHEDULED], true) || $rideAlreadyExists) {
+            throw new Exception(__('taxido::static.rides.ride_request_already_accepted'), 409);
+        }
+
+        // Sequential (non-bidding) flow: only the currently assigned driver may
+        // accept, and the offer must not have expired.
+        if (! $bid && $rideRequest->current_driver_id) {
+            $currentDriverId = getCurrentDriver()?->id;
+            if ((int) $rideRequest->current_driver_id !== (int) $currentDriverId) {
+                throw new Exception(__('taxido::static.rides.ride_request_not_assigned_to_you'), 409);
+            }
+            if ($rideRequest->driver_acceptance_expires_at && $rideRequest->driver_acceptance_expires_at->isPast()) {
+                throw new Exception(__('taxido::static.rides.ride_offer_expired'), 409);
+            }
+        }
+
+        // Seat integrity re-check at acceptance time, mirroring the creation-time rule.
+        if (! is_null($rideRequest->total_seats)) {
+            $bookedSeats = (int) ($rideRequest->booked_seats ?? 1);
+            if ($bookedSeats < 1 || $bookedSeats > (int) $rideRequest->total_seats) {
+                throw new Exception(__('taxido::static.rides.booked_seats_exceed_total'), 422);
+            }
+        }
+
+        return $rideRequest;
     }
 
     private function broadcastRideAcceptance($rideRequest, $ride, $driver, $bid = null)
