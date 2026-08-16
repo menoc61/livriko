@@ -53,7 +53,7 @@ export function Onboarding() {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<
-    { label: string; value: string; icon: () => JSX.Element }[]
+    { label: string; value: string; icon: () => React.ReactNode }[]
   >([]);
 
 
@@ -202,7 +202,7 @@ export function Onboarding() {
                   setItems={setItems}
                   placeholder={"Select Language"}
 
-                  onSelectItem={item => handleLanguageChange(item?.value)}
+                  onSelectItem={item => handleLanguageChange(item?.value ?? null)}
                   onChangeValue={handleLanguageChange}
                   onOpen={handleOpenDropdown}
                   loading={loading}

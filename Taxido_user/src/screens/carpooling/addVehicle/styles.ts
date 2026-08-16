@@ -82,6 +82,18 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
   },
+  placeholder: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: windowWidth(5),
+  },
+  placeholderText: {
+    color: appColors.regularText,
+    fontFamily: appFonts.regular,
+    fontSize: 12,
+    textAlign: "center",
+  },
   mainView: {
     marginHorizontal: windowWidth(20),
     marginTop: windowHeight(15),

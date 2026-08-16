@@ -15,7 +15,7 @@ import { useAppNavigation } from "@src/utils/navigation";
 
 export function SeatSet() {
     const rules = ["Maximum of 2 Passengers in the Back Seat", "Women Only"];
-    const [selectedRules, setSelectedRules] = useState([]);
+    const [selectedRules, setSelectedRules] = useState<string[]>([]);
     const [count, setCount] = useState(1)
     const { navigate } = useAppNavigation();
 
@@ -23,7 +23,7 @@ export function SeatSet() {
         navigate('PriceSet')
     };
 
-    const handleCheckboxPress = (rule) => {
+    const handleCheckboxPress = (rule: string) => {
         if (selectedRules.includes(rule)) {
             setSelectedRules(selectedRules.filter((item) => item !== rule));
         } else {
@@ -40,7 +40,7 @@ export function SeatSet() {
             setCount(prevCount => prevCount - 1);
         }
     };
-    const renderItem = ({ item, index }) => (
+    const renderItem = ({ item, index }: { item: any; index: number }) => (
         <>
             <TouchableOpacity
                 onPress={() => handleCheckboxPress(item)}

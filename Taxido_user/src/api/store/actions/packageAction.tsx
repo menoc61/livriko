@@ -3,7 +3,7 @@ import { packageServices } from "../../services/index";
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 
-export const packageDataGet = createAsyncThunk(PACKAGE, async (data: number) => {
+export const packageDataGet = createAsyncThunk(PACKAGE, async (data: { zone_id: number }) => {
   const response = await packageServices.packageDataGet(data.zone_id);
   return response?.data;
 },

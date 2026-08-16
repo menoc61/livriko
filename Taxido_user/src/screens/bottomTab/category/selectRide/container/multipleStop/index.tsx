@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 export function MultiStop() {
 
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     <View style={styles.container}>

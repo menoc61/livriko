@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AppDispatch } from "@src/api/store";
 import styles from "./style";
 import Images from "@src/utils/images";
 import { Image, Text, View } from "react-native";
@@ -13,7 +14,7 @@ import { userZone } from "@src/api/store/actions";
 
 export function NoService() {
     const { viewRTLStyle, isDark, bgContainer } = useValues()
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const { latitude, longitude } = useStoredLocation();
     const { replace } = useAppNavigation();
     const [refreshLoading, setRefreshLoading] = useState(false);

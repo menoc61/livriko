@@ -7,10 +7,10 @@ import { useAppNavigation } from '@src/utils/navigation';
 
 export function Stopover() {
     const cities = ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'];
-    const [selectedCities, setSelectedCities] = useState([]);
+    const [selectedCities, setSelectedCities] = useState<string[]>([]);
     const { navigate } = useAppNavigation();
 
-    const handleCheckboxPress = (city) => {
+    const handleCheckboxPress = (city: string) => {
         if (selectedCities.includes(city)) {
             setSelectedCities(selectedCities.filter((item) => item !== city));
         } else {
@@ -20,7 +20,7 @@ export function Stopover() {
 
     const handleNext = () => {
         if (selectedCities?.length === 0) return;
-        const formattedSteps = [];
+        const formattedSteps: any[] = [];
         formattedSteps.push({ id: 0, label: selectedCities[0], type: 'start' });
         if (selectedCities?.length > 1) {
             const middleStops = selectedCities.slice(1, -1).map((city, index) => ({
@@ -38,7 +38,7 @@ export function Stopover() {
         navigate('EditStopOver', { stopovers: formattedSteps });
     };
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }: { item: any }) => (
         <TouchableOpacity onPress={() => handleCheckboxPress(item)} activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center', padding: windowHeight(12.1), backgroundColor: appColors.whiteColor, marginVertical: windowHeight(7), borderRadius: windowHeight(5) }}>
             <Checkbox
                 isChecked={selectedCities.includes(item)}

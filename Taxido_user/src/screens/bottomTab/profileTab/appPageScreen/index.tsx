@@ -1,4 +1,5 @@
 import {useValues} from "@src/utils/context/index";
+import { AppDispatch } from "@src/api/store";
 import React, {useEffect, useState} from "react";
 import {View, TouchableOpacity, Text} from "react-native";
 import {styles} from "./style";
@@ -38,9 +39,9 @@ export function AppPageScreen() {
   const [selectedLang, setSelectedLang] = useState("en");
   const [languageTitle, setLanguageTitle] = useState("English");
 
-  const {translateData} = useSelector(state => state.setting);
-  const [toggles, setToggles] = useState([]);
-  const dispatch = useDispatch();
+  const {translateData} = useSelector((state: any) => state.setting);
+  const [toggles, setToggles] = useState<any[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
 
   const openModal = () => setLanguageSheetVisible(true);
   const closeModal = () => setLanguageSheetVisible(false);
@@ -98,19 +99,19 @@ export function AppPageScreen() {
     try {
       switch (toggleId) {
         case "toggle4":
-          setIsDark(prev => {
+          setIsDark((prev: any) => {
             AsyncStorage.setItem("darkTheme", JSON.stringify(!prev));
             return !prev;
           });
           break;
         case "toggle5":
-          setIsRTL(prev => {
+          setIsRTL((prev: any) => {
             AsyncStorage.setItem("rtl", JSON.stringify(!prev));
             return !prev;
           });
           break;
         case "toggle6":
-          setNotificationValues(prev => {
+          setNotificationValues((prev: any) => {
             AsyncStorage.setItem("isNotificationOn", JSON.stringify(!prev));
             return !prev;
           });

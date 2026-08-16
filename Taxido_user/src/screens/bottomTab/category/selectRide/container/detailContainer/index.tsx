@@ -65,7 +65,7 @@ import BottomSheet, {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RootState } from "@src/api/store";
+import { RootState, AppDispatch } from "@src/api/store";
 import darkMapStyle from "@src/screens/darkMapStyle";
 
 
@@ -90,7 +90,7 @@ export function DetailContainer() {
   } = routeParams;
   const { zoneValue: reduxZoneValue } = useSelector((state: any) => state.zone);
   const zoneValue = routeZoneValue || reduxZoneValue;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { navigate, goBack } = useAppNavigation();
   const [isChecked, setIsChecked] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
@@ -101,12 +101,13 @@ export function DetailContainer() {
   const selectedVehicleData = Array.isArray(vehicleTypedata)
     ? vehicleTypedata.find((item: any) => item?.id === selectedItem)
     : null;
+  const selectedVehicleDataAny: any = selectedVehicleData;
   const [pickupCoords, setPickupCoords] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
   const ZoneArea = zoneValue?.locations;
-  const [subZone, setSubZone] = useState([]);
+  const [subZone, setSubZone] = useState<any[]>([]);
   const [RideBooked, setRideBooked] = useState(false);
   const [isExpanding, setIsExpanding] = useState(false);
   const [rideID, setRideId] = useState(null);
@@ -121,9 +122,9 @@ export function DetailContainer() {
     undefined,
   );
   const [selectedItemData, setSelectedItemData] = useState<any>(null);
-  const [radiusPerVertex, setRadiusPerVertex] = useState(null);
+  const [radiusPerVertex, setRadiusPerVertex] = useState<number[] | null>(null);
   const [incrementDistance, setIncrementDistance] = useState(0.5);
-  const intervalRef = useRef(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [startDriverRequest, setStartDriverRequest] = useState(false);
   const allLocations = [pickupLocation];
   const allLocationCoords = [pickupCoords];
@@ -164,9 +165,9 @@ export function DetailContainer() {
   const [pulses, setPulses] = useState(
     Array(pulseCount).fill({ radius: 1000, opacity: 0 }),
   );
-  const animationRef = useRef<NodeJS.Timeout | null>(null);
+  const animationRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [isPulsing, setIsPulsing] = useState(false);
-  const mapRef = useRef(null);
+  const mapRef = useRef<any>(null);
   const { currentLatitude, currentLongitude } = useSmartLocation();
   const [seletedPayment, setSeletedPayment] = useState(null);
   const [coupon, setCoupon] = useState<any>(null);
@@ -183,7 +184,7 @@ export function DetailContainer() {
     1000 || 180000; // 3 minutes default
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
-  const intervalTimeRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalTimeRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timerCancelledRef = useRef(false);
 
   const mainBottomSheetRef = useRef<BottomSheet>(null);
@@ -339,9 +340,9 @@ export function DetailContainer() {
     })
     ?.filter((driver: any) => driver !== null);
 
-  const filteredDrivers = selectedVehicleData
+  const filteredDrivers = selectedVehicleDataAny
     ? driverLocations?.filter(
-      (driver: any) => driver?.vehicleId === selectedVehicleData?.id,
+      (driver: any) => driver?.vehicleId === selectedVehicleDataAny?.id,
     )
     : [];
 
@@ -349,8 +350,8 @@ export function DetailContainer() {
     const payload = {
       locations: [
         {
-          lat: currentLatitude,
-          lng: currentLongitude,
+          lat: currentLatitude ?? 0,
+          lng: currentLongitude ?? 0,
         },
       ],
       service_id: service_ID,
@@ -431,7 +432,7 @@ export function DetailContainer() {
     if (isExpanding) {
       intervalRef.current = setInterval(() => {
         setRadiusPerVertex(prevRadii =>
-          prevRadii?.map((radius, index) => {
+          (prevRadii ?? []).map((radius, index) => {
             const currentSubZoneVertex = subZone[index] || pickupCoords;
             const distanceToMainZone = turf.distance(
               turf.point([
@@ -451,7 +452,9 @@ export function DetailContainer() {
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    return () => clearInterval(intervalRef.current);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [isExpanding, subZone, incrementDistance, pickupCoords]);
 
   const expandSubZone = () => {
@@ -475,7 +478,7 @@ export function DetailContainer() {
         turf.point([mainZonePoint.lng, mainZonePoint.lat]),
         { units: "kilometers" },
       );
-      const newRadius = radiusPerVertex[i] ?? 0;
+      const newRadius = radiusPerVertex?.[i] ?? 0;
       if (distanceToMainZone <= incrementDistance) {
         expandedPoints.push({ lat: mainZonePoint.lat, lng: mainZonePoint.lng });
         newRadiusPerVertex.push(distanceToMainZone);
@@ -502,7 +505,7 @@ export function DetailContainer() {
     if (validPoints?.length < 3) return;
     const polygon = turf.polygon([validPoints.map(({ lng, lat }) => [lng, lat])]);
     const messages = filteredDrivers
-      ?.map(driver => {
+      ?.map((driver: any) => {
         if (!driver?.lat || !driver?.lng) return null;
         const point = turf.point([driver.lng, driver.lat]);
         return turf.booleanPointInPolygon(point, polygon) ? driver.id : null;
@@ -551,15 +554,15 @@ export function DetailContainer() {
     hourly_package_id: selectedPackageDetails?.id,
   };
 
-  const BookRideRequest = async forme => {
+  const BookRideRequest = async (forme: any) => {
     const token = await getValue("token");
     try {
       const formData = new FormData();
-      forme.location_coordinates.forEach((coord, index) => {
+      forme.location_coordinates.forEach((coord: any, index: any) => {
         formData.append(`location_coordinates[${index}][lat]`, coord.lat);
         formData.append(`location_coordinates[${index}][lng]`, coord.lng);
       });
-      forme.locations.forEach((loc, index) => {
+      forme.locations.forEach((loc: any, index: any) => {
         formData.append(`locations[${index}]`, loc);
       });
       formData.append("ride_fare", forme.ride_fare);
@@ -590,7 +593,7 @@ export function DetailContainer() {
       if (response.status == 403) {
         notificationHelper("", translateData.loginAgain, "error");
         await clearValue("token");
-        navigation.reset({ index: 0, routes: [{ name: "SignIn" }] });
+        navigation.reset({ index: 0, routes: [{ name: "SignIn" }] } as any);
         return;
       }
 
@@ -721,7 +724,7 @@ export function DetailContainer() {
     Object.values(selectedPackageDetails).some(value => value !== null);
   const activePaymentMethods = zoneValue?.payment_method;
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <BookRideItem
       couponsData={couponValue}
       item={item}
@@ -733,7 +736,7 @@ export function DetailContainer() {
 
           if (taxidoSettingData?.cabbooking_values?.activation?.bidding === 0) {
             const price = finalPrices[item.id] ?? item?.charges?.total;
-            setFareValue(`${price}`);
+            setFareValue(Number(price) || 0);
             setSelectedFinalPrice(`${price}`);
           }
         }
@@ -744,13 +747,13 @@ export function DetailContainer() {
           handleOpenVehicleDetails(item);
         }
       }}
-      onPriceCalculated={(id, price) => {
+      onPriceCalculated={(id: any, price: any) => {
         setFinalPrices(prev => ({ ...prev, [id]: price }));
       }}
     />
   );
 
-  const renderItem1 = ({ item, index }) => (
+  const renderItem1 = ({ item, index }: { item: any; index: any }) => (
     <TouchableOpacity onPress={() => paymentData(index)} activeOpacity={0.7}>
       <View
         style={[
@@ -853,7 +856,7 @@ export function DetailContainer() {
     setCouponValue(undefined);
   };
 
-  const getCoupon = val => {
+  const getCoupon = (val: any) => {
     setCoupon(val);
   };
 
@@ -947,7 +950,7 @@ export function DetailContainer() {
           <View style={[external.mt_10, external.mh_15, styles.listView]}>
             <FlatList
               renderItem={renderItemRequest}
-              data={bidValue?.data?.length > 0 ? [bidValue?.data[0]] : []}
+              data={(bidValue as any)?.data?.length > 0 ? [(bidValue as any)?.data[0]] : []}
               keyExtractor={item => item.id.toString()}
               removeClippedSubviews={true}
             />

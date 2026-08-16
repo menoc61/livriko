@@ -179,8 +179,8 @@ export const BookRideItem = memo(function BookRideItem({
                   fontFamily: appFonts.regular,
                 },
               ]}>
-              {item?.description?.length > 25
-                ? item?.description.substring(0, 25) + "..."
+              {item?.description && item?.description?.length > 25
+                ? item?.description?.substring(0, 25) + "..."
                 : item?.description}
             </Text>
           </View>

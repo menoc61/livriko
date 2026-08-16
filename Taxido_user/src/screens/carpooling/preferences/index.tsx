@@ -18,7 +18,7 @@ export function Preferences() {
     const [selectedPriority, setSelectedPriority] = useState(null);
     const { goBack } = useAppNavigation();
     const [open, setOpen] = useState(false);
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
     const [priorityList, setPriorityList] = useState([]);
     return (
         <View>
@@ -49,7 +49,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -58,10 +58,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -92,7 +92,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -101,10 +101,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -135,7 +135,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -144,10 +144,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -178,7 +178,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -187,10 +187,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -221,7 +221,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -230,10 +230,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -264,7 +264,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -273,10 +273,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -307,7 +307,7 @@ export function Preferences() {
                     }}
                     tickIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -316,10 +316,10 @@ export function Preferences() {
                     }}
                     iconContainerStyle={{
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     arrowIconStyle={{
                         tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}

@@ -12,17 +12,16 @@ import { resetState } from "@src/api/store/reducers";
 import { AppDispatch } from "@src/api/store";
 import { allRides, homeScreenPrimary, settingDataGet } from "@src/api/store/actions";
 import { useAppNavigation } from "@src/utils/navigation";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useValues } from "@src/utils/context/index";
 
 export function RideScreen() {
   const { bgFullStyle, linearColorStyle, setIsRTL, setIsDark } = useValues();
   const dispatch = useDispatch<AppDispatch>();
-  const { translateData } = useSelector((state) => state.setting);
-  const { reset } = useAppNavigation();
+  const { translateData } = useSelector((state: any) => state.setting);
+  const navigation = useAppNavigation();
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
@@ -60,7 +59,7 @@ export function RideScreen() {
     setIsDark();
     dispatch(settingDataGet());
     await dispatch(homeScreenPrimary())
-    reset({
+    navigation.reset({
       index: 0,
       routes: [
         { name: "SignIn" },

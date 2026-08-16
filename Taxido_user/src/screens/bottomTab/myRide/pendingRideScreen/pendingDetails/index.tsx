@@ -19,7 +19,7 @@ type pendingdetailsProps = {
 
 export function PendingDetails({ rideDetails, vehicleData }: pendingdetailsProps) {
   const { bgFullStyle, viewRTLStyle, textRTLStyle, isDark } = useValues();
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     < View>
@@ -70,7 +70,7 @@ export function PendingDetails({ rideDetails, vehicleData }: pendingdetailsProps
         />
         <View style={{ height: windowHeight(5), backgroundColor: isDark ? appColors.bgDark : appColors.lightGray, marginTop: windowHeight(5) }} />
         {rideDetails?.service?.slug == "parcel" ||
-          (rideDetails?.service?.slug == "fright" && (
+          ((rideDetails?.service?.slug as any) == "fright" && (
             <View style={styles.rideDetailsView}>
               <Image
                 source={{

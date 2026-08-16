@@ -205,7 +205,7 @@ export function FindDriverHome() {
     { id: "2", label: "Adajan, Gujarat" },
   ];
 
-  const onPress = index => {
+  const onPress = (index: any) => {
     setSelectedIndex(index);
   };
   const serviceCategories = [

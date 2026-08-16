@@ -8,7 +8,7 @@ import { useValues } from '@src/utils/context/index';
 import { useSelector } from 'react-redux';
 import { appColors } from '@src/themes';
 
-export function LocationTime({ pickupLocation }) {
+export function LocationTime({ pickupLocation }: { pickupLocation: any }) {
   const { textColorStyle, bgContainer, isDark } = useValues();
   const { translateData } = useSelector((state: any) => state.setting);
 

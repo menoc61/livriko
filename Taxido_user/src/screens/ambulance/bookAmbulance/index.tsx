@@ -36,8 +36,8 @@ export function BookAmbulance() {
     const [remaining, setRemaining] = useState<any>(TOTAL_TIME);
     const [startTime, setStartTime] = useState<any>(Date.now());
     const appState = useRef<any>(AppState.currentState);
-    const circularRef = useRef<any>();
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const circularRef = useRef<any>(null);
+    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const { bgFullStyle } = useValues()
 
 

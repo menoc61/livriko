@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 export function ModalContect({ onpress }: { onpress: () => void }) {
     const { linearColorStyle, textColorStyle, viewRTLStyle, bgContainer, } = useValues();
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
 
     return (
         <View style={styles.modalBg} >

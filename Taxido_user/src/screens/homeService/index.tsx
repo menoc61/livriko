@@ -1,6 +1,6 @@
 import { View, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useAppRoute } from '@src/utils/navigation';
 import { Header } from "@src/commonComponent";
 import { appColors } from "@src/themes";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ import { BottomTitle } from "@src/components";
 import { HomeServiceLoader } from "./component";
 
 export function HomeService() {
-  const route = useRoute();
+  const route = useAppRoute();
   const { itemName } = route.params || {};
   const { homeScreenData, loading } = useSelector((state: any) => state.home);
   const { isDark, linearColorStyle } = useValues();

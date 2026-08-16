@@ -19,7 +19,7 @@ const deleteValue = async (val: string) => {
   return item;
 };
 
-const clearValue = async () => {
+const clearValue = async (key?: string) => {
   await AsyncStorage.clear();
 };
 

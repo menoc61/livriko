@@ -39,7 +39,7 @@ async function createNotificationChannel() {
 }
 
 // Show Local Notification (Same UI as background)
-async function showLocalNotification(remoteMessage) {
+async function showLocalNotification(remoteMessage: any) {
   const channelId = await createNotificationChannel();
 
   const title =

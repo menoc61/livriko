@@ -32,21 +32,19 @@ export function UserContainerSkeleton() {
                 <Rect
                     x={styles.profileImage.width + styles.detainContain.marginHorizontal * 2}
                     y={styles.detainContain.marginVertical + styles.details.top + windowHeight(5)}
-                    width={styles.name.width}
+                    width={styles.name.width as unknown as number}
                     height={styles.name.height}
                     rx={0}
                     ry={0}
-                    style={{ borderRadius: 0 }}
                 />
 
                 <Rect
                     x={styles.walletContain.marginHorizontal}
                     y={styles.profileImage.height + styles.detainContain.marginVertical * 5}
-                    width={styles.walletContain.width}
+                    width={styles.walletContain.width as unknown as number}
                     height={styles.walletContain.height}
                     rx={0}
                     ry={0}
-                    style={{ borderRadius: 0 }}
                 />
             </ContentLoader>
         </View>

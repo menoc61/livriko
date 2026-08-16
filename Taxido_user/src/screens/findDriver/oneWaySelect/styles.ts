@@ -128,6 +128,10 @@ const styles = StyleSheet.create({
   dropdown: {
     width: '82%',
   },
+  dropDownText: {
+    fontSize: fontSizes.FONT14,
+    fontFamily: appFonts.regular,
+  },
   dropdownContainer: {
     height: windowHeight(38),
     width: windowWidth(250),

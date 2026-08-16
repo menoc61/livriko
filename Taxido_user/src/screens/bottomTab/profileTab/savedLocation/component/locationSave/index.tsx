@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { AppDispatch } from "@src/api/store";
 import {
   View,
   Text,
@@ -157,12 +158,12 @@ export function LocationSave() {
   const [locationTitle, setLocationTitle] = useState(
     locationDetails?.title || "",
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { translateData, taxidoSettingData } = useSelector(
     (state: any) => state.setting,
   );
   const { latitude, longitude } = useStoredLocation();
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<any>(null);
   const [loadingMap, setLoadingMap] = useState(true);
   const [isLocationInitialized, setIsLocationInitialized] = useState(false);
 

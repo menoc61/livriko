@@ -1,24 +1,25 @@
 import React, { useRef } from 'react';
+import { AppDispatch } from "@src/api/store";
 import { WebView } from 'react-native-webview';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useAppRoute, useAppNavigation } from '@src/utils/navigation';
 import { Alert } from 'react-native';
 import { URL as API_URL } from '@src/api/config';
 import styles from './styles';
 import { PaymentVerifyInterface } from '@src/api/interface/paymentInterface';
-import { allRides, paymentVerify, walletTopUpData } from '@src/api/store/actions';
+import { allRides, paymentVerify, walletData, walletTopUpData } from '@src/api/store/actions';
 import { notificationHelper } from '@src/commonComponent';
 
-export function PaymentWebView({ route }) {
+export function PaymentWebView({ route }: { route: any }) {
   const hasVerified = useRef(false);
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const navigation = useAppNavigation();
+  const dispatch = useDispatch<AppDispatch>();
   const { url, selectedPaymentMethod, dataValue } = route.params || {};
   const { translateData } = useSelector((state: any) => state.setting);
 
 
 
-  const handleResponse = async (navState) => {
+  const handleResponse = async (navState: any) => {
 
     if (hasVerified.current) {
       return;
@@ -61,10 +62,14 @@ export function PaymentWebView({ route }) {
 
   };
 
-  const parseQueryParams = (urlString) => {
+  const parseQueryParams = (urlString: any) => {
     try {
-      const parsed = new URL(urlString);
-      const params = Object.fromEntries(parsed.searchParams.entries());
+      const params: any = {};
+      const queryString = (urlString.split('?')[1] || urlString.split('#')[1] || '');
+      queryString.split('&').forEach((part: any) => {
+        const pair = part.split('=');
+        if (pair[0]) params[pair[0]] = decodeURIComponent(pair[1] || '');
+      });
       return {
         token: params?.token || null,
         payerID: params?.PayerID || null,
@@ -75,7 +80,7 @@ export function PaymentWebView({ route }) {
     }
   };
 
-  const verifyPaystackPayment = async (navState) => {
+  const verifyPaystackPayment = async (navState: any) => {
     if (!navState?.url) return;
     if (hasVerified.current) return;
 
@@ -96,11 +101,11 @@ export function PaymentWebView({ route }) {
         const res = await dispatch(paymentVerify(payload)).unwrap();
 
         dispatch(allRides());
-        dispatch(walletTopUpData());
+        dispatch(walletData() as any);
         notificationHelper("", translateData.topUpCompleted, 'success');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'MyTabs' }],
+          routes: [{ name: 'MyTabs' }] as any,
         });
       } catch (error) {
         console.error('Paystack verification error:', error);
@@ -118,7 +123,7 @@ export function PaymentWebView({ route }) {
     }
   }
 
-  const fetchPaymentData = async (token, payerID) => {
+  const fetchPaymentData = async (token: any, payerID: any) => {
 
     try {
       const fetchUrl = `${API_URL}/${selectedPaymentMethod}/status` +
@@ -134,11 +139,11 @@ export function PaymentWebView({ route }) {
 
 
       dispatch(allRides());
-      dispatch(walletTopUpData())
+      dispatch(walletData() as any)
       notificationHelper("", translateData.topUpCompleted, 'success')
       navigation.reset({
         index: 0,
-        routes: [{ name: 'MyTabs' }],
+        routes: [{ name: 'MyTabs' }] as any,
       });
     } catch (error) {
       console.error('❌ Payment verification failed:', error);

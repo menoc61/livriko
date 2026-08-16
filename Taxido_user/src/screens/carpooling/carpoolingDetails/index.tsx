@@ -5,13 +5,14 @@ import { appColors, appFonts, fontSizes, windowHeight, windowWidth } from '@src/
 import Images from '@src/utils/images'
 import { Gps, Message, PickLocation, PlatNumber, Radio, RatingEmptyStart, RatingStar, SafetyCall, Toyota } from '@src/utils/icons'
 import styles from './styles'
-import { useNavigation, useTheme } from '@react-navigation/native'
+import { useTheme } from '@react-navigation/native'
 import { useValues } from '@src/utils/context/index';
+import { useAppNavigation } from '@src/utils/navigation';
 
 export function CarpoolingDetails() {
     const { colors } = useTheme()
     const { textColorStyle, bgFullStyle, viewRTLStyle, textRTLStyle } = useValues()
-    const navigation = useNavigation();
+    const navigation = useAppNavigation();
     const cities = [
         { label: 'Toronto', type: 'start' },
         { label: 'Mississauga', type: 'middle' },
@@ -19,7 +20,7 @@ export function CarpoolingDetails() {
         { label: 'Calgary', type: 'end' },
     ];
 
-    const cityStatuses = {
+    const cityStatuses: Record<string, string> = {
         Toronto: "Start",
         Mississauga: "Arrived",
         Vancouver: "Arrived",
@@ -40,7 +41,7 @@ export function CarpoolingDetails() {
         return () => backHandler.remove();
     }, [navigation]);
 
-    const handleEditStopover = (stop) => {
+    const handleEditStopover = (stop: any) => {
         if (stop.type === 'middle') {
         }
     };

@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 export function RideDetails() {
   const { isDark, textRTLStyle, viewRTLStyle } = useValues();
   const detailImage = isDark ? Images.rideDetailDark : Images.rideDetail;
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const { zoneValue } = useSelector((state: any) => state.zone);
 
   return (

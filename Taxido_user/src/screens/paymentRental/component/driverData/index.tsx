@@ -4,7 +4,7 @@ import styles from "../../styles";
 import { useValues } from "@src/utils/context/index";
 import Images from "@utils/images";
 import { Call, LiveShare, Star, Verification } from "@utils/icons";
-import { useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "@src/utils/navigation";
 import { ModalContect } from "@src/screens/rideActive/component/modalContect";
 import { external } from "@src/styles/externalStyle";
 import { appColors, appFonts, windowHeight, windowWidth } from "@src/themes";
@@ -12,11 +12,11 @@ import { useSelector } from "react-redux";
 
 export function DriverData({ driverDetails }: { driverDetails: any }) {
   const { bgFullStyle, viewRTLStyle, textColorStyle, isDark } = useValues();
-  const { navigate } = useNavigation();
+  const { navigate } = useAppNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const { translateData } = useSelector((state: any) => state.setting);
 
-  const gotoChat = (item) => {
+  const gotoChat = (item: any) => {
     navigate("ChatScreen", {
       driverId: item?.driver?.id,
       riderId: item?.rider?.id,
@@ -26,7 +26,7 @@ export function DriverData({ driverDetails }: { driverDetails: any }) {
     });
   };
 
-  const gotoCall = (item) => {
+  const gotoCall = (item: any) => {
     const phoneNumber = `${item?.driver?.phone}`;
     Linking.openURL(`tel:${phoneNumber}`);
   };
@@ -50,7 +50,7 @@ export function DriverData({ driverDetails }: { driverDetails: any }) {
       } else if (result.action === Share.dismissedAction) {
         // dismissed
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sharing:", error.message);
     }
   };

@@ -10,10 +10,11 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
+import { AppDispatch } from "@src/api/store";
 import { Header, notificationHelper } from "@src/commonComponent";
 import { commonStyles } from "@src/styles/commonStyle";
 import styles from "./component/selectMethod/styles";
-import { useNavigation, useTheme } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 import { useValues } from "@src/utils/context/index";
 import { appColors, windowHeight, windowWidth } from "@src/themes";
 import { Button, RadioButton } from "@src/commonComponent";
@@ -36,17 +37,17 @@ export function TopUpWallet() {
     textColorStyle,
     textRTLStyle,
   } = useValues();
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState<any>(0);
   const [isLoading, setIsLoading] = useState(false);
-  const { paymentMethodData } = useSelector(state => state.payment);
+  const { paymentMethodData } = useSelector((state: any) => state.payment);
   const activePaymentMethods = paymentMethodData?.filter(
-    method => method?.status == true,
+    (method: any) => method?.status == true,
   );
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const dispatch = useDispatch();
-  const { navigate } = useNavigation();
-  const { translateData, settingData } = useSelector(state => state.setting);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<any>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const { navigate } = useAppNavigation();
+  const { translateData, settingData } = useSelector((state: any) => state.setting);
   const [topupLoading, setTopuploading] = useState(false);
   const { zoneValue } = useSelector((state: any) => state.zone);
   const { goBack } = useAppNavigation();
@@ -58,7 +59,7 @@ export function TopUpWallet() {
 
   const addBalance = async () => {
     setTopuploading(true);
-    if (amount <= 0) {
+    if (Number(amount) <= 0) {
       notificationHelper("", translateData.enterAmount, "error");
       setTopuploading(false);
       return;
@@ -104,7 +105,7 @@ export function TopUpWallet() {
       });
   };
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
     const isSvg = item?.image?.toLowerCase().endsWith(".svg");
     return (
       <TouchableOpacity
@@ -283,7 +284,7 @@ export function TopUpWallet() {
                   ) : (
                     <FlatList
                       data={activePaymentMethods.filter(
-                        item => item?.name.toLowerCase() !== "cash",
+                        (item: any) => item?.name.toLowerCase() !== "cash",
                       )}
                       renderItem={renderItem}
                       keyExtractor={item => item.id}

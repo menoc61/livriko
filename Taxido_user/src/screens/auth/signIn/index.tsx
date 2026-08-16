@@ -33,7 +33,7 @@ export function SignIn() {
   const [cca2, setCca2] = useState('IN');
   const [countryCode, setCountryCode] = useState(`+${taxidoSettingData?.cabbooking_values?.ride?.country_code}`);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const messageRef = useRef<any>();
+  const messageRef = useRef<any>(null);
   const [demouser, setDemouser] = useState(false);
   const [warning, setWarning] = useState(false);
   const [fcmToken, setFcmToken] = useState('');

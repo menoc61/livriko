@@ -7,21 +7,21 @@ import { useValues } from "@src/utils/context/index";
 import { appColors } from '@src/themes';
 import { useSelector } from 'react-redux';
 
-export function PictureCargo({ onImageSelect, service_name }) {
+export function PictureCargo({ onImageSelect, service_name }: { onImageSelect: any; service_name: any }) {
   const { textColorStyle, isDark, bgContainer, textRTLStyle } = useValues();
-  const [image, setimage] = useState(null);
-  const { translateData } = useSelector((state) => state.setting);
+  const [image, setimage] = useState<any>(null);
+  const { translateData } = useSelector((state: any) => state.setting);
 
 
   const openImagePicker = () => {
-    const options = {
+    const options: any = {
       mediaType: 'photo',
       maxWidth: 300,
       maxHeight: 300,
       quality: 1,
     };
 
-    launchImageLibrary(options, (response) => {
+    launchImageLibrary(options, (response: any) => {
       if (response.didCancel) {
       } else if (response.errorMessage) {
       } else if (response.assets && response.assets?.length > 0) {

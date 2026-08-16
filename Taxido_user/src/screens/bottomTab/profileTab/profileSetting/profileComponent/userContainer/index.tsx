@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { AppDispatch } from "@src/api/store";
 import { Image, Text, View, TouchableOpacity } from "react-native";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { walletData } from "@src/api/store/actions/walletActions";
 import { getValue } from "@src/utils/localstorage";
@@ -11,15 +12,16 @@ import { styles } from "./style";
 import { useValues } from "@src/utils/context/index";
 import { UserContainerSkeleton } from "./userSkeleton";
 import { Star } from "@src/utils/icons";
+import { useAppNavigation } from "@src/utils/navigation";
 
 export function UserContainer() {
   const { bgFullStyle, textColorStyle, viewRTLStyle, isDark, isRTL } = useValues();
-  const dispatch = useDispatch();
-  const { navigate } = useNavigation();
-  const { self } = useSelector(state => state.account);
-  const { walletTypedata } = useSelector(state => state.wallet);
+  const dispatch = useDispatch<AppDispatch>();
+  const { navigate } = useAppNavigation();
+  const { self } = useSelector((state: any) => state.account);
+  const { walletTypedata } = useSelector((state: any) => state.wallet);
   const char = self?.name ? self.name.charAt(0) : "";
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { translateData } = useSelector((state: any) => state.setting);
   const { zoneValue } = useSelector((state: any) => state.zone);
@@ -50,7 +52,7 @@ export function UserContainer() {
 
   const navigationProfile = () => {
     if (token) {
-      navigate("EditProfile");
+      navigate("EditProfile" as any);
     }
   };
 
@@ -89,7 +91,7 @@ export function UserContainer() {
                     flexDirection: viewRTLStyle,
                     justifyContent: "space-between",
                     alignItems: "center",
-                    width: !isRTL && "84%",
+                    width: (!isRTL && "84%") as any,
                   }}>
                   <Text
                     style={[
@@ -142,7 +144,7 @@ export function UserContainer() {
           {token && (
             <TouchableOpacity
               style={[styles.walletContainer, { flexDirection: viewRTLStyle }]}
-              onPress={() => navigate("Wallet")}
+              onPress={() => navigate("Wallet" as any)}
               activeOpacity={0.7}>
               <Text style={styles.walletBalance}>{translateData?.balance}</Text>
               <Text

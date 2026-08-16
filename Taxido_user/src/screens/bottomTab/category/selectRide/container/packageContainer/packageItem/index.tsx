@@ -4,7 +4,7 @@ import { styles } from '../style';
 import { useValues } from '@src/utils/context/index';
 import { appColors } from '@src/themes';
 
-export function PackageItem({ item, onPress, isSelected }) {
+export function PackageItem({ item, onPress, isSelected }: { item: any; onPress: any; isSelected: any }) {
   const { textColorStyle, bgFullLayout, viewRTLStyle } = useValues();
 
   return (

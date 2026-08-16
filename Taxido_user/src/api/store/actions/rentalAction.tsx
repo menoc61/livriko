@@ -21,7 +21,7 @@ export const rentalRideRequests = createAsyncThunk(
 
 export const rentalVehicleList = createAsyncThunk(
   RENTAL_VEHICLE_LIST,
-  async ({ start_time, vehicle_type_id, lat, lng }: { start_time: number, vehicle_type_id: number, lat: number, lng: number }) => {
+  async ({ start_time, vehicle_type_id, lat, lng }: { start_time: string, vehicle_type_id: number, lat: number, lng: number }) => {
     const response = await rentalVehicleServices.rentalVehicleList({ start_time, vehicle_type_id, lat, lng });
     return response?.data;
   },

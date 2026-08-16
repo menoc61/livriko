@@ -5,7 +5,7 @@ import { CustomRadioButton } from "@src/commonComponent/radioButton/customRadioB
 import { useTheme } from "@react-navigation/native";
 import styles from "./styles";
 
-const PaymentOption = ({ imageSource, text, selected, onPress }) => {
+const PaymentOption = ({ imageSource, text, selected, onPress }: { imageSource: any; text: any; selected: any; onPress: any }) => {
   const { colors } = useTheme();
   const { viewRTLStyle } = useValues();
 

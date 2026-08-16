@@ -3,15 +3,15 @@ import React from "react";
 import { appColors } from "@src/themes";
 import { PickLocation, Radio, RightArrowSmall, Target } from "@src/utils/icons";
 import { BarProgress, Button, Header } from "@src/commonComponent";
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useAppRoute, useAppNavigation } from '@src/utils/navigation';
 import styles from "./styles";
 
 export function EditStopOver() {
-    const route = useRoute();
+    const route = useAppRoute();
     const { stopovers = [] } = route.params || {};
-    const navigation = useNavigation();
+    const navigation = useAppNavigation();
 
-    const handleEditStopover = (stop) => {
+    const handleEditStopover = (stop: any) => {
     };
 
     return (
@@ -26,7 +26,7 @@ export function EditStopOver() {
                 </Text>
             </View>
             <View style={styles.container}>
-                {stopovers.map((step, index) => (
+                {stopovers.map((step: any, index: number) => (
                     <View key={index} style={styles.stepContainer}>
                         <View style={styles.iconColumn}>
                             <View style={styles.stepType}>
@@ -57,7 +57,7 @@ export function EditStopOver() {
             <Text style={styles.mapLink}>View on Map</Text>
 
             <View style={styles.btn}>
-                <Button title='Next' onPress={() => navigation.navigate('carpoolingDate')} />
+                <Button title='Next' onPress={() => navigation.navigate('carpoolingDate', {})} />
             </View>
         </View>
     );

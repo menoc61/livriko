@@ -6,8 +6,9 @@ import { sosServices } from "@src/api/services";
 
 export const sosData = createAsyncThunk(
   SOS,
-  async (data: SOSInterface) => {
-    const response = await sosServices.sosData(data.zone_id);
+  async (data: number | { zone_id: number }) => {
+    const zone_id = typeof data === 'number' ? data : data.zone_id;
+    const response = await sosServices.sosData(zone_id);
     return response?.data;
   },
 );

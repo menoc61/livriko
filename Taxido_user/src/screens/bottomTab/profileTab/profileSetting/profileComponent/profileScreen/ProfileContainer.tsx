@@ -13,6 +13,7 @@ import {
   Linking,
 } from "react-native";
 import { external } from "../../../../../../styles/externalStyle";
+import { AppDispatch } from "@src/api/store";
 import {
   useProfileData,
   useGuestData,
@@ -55,7 +56,7 @@ export const ProfileContainer = forwardRef(
       linearColorStyle,
       imageRTLStyle,
     } = useValues();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const { translateData, taxidoSettingData } = useSelector(
       (state: any) => state.setting,
     );

@@ -34,10 +34,10 @@ const rideSlice = createSlice({
         state.statusCode = action.payload.status;
         state.success = true;
       })
-      .addCase(allRide.rejected, (state) => {
+      .addCase(allRide.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
-        state.statusCode = action.payload?.status || 500;
+        state.statusCode = (action.payload as any)?.status || 500;
       })
 
 

@@ -20,14 +20,14 @@ import { useValues } from "@src/utils/context/index";
 import { useSelector } from "react-redux";
 import DropDownPicker from "react-native-dropdown-picker";
 import styless from "@src/screens/bottomTab/myRide/pendingRideScreen/styles";
-import { useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "@src/utils/navigation";
 
 export function OneWaySelect() {
   const { viewRTLStyle, isDark, textRTLStyle, bgFullStyle } = useValues();
-  const { translateData } = useSelector(state => state.setting);
-  const navigation = useNavigation();
+  const { translateData } = useSelector((state: any) => state.setting);
+  const navigation = useAppNavigation();
 
-  const formatDates = dateString => {
+  const formatDates = (dateString: any) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
     const month = date.toLocaleString("en-US", { month: "short" });
@@ -70,7 +70,7 @@ export function OneWaySelect() {
   const [openCarType, setOpenCarType] = useState(false);
   const [openTransmissionType, setOpenTransmissionType] = useState(false);
 
-  const DriverOption = ({ title, price, isSelected }) => (
+  const DriverOption = ({ title, price, isSelected }: { title: any; price: any; isSelected: any }) => (
     <View
       style={[
         styles.container,
@@ -277,13 +277,13 @@ export function OneWaySelect() {
               }}
               tickIconStyle={{
                 tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-              }}
+              } as any}
               iconContainerStyle={{
                 color: isDark ? appColors.whiteColor : appColors.blackColor,
-              }}
+              } as any}
               arrowIconStyle={{
                 tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-              }}
+              } as any}
             />
           </View>
 
@@ -324,13 +324,13 @@ export function OneWaySelect() {
               }}
               tickIconStyle={{
                 tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-              }}
+              } as any}
               iconContainerStyle={{
                 color: isDark ? appColors.whiteColor : appColors.blackColor,
-              }}
+              } as any}
               arrowIconStyle={{
                 tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-              }}
+              } as any}
             />
           </View>
         </View>
@@ -361,7 +361,7 @@ export function OneWaySelect() {
       >
         <Button
           title="Request"
-          onPress={() => navigation.navigate("OneWayRideDetails")}
+          onPress={() => navigation.navigate("OneWayRideDetails", {})}
         />
       </View>
     </View>

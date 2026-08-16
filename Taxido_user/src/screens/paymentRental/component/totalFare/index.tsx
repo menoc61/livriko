@@ -4,9 +4,9 @@ import styles from '../../styles'
 import { useValues } from "@src/utils/context/index";
 import { useSelector } from 'react-redux';
 
-export function TotalFare({ handlePress, fareAmount, rideStatus }) {
+export function TotalFare({ handlePress, fareAmount, rideStatus }: { handlePress: any; fareAmount: any; rideStatus: any }) {
     const { viewRTLStyle, textColorStyle } = useValues();
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
     const { zoneValue } = useSelector((state: any) => state.zone);
 
     return (

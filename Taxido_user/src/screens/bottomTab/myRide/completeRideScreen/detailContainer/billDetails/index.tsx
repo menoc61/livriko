@@ -10,7 +10,7 @@ import {BillDetailsInterface} from "@src/api/interface/rideRequestInterface";
 import {useSelector} from "react-redux";
 
 interface BillDetailsProps {
-  billDetail: BillDetailsInterface | any;
+  billDetail?: BillDetailsInterface | any;
 }
 
 export function BillDetails({billDetail}: BillDetailsProps) {

@@ -1,7 +1,7 @@
 
 import { BarProgress, Header } from '@src/commonComponent'
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Calendar } from "react-native-calendars";
 import { RightArrows, LeftArrow } from "@utils/icons";
@@ -32,7 +32,7 @@ export function CarpoolingDate() {
     const route = useAppRoute();
     const { fieldValue, categoryId, categorySlug } = route.params || {};
     const { linearColorStyle, textColorStyle, isDark, bgContainer, viewRTLStyle, textRTLStyle, isRTL } = useValues()
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
 
     const currentYear = new Date().getFullYear().toString();
 
@@ -116,8 +116,7 @@ export function CarpoolingDate() {
                     <DropDownPicker
                         open={openMonth}
                         value={selectedMonth}
-                        items={months}
-                        defaultValue={selectedMonth}
+                        items={months as any}
                         setOpen={setOpenMonth}
                         setValue={setSelectedMonth}
                         containerStyle={styles.dropdownContainer}
@@ -128,17 +127,13 @@ export function CarpoolingDate() {
                         dropDownContainerStyle={{ backgroundColor: isDark ? appColors.bgDark : appColors.lightGray, borderColor: isDark ? appColors.bgDark : appColors.border, maxHeight: windowHeight(450) }}
                         tickIconStyle={{
                             tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
-                        textStyle={{
-                            textAlign: isRTL ? "right" : "left",
-                            color: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
+                        } as any}
                         iconContainerStyle={{
                             color: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
+                        } as any}
                         arrowIconStyle={{
                             tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
+                        } as any}
                         placeholderStyle={{
                             color: isDark ? appColors.darkText : appColors.regularText,
                         }}
@@ -148,32 +143,24 @@ export function CarpoolingDate() {
                     <DropDownPicker
                         open={openYear}
                         value={selectedYear}
-                        items={years}
-                        defaultValue={selectedYear}
+                        items={years as any}
                         setOpen={setOpenYear}
                         setValue={setSelectedYear}
                         placeholder={currentYear}
                         containerStyle={styles.dropdownContainer2}
-                        onChangeItem={(item: { value: React.SetStateAction<string> }) =>
-                            setSelectedYear(item.value)
-                        }
                         style={[styles.dropdown, { backgroundColor: isDark ? appColors.darkPrimary : appColors.whiteColor, borderColor: isDark ? appColors.darkPrimary : appColors.border }]}
                         textStyle={[styles.dropDownText, { color: isDark ? appColors.whiteColor : appColors.primaryText }]}
                         zIndex={2}
                         dropDownContainerStyle={{ backgroundColor: isDark ? appColors.bgDark : appColors.lightGray, borderColor: isDark ? appColors.bgDark : appColors.border }}
                         tickIconStyle={{
                             tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
-                        textStyle={{
-                            textAlign: isRTL ? "right" : "left",
-                            color: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
+                        } as any}
                         iconContainerStyle={{
                             color: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
+                        } as any}
                         arrowIconStyle={{
                             tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                        }}
+                        } as any}
                         placeholderStyle={{
                             color: isDark ? appColors.darkText : appColors.regularText,
                         }}
@@ -214,8 +201,7 @@ export function CarpoolingDate() {
                         todayBackgroundColor: appColors.whiteColor,
                         arrowColor: isDark ? appColors.whiteColor : appColors.blackColor,
                         dotColor: appColors.primary,
-                        'stylesheet.calendar.header': {
-
+                        "stylesheet.calendar.header" : {
                             dayHeader: {
                                 color: appColors.gray,
                                 fontSize: fontSizes.FONT16,
@@ -224,21 +210,21 @@ export function CarpoolingDate() {
                                 textTransform: 'uppercase',
                             },
                         },
-                    }}
+                    } as any}
                     current={datee}
 
-                    onDayPress={(day) => {
+                    onDayPress={(day: any) => {
                         const today = new Date().toISOString().split("T")[0];
                         if (day.dateString < today) {
-                            alert("You cannot select a past date.");
+                            Alert.alert("You cannot select a past date.");
                             return;
                         }
-                        setday(day.day);
+                        setday(String(day.day));
                         setSelecte(day.dateString);
                     }}
                     markingType={"custom"}
-                    dayComponent={({ date, state, marking, onPress }) => {
-                        let parent = [];
+                    dayComponent={(({ date, state, marking, onPress }: { date: any; state: any; marking: any; onPress: any }) => {
+                        let parent: any[] = [];
                         let backgroundColor = isDark ? linearColorStyle : appColors.lightGray;
                         let color = isDark ? appColors.whiteColor : appColors.blackColor;
                         if (state === "disabled") {
@@ -256,11 +242,11 @@ export function CarpoolingDate() {
                                 onPress={() => onPress(date)}
                                 style={[styles.dateView, { backgroundColor }]}
                             >
-                                <Text style={[styles.dateText, { color }]}>{date.day}</Text>
+                                <Text style={[styles.dateText, { color }]}>{date?.day}</Text>
                             </TouchableOpacity>
                         );
                         return parent;
-                    }}
+                    }) as any}
                 />
             </View>
 

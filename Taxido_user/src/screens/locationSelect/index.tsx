@@ -94,7 +94,7 @@ const ConfirmButton = React.memo(({
 
 export function LocationSelect() {
   const { isDark, viewRTLStyle, Google_Map_Key } = useValues();
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<any>(null);
   const navigation = useNavigation();
   const route = useRoute();
   const { field, screenValue, service_ID, service_name, service_category_ID, service_category_slug, formattedDate, formattedTime } = (route.params || {}) as RouteParams;
@@ -104,7 +104,7 @@ export function LocationSelect() {
   const [currentAddress, setCurrentAddress] = useState("");
   const [loadingMap, setLoadingMap] = useState(true);
   const [fetchingAddress, setFetchingAddress] = useState(false);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { translateData, taxidoSettingData } = useSelector((state: any) => state.setting);
   const mapType = taxidoSettingData?.cabbooking_values?.location?.map_provider;
 

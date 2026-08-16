@@ -132,13 +132,13 @@ export function PriceSet() {
                     <Text style={{ fontFamily: appFonts.regular, color: appColors.gray }}>Select</Text><RightArrowSmall />
                 </View>
                 <Text style={{ fontFamily: appFonts.semiBold, marginTop: windowHeight(5), }}>Preferences</Text>
-                <TouchableOpacity onPress={() => navigate("Preferences")} activeOpacity={0.7} style={{ flexDirection: 'row', backgroundColor: appColors.whiteColor, justifyContent: 'space-between', padding: windowHeight(12), marginVertical: windowHeight(10), borderRadius: windowHeight(5) }}>
+                <TouchableOpacity onPress={() => (navigate as any)("Preferences")} activeOpacity={0.7} style={{ flexDirection: 'row', backgroundColor: appColors.whiteColor, justifyContent: 'space-between', padding: windowHeight(12), marginVertical: windowHeight(10), borderRadius: windowHeight(5) }}>
                     <Text style={{ fontFamily: appFonts.regular, color: appColors.gray }}>Select</Text><RightArrowSmall />
                 </TouchableOpacity>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: windowHeight(5) }}>
                     <Text style={{ color: appColors.primaryText, fontFamily: appFonts.semiBold }}>Account Verification</Text>
-                    <TouchableOpacity onPress={() => navigate('Accountverification')} activeOpacity={0.7}>
+                    <TouchableOpacity onPress={() => (navigate as any)('Accountverification')} activeOpacity={0.7}>
                         <Text style={{ color: appColors.primary, fontFamily: appFonts.semiBold, textDecorationLine: 'underline' }}>Verify Now</Text>
                     </TouchableOpacity>
                 </View>

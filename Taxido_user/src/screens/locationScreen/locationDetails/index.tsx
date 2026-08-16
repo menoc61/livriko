@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 export function LocationDetails() {
   const { navigate, goBack } = useAppNavigation();
   const { bgFullStyle, textColorStyle, textRTLStyle, viewRTLStyle, bgContainer, isDark } = useValues();
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     <View>

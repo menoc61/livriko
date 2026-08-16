@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    paddingVetical: windowHeight(5),
+    paddingVertical: windowHeight(5),
     paddingHorizontal: windowWidth(10),
     justifyContent: "center",
     alignItems: "center",

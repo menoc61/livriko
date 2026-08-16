@@ -10,7 +10,7 @@ import { Coupons } from "./component/coupons";
 import { external } from "@src/styles/externalStyle";
 import { CouponLoader } from "./couponLoader";
 
-export function PromoCodeScreen({ route }) {
+export function PromoCodeScreen({ route }: { route: any }) {
   const { bgFullStyle, linearColorStyle, isDark } = useValues();
   const { couponsList, statusCode, loading } = useSelector((state: any) => state.coupon);
   const { translateData } = useSelector((state: any) => state.setting);

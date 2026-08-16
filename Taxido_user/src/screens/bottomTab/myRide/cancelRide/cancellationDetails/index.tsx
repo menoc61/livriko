@@ -1,13 +1,13 @@
 import { Text, View } from 'react-native';
 import React from 'react';
-import SolidLine from '@src/commonComponent';
+import { SolidLine } from '@src/commonComponent';
 import { styles } from './styles';
 import { useValues } from '@src/utils/context/index';
 import { useSelector } from 'react-redux';
 
 export function CancellationDetails() {
   const { bgFullStyle, linearColorStyle, textColorStyle, textRTLStyle } = useValues();
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     <View style={[styles.container, { backgroundColor: bgFullStyle }]}>

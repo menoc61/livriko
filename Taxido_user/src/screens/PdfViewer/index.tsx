@@ -10,11 +10,11 @@ import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
 import { URL } from '@src/api/config';
 
-export function PdfViewer({ route }) {
+export function PdfViewer({ route }: { route: any }) {
     const { pdfUrl, rideNumber } = route?.params || {};
     const { bgContainer, imageRTLStyle, isDark, bgFullStyle } = useValues();
     const [loading, setLoading] = useState(true);
-    const { translateData } = useSelector(state => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
     const googleViewerUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(pdfUrl)}`;
     const [isSharing, setIsSharing] = useState(false);
 

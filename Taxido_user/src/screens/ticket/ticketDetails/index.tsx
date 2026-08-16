@@ -25,13 +25,13 @@ import {
 import { URL } from "@src/api/config";
 import { useValues } from "@src/utils/context/index";
 import { external } from "@src/styles/externalStyle";
-import { useNavigation } from "@react-navigation/native";
+import { useAppRoute, useAppNavigation } from "@src/utils/navigation";
 import { AppDispatch } from "@src/api/store";
 import RNBlobUtil from "react-native-blob-util";
 
-export function TicketDetails({ route }) {
+export function TicketDetails({ route }: { route: any }) {
   const { ticketData } = route.params;
-  const { translateData } = useSelector(state => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const [textViewShow, setTextViewShow] = useState(false);
   const [inputText, setInputText] = useState("");
   const [files, setFiles] = useState<DocumentPicker.DocumentPickerResponse[]>(
@@ -40,7 +40,7 @@ export function TicketDetails({ route }) {
   const { messageData } = useSelector((state: any) => state.tickets);
   const dispatch = useDispatch<AppDispatch>();
   const { textRTLStyle, viewRTLStyle } = useValues();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const { isDark } = useValues();
 
   useEffect(() => {
@@ -99,8 +99,8 @@ export function TicketDetails({ route }) {
       ticket_id: messageData?.id,
     };
 
-    setFiles();
-    setInputText();
+    setFiles([]);
+    setInputText("");
     setTextViewShow(false);
     const token = await getValue("token");
     try {
@@ -259,7 +259,7 @@ export function TicketDetails({ route }) {
               },
             ]}
           >
-            {item?.media?.map((fileUrl, index) => (
+            {item?.media?.map((fileUrl: any, index: number) => (
               <View
                 key={index}
                 style={[
@@ -418,9 +418,9 @@ export function TicketDetails({ route }) {
                       </TouchableOpacity>
                       <View style={styles.fileTextView}>
                         <Text style={styles.fileText}>
-                          {file?.name?.length > 5
-                            ? `${file.name.substring(0, 5)}...`
-                            : file.name}
+                          {(file?.name?.length ?? 0) > 5
+                            ? `${file.name?.substring(0, 5)}...`
+                            : file?.name}
                         </Text>
                         <Text style={styles.formatedText}>{sizeFormatted}</Text>
                       </View>

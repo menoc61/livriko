@@ -17,14 +17,11 @@ export function Parcel() {
   const [selectedGender, setSelectedGender] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scheduleDate, setScheduleDate] = useState({ DateValue: '', TimeValue: '' });
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const { bgContainer } = useValues();
 
   const handleSelectGender = (gender: string) => {
     setSelectedGender(gender);
-    setIsMenuOpen(false);
-  };
-  const handleCloseMenu = () => {
     setIsMenuOpen(false);
   };
 
@@ -74,7 +71,6 @@ export function Parcel() {
         initialPlaceholder={translateData.cash}
         options={['Cash', 'UPI', 'QR-Code']}
         onSelect={handleSelectGender}
-        onCloseMenu={handleCloseMenu}
         position={true}
         iconShow={true}
       />

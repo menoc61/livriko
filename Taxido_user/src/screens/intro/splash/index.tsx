@@ -32,12 +32,12 @@ export function Splash() {
   const { isDark, setIsRTL } = useValues();
   const dispatch = useDispatch<AppDispatch>();
   const { settingData, taxidoSettingData, serverStatus } = useSelector(
-    state => state.setting,
+    (state: any) => state.setting,
   );
-  const [splashImage, setSplashImage] = useState(null);
+  const [splashImage, setSplashImage] = useState<string | null>(null);
   const [showNoInternet, setShowNoInternet] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const { translateData } = useSelector(state => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const { currentLatitude, currentLongitude } = useSmartLocation();
 
 
@@ -174,30 +174,9 @@ export function Splash() {
     }
   }, [dispatch, replace, taxidoSettingData]);
 
-  const handleRefresh = useCallback(() => {
-    dispatch(taxidosettingDataGet())
-      .unwrap()
-      .then(res => {
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    dispatch(settingDataGet())
-      .then(res => {
-        if (res?.payload._status == 500) {
-          replace("NoInternalServer");
-        } else {
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-  }, [dispatch]);
-
   if (showNoInternet) {
     return (
       <NoInternet
-        onRefresh={handleRefresh}
         title={translateData?.appUnderMaintenance}
         details={translateData?.onlineShortly}
         image={isDark ? Images.maintenanceDark : Images.maintenance}

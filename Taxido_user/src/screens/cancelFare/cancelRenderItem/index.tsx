@@ -12,7 +12,7 @@ import { allRides, bidUpdate } from "../../../api/store/actions/index";
 import { fontSizes, appColors, windowWidth, appFonts } from "@src/themes";
 import { useAppNavigation } from "@src/utils/navigation";
 
-export function CancelRender({ item }: { item: any; pickupLocation: any }) {
+export function CancelRender({ item }: { item: any; pickupLocation?: any }) {
   const { navigate } = useAppNavigation();
   const {
     linearColorStyle,
@@ -23,13 +23,13 @@ export function CancelRender({ item }: { item: any; pickupLocation: any }) {
   } = useValues();
   const dispatch = useDispatch<AppDispatch>();
   const [progress, setProgress] = useState(0);
-  const { translateData } = useSelector(state => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const { zoneValue } = useSelector((state: any) => state.zone);
   const [acceptLoading, setAcceptLoading] = useState(false);
   const [rejectedLoading, setRejectedLoading] = useState(false);
   const timersRef = useRef<{
-    interval?: NodeJS.Timeout;
-    timeout?: NodeJS.Timeout;
+    interval?: ReturnType<typeof setInterval>;
+    timeout?: ReturnType<typeof setInterval>;
   }>({});
 
   const clearTimers = () => {

@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 export function Address({ DropLocation }: { DropLocation: string }) {
     const { viewRTLStyle, textColorStyle, textRTLStyle } = useValues();
     const { navigate } = useAppNavigation();
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
 
     const gotoPay = () => {
         navigate('Payment')

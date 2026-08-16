@@ -410,7 +410,7 @@ export function ChatScreen() {
                       )}
                     <Text
                       style={[
-                        styles.timeStyle,
+                        styles.senderMessageTime,
                         {
                           color: isMe ? appColors.whiteColor : appColors.gray,
                           textAlign: isMe ? "right" : "left",

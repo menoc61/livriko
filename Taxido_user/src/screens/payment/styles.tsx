@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     marginHorizontal: windowWidth(2),
     color: appColors.whiteColor,
   },
+  pinBox: {
+    backgroundColor: appColors.primary,
+    paddingVertical: windowHeight(3),
+    paddingHorizontal: windowWidth(11),
+    borderRadius: windowHeight(3),
+    marginHorizontal: windowWidth(2),
+  },
   card1: {
     borderRadius: windowHeight(4.8),
     marginVertical: windowHeight(8),

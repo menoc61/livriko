@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import { AppDispatch } from "@src/api/store";
 import { SafeAreaView, ScrollView, View, BackHandler, Text, StyleSheet, Image, Modal } from "react-native";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { commonStyles } from "../../../styles/commonStyle";
@@ -28,7 +29,7 @@ import DynamicIceland from "../../../components/homeScreen/DynamicIceland";
 import { LowBalance } from "@src/commonComponent/lowBalance";
 
 export function HomeScreen() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { textColorStyle, viewRTLStyle, isDark, bgFullStyle, setIsRTL, isRTL } = useValues();
   const isFocused = useIsFocused();
   const [isScrolling, setIsScrolling] = useState(true);

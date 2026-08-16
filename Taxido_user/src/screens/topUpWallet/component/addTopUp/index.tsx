@@ -6,6 +6,7 @@ import styles from "./styles";
 import { useTheme } from "@react-navigation/native";
 import { useValues } from "@src/utils/context/index";;
 import { DollarCoin } from "@src/utils/icons";
+import { useSelector } from "react-redux";
 
 
 const AddTopUp = () => {

@@ -24,10 +24,10 @@ export function RentalBooking() {
   const [startTime, setStartTime] = useState('');
   const [endDate, setEndDate] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [pickupLocation, setPickUpLocation] = useState();
-  const [dropLocation, setDropLocation] = useState();
-  const [pickUpCoords, setPickupCoords] = useState();
-  const [dropCoords, setDropCoords] = useState();
+  const [pickupLocation, setPickUpLocation] = useState<any>();
+  const [dropLocation, setDropLocation] = useState<any>();
+  const [pickUpCoords, setPickupCoords] = useState<any>();
+  const [dropCoords, setDropCoords] = useState<any>();
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(true);
   const { linearColorStyle, textColorStyle, viewRTLStyle, textRTLStyle, bgContainer, isDark } = useValues();
@@ -35,7 +35,7 @@ export function RentalBooking() {
   const { selectedAddress, fieldValue }: any = route.params || {};
   const date = new Date(startDate);
   const day = date.getDate();
-  const { translateData } = useSelector(state => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const [findLoading, setFindLoading] = useState(false);
   const [errors, setErrors] = useState({
     startDate: '',
@@ -136,7 +136,7 @@ export function RentalBooking() {
     });
   };
 
-  const geocodeAddressLocal = async address => {
+  const geocodeAddressLocal = async (address: any) => {
     try {
       const dataMap = await geocodeAddress(address);
       if (dataMap.status === "OK" && dataMap.results?.length > 0) {
@@ -267,7 +267,7 @@ export function RentalBooking() {
       const pickup = await geocodeAddressLocal(pickupLocation);
 
       if (pickup) {
-        let payload: RentalInterface = {
+        let payload: any = {
           locations: [
             {
               lat: pickup?.lat,
@@ -323,7 +323,7 @@ export function RentalBooking() {
   };
 
 
-  function formatStartDate(dateStr) {
+  function formatStartDate(dateStr: any) {
     if (!dateStr) return "Select Date";
     const parts = dateStr.split(" ");
     if (parts?.length < 3) return "Select Date";
@@ -399,8 +399,6 @@ export function RentalBooking() {
                   handleFocus(2);
                 }}
                 style={{ borderWidth: 1, height: windowHeight(40), paddingHorizontal: windowWidth(18), marginTop: windowHeight(10), borderColor: isDark ? appColors.darkBorder : appColors.border, backgroundColor: appColors.whiteColor, fontFamily: appFonts.regular, borderRadius: windowHeight(4) }}
-
-                warningText={errors.dropLocation ? errors.dropLocation : ''}
               />
             </View>
           )}

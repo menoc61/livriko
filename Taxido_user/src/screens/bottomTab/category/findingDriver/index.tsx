@@ -9,19 +9,19 @@ import { CancelFareData } from '../../../../data/cancelFare/index';
 import { CancelRender } from '../../../cancelFare/cancelRenderItem/index';
 import { appColors } from '@src/themes';
 import { useValues } from '@src/utils/context/index';
-import { useRoute } from '@react-navigation/native';
+import { useAppRoute } from '@src/utils/navigation';
 import { useSelector } from 'react-redux';
 
 var progress = 0;
 
 export function FindingDriver() {
-  const route = useRoute();
+  const route = useAppRoute();
   const { isOutstation } = route?.params || { isOutstation: false };
   const [progresss, setProgress] = useState(0);
   const [completed, setCompleted] = useState(false);
   const { textColorStyle } = useValues();
   const { bgFullLayout, viewRTLStyle } = useValues();
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   useEffect(() => {
     increaseProgress();
@@ -38,7 +38,7 @@ export function FindingDriver() {
       }
     }, 100);
   };
-  const renderItem = ({ item }: { item: any }) => <CancelRender item={item} value={isOutstation} />;
+  const renderItem = ({ item }: { item: any }) => <CancelRender item={item} />;
 
   return (
     <View style={[commonStyles.flexContainer]}>

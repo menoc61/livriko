@@ -407,7 +407,7 @@ export function FindLocationScreen() {
         }}
       >
         <View style={[styles.historyIconContainer]}>
-          <History color={appColors.iconColor} />
+          <History />
         </View>
 
         <View style={styles.recentItemContent}>
@@ -457,9 +457,9 @@ export function FindLocationScreen() {
   );
 
   const gotoSaveLocation = async () => {
-    let token = "";
+    let token: string | null = "";
     await getValue("token").then(function (value) {
-      token = value;
+      token = value || null;
     });
 
     if (token) {
@@ -1525,7 +1525,7 @@ export function FindLocationScreen() {
 
                     if (
                       pickerDate === todayISO &&
-                      currentMinutes < nowMinutes
+                      selectedMinutes < nowMinutes
                     ) {
                       notificationHelper(
                         "Error",
@@ -1547,7 +1547,7 @@ export function FindLocationScreen() {
                       if (
                         pickerDate === startDateISO &&
                         startTimeMinutes !== null &&
-                        currentMinutes <= startTimeMinutes
+                        selectedMinutes <= startTimeMinutes
                       ) {
                         notificationHelper(
                           "Error",
@@ -1561,7 +1561,7 @@ export function FindLocationScreen() {
                     if (pickingType === "start" && endDateISO === pickerDate) {
                       if (
                         endTimeMinutes !== null &&
-                        currentMinutes >= endTimeMinutes
+                        selectedMinutes >= endTimeMinutes
                       ) {
                         notificationHelper(
                           "Error",
@@ -1582,7 +1582,7 @@ export function FindLocationScreen() {
                           pickerDate > endDateISO ||
                           (pickerDate === endDateISO &&
                             endTimeMinutes !== null &&
-                            currentMinutes >= endTimeMinutes)
+                            selectedMinutes >= endTimeMinutes)
                         ) {
                           setEndDate(null);
                           setEndDateISO(null);

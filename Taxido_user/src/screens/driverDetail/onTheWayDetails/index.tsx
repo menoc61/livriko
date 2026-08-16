@@ -15,9 +15,9 @@ import { useSelector } from 'react-redux';
 export function OnTheWayDetails() {
   const [selected, setSelected] = useState(true);
   const { viewRTLStyle } = useValues()
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: any }) => {
     return (
       <View
         style={[styles.renderView, { flexDirection: viewRTLStyle }]}>

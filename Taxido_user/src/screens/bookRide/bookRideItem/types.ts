@@ -10,6 +10,8 @@ export interface BookRideItemType {
     name?: string;
     vehicle_image_url?: any,
     currency_symbol?: string | number
+    max_seat?: any;
+    description?: string;
   };
   onPress: any;
   onPressAlternate: any;

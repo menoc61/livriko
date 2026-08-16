@@ -8,7 +8,7 @@ import { useValues } from '@src/utils/context/index';
 import { LocationDetailsPrpos } from '../type';
 
 
-export function LocationDetails({ locationDetails }: LocationDetailsPrpos) {
+export function LocationDetails({ locationDetails = [] as any }: LocationDetailsPrpos) {
   const { textColorStyle, iconColorStyle, viewRTLStyle, textRTLStyle, isDark } = useValues();
 
   return (

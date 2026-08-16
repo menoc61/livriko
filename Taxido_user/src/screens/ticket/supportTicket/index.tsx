@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { Back, Info } from "@src/utils/icons";
 import { Add } from "@src/utils/icons";
 import { appColors, appFonts, windowHeight } from "@src/themes";
-import { useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "@src/utils/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import Images from "@src/utils/images";
 import styles from "./styles";
@@ -14,17 +14,17 @@ import { ticketDataGet } from "@src/api/store/actions";
 import { AppDispatch } from "@src/api/store";
 
 export function SupportTicket() {
-  const { navigate, goBack } = useNavigation();
+  const { navigate, goBack } = useAppNavigation();
   const { ticketData, loading } = useSelector((state: any) => state.tickets);
   const { textColorStyle, isDark, viewRTLStyle, bgFullStyle } = useValues();
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   const gotoAdd = () => {
-    navigate("CreateTicket");
+    navigate("CreateTicket" as any);
   };
 
-  const gotoDetails = (value) => {
-    navigate("TicketDetails", { ticketData: value });
+  const gotoDetails = (value: any) => {
+    navigate("TicketDetails" as any, { ticketData: value });
   };
 
   const formatDate = (dateString: string) => {

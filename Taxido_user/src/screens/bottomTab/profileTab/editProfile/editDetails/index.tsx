@@ -76,7 +76,7 @@ export function EditDetails() {
 
     const isMobile = field === "mobile";
 
-    const payload: UpdateProfileInterface = isMobile
+    const payload: any = isMobile
       ? {
           phone: phoneNumber,
           country_code: (selectedCountry?.idd?.root || "1").replace("+", ""),
@@ -115,9 +115,9 @@ export function EditDetails() {
       }),
     };
 
-    dispatch(verifyMobileEmail(payload) as any)
+    dispatch(verifyMobileEmail(payload as any) as any)
       .unwrap()
-      .then(res => {
+      .then((res: any) => {
         if (res === 'Unauthorized') {
           setOtpLoader(false);
           return;
@@ -126,7 +126,7 @@ export function EditDetails() {
         if (res?.status === 200) {
           dispatch(selfData())
             .unwrap()
-            .then(res => {
+            .then((res: any) => {
               navigation.goBack();
               otpBottomSheetRef.current?.close();
             });
@@ -391,7 +391,7 @@ export function EditDetails() {
                         ? appColors.whiteColor
                         : appColors.primaryText,
                       borderBottomWidth: 1.5,
-                    }}
+                    } as any}
                     keyboardType="numeric"
                     tintColor={appColors.primary}
                     offTintColor={

@@ -60,6 +60,7 @@ export interface vehicleInterface {
     plate_number: number
     description: string
     name: string
+    [key: string]: any;
 }
 export interface driverInfo {
     vehicle_info: vehicleInterface
@@ -69,6 +70,7 @@ export interface driverInfo {
 export interface taxidetailsObject {
     driver: driverInfo;
     rental_vehicle: vehicleInterface;
+    [key: string]: any;
 }
 
 

@@ -14,6 +14,7 @@ import {
   View,
 } from "react-native";
 import { Button, HeaderTab, notificationHelper } from "@src/commonComponent";
+import { AppDispatch } from "@src/api/store";
 import { external } from "../../../../styles/externalStyle";
 import { commonStyles } from "../../../../styles/commonStyle";
 import { UserContainer } from "./profileComponent/userContainer/index";
@@ -60,19 +61,19 @@ export function ProfileSetting() {
     setIsRTL,
     setIsDark,
   } = useValues();
-  const profileContainerRef = useRef(null);
+  const profileContainerRef = useRef<any>(null);
   const [token, setToken] = useState<string | null | undefined>(undefined);
   const { translateData } = useSelector((state: any) => state.setting);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [versionCode, setVersionCode] = useState("");
   const logoutSheetRef = useRef<BottomSheetModal>(null);
   const deleteSheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ["35%"], []);
   const snapPoints1 = useMemo(() => ["47%"], []);
-  const { self } = useSelector(state => state.account);
+  const { self } = useSelector((state: any) => state.account);
   const { latitude, longitude } = useStoredLocation();
   const navigation = useNavigation();
-  const { reset } = useAppNavigation();
+  const { reset, navigate } = useAppNavigation();
 
   useEffect(() => {
     const loadNotification = async () => {
@@ -98,7 +99,7 @@ export function ProfileSetting() {
     useCallback(() => {
       const backAction = () => {
         if (navigation.canGoBack()) {
-          navigation.navigate("HomeScreen");
+          navigate("HomeScreen");
           return true;
         }
         return false;
@@ -119,7 +120,7 @@ export function ProfileSetting() {
     };
     fetchVersion();
     dispatch(userSaveLocation());
-    dispatch(couponListData());
+    dispatch(couponListData(undefined));
     dispatch(ticketDataGet());
   }, []);
 
@@ -348,7 +349,7 @@ export function ProfileSetting() {
               <Button
                 title={translateData.proceed}
                 backgroundColor={appColors.primary}
-                color={appColors.whiteColor}
+                textColor={appColors.whiteColor}
                 onPress={handleDeleteAccount}
               />
             </View>

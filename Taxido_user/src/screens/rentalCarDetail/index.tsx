@@ -1,4 +1,5 @@
 import { View, Text, Image, ScrollView, TouchableOpacity, BackHandler } from "react-native";
+import { AppDispatch } from "@src/api/store";
 import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Ac, Back, Bag, Right, Star1 } from "@src/utils/icons";
 import { CarType } from "@src/assets/icons/carType";
@@ -76,7 +77,7 @@ export function RentalCarDetails() {
   const route = useRoute<RentalCarDetailsRouteProp>();
   const { startDate, pickUpCoords, pickupLocation, dropLocation, dropCoords, endDate, convertedStartTime, convertedEndTime, getDriver, vehicle_type_id, no_of_days, is_with_driver } = route.params;
   const navigation = useNavigation<any>();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { rentalVehicleListsDetails } = useSelector((state: RootState) => state.rentalVehicle);
   const { zoneValue } = useSelector((state: RootState) => state.zone);
   const { translateData } = useSelector((state: RootState) => state.setting);
@@ -91,7 +92,7 @@ export function RentalCarDetails() {
   const snapPoints = useMemo(() => ['40%'], []);
   const [mainImage, setMainImage] = useState('');
   const imageIndexRef = useRef(0);
-  const imageChangeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const imageChangeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

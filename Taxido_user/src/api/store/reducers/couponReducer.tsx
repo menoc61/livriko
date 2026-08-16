@@ -18,12 +18,12 @@ const couponSlice = createSlice({
         builder.addCase(couponListData.pending, (state, action) => {
             state.loading = true;
         });
-        builder.addCase(couponListData.fulfilled, (state: any, action: PayloadAction<any[]>) => {
+        builder.addCase(couponListData.fulfilled, (state: any, action: PayloadAction<{ data: any[]; status?: number }>) => {
             state.couponsList = action.payload;
             state.statusCode = action.payload.status;
             state.loading = false;
         });
-        builder.addCase(couponListData.rejected, (state: any) => {
+        builder.addCase(couponListData.rejected, (state: any, action: { payload: any }) => {
             state.loading = false;
             state.success = false;
             state.statusCode = action.payload?.status || 500;

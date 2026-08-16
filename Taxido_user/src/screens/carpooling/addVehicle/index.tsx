@@ -11,7 +11,7 @@ import { useAppNavigation } from '@src/utils/navigation'
 import DropDownPicker from 'react-native-dropdown-picker'
 
 export function AddVehicle() {
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
     const { bgFullLayout, textColorStyle, textRTLStyle, isDark, viewRTLStyle, isRTL } = useValues();
     const [files, setFiles] = useState<DocumentPicker.DocumentPickerResponse[]>([]);
     const [open, setOpen] = useState(false);
@@ -65,8 +65,8 @@ export function AddVehicle() {
                         borderColor: isDark ? appColors.darkBorder : appColors.border,
                     }}
                     tickIconStyle={{
-                        tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                           tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -74,11 +74,11 @@ export function AddVehicle() {
                         fontSize: fontSizes.FONT17
                     }}
                     iconContainerStyle={{
-                        color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                           color: isDark ? appColors.whiteColor : appColors.blackColor,
+                    } as any}
                     arrowIconStyle={{
-                        tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                           tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}
@@ -108,8 +108,8 @@ export function AddVehicle() {
                         borderColor: isDark ? appColors.darkBorder : appColors.border,
                     }}
                     tickIconStyle={{
-                        tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                           tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
+                    } as any}
                     textStyle={{
                         textAlign: isRTL ? "right" : "left",
                         color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -117,11 +117,11 @@ export function AddVehicle() {
                         fontSize: fontSizes.FONT17
                     }}
                     iconContainerStyle={{
-                        color: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                           color: isDark ? appColors.whiteColor : appColors.blackColor,
+                    } as any}
                     arrowIconStyle={{
-                        tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-                    }}
+                           tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
+                    } as any}
                     placeholderStyle={{
                         color: isDark ? appColors.darkText : appColors.regularText,
                     }}

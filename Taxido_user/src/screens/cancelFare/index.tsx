@@ -1,4 +1,5 @@
 import { FlatList, Text, View } from 'react-native';
+import { AppDispatch } from "@src/api/store";
 import React, { useState, useEffect } from 'react';
 import { commonStyles } from '../../styles/commonStyle';
 import { HeaderContainer, CommonModal, Button } from '@src/commonComponent';
@@ -11,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bidDataGet } from '../../api/store/actions/bidAction';
 
 export function CancelFare() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [selected, setSelected] = useState(false);
   const renderItem = ({ item }: { item: any }) => <CancelRender item={item} />;
   const { bgFullStyle, linearColorStyle, textColorStyle, viewRTLStyle } = useValues();
@@ -24,7 +25,7 @@ export function CancelFare() {
 
   const getVehicleTypes = async () => {
     const rideRequestId = 8;
-    dispatch(bidDataGet(rideRequestId));
+    dispatch(bidDataGet({ ride_request_id: rideRequestId }));
   }
 
   return (

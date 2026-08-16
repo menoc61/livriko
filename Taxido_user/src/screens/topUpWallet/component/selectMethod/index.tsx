@@ -1,4 +1,5 @@
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
+import { AppDispatch } from "@src/api/store";
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
 import { useNavigation, useTheme } from "@react-navigation/native";
@@ -15,13 +16,13 @@ import { useAppNavigation } from "@src/utils/navigation";
 const SelectMethod = () => {
   const { colors } = useTheme();
   const { viewRTLStyle } = useValues();
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState(0);
   const { paymentMethodData } = useSelector((state: any) => state.payment);
   const activePaymentMethods = paymentMethodData?.data?.filter((method: any) => method?.status === true);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const dispatch = useDispatch();
-  const { navigate } = useNavigation();
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<any>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const { navigate } = useAppNavigation();
   const { translateData, settingData } = useSelector((state: any) => state.setting);
   const [topupLoading, setTopuploading] = useState(false);
   const { zoneValue } = useSelector((state: any) => state.zone);
@@ -38,7 +39,7 @@ const SelectMethod = () => {
 
   const addBalance = () => {
     setTopuploading(true)
-    let payload: WalletTopUpDatainterface = {
+    let payload: any = {
       amount: amount,
       payment_method: selectedPaymentMethod,
       currency_code: zoneValue?.currency_code,
@@ -67,7 +68,7 @@ const SelectMethod = () => {
       });
   };
 
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({ item, index }: { item: any; index: number }) => (
     <TouchableOpacity
       onPress={() => {
         if (!topupLoading) {
@@ -148,8 +149,8 @@ const SelectMethod = () => {
           placeholder={translateData.amount}
           placeholderTextColor={appColors.regularText}
           keyboardType={"numeric"}
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={String(amount)}
+          onChangeText={(text) => setAmount(Number(text) || 0)}
         />
       </View>
       <View style={styles.addBtn}>

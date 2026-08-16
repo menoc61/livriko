@@ -40,9 +40,9 @@ export function OtpVerification() {
   const [otp, setOtp] = useState(demoMode === true ? '123456' : '');
   const [fcmToken, setFcmToken] = useState<string>('')
   const [resendTimer, setResendTimer] = useState<number>(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const messageRef = useRef<any>();
+  const messageRef = useRef<any>(null);
   const navigation = useAppNavigation();
 
   useEffect(() => {
@@ -244,7 +244,7 @@ export function OtpVerification() {
                     containerStyle={[
                       style.otpContainer,
                       { flexDirection: viewRTLStyle },
-                    ]}
+                    ] as any}
                     inputCount={6}
                     handleTextChange={(value) => {
                       setOtp(value);
@@ -259,7 +259,7 @@ export function OtpVerification() {
                           ? appColors.whiteColor
                           : appColors.blackColor,
                       },
-                    ]}
+                    ] as any}
                     keyboardType="numeric"
                     tintColor={appColors.primary}
                     offTintColor={isDark ? appColors.darkBorder : appColors.lightGray}

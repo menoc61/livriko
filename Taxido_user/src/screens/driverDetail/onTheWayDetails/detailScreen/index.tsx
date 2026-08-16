@@ -8,7 +8,7 @@ import styles from './styles';
 import { useSelector } from 'react-redux';
 
 export function DetailScreen() {
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     <View style={styles.container}>

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 export function TexiDetail({ otp, vehicleData }: { otp: number, vehicleData: any }) {
   const { viewRTLStyle, textRTLStyle, isDark } = useValues();
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
 
   return (

@@ -35,7 +35,7 @@ const handleShare = async () => {
     } else if (result.action === Share.dismissedAction) {
       // dismissed
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error sharing:", error.message);
   }
 };

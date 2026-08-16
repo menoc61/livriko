@@ -4,9 +4,9 @@ import styles from "../styles";
 import { useValues } from "@src/utils/context/index";;
 import { useSelector } from "react-redux";
 
-const PaymentDetails = ({ title, rideAmount }: { title: string, rideAmount: number }) => {
+const PaymentDetails = ({ title, rideAmount }: { title: string, rideAmount: number | string }) => {
   const { textColorStyle, viewRTLStyle } = useValues();
-  const { zoneValue } = useSelector((state) => state.zone);
+  const { zoneValue } = useSelector((state: any) => state.zone);
 
   return (
     <View style={[styles.rideContainer, { flexDirection: viewRTLStyle }]}>

@@ -1,28 +1,29 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { AppDispatch } from "@src/api/store";
 import { Text, TouchableOpacity, View, ScrollView, Modal, Animated, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList, Alert, Platform, TextInput } from "react-native";
 import { History, Calender, AddressMarker, PickLocation, Save, Driving, Gps, Close, Add, Minus } from "@utils/icons";
 import { styles } from "./styles";
 import { commonStyles } from "../../styles/commonStyle";
 import { external } from "../../styles/externalStyle";
 import { SolidLine, Button, Header, InputText } from "@src/commonComponent";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { userZone } from "../../api/store/actions/index";
 import { vehicleTypeDataGet } from "../../api/store/actions/vehicleTypeAction";
 import { getValue, setValue } from "@src/utils/localstorage";
 import { appColors, appFonts, windowHeight, windowWidth } from "@src/themes";
-import { useAppNavigation } from "@src/utils/navigation";
+import { useAppNavigation, useAppRoute } from "@src/utils/navigation";
 import { getDistance } from "geolib";
 import useSmartLocation from "@src/components/helper/locationHelper";
 import { useValues } from "@src/utils/context/index";
 import { reverseGeocode, geocodeAddress, autocompletePlaces } from "@src/components/helper/geocoder";
 
 export function LocationDrop() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { navigate, replace } = useAppNavigation();
   const [isProcessing, setIsProcessing] = useState(false);
   const [activeField, setActiveField] = useState<string | null>(null);
-  const route = useRoute();
+  const route = useAppRoute<'Ride'>();
   const { service_ID, service_name, service_category_ID, service_category_slug, formattedDate, formattedTime, defultAddress, defultCoords } = route.params;
   const { selectedAddress, fieldValue, pinLatitude, pinLongitude } = route.params || {};
   const [destination, setDestination] = useState<string>("");
@@ -30,14 +31,14 @@ export function LocationDrop() {
   const [pickupLocation, setPickupLocation] = useState<string>(defultAddress);
   const [fieldLength, setFieldLength] = useState<number>(0);
   const [addressData, setAddressData] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [isInitialFetchDone, setIsInitialFetchDone] = useState(false);
-  const { zoneValue } = useSelector(state => state.zone);
+  const { zoneValue } = useSelector((state: any) => state.zone);
   const [visible, setVisible] = useState(false);
   const screenWidth = Dimensions.get("window").width;
   const translateX = useRef(new Animated.Value(-30)).current;
-  const { settingData, taxidoSettingData, translateData } = useSelector(state => state.setting);
+  const { settingData, taxidoSettingData, translateData } = useSelector((state: any) => state.setting);
   const [recentDatas, setRecentDatas] = useState([]);
   const [dateError, setDateError] = useState(false);
   const { DateValue, TimeValue, field } = route.params || {};
@@ -50,7 +51,7 @@ export function LocationDrop() {
   const [isdesFocused, setIsdesFocused] = useState(false);
   const { linearColorStyle, viewRTLStyle, textColorStyle, bgFullLayout, textRTLStyle, isDark, isRTL } = useValues();
   const [wasAutoFilled, setWasAutoFilled] = useState(false);
-  const [destinationFullAddress, setDestinationFullAddress] = useState();
+  const [destinationFullAddress, setDestinationFullAddress] = useState<any>();
   const [hasNavigated, setHasNavigated] = useState(false);
   const pickupRef = useRef<TextInput>(null);
   const destinationRef = useRef<TextInput>(null);
@@ -62,10 +63,7 @@ export function LocationDrop() {
     lat: number;
     lng: number;
   } | null>(null);
-  const [stopCoords, setStopCoords] = useState<{
-    lat: number;
-    lng: number;
-  } | null | Array<{ lat: number; lng: number } | null>>(null);
+  const [stopCoords, setStopCoords] = useState<Array<{ lat: number; lng: number } | null> | null>(null);
   const [minRadiusKm, setMinRadiusKm] = useState(0);
 
 
@@ -96,10 +94,10 @@ export function LocationDrop() {
   };
 
   const coordset = (
-    selectedPickup,
-    selectedDropOff,
-    shortPickup,
-    shortDropOff,
+    selectedPickup: any,
+    selectedDropOff: any,
+    shortPickup: any,
+    shortDropOff: any,
   ) => {
     if (selectedPickup)
       convertToCoords(selectedPickup, setPickupCoords, "pickup", shortPickup);
@@ -160,7 +158,7 @@ export function LocationDrop() {
     }
   };
 
-  const convertStopsToCoords = async stopList => {
+  const convertStopsToCoords = async (stopList: any[]) => {
     if (!stopList || stopList?.length === 0) {
       setStopCoords([]);
       return;
@@ -201,7 +199,7 @@ export function LocationDrop() {
     }
   }, [stops]);
 
-  const fetchAddressFromCoords = async (latitude, longitude) => {
+  const fetchAddressFromCoords = async (latitude: any, longitude: any) => {
     if (!latitude || !longitude) return;
     try {
       const json = await reverseGeocode(latitude, longitude);
@@ -332,7 +330,7 @@ export function LocationDrop() {
     }
   }, [activeField, pickupLocation, destination, stops]);
 
-  const fetchAddressSuggestions = async input => {
+  const fetchAddressSuggestions = async (input: any) => {
     if (input?.length >= 3) {
       try {
         const data = await autocompletePlaces(input);
@@ -375,7 +373,7 @@ export function LocationDrop() {
     }
   };
 
-  const handleRecentClick = async suggestion => {
+  const handleRecentClick = async (suggestion: any) => {
     Keyboard.dismiss();
     const fullAddr = `${suggestion?.shortAddress}, ${suggestion?.detailAddress}`;
     if (activeField === "pickupLocation") {
@@ -398,7 +396,7 @@ export function LocationDrop() {
     }
   };
 
-  const handleSuggestionClick = async suggestion => {
+  const handleSuggestionClick = async (suggestion: any) => {
     Keyboard.dismiss();
     try {
       let storedLocations = [];
@@ -496,7 +494,7 @@ export function LocationDrop() {
   }, [stops, pickupLocation, destination]);
 
   const coordsData = async () => {
-    const geocodeAddressLocal = async address => {
+    const geocodeAddressLocal = async (address: any) => {
       try {
         const dataMap = await geocodeAddress(address);
         if (dataMap?.status === "OK" && dataMap?.results?.length > 0) {
@@ -542,11 +540,11 @@ export function LocationDrop() {
     const filteredLocations = rawLocations
       .filter(coord => coord && coord?.lat != null && coord?.lng != null)
       .map(coord => ({
-        lat: coord?.lat,
-        lng: coord?.lng,
+        lat: coord?.lat as number,
+        lng: coord?.lng as number,
       }));
 
-    const getFormattedTime = date => {
+    const getFormattedTime = (date: Date) => {
       const hours = date.getHours().toString().padStart(2, "0");
       const minutes = date.getMinutes().toString().padStart(2, "0");
       const seconds = date.getSeconds().toString().padStart(2, "0");
@@ -635,7 +633,7 @@ export function LocationDrop() {
 
   const calculateDistance = (lat1: any, lon1: any, lat2: any, lon2: any) => {
     const R = 6371;
-    const toRadians = degree => (degree * Math.PI) / 180;
+    const toRadians = (degree: any) => (degree * Math.PI) / 180;
 
     const dLat = toRadians(lat2 - lat1);
     const dLon = toRadians(lon2 - lon1);
@@ -680,7 +678,7 @@ export function LocationDrop() {
           let storedLocations = JSON.parse(stored) || [];
 
           const alreadyExists = storedLocations.some(
-            loc =>
+            (loc: any) =>
               loc.shortAddress.trim().toLowerCase() ===
               suggestion.shortAddress.trim().toLowerCase(),
           );
@@ -796,9 +794,9 @@ export function LocationDrop() {
   };
 
   const gotoSaveLocation = async () => {
-    let token = "";
+    let token: string = "";
     await getValue("token").then(function (value) {
-      token = value;
+      token = value || "";
     });
 
     if (token) {
@@ -841,7 +839,7 @@ export function LocationDrop() {
     }
   }, [selectedAddress, fieldValue, pinLatitude, pinLongitude]);
 
-  const renderItemRecentData = ({ item: suggestion, index }) => {
+  const renderItemRecentData = ({ item: suggestion, index }: { item: any; index: any }) => {
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.renderItemRecentView}>
@@ -914,7 +912,7 @@ export function LocationDrop() {
     }
   };
 
-  const removeStop = index => {
+  const removeStop = (index: any) => {
     const updatedStops = stops.filter((_, i) => i !== index);
     setStops(updatedStops);
 
@@ -938,7 +936,7 @@ export function LocationDrop() {
     }
   };
 
-  const handleFocus = id => {
+  const handleFocus = (id: any) => {
     if (id === 1) {
       setActiveField("pickupLocation");
     } else if (id === 2) {
@@ -952,7 +950,7 @@ export function LocationDrop() {
     setActiveField(null);
   };
 
-  const handleCloseStop = index => {
+  const handleCloseStop = (index: any) => {
     const updatedStops = [...stops];
     updatedStops[index] = "";
     setStops(updatedStops);
@@ -1477,7 +1475,7 @@ export function LocationDrop() {
                 <FlatList
                   data={suggestions}
                   keyExtractor={(_, index) => index.toString()}
-                  renderItem={({ item: suggestion, index }) => (
+                  renderItem={({ item: suggestion, index }: { item: any; index: any }) => (
                     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                       <TouchableOpacity
                         activeOpacity={0.7}

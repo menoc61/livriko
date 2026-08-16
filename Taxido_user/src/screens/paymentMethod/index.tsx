@@ -64,7 +64,7 @@ export function PaymentMethod() {
             navigation.reset({
               index: 0,
               routes: [{ name: 'SignIn' }],
-            });
+            } as any);
           });
         }
       })
@@ -111,7 +111,7 @@ export function PaymentMethod() {
   };
 
 
-  const calculateCouponDiscount = totalBill => {
+  const calculateCouponDiscount = (totalBill: any) => {
     if (!coupon || !coupon.type) return 0;
     if (coupon.type === 'fixed') {
       return parseFloat(coupon.amount);
@@ -162,7 +162,7 @@ export function PaymentMethod() {
     navigate('PromoCodeScreen', { from: 'payment', getCoupon });
   };
 
-  const getCoupon = val => {
+  const getCoupon = (val: any) => {
     setCoupon(val);
   };
 
@@ -205,7 +205,7 @@ export function PaymentMethod() {
       });
   };
 
-  const renderItem = ({ item, index, length }) => (
+  const renderItem = ({ item, index, length }: { item: any; index: any; length: any }) => (
     <TouchableOpacity
       onPress={() => paymentData(index, item?.slug)}
       activeOpacity={0.7}>
@@ -529,7 +529,7 @@ export function PaymentMethod() {
               </Text>
               <Text style={styles.totalAmount}>
                 {rideData?.currency_symbol}
-                {(Number(rideData?.total).toFixed(2) - couponDiscount) + calculateTipAmount()}
+                {Number(Number(rideData?.total).toFixed(2)) - Number(couponDiscount) + calculateTipAmount()}
               </Text>
             </View>
 
@@ -617,12 +617,12 @@ export function PaymentMethod() {
                 { borderColor: isDark ? appColors.darkBorder : appColors.border },
               ]}>
               <FlatList
-                data={zoneValue?.payment_method?.filter(item => item.name.toLowerCase() !== 'cash')}
+                data={zoneValue?.payment_method?.filter((item: any) => item.name.toLowerCase() !== 'cash')}
                 renderItem={({ item, index }) =>
                   renderItem({
                     item,
                     index,
-                    length: zoneValue?.payment_method?.filter(i => i.name.toLowerCase() !== 'cash').length,
+                    length: zoneValue?.payment_method?.filter((i: any) => i.name.toLowerCase() !== 'cash').length,
                   })
                 }
                 keyExtractor={item => item.id}

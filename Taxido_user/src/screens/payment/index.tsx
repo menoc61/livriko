@@ -15,6 +15,7 @@ import React, {
   useCallback,
 } from "react";
 import { Map, notificationHelper } from "@src/commonComponent";
+import { AppDispatch } from "@src/api/store";
 import styles from "./styles";
 import { useValues } from "@src/utils/context/index";
 import { DriverData } from "./component/driverData/index";
@@ -101,7 +102,7 @@ export function Payment() {
     return [collapsed, expanded];
   }, [taxidoSettingData?.cabbooking_values?.ads?.native_enable]);
   const sosSnapPoints = useMemo(() => ["35%"], []);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { zoneValue } = useSelector((state: any) => state.zone);
   const { sosValue } = useSelector((state: any) => state.sos);
   const { isDark, viewRTLStyle } = useValues();
@@ -119,7 +120,7 @@ export function Payment() {
         const statusChannel = `ride-status.${rideId}`;
 
         const checkRideStatus = () => {
-          dispatch(allRide({ ride_id: rideId }) as any)
+          dispatch(allRide({ ride_id: Number(rideId) }) as any)
             .unwrap()
             .then((res: any) => {
               const rideData = res?.data || res;

@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 
 export function PublishRide() {
     const [dropDownEnable, setDropdownEnable] = useState(false);
-    const [selectedOption, setSelectedOption] = useState();
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
     const { navigate } = useAppNavigation();
     const { translateData } = useSelector((state: any) => state.setting);
 

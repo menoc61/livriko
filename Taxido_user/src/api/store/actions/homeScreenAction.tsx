@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const homeScreenData = createAsyncThunk(
     HOMESCREEN,
-    async ({ service }: { service: number }) => {
+    async ({ service }: { service: string }) => {
         const response = await homeScreenService.homeScreenData({ service });
         return response?.data;
     },

@@ -44,7 +44,7 @@ export function AmbulancePayment() {
             <View style={{ left: windowHeight(15) }}>
                 <CustomRadioButton
                     selected={selectedPaymentMethod === method}
-                    onPress={() => onPress(method)}
+                    onPress={() => onPress?.(method)}
                 />
             </View>
         </View>

@@ -4,17 +4,17 @@ import styles from "../../styles";
 import { useValues } from "@src/utils/context/index";
 import Images from "@utils/images";
 import { Call, LiveShare, RatingStar, Verification } from "@utils/icons";
-import { useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "@src/utils/navigation";
 import { useSelector } from "react-redux";
 import { appColors, appFonts, windowHeight, windowWidth } from "@src/themes";
 import { URL } from "@src/api/config";
 
-export function DriverData({ driverDetails, duration }) {
+export function DriverData({ driverDetails, duration }: { driverDetails: any; duration: any }) {
   const { bgFullStyle, viewRTLStyle, textColorStyle, textRTLStyle } = useValues();
-  const { navigate } = useNavigation();
+  const { navigate } = useAppNavigation();
   const [endTime, setEndTime] = useState("");
   const [currentTime, setCurrentTime] = useState("");
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
   const { isDark } = useValues()
 
   const gotoChat = () => {
@@ -68,7 +68,7 @@ export function DriverData({ driverDetails, duration }) {
       } else if (result.action === Share.dismissedAction) {
         // dismissed
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sharing:", error.message);
     }
   };
@@ -160,7 +160,7 @@ export function DriverData({ driverDetails, duration }) {
                 ?.toString()
                 .padStart(4, "0")
                 .split("")
-                .map((digit, index) => (
+                .map((digit: any, index: number) => (
                   <View key={index} style={styles.pinBox}>
                     <Text style={styles.pin}>{digit}</Text>
                   </View>

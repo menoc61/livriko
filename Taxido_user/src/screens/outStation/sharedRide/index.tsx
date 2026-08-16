@@ -7,7 +7,7 @@ import { styles } from './styles';
 import { useSelector } from 'react-redux';
 
 export function SharedRide() {
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     <View>

@@ -16,6 +16,7 @@ import React, {
   useState,
 } from "react";
 import { Button, Header, notificationHelper } from "@src/commonComponent";
+import { AppDispatch } from "@src/api/store";
 import { external } from "../../../../styles/externalStyle";
 import { PendingDetails } from "./pendingDetails/index";
 import {
@@ -31,6 +32,7 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
+import { useAppRoute } from "@src/utils/navigation";
 import {
   CalenderSmall,
   Call,
@@ -56,7 +58,8 @@ import {
   cancelationDataGet,
 } from "@src/api/store/actions";
 import { URL } from "@src/api/config";
-import { UserRegistrationPayload } from "@src/api/interface/authInterface";
+import { UpdateRideInterface } from "@src/api/interface/allRideInterface";
+import { DriverReviewDataInterface } from "@src/api/interface/reviewInterface";
 import styless from "./styles";
 import { commonStyles } from "@src/styles/commonStyle";
 import { apiformatDates } from "@src/utils/functions";
@@ -76,9 +79,9 @@ export function PendingRideScreen() {
     isDark,
     isRTL,
   } = useValues();
-  const route = useRoute();
+  const route = useAppRoute();
   const { item, vehicleDetail, rideStatus } = route?.params;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { navigate }: any = useNavigation();
   const { rideData } = useSelector((state: any) => state.allRide);
   const [rating, setRating] = useState<number>(0);
@@ -90,7 +93,7 @@ export function PendingRideScreen() {
   const [loader, setLoader] = useState(false);
   const [paymentLoading, setpaymentLoading] = useState(false);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
-  const { canceldata } = useSelector(state => state.cancelationReason);
+  const { canceldata } = useSelector((state: any) => state.cancelationReason);
   const sheetRef = useRef<BottomSheet>(null);
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
@@ -141,10 +144,10 @@ export function PendingRideScreen() {
     sheetRef.current?.snapToIndex(0);
   };
 
-  const cancelRide = selectedItem => {
+  const cancelRide = (selectedItem: any) => {
     const ride_id = item?.id;
 
-    let payload: ReviewInterface = {
+    let payload: UpdateRideInterface = {
       status: "cancelled",
       cancellation_reason: selectedItem.title,
     };
@@ -198,7 +201,7 @@ export function PendingRideScreen() {
   };
 
   const reviewSubmit = async () => {
-    let payload: UserRegistrationPayload = {
+    let payload: DriverReviewDataInterface = {
       ride_id: item?.id,
       driver_id: item?.driver_id,
       rating: rating,
@@ -235,7 +238,7 @@ export function PendingRideScreen() {
               navigation.reset({
                 index: 0,
                 routes: [{ name: "SignIn" }],
-              });
+              } as any);
             });
           }
         })
@@ -252,7 +255,7 @@ export function PendingRideScreen() {
               navigation.reset({
                 index: 0,
                 routes: [{ name: "SignIn" }],
-              });
+              } as any);
             });
           }
         })
@@ -355,7 +358,7 @@ export function PendingRideScreen() {
     }
   };
 
-  const gotoMessage = item => {
+  const gotoMessage = (item: any) => {
     navigate("ChatScreen", {
       driverId: item?.driver?.id,
       riderId: item?.rider?.id,
@@ -365,7 +368,7 @@ export function PendingRideScreen() {
     });
   };
 
-  const gotoCall = item => {
+  const gotoCall = (item: any) => {
     const phoneNumber = `${item?.driver?.phone}`;
     Linking.openURL(`tel:${phoneNumber}`);
   };
@@ -373,7 +376,7 @@ export function PendingRideScreen() {
   const formattedDate = apiformatDates(item.created_at);
   const hasProfileImage = !!item?.driver?.driver_profile_image_url;
 
-  const handleSheetChange = useCallback(index => { }, []);
+  const handleSheetChange = useCallback((index: any) => { }, []);
 
   const onConfirmCancel = () => {
     if (!selectedItem) return;
@@ -381,7 +384,7 @@ export function PendingRideScreen() {
   };
 
   const renderItem = useCallback(
-    ({ item }) => {
+    ({ item }: { item: any }) => {
       const isSelected = selectedItem?.id === item.id;
 
       return (

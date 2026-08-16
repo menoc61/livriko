@@ -19,23 +19,23 @@ export function RideListFilter() {
     const smokingPreference = ["Non-Smoking Ride", "Smoking Allowed", "Smoke Breaks Outside Only"];
     const petPolicy = ["Pet Friendly", "No Pets Allowed"];
 
-    const handleCheckboxPress = (option) => {
+    const handleCheckboxPress = (option: any) => {
         setSelectedOption(option);
     };
 
-    const handleCheckboxPress1 = (option) => {
+    const handleCheckboxPress1 = (option: any) => {
         setSelectedOption1(option);
     };
 
-    const handleCheckboxPress2 = (option) => {
+    const handleCheckboxPress2 = (option: any) => {
         setSelectedOption2(option);
     };
 
-    const handleCheckboxPress3 = (option) => {
+    const handleCheckboxPress3 = (option: any) => {
         setSelectedOption3(option);
     };
 
-    const handleCheckboxPress4 = (option) => {
+    const handleCheckboxPress4 = (option: any) => {
         setSelectedOption4(option);
     };
 

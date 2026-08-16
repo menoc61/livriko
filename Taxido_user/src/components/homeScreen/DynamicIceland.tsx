@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { AppDispatch } from "@src/api/store";
 import { View, Text, StyleSheet, Animated, PanResponder, Dimensions, Image, Vibration, ActivityIndicator } from "react-native";
 import { appColors, fontSizes, windowHeight, windowWidth } from "@src/themes";
 import { appFonts } from "@src/themes";
@@ -20,9 +21,9 @@ const DynamicIceland: React.FC<DynamicIcelandProps> = ({ rideData }) => {
     const navigation = useAppNavigation();
 
     // --- Refs for synchronous tracking and animations ---
-    const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+    const longPressTimer = useRef<ReturnType<typeof setInterval> | null>(null);
     const isDraggable = useRef(false);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
 
     const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -160,7 +161,7 @@ const DynamicIceland: React.FC<DynamicIcelandProps> = ({ rideData }) => {
     ).current;
 
 
-    const gotoBook = async (item) => {
+    const gotoBook = async (item: any) => {
         setLoading(true);
         const locations = item?.locations || [];
         const pickupLocation = locations[0] || null;
@@ -176,12 +177,12 @@ const DynamicIceland: React.FC<DynamicIcelandProps> = ({ rideData }) => {
             const rawLocations = item?.location_coordinates ?? [];
             const filteredLocations = rawLocations
                 .filter(
-                    (coord) =>
+                    (coord: any) =>
                         coord &&
                         coord.lat != null &&
                         coord.lng != null
                 )
-                .map((coord) => ({
+                .map((coord: any) => ({
                     lat: Number(coord.lat),
                     lng: Number(coord.lng),
                 }));
@@ -262,7 +263,7 @@ const DynamicIceland: React.FC<DynamicIcelandProps> = ({ rideData }) => {
         transform: position.getTranslateTransform(),
     };
 
-    const getRideDisplayStatus = (rideData) => {
+    const getRideDisplayStatus = (rideData: any) => {
         const isFinding =
             rideData?.status === "requested" ||
             rideData?.ride_status?.slug === "requested";

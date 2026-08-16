@@ -19,9 +19,9 @@ interface DriverProfileProps {
 }
 export function DriverProfile({ borderRadius, showInfoIcon, showCarTitle }: DriverProfileProps) {
     const { colors } = useTheme();
-    const { viewRtlStyle } = useValues();
+    const { viewRTLStyle } = useValues();
     const { navigate } = useAppNavigation();
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
 
     const gotoChat = () => {
         navigate('ChatScreen')
@@ -32,11 +32,11 @@ export function DriverProfile({ borderRadius, showInfoIcon, showCarTitle }: Driv
     };
 
     return (
-        <View style={[styles.profile, { backgroundColor: colors.card, flexDirection: viewRtlStyle }]}>
-            <View style={[styles.subProfile, { flexDirection: viewRtlStyle }]}>
+        <View style={[styles.profile, { backgroundColor: colors.card, flexDirection: viewRTLStyle }]}>
+            <View style={[styles.subProfile, { flexDirection: viewRTLStyle }]}>
                 <Image source={Images.profileUser} style={[styles.userImage, { borderRadius: borderRadius }]} />
                 <View>
-                    <View style={[commonStyles.directionRow, { flexDirection: viewRtlStyle }]}>
+                    <View style={[commonStyles.directionRow, { flexDirection: viewRTLStyle }]}>
                         <Text style={[styles.userName, { color: colors.text }]}>{translateData.name}</Text>
                         {showInfoIcon && (
                             <View style={commonStyles.iconSpace}>
@@ -44,10 +44,10 @@ export function DriverProfile({ borderRadius, showInfoIcon, showCarTitle }: Driv
                             </View>
                         )}
                     </View>
-                    <View style={{ flexDirection: viewRtlStyle }}>
+                    <View style={{ flexDirection: viewRTLStyle }}>
 
                         {showCarTitle && (
-                            <View style={{ flexDirection: viewRtlStyle }}>
+                            <View style={{ flexDirection: viewRTLStyle }}>
                                 <Text style={styles.carTitle}>{translateData.gvFewsf}</Text>
                                 <View style={styles.line} />
                             </View>
@@ -60,7 +60,7 @@ export function DriverProfile({ borderRadius, showInfoIcon, showCarTitle }: Driv
                     </View>
                 </View>
             </View>
-            <View style={[commonStyles.containerBtn, { flexDirection: viewRtlStyle }]}>
+            <View style={[commonStyles.containerBtn, { flexDirection: viewRTLStyle }]}>
                 <TouchableOpacity style={[commonStyles.iconButton, { backgroundColor: colors.background, borderColor: colors.border }]} onPress={gotoChat} activeOpacity={0.7}
                 >
                     <Message />

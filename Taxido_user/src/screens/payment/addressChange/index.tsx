@@ -30,7 +30,7 @@ import {
 export function AddressChange() {
   const { isDark, viewRTLStyle, Google_Map_Key } = useValues();
   const dispatch = useDispatch<AppDispatch>();
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<any>(null);
   const navigation = useNavigation();
   const route = useRoute();
   const { rideId, rideDatas, locationIndex } =
@@ -51,7 +51,7 @@ export function AddressChange() {
   const [isUpdatingLocation, setIsUpdatingLocation] = useState(false);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [priceData, setPriceData] = useState<any>(null);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { translateData, taxidoSettingData } = useSelector(
     (state: any) => state.setting,
   );

@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { useValues } from '@src/utils/context/index';
 import { appColors, appFonts, fontSizes, windowHeight, windowWidth } from '@src/themes';
 import { Ac, Bag, PlatNumber, Right, Star1 } from '@src/utils/icons';
-import { taxidetailsObject, vehicleInterface } from '@src/api/interface/vehicleTypeInterface';
+import { vehicleInterface } from '@src/api/interface/vehicleTypeInterface';
 import { CarType } from '@src/assets/icons/carType';
 import { FuelType } from '@src/assets/icons/fuelType';
 import { Milage } from '@src/assets/icons/milage';
@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 
 type taxidetailsProps = {
   paddingHorizontal: any;
-  texiDetail?: taxidetailsObject;
+  texiDetail?: any;
   vehicleData?: vehicleInterface;
 };
 
@@ -332,7 +332,7 @@ export function TaxiDetails({ paddingHorizontal, texiDetail }: taxidetailsProps)
               marginHorizontal: windowWidth(19),
               marginTop: windowHeight(5),
             }}>
-            {texiDetail?.rental_vehicle?.interior?.map((item, index) => (
+            {texiDetail?.rental_vehicle?.interior?.map((item: any, index: any) => (
               <View
                 key={index}
                 style={{

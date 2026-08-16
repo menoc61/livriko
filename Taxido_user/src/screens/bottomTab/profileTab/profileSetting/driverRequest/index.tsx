@@ -6,6 +6,7 @@ import {
   Text,
 } from "react-native";
 import React, { useEffect } from "react";
+import { AppDispatch } from "@src/api/store";
 import { Header, HeaderTab } from "@src/commonComponent";
 import { commonStyles } from "../../../../../styles/commonStyle";
 import { styles } from "./styles";
@@ -16,7 +17,7 @@ import DriverRequestItem from "./DriverRequestItem";
 
 export function DriverRequestScreen() {
   const { bgFullStyle, linearColorStyle, textColorStyle } = useValues();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { translateData } = useSelector((state: any) => state.setting);
   const { findDriverRequestsData, loading } = useSelector(
     (state: any) => state.rideRequest,

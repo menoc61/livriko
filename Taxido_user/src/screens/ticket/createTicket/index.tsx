@@ -21,7 +21,7 @@ import {
 } from "../../../api/store/actions/ticketAction";
 import styles from "./styles";
 import { clearValue, getValue } from "@src/utils/localstorage";
-import { useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "@src/utils/navigation";
 import { URL } from "@src/api/config";
 import { useValues } from "@src/utils/context/index";
 
@@ -47,9 +47,9 @@ export function CreateTicket() {
   const [priorityError, setPriorityError] = useState("");
   const [departmentError, setDepartmentError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
-  const { goBack } = useNavigation();
+  const { goBack } = useAppNavigation();
   const {
     linearColorStyle,
     bgFullLayout,
@@ -354,7 +354,7 @@ export function CreateTicket() {
           }}
           tickIconStyle={{
             tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-          }}
+          } as any}
           textStyle={{
             textAlign: isRTL ? "right" : "left",
             color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -363,10 +363,10 @@ export function CreateTicket() {
           }}
           iconContainerStyle={{
             color: isDark ? appColors.whiteColor : appColors.blackColor,
-          }}
+          } as any}
           arrowIconStyle={{
             tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-          }}
+          } as any}
           placeholderStyle={{
             color: isDark ? appColors.darkText : appColors.regularText,
           }}
@@ -424,8 +424,8 @@ export function CreateTicket() {
               marginTop: windowHeight(5),
             }}
             tickIconStyle={{
-              tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-            }}
+            tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
+          } as any}
             textStyle={{
               textAlign: isRTL ? "right" : "left",
               color: isDark ? appColors.whiteColor : appColors.blackColor,
@@ -433,11 +433,11 @@ export function CreateTicket() {
               fontSize: fontSizes.FONT17,
             }}
             iconContainerStyle={{
-              color: isDark ? appColors.whiteColor : appColors.blackColor,
-            }}
+            color: isDark ? appColors.whiteColor : appColors.blackColor,
+          } as any}
             arrowIconStyle={{
-              tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
-            }}
+            tintColor: isDark ? appColors.whiteColor : appColors.blackColor,
+          } as any}
             placeholderStyle={{
               color: isDark ? appColors.darkText : appColors.regularText,
             }}

@@ -15,18 +15,23 @@ interface MapScreenProps {
   isDark: boolean;
   Google_Map_Key: string;
   isPulsing: boolean;
+  mapBottomPadding?: number;
 }
 
-const MapScreen: React.FC<MapScreenProps> = ({
-  mapType,
-  pickupCoords,
-  stopsCoords,
-  destinationCoords,
-  isDark,
-  Google_Map_Key,
-  isPulsing,
-}) => {
-  const webViewRef = useRef<WebView>(null);
+const MapScreen = React.forwardRef<any, MapScreenProps>(
+  (
+    {
+      mapType,
+      pickupCoords,
+      stopsCoords,
+      destinationCoords,
+      isDark,
+      Google_Map_Key,
+      isPulsing,
+    },
+    ref,
+  ) => {
+  const webViewRef = useRef<any>(null);
 
   const getMapHtml = (provider: "google_map" | "osm") => {
     if (!pickupCoords || !destinationCoords) return "";
@@ -387,7 +392,10 @@ const MapScreen: React.FC<MapScreenProps> = ({
             isPulsing,
           ])
         }
-        ref={webViewRef}
+        ref={(node: any) => {
+          webViewRef.current = node;
+          if (ref && typeof (ref as any) === "object") (ref as any).current = node;
+        }}
         originWhitelist={["*"]}
         source={{ html: getMapHtml(mapType) }}
         javaScriptEnabled={true}
@@ -395,7 +403,8 @@ const MapScreen: React.FC<MapScreenProps> = ({
       />
     </View>
   );
-};
+  },
+);
 
 export default MapScreen;
 

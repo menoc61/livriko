@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import { AppDispatch } from "@src/api/store";
 import { Text, TouchableOpacity, View, ScrollView, Modal, FlatList, Keyboard, TextInput } from "react-native";
 import { History, Calender, AddressMarker, Save, PickLocation } from "@utils/icons";
 import { styles } from "./style";
@@ -7,38 +8,36 @@ import { external } from "../../styles/externalStyle";
 import { SolidLine, Button, Header, InputText } from "@src/commonComponent";
 import { useValues } from "@src/utils/context/index";
 import { reverseGeocode, geocodeAddress, autocompletePlaces } from "@src/components/helper/geocoder";
-import { useRoute } from "@react-navigation/native";
+import { useAppNavigation, useAppRoute } from "@src/utils/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { userZone } from "../../api/store/actions/index";
 import { vehicleTypeDataGet } from "../../api/store/actions/vehicleTypeAction";
-import { appColors, windowHeight } from "@src/themes";
+import { appColors, windowHeight, windowWidth } from "@src/themes";
 import { getValue, setValue } from "@src/utils/localstorage";
-import { windowWidth } from "@src/themes";
-import { useAppNavigation } from "@src/utils/navigation";
 import { LocationContext } from "@src/utils/locationContext";
 import useStoredLocation from "@src/components/helper/useStoredLocation";
 
 export function RentalLocation() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { navigate, replace } = useAppNavigation();
   const [selectedCal, setSelectedCal] = useState(false);
   const [activeField, setActiveField] = useState<string | null>(null);
   const [destination, setDestination] = useState<string>("");
   const [stops, setStops] = useState<string[]>([]);
   const [pickupLocation, setPickupLocation] = useState<string>("");
-  const route = useRoute();
+  const route = useAppRoute();
   const { ScreenValue } = route.params || {};
   const { service_ID, service_category_ID, service_name, service_category_slug, formattedDate, formattedTime } = route.params;
   const { selectedAddress, fieldValue } = route.params || {};
   const [fieldLength, setFieldLength] = useState<number>(0);
   const [addressData, setAddressData] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isInitialFetchDone, setIsInitialFetchDone] = useState(false);
-  const { zoneValue } = useSelector((state) => state.zone);
+  const { zoneValue } = useSelector((state: any) => state.zone);
   const [recentDatas, setRecentDatas] = useState<string[]>([]);
-  const { translateData, settingData } = useSelector((state) => state.setting);
+  const { translateData, settingData } = useSelector((state: any) => state.setting);
   const context = useContext(LocationContext);
   const { latitude, longitude } = useStoredLocation();
   const { linearColorStyleTwo, linearColorStyle, viewRTLStyle, textColorStyle, bgFullLayout, textRTLStyle, isDark } = useValues();
@@ -51,7 +50,7 @@ export function RentalLocation() {
     fetchAddressFromCoords(latitude, longitude);
   }, [latitude, longitude]);
 
-  const fetchAddressFromCoords = async (latitude, longitude) => {
+  const fetchAddressFromCoords = async (latitude: any, longitude: any) => {
     if (!latitude || !longitude) return;
 
     try {
@@ -100,7 +99,7 @@ export function RentalLocation() {
     if (pickupLocation) convertToCoords(pickupLocation, setPickupCoords);
   }, [pickupLocation]);
 
-  const convertToCoords = async (address, setter) => {
+  const convertToCoords = async (address: any, setter: any) => {
     try {
       const data = await geocodeAddress(address);
       if (data.status === 'OK' && data.results?.length > 0) {
@@ -194,7 +193,7 @@ export function RentalLocation() {
   }, [activeField, stops, pickupLocation, destination]);
 
   const coordsData = async () => {
-    const geocodeAddressLocal = async (address) => {
+    const geocodeAddressLocal = async (address: any) => {
       try {
         const dataMap = await geocodeAddress(address);
         if (dataMap.status === 'OK' && dataMap.results?.length > 0) {
@@ -230,8 +229,8 @@ export function RentalLocation() {
     const payload = {
       locations: [
         {
-          lat: latitude,
-          lng: longitude,
+          lat: latitude ?? 0,
+          lng: longitude ?? 0,
         },
       ],
       service_id: service_ID.toString(),
@@ -277,7 +276,7 @@ export function RentalLocation() {
     navigate("LocationSelect", { field: activeField, screenValue: "RentalLocation", service_ID: service_ID, service_name: service_name, service_category_ID: service_category_ID, service_category_slug: service_category_slug, formattedDate: formattedDate, formattedTime: formattedTime });
   };
 
-  const handlerecentClick = (suggestion: string) => {
+  const handlerecentClick = (suggestion: any) => {
     Keyboard.dismiss();
     if (activeField === "pickupLocation") {
       setPickupLocation(suggestion.location);
@@ -310,9 +309,9 @@ export function RentalLocation() {
   };
 
   const gotoSaveLocation = async () => {
-    let token = "";
+    let token: string = "";
     await getValue("token").then(function (value) {
-      token = value;
+      token = value || "";
     });
     if (token) {
       navigate("SavedLocation", { selectedLocation: "RentalLocation", savefield: activeField, service_ID: service_ID, service_name: service_name, service_category_ID: service_category_ID, service_category_slug: service_category_slug, formattedDate: formattedDate, formattedTime: formattedTime });
@@ -328,7 +327,7 @@ export function RentalLocation() {
     }
   };
 
-  const renderItemRecentData = ({ item: suggestion, index }) => (
+  const renderItemRecentData = ({ item: suggestion, index }: { item: any; index: any }) => (
     <View style={{ paddingHorizontal: windowWidth(15) }}>
       <TouchableOpacity
         activeOpacity={0.7}
@@ -492,7 +491,7 @@ export function RentalLocation() {
           ]}
         >
           {suggestions?.length >= 3 ? (
-            suggestions?.map((suggestion, index) => (
+            suggestions?.map((suggestion: any, index: any) => (
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={[styles.addressBtn, { flexDirection: viewRTLStyle }]}

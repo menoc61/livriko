@@ -171,7 +171,7 @@ export function BookRide() {
     taxidoSettingData?.cabbooking_values?.ride?.find_driver_time_limit * 60 * 1000;
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
-  const intervalTimeRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalTimeRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [_currentNearestDriver, _setCurrentNearestDriver] = useState<any>([]);
   const dataList =
     vehicleTypedata && vehicleTypedata?.length > 0
@@ -198,7 +198,7 @@ export function BookRide() {
   const [finalPrices, setFinalPrices] = useState<{ [key: string]: string }>({});
   const mainSheetRef = useRef<BottomSheet>(null);
   const vehicleDetailsSheetRef = useRef<BottomSheetModal>(null);
-  const noVehicleSheetRef = useRef<BottomSheetModal>(null);
+  const noVehicleSheetRef = useRef<BottomSheetModal | any>(null);
   const paymentSheetRef = useRef<BottomSheetModal>(null);
   const riderSheetRef = useRef<BottomSheetModal>(null);
   const couponsSheetRef = useRef<BottomSheetModal>(null);
@@ -248,6 +248,8 @@ export function BookRide() {
     [webViewRef],
   );
 
+  const timerCancelledRef = useRef(false);
+
   const cancelTimer = useCallback(async () => {
     setIsPulsing(false);
     timerCancelledRef.current = true;
@@ -262,6 +264,56 @@ export function BookRide() {
     setRemainingTime(0);
     setIsExpanding(false);
   }, [intervalTimeRef, timerCancelledRef]);
+
+  const stopPulseAnimation = useCallback(async () => {
+    cancelTimer();
+    if (animationRef.current) {
+      clearInterval(animationRef.current);
+      animationRef.current = null;
+    }
+    setIsPulsing(false);
+  }, [animationRef, cancelTimer]);
+
+  const handleCancelRide = useCallback(async () => {
+    await cancelTimer();
+    await AsyncStorage.removeItem("current_ride_request_id");
+
+    setIsPulsing(false);
+    stopPulseAnimation();
+    setBookLoading(false);
+    setIsExpanding(false);
+
+    if (webViewRef.current) {
+      webViewRef.current.injectJavaScript("drawRouteAndMarkers();");
+    }
+    sendToWebView("fitRoute");
+
+    paymentSheetRef.current?.close();
+    mainSheetRef.current?.snapToIndex(2);
+
+    if (riderequestId) {
+      const payload = {
+        status: "cancelled",
+      };
+
+      dispatch(updateRideRequest({ payload: payload, ride_id: riderequestId }))
+        .then(_res => { console.log("Ride Cancelled Successfully", _res); })
+        .catch(_err => { console.log("Ride Cancelled Failed", _err); });
+    }
+
+    if (taxidoSettingData?.cabbooking_values?.activation?.bidding == 1) {
+    }
+  }, [
+    cancelTimer,
+    stopPulseAnimation,
+    dispatch,
+    riderequestId,
+    taxidoSettingData?.cabbooking_values?.activation?.bidding,
+    webViewRef,
+    sendToWebView,
+    paymentSheetRef,
+    mainSheetRef,
+  ]);
 
   const handleTimerComplete = useCallback(async () => {
     if (timerCancelledRef.current) return;
@@ -301,8 +353,6 @@ export function BookRide() {
   useEffect(() => {
     checkTimerRef.current = checkTimer;
   }, [checkTimer]);
-
-  const timerCancelledRef = useRef(false);
 
   const togglePreference = (item: any) => {
     if (!selectedItemData?.id) return;
@@ -776,7 +826,7 @@ export function BookRide() {
   }, [dispatch, zoneValue?.data]);
 
   const requestContactsPermission = async () => {
-    const isSimulator = Platform.OS === "ios" && !process.env.IS_DEVICE;
+    const isSimulator = Platform.OS === "ios" && !(globalThis as any).__DEV__;
     try {
       const permission =
         Platform.OS === "ios"
@@ -1225,46 +1275,6 @@ export function BookRide() {
   );
 
 
-  const handleCancelRide = useCallback(async () => {
-    await cancelTimer();
-    await AsyncStorage.removeItem("current_ride_request_id");
-
-    setIsPulsing(false);
-    stopPulseAnimation();
-    setBookLoading(false);
-    setIsExpanding(false);
-
-    if (webViewRef.current) {
-      webViewRef.current.injectJavaScript("drawRouteAndMarkers();");
-    }
-    sendToWebView("fitRoute");
-
-    paymentSheetRef.current?.close();
-    mainSheetRef.current?.snapToIndex(2);
-
-    if (riderequestId) {
-      const payload = {
-        status: "cancelled",
-      };
-
-      dispatch(updateRideRequest({ payload: payload, ride_id: riderequestId }))
-        .then(_res => { console.log("Ride Cancelled Successfully", _res); })
-        .catch(_err => { console.log("Ride Cancelled Failed", _err); });
-    }
-
-    if (taxidoSettingData?.cabbooking_values?.activation?.bidding == 1) {
-    }
-  }, [
-    cancelTimer,
-    dispatch,
-    riderequestId,
-    taxidoSettingData?.cabbooking_values?.activation?.bidding,
-    webViewRef,
-    sendToWebView,
-    paymentSheetRef,
-    mainSheetRef,
-  ]);
-
   const backScreen = () => {
     goBack();
   };
@@ -1282,15 +1292,6 @@ export function BookRide() {
     setIsPulsing(true);
     hasNavigatedRef.current = false;
   };
-
-  const stopPulseAnimation = useCallback(async () => {
-    cancelTimer();
-    if (animationRef.current) {
-      clearInterval(animationRef.current);
-      animationRef.current = null;
-    }
-    setIsPulsing(false);
-  }, [animationRef, cancelTimer]);
 
   useEffect(() => {
     return () => {

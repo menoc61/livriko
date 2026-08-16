@@ -27,7 +27,6 @@ import { selfData } from "../../../../api/store/actions/accountAction";
 import { useAppNavigation } from "@src/utils/navigation";
 import { URL } from "@src/api/config";
 import { notificationHelper } from "@src/commonComponent";
-import { useNavigation } from "@react-navigation/native";
 import { AppDispatch } from "@src/api/store";
 import {
   BottomSheetModal,
@@ -49,7 +48,7 @@ export function EditProfile() {
   const [show, setShow] = useState(false);
   const [form, setForm] = useState<any>(null);
   const [isUpdating, setIsUpdating] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const { translateData } = useSelector((state: any) => state.setting);
 
   useEffect(() => {
@@ -231,7 +230,7 @@ export function EditProfile() {
   const [imageUri, setImageUri] = useState<string | undefined>();
 
   const handleImageSelection = async (type: "camera" | "gallery") => {
-    const options = {
+    const options: any = {
       mediaType: "photo",
       maxWidth: 300,
       maxHeight: 300,

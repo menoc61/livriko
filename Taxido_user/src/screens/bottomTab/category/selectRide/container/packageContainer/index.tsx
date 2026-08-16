@@ -4,11 +4,12 @@ import { external } from '../../../../../../styles/externalStyle';
 import { PackageItem } from './packageItem/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { packageDataGet } from '@src/api/store/actions/packageAction';
+import { AppDispatch } from '@src/api/store';
 
-export function KmDetails({ onPackageSelect, onpackageVehicle, zoneValue }) {
-  const [selectedId, setSelectedId] = useState(null);
-  const { packageList } = useSelector(state => state.package);
-  const dispatch = useDispatch();
+export function KmDetails({ onPackageSelect, onpackageVehicle, zoneValue }: { onPackageSelect: any; onpackageVehicle: any; zoneValue: any }) {
+  const [selectedId, setSelectedId] = useState<any>(null);
+  const { packageList } = useSelector((state: any) => state.package);
+  const dispatch = useDispatch<AppDispatch>();
 
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export function KmDetails({ onPackageSelect, onpackageVehicle, zoneValue }) {
     }
   }, [packageList.data]);
 
-  const handlePress = (item) => {
+  const handlePress = (item: any) => {
     setSelectedId(item.id);
     const details = { hour: item.hour, distance: item.distance, id: item.id, distanceType: item.distance_type, currency_symbol: item?.currency_symbol };
     onPackageSelect(details);
@@ -40,7 +41,7 @@ export function KmDetails({ onPackageSelect, onpackageVehicle, zoneValue }) {
     onpackageVehicle(vehicleDetails);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <PackageItem
       item={item}
       isSelected={item.id === selectedId}

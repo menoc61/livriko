@@ -9,7 +9,7 @@ export function DriverSlider() {
   return (
     <Swiper
       height={308}
-      width={'100%'}
+      width={'100%' as any}
       removeClippedSubviews={false}
       style={[external.mv_13]}>
       {Images?.map((image: any, index: number) => (

@@ -8,7 +8,7 @@ import { ReviewContainer } from '../../bottomTab/category/driverDetails/componen
 import { useSelector } from 'react-redux';
 
 export function DriverInfos() {
-  const { translateData } = useSelector((state) => state.setting);
+  const { translateData } = useSelector((state: any) => state.setting);
 
   return (
     <View style={[commonStyles.flexContainer]}>

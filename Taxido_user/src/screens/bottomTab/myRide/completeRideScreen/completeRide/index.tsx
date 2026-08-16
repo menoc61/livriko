@@ -15,8 +15,8 @@ import { useSelector } from 'react-redux';
 export function CompleteRide() {
   const { textColorStyle, linearColorStyle, textRTLStyle, viewRTLStyle, bgContainer } = useValues();
   const [modalCancelVisible, setModalCancelVisible] = useState(false);
-  const { navigate } = useNavigation();
-  const { translateData } = useSelector((state) => state.setting);
+  const { navigate } = useNavigation<any>();
+  const { translateData } = useSelector((state: any) => state.setting);
 
   const handlePreeCancel = () => {
     setModalCancelVisible(true);

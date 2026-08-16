@@ -8,7 +8,6 @@ import {
     NativeMediaView,
     NativeAssetType,
     TestIds,
-    AdEventType,
 } from "react-native-google-mobile-ads";
 import { useSelector } from "react-redux";
 
@@ -29,13 +28,6 @@ const NativeAdComponent = ({ heights = windowHeight(40), adsHeight }: Props) => 
         NativeAd.createForAdRequest(TestIds.NATIVE)
             .then(ad => {
                 setNativeAd(ad);
-
-                removeListener = ad.addAdEventListener(
-                    AdEventType.LOADED,
-                    () => console.log("Native ad loaded")
-                );
-
-                ad.load();
             })
             .catch(error => console.error("Error loading native ad:", error));
 

@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-export function Shield({ color }) {
+export function Shield({ color = "#000" }: { color?: string }) {
     return (
         <Svg width={16} height={18} fill="none">
             <Path

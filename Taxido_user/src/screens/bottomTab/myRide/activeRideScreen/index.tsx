@@ -8,7 +8,7 @@ import { appColors } from '@src/themes';
 import { useSelector } from 'react-redux';
 
 export function ActiveRideScreen() {
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
 
     return (
         <Header

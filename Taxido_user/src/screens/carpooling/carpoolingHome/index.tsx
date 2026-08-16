@@ -10,14 +10,12 @@ import { useAppNavigation } from '@src/utils/navigation'
 import MapView, { Marker } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import { useValues } from '@src/utils/context/index';
-import { useNavigation } from '@react-navigation/native'
 
 
 export function CarpoolingHome() {
     const [isScrolling, setIsScrolling] = useState(true);
     const { navigate, goBack } = useAppNavigation();
     const { viewRTLStyle, Google_Map_Key } = useValues()
-    const navigation = useNavigation()
     const mapRef = useRef(null);
     const [pickupCoords, setPickupCoords] = useState(null);
     const [dropOffCoords, setDropOffCoords] = useState(null);
@@ -105,7 +103,7 @@ export function CarpoolingHome() {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.buttonView}>
-                                <Button textColor={appColors.whiteColor} title='Next' onPress={() => navigation.navigate('Stopover')} />
+                                <Button textColor={appColors.whiteColor} title='Next' onPress={() => navigate('Stopover', {})} />
                             </View>
                         </View>
                         <View style={styles.addressMainView}>

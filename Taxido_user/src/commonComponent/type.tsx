@@ -9,7 +9,7 @@ export interface FilledBarsProps {
 export interface ButtonInterface {
   title?: string;
   onPress?: () => void;
-  width?: number;
+  width?: number | string;
   height?: number;
   backgroundColor?: string;
   textColor?: string;
@@ -20,7 +20,7 @@ export interface ButtonInterface {
 export interface CheckBoxProps {
   isChecked: boolean;
   onPress: () => void;
-  label: string;
+  label?: string;
   labelStyle?: TextStyle;
   style?: any;
 }
@@ -99,7 +99,7 @@ export interface InputTextProps {
 }
 
 export interface LocationDetailsPrpos {
-  locationDetails: string;
+  locationDetails?: string;
 }
 
 export interface HeaderPropType {
@@ -161,7 +161,7 @@ export interface toggleMenuProp {
   initialPlaceholder: string;
   position: boolean;
   iconShow: boolean;
-  icon: ReactNode;
+  icon?: ReactNode;
   titleShow: boolean;
 }
 

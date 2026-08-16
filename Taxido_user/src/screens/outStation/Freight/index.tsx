@@ -1,4 +1,5 @@
 import { TextInput, View, Text, TouchableOpacity } from "react-native";
+import { AppDispatch } from "@src/api/store";
 import React, { useState } from "react";
 import { Button, CommonModal } from "@src/commonComponent";
 import { external } from "../../../styles/externalStyle";
@@ -14,9 +15,13 @@ import styles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { vehicleTypeDataGet } from "@src/api/store/actions";
 
-export function Freight({ pickupLocation, stops, destination, service_ID, zoneValue, service_name, service_category_ID, scheduleDate: scheduleDateProp, filteredLocations,
-  pickupCoords, destinationCoords }) {
-  const dispatch = useDispatch();
+export function Freight({
+  pickupLocation, stops, destination, service_ID, zoneValue, service_name, service_category_ID, scheduleDate: scheduleDateProp, filteredLocations,
+  pickupCoords, destinationCoords }: {
+    pickupLocation: any; stops: any; destination: any; service_ID: any; zoneValue: any; service_name: any; service_category_ID: any; scheduleDate?: any; filteredLocations: any;
+    pickupCoords: any; destinationCoords: any
+  }) {
+  const dispatch = useDispatch<AppDispatch>();
   const { navigate } = useAppNavigation();
   const [selected, setSelected] = useState(false);
   const { bgContainer, textColorStyle, textRTLStyle, isDark } = useValues();
@@ -28,20 +33,20 @@ export function Freight({ pickupLocation, stops, destination, service_ID, zoneVa
   const [phoneNumber, setPhoneNumber] = useState("");
   const [packageType, setPackageType] = useState("");
   const [scheduleDate, setScheduleDate] = useState(scheduleDateProp || { DateValue: "", TimeValue: "" });
-  const { translateData, taxidoSettingData } = useSelector(state => state.setting);
+  const { translateData, taxidoSettingData } = useSelector((state: any) => state.setting);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState("");
   const [bookloading, setBookLoading] = useState(false);
 
-  const handleDescriptionChange = text => {
+  const handleDescriptionChange = (text: any) => {
     setDescriptionText(text);
   };
 
-  const handleImageSelect = imageUri => {
+  const handleImageSelect = (imageUri: any) => {
     setSelectedImage(imageUri);
   };
 
-  const handlePackageTypeSelect = type => {
+  const handlePackageTypeSelect = (type: any) => {
     setPackageType(type);
   };
 

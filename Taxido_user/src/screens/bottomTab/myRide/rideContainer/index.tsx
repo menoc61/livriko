@@ -18,13 +18,13 @@ import { userRideLocation, vehicleTypeDataGet, allRides } from "@src/api/store/a
 import { AppDispatch } from "@src/api/store";
 import { useCallback } from "react";
 
-export default function RideContainer({ status }: { status: string }) {
+export default function RideContainer({ status, onPress, color, mapShow }: { status: string; onPress?: any; color?: any; mapShow?: any }) {
   const { navigate } = useAppNavigation();
   const { bgFullStyle, textColorStyle, viewRTLStyle, textRTLStyle, isDark, iconColorStyle } = useValues();
   const { colors } = useTheme();
-  const { rideDatas } = useSelector(state => state.allRide);
-  const { allVehicle } = useSelector(state => state.vehicleType);
-  const { translateData } = useSelector(state => state.setting);
+  const { rideDatas } = useSelector((state: any) => state.allRide);
+  const { allVehicle } = useSelector((state: any) => state.vehicleType);
+  const { translateData } = useSelector((state: any) => state.setting);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [page, setPage] = useState(1);
   const [initialLoading, setInitialLoading] = useState(false);
@@ -49,7 +49,7 @@ export default function RideContainer({ status }: { status: string }) {
   }, [status]);
 
   const acceptedRides = useMemo(() => {
-    return rideDatas?.data?.filter(ride => {
+    return rideDatas?.data?.filter((ride: any) => {
       const rideStatus = ride?.ride_status?.slug?.toLowerCase();
       const categorySlug = ride?.service_category?.name?.toLowerCase();
       const currentStatus = status?.toLowerCase()?.trim();
@@ -83,7 +83,7 @@ export default function RideContainer({ status }: { status: string }) {
     });
   }, [rideDatas?.data, status]);
 
-  const statusMapping = {
+  const statusMapping: Record<string, { text?: string; color?: string; backgroundColor?: string }> = {
     accepted: {
       text: "Pending",
       color: appColors.completeColor,
@@ -128,7 +128,7 @@ export default function RideContainer({ status }: { status: string }) {
   }, [rideDatas]);
 
 
-  const gotoMessage = item => {
+  const gotoMessage = (item: any) => {
     navigate("ChatScreen", {
       driverId: item?.driver?.id,
       riderId: item?.rider?.id,
@@ -138,7 +138,7 @@ export default function RideContainer({ status }: { status: string }) {
     });
   };
 
-  const gotoCall = item => {
+  const gotoCall = (item: any) => {
     const phoneNumber = `${item?.driver?.phone}`;
     Linking.openURL(`tel:${phoneNumber}`);
   };
@@ -162,7 +162,7 @@ export default function RideContainer({ status }: { status: string }) {
     }
   };
 
-  const handlePress = (selectedItem, vehicleData) => {
+  const handlePress = (selectedItem: any, vehicleData: any) => {
     let rideStatus =
       status === "Schedule"
         ? statusMapping[selectedItem?.service_category?.service_category_type]
@@ -175,7 +175,7 @@ export default function RideContainer({ status }: { status: string }) {
     });
   };
 
-  const convertToCoords = async (address) => {
+  const convertToCoords = async (address: any) => {
     try {
       const data = await geocodeAddress(address);
       if (data.status === 'OK' && data.results?.length > 0) {
@@ -191,8 +191,8 @@ export default function RideContainer({ status }: { status: string }) {
     }
   };
 
-  const convertStopsToCoords = async (stopList) => {
-    const coordsArray = [];
+  const convertStopsToCoords = async (stopList: any) => {
+    const coordsArray: any[] = [];
     for (const stop of stopList) {
       try {
         const data = await geocodeAddress(stop);
@@ -211,7 +211,7 @@ export default function RideContainer({ status }: { status: string }) {
     return coordsArray;
   };
 
-  const gotoBook = async (item) => {
+  const gotoBook = async (item: any) => {
     setRebookingRideId(item.id);
     const locations = item?.locations || [];
     const pickupLocation = locations[0] || null;
@@ -300,7 +300,7 @@ export default function RideContainer({ status }: { status: string }) {
   };
 
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: any }) => {
     const { vehicle_type_id } = item.vehicle_type_id || {};
     const vehicleData = Array.isArray(allVehicle)
       ? allVehicle.find(vehicle => vehicle?.id == vehicle_type_id)

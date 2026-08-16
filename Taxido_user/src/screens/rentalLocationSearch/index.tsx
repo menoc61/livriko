@@ -12,7 +12,7 @@ export function RentalLocationSearch({ bgColor, setPickupLocation, activeField, 
     const { isDark, viewRTLStyle } = useValues();
     const context = useContext(LocationContext);
     const { pickupLocationLocal, setPickupLocationLocal } = context;
-    const { translateData } = useSelector((state) => state.setting);
+    const { translateData } = useSelector((state: any) => state.setting);
 
     useEffect(() => {
         if (activeField === 'pickupLocation') {

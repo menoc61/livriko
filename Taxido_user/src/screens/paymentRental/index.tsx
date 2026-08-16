@@ -1,4 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Modal, TextInput, ActivityIndicator } from "react-native";
+import { AppDispatch } from "@src/api/store";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Button, notificationHelper } from "@src/commonComponent";
 import styles from "./styles";
@@ -59,7 +60,7 @@ const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: numbe
 };
 
 export function PaymentRental() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [modalVisible, setModalVisible] = useState(false);
   const [rating, setRating] = useState<number>(0);
   const { linearColorStyle, bgFullStyle, textColorStyle, textRTLStyle, viewRTLStyle, Google_Map_Key } = useValues();
@@ -91,7 +92,7 @@ export function PaymentRental() {
         const statusChannel = `ride-status.${rideId}`;
 
         const checkRideStatus = () => {
-          dispatch(allRide({ ride_id: rideId }) as any)
+          dispatch(allRide({ ride_id: Number(rideId) }) as any)
             .unwrap()
             .then((res: any) => {
               const rideData = res?.data || res;
@@ -191,7 +192,7 @@ export function PaymentRental() {
   }, [rideDatas?.driver?.id]);
 
   // Store interval reference to properly clear it
-  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
 

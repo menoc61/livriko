@@ -112,7 +112,7 @@ const VehicleItem = React.memo(({ item, isSelected, isDark, onPress, appColors, 
 ));
 
 VehicleItem.displayName = 'VehicleItem';
-const capitalizeFirst = text => {
+const capitalizeFirst = (text: string) => {
   if (!text) return "";
   return text.charAt(0).toUpperCase() + text.slice(1);
 };

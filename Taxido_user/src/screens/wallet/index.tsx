@@ -1,4 +1,5 @@
 import { View, Text } from "react-native";
+import { AppDispatch } from "@src/api/store";
 import React, { useEffect, useState } from "react";
 import { BalanceTopup, List } from "./component/index";
 import { Header, notificationHelper } from "@src/commonComponent";
@@ -9,17 +10,17 @@ import Images from "@src/utils/images";
 import { NoInternet } from "@src/components";
 import styles from "./styles";
 import { SkeltonAppPage } from "../bottomTab/profileTab/appPageScreen/component";
-import { useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "@src/utils/navigation";
 import { paymentsData } from "@src/api/store/actions";
 import { clearValue } from "@src/utils/localstorage";
 
 export function Wallet() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { textColorStyle, isDark, bgFullLayout } = useValues();
   const { walletTypedata, statusCode } = useSelector((state: any) => state.wallet);
   const [loading, setLoading] = useState(true);
   const { translateData } = useSelector((state: any) => state.setting);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   useEffect(() => {
     dispatch(paymentsData())

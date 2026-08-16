@@ -1,4 +1,5 @@
 import { Header } from "@src/commonComponent";
+import { AppDispatch } from "@src/api/store";
 import React from "react";
 import {
   Image,
@@ -26,7 +27,7 @@ export function ReferralID() {
     (state: any) => state.setting,
   );
   const { navigate }: any = useAppNavigation();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const Workdata = [
     { data: `${translateData.referral1}` },

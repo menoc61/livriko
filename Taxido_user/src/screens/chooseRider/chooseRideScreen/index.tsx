@@ -8,17 +8,16 @@ import { styles } from './styles';
 import { useValues } from '@src/utils/context/index';
 import { appColors } from '@src/themes';
 import Contacts from 'react-native-contacts';
-import { useAppNavigation } from '@src/utils/navigation';
+import { useAppRoute, useAppNavigation } from '@src/utils/navigation';
 import { useSelector } from 'react-redux';
-import { useRoute } from '@react-navigation/native';
 
 export function ChooseRiderScreen() {
   const { bgFullStyle, linearColorStyle, textColorStyle, isDark } = useValues();
   const { navigate, replace } = useAppNavigation();
   const [selected, setSelected] = useState<number | null>(null);
-  const [contacts, setContacts] = useState([]);
-  const { translateData } = useSelector((state) => state.setting);
-  const route = useRoute();
+  const [contacts, setContacts] = useState<any[]>([]);
+  const { translateData } = useSelector((state: any) => state.setting);
+  const route = useAppRoute();
   const { destination, stops, pickupLocation, service_ID, zoneValue, scheduleDate, service_category_ID, selectedImage, parcelWeight, pickupCoords, destinationCoords } = route.params || {};
   const { textRTLStyle, viewRTLStyle } = useValues();
 

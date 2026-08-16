@@ -7,10 +7,10 @@ import { FlatList } from "react-native-gesture-handler";
 
 export function EditVehicle() {
     const cars = ['Toyota Camry', 'Volkswagen', 'Montreal', 'BMW 3 Series'];
-    const [selectedCar, setSelectedCar] = useState(null);
+    const [selectedCar, setSelectedCar] = useState<string | null>(null);
     const { navigate } = useAppNavigation();
 
-    const handleCheckboxPress = (car) => {
+    const handleCheckboxPress = (car: string) => {
         setSelectedCar(car);
     };
 
@@ -18,7 +18,7 @@ export function EditVehicle() {
         navigate('SeatSet')
     }
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }: { item: string }) => (
         <TouchableOpacity onPress={() => handleCheckboxPress(item)} activeOpacity={0.7} style={{ flexDirection: 'row', alignItems: 'center', padding: windowHeight(12.1), backgroundColor: appColors.whiteColor, marginVertical: windowHeight(7), borderRadius: windowHeight(5) }}>
             <RadioButton color={appColors.primary}
                 checked={selectedCar === item}

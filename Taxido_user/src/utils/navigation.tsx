@@ -15,5 +15,5 @@ export const IsFocused = () => {
 }
 
 export const useAppRoute = <T extends keyof RootStackParamList>() => {
-  return useRoute<RouteProp<RootStackParamList, T>>();
+  return useRoute<RouteProp<RootStackParamList, T>>() as unknown as { key: string; name: T; params: any };
 }

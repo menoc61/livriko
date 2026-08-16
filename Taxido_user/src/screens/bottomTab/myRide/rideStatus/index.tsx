@@ -51,11 +51,11 @@ export function RideStatus() {
     }
   }, [selected]);
 
-  const handleTabPress = useCallback((tabId) => {
+  const handleTabPress = useCallback((tabId: any) => {
     setSelected(tabId);
   }, []);
 
-  const renderItem = useCallback(({ item }) => (
+  const renderItem = useCallback(({ item }: { item: any }) => (
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={() => handleTabPress(item.id)}
@@ -85,7 +85,7 @@ export function RideStatus() {
     </TouchableOpacity>
   ), [selected, isDark, handleTabPress]);
 
-  const keyExtractor = useCallback((item) => item.id.toString(), []);
+  const keyExtractor = useCallback((item: any) => item.id.toString(), []);
 
   if (!addressLoaded && !hasInitiallyLoaded.current) {
     return <SkeletonRideStatus />;

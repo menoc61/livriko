@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef } from "react";
+import { AppDispatch } from "@src/api/store";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useAppNavigation, useAppRoute } from "@src/utils/navigation";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -46,9 +47,9 @@ export function SavedLocation() {
     isDark,
   } = useValues();
   const { translateData } = useSelector((state: any) => state.setting);
-  const navigation = useNavigation();
-  const route = useRoute();
-  const dispatch = useDispatch();
+  const navigation = useAppNavigation();
+  const route = useAppRoute();
+  const dispatch = useDispatch<AppDispatch>();
   const { saveLocationDataGet, statusCode, loading } = useSelector(
     (state: any) => state.saveLocation,
   );
@@ -71,7 +72,7 @@ export function SavedLocation() {
   }, [navigation]);
 
   const editAddress = useCallback(
-    (locationDetails: number) => {
+    (locationDetails: any) => {
       navigation.navigate("LocationSave", {
         mode: "edit",
         locationID: locationDetails?.id,
@@ -111,7 +112,7 @@ export function SavedLocation() {
               navigation.reset({
                 index: 0,
                 routes: [{ name: "SignIn" }],
-              });
+              } as any);
             });
             return;
           }

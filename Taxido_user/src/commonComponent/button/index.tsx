@@ -24,7 +24,7 @@ export function Button({
       style={[
         styles.container,
         {
-          width: widthNumber,
+          width: widthNumber as any,
           height: windowHeight(heightNumber),
           backgroundColor:
             disabled || loading
