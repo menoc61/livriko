@@ -2,6 +2,18 @@
 
 ## ✅ Completed (this session)
 
+### 5b. Driver announcement feed — driver UI (NEW)
+- **Backend markers**:
+  - `Drivers/RideRequestResource`: now exposes `ride_type` + `is_schedule` (from new `RideRequest::isScheduleRideRequest()` helper — SCHEDULED status activity OR future `start_time`), plus `ride_status_activities` eager-loaded in the driver index to avoid N+1.
+  - `RideRequestController::filter` driver announcement branch: added `whereDoesntHave('ride')` so once a driver accepts a scheduled announcement (Ride created), it vanishes from all other drivers' feeds (SCHEDULED activity otherwise persists).
+- **Driver app (Taxido_driver)**:
+  - New `src/screen/home/component/announcement/` (index.tsx + styles.ts): dedicated `Announcement` card — Scheduled badge, destination/departure pick from `locations[]`, date+time range (from `start_time`/`end_time`), price, seats (booked/total), distance; Accept button.
+  - `homeScreen/index.tsx`: consumes the previously-unused `rideRequestdata` store (polled every 10s when online+focused); derives `announcements` (ride_type=schedule / is_schedule=true / schedule category, excluding accepted/`ride_id`); renders a horizontal announcements section overlaid above the bottom sheet (visible when no sheet open); `acceptAnnouncement` → `acceptRequestValue({ride_request_id})` → "Ride scheduled" toast + `rideDataGets` + local removal. No ringtone/pulse/auto-ignore (announcements aren't time-urgent).
+  - Driver tsc stayed at **492** (baseline); announcement component adds 0 errors (accept logic hoisted to homeScreen to avoid react-redux TS7016).
+- Tests: `CreateRideRequestValidationTest` extended with `isScheduleRideRequest` marker cases. Laravel **12/12 green**.
+
+---
+
 ### 1. User App TypeScript — 754 → 0 errors
 - Commit: `6f2b807` ("fix: resolve all 754 user app TypeScript errors to zero")
 - 136 files changed across Taxido_user screens, components, types, icons, navigation
@@ -76,9 +88,9 @@ Root causes in Laravel (`Modules/Taxido`):
    - Scheduled POST success → app shows "Ride scheduled" and resets to home (no driver-finding pulse).
    - ⏳ Remaining: driver app announcement feed UI (separate item #4).
 
-4. **Driver announcement feature**
-   - Driver posts trip: destination, date/time, departure point, available seats, price/seat
-   - Platform recommends price; rider can accept, reduce (≤10%), or increase (≤20%)
+4. **Driver announcement feature** (partially done)
+   - ✅ Driver feed UI: `homeScreen` now surfaces zone-scoped SCHEDULED announcements from the polling store with a dedicated card + Accept ("Ride scheduled"); accepted announcements disappear from all drivers' feeds.
+   - ⏳ Remaining: driver posts trip (destination, date/time, departure point, available seats, price/seat); platform recommends price; rider can accept, reduce (≤10%), or increase (≤20%) — decide whether this needs the distinct `announcements` table (data currently rides `ride_requests` via ride_type=schedule/start_time).
 
 5. **Driver registration/verification**
    - Upload: driver license, vehicle photo(s), carte grise (registration), manual plate entry
@@ -126,8 +138,15 @@ Root causes in Laravel (`Modules/Taxido`):
 
 ### Laravel (Scheduling-first)
 - `Modules/Taxido/app/Http/Traits/RideRequestTrait.php`: `isScheduled` = any future start_time; scheduled skips driver dispatch + attaches zones
-- `Modules/Taxido/app/Http/Controllers/Api/RideRequestController.php`: driver filter shows SCHEDULED announcements (zone-scoped) + assigned rides
+- `Modules/Taxido/app/Http/Controllers/Api/RideRequestController.php`: driver filter shows SCHEDULED announcements (zone-scoped) + assigned rides; announcements excluded once a Ride exists (`whereDoesntHave('ride')`)
 - `Modules/Taxido/app/Http/Requests/Api/CreateRideRequest.php`: `start_time`/`ride_type` rules + `tests/Feature/CreateRideRequestValidationTest.php`
+- `Modules/Taxido/app/Http/Resources/Drivers/RideRequestResource.php`: exposes `ride_type` + `is_schedule`
+- `Modules/Taxido/app/Models/RideRequest.php`: `isScheduleRideRequest()` helper + Carbon/RideStatusEnum imports
+
+### Taxido_driver (Announcement feed)
+- `src/screen/home/component/announcement/index.tsx` + `styles.ts`: NEW dedicated Announcement card (badge, route, date/time range, price, seats, distance, Accept)
+- `src/screen/home/component/index.tsx`: export Announcement
+- `src/screen/home/homeScreen/index.tsx`: consumes `rideRequestdata` store → announcements overlay section; `acceptAnnouncement` via `acceptRequestValue`; poll interval 20s → 10s; ScrollView import
 
 ---
 

@@ -2,6 +2,7 @@
 
 namespace Modules\Taxido\Http\Resources\Drivers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Modules\Taxido\Models\Rider;
 use App\Http\Resources\BaseResource;
@@ -37,6 +38,8 @@ class RideRequestResource extends BaseResource
       'hourly_package' => null,
       'start_time' => $this->start_time,
       'end_time' => $this->end_time,
+      'ride_type' => $this->ride_type,
+      'is_schedule' => $this->isScheduleRideRequest(),
       'cargo_image_url' => $this->cargo_image?->original_url,
       'created_at' => $this->created_at,
       'is_with_driver' => $this->is_with_driver,

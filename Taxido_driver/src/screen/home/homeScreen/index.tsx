@@ -12,6 +12,7 @@ import {
   Modal,
   ActivityIndicator,
   NativeModules,
+  ScrollView,
 } from 'react-native'
 import appColors from '../../../theme/appColors'
 import {
@@ -35,6 +36,7 @@ import {
   stopLiveLocation,
 } from '../../../commonComponents/helper/liveLocationHelper'
 import {
+  acceptRequestValue,
   currentZone,
   dashBoardData,
   driversStatus,
@@ -58,6 +60,7 @@ import BottomSheet, {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet'
 import { UpcomingRide } from '../component'
+import { Announcement } from '../component'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useValues } from '../../../utils/context'
 import { TourGuideZone, useTourGuideController } from 'rn-tourguide'
@@ -146,6 +149,13 @@ export function Home() {
   const upcomingRideRef = useRef(null)
   const [selectedRide, setSelectedRide] = useState(null)
   const [rides, setRides] = useState<any>([])
+  const rideRequestdata = useSelector(
+    (state: any) => state.rideRequest?.rideRequestdata ?? [],
+  )
+  const [announcements, setAnnouncements] = useState<any[]>([])
+  const [acceptedAnnouncements, setAcceptedAnnouncements] = useState<Set<number>>(
+    new Set(),
+  )
   const dispatch = useDispatch<AppDispatch>()
   const { navigate } = useNavigation<any>()
   const navigation = useNavigation<any>()
@@ -528,10 +538,28 @@ export function Home() {
     if (zone_id && isFocused && isOnline) {
       const intervalId = setInterval(() => {
         dispatch(rideRequestDataGet(zone_id))
-      }, 20000)
+      }, 10000)
       return () => clearInterval(intervalId)
     }
   }, [dispatch, zoneValue, isFocused, isOnline])
+
+  useEffect(() => {
+    const all = Array.isArray(rideRequestdata) ? rideRequestdata : []
+    const scheduled = all.filter(
+      (item: any) =>
+        item?.is_schedule === true ||
+        item?.ride_type === 'schedule' ||
+        ((item?.service_category?.service_category_type === 'schedule' ||
+          item?.service_category?.type === 'schedule') &&
+          !item?.ride_id),
+    )
+    setAnnouncements(
+      scheduled.filter(
+        (item: any) =>
+          item?.id && !acceptedAnnouncements.has(item?.id) && !item?.ride_id,
+      ),
+    )
+  }, [rideRequestdata, acceptedAnnouncements])
 
   const selectDriver = (ride: any) => {
     setSelectedRide(ride)
@@ -545,6 +573,46 @@ export function Home() {
       stopNotificationSound()
       bottomSheetModalRef.current?.close()
     }
+  }
+
+  const onAnnouncementAccepted = (announcementId: number) => {
+    setAcceptedAnnouncements(prev => {
+      const next = new Set(prev)
+      next.add(announcementId)
+      return next
+    })
+  }
+
+  const [acceptingAnnouncement, setAcceptingAnnouncement] = useState<number | null>(
+    null,
+  )
+
+  const acceptAnnouncement = (announcementId: number) => {
+    setAcceptingAnnouncement(announcementId)
+    const payload: any = {
+      ride_request_id: announcementId,
+    }
+
+    dispatch(acceptRequestValue(payload))
+      .unwrap()
+      .then((res: any) => {
+        setAcceptingAnnouncement(null)
+        if (res?.id) {
+          dispatch(rideDataGets())
+          notificationHelper(
+            '',
+            translateData?.rideScheduled || 'Ride scheduled',
+            'success',
+          )
+          onAnnouncementAccepted(announcementId)
+        } else {
+          notificationHelper('', res?.message, 'error')
+        }
+      })
+      .catch((err: any) => {
+        setAcceptingAnnouncement(null)
+        console.log('[homeScreen] announcement accept error:', err)
+      })
   }
   const walletBalance = Number(selfDriver?.wallet_balance ?? 0)
   const minWalletBalance = Number(
@@ -1479,6 +1547,73 @@ export function Home() {
                 {current.icon}
               </TouchableOpacity>
             </TourGuideZone>
+          </View>
+        )}
+
+      {announcements?.length > 0 &&
+        isOnline &&
+        !isBottomSheetOpen &&
+        !isBottomSheetOfflineOpen &&
+        !isBottomSheetSOSOpen &&
+        !isBottomSheetCancelOpen && (
+          <View
+            style={{
+              position: 'absolute',
+              bottom: windowHeight(18),
+              left: windowWidth(3),
+              right: windowWidth(3),
+              zIndex: 3,
+            }}
+          >
+            <View
+              style={[
+                {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: windowHeight(0.5),
+                  paddingHorizontal: windowWidth(2),
+                },
+              ]}
+            >
+              <Text
+                style={{
+                  color: isDark ? appColors.white : appColors.primaryFont,
+                  fontFamily: appFonts.medium,
+                  fontSize: fontSizes.FONT4,
+                }}
+              >
+                {translateData?.announcements || 'Announcements'}
+              </Text>
+              <Text
+                style={{
+                  color: appColors.secondaryFont,
+                  fontFamily: appFonts.regular,
+                  fontSize: fontSizes.FONT3SMALL,
+                }}
+              >
+                {announcements.length}{' '}
+                {translateData?.upcomingRides || 'rides'}
+              </Text>
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ maxHeight: windowHeight(34) }}
+            >
+              {announcements.map((item: any) => (
+                <View key={item?.id} style={{ width: windowWidth(76) }}>
+                  <Announcement
+                    announcement={item}
+                    translateData={translateData}
+                    currencySymbol={zoneValue?.currency_symbol}
+                    accepting={acceptingAnnouncement === item?.id}
+                    onAccept={acceptAnnouncement}
+                    onAccepted={onAnnouncementAccepted}
+                  />
+                </View>
+              ))}
+            </ScrollView>
           </View>
         )}
 

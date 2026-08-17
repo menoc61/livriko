@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Support\Facades\Validator;
 use Modules\Taxido\Http\Requests\Api\CreateRideRequest;
+use Modules\Taxido\Models\RideRequest;
 use Tests\TestCase;
 
 class CreateRideRequestValidationTest extends TestCase
@@ -36,5 +37,24 @@ class CreateRideRequestValidationTest extends TestCase
         ], $rules);
 
         $this->assertFalse($validator->fails(), implode(', ', $validator->errors()->all()));
+    }
+
+    public function test_is_schedule_marker_detects_future_start_time(): void
+    {
+        $ride = new RideRequest([
+            'start_time' => now()->addDays(2)->toDateTimeString(),
+        ]);
+
+        $this->assertTrue($ride->isScheduleRideRequest());
+    }
+
+    public function test_is_schedule_marker_rejects_past_instant_ride(): void
+    {
+        $ride = new RideRequest([
+            'start_time'        => now()->subDays(2)->toDateTimeString(),
+            'ride_type'         => 'instant',
+        ]);
+
+        $this->assertFalse($ride->isScheduleRideRequest());
     }
 }

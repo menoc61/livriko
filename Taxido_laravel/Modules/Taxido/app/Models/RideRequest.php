@@ -3,6 +3,7 @@
 namespace Modules\Taxido\Models;
 
 use App\Models\Attachment;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Taxido\Enums\BidStatusEnum;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Taxido\Broadcasts\RideRequestBroadcast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Taxido\Enums\RideStatusEnum;
 
 class RideRequest extends Model
 {
@@ -129,6 +131,25 @@ class RideRequest extends Model
     public function getAcceptedBid()
     {
         return $this->bids()?->where('status', BidStatusEnum::ACCEPTED)?->first();
+    }
+
+    public function isScheduleRideRequest(): bool
+    {
+        if ($this->relationLoaded('ride_status_activities')) {
+            return $this->ride_status_activities
+                ->where('status', RideStatusEnum::SCHEDULED)
+                ->isNotEmpty();
+        }
+
+        if ($this->ride_status_activities()?->where('status', RideStatusEnum::SCHEDULED)?->latest('changed_at')?->exists()) {
+            return true;
+        }
+
+        if (! empty($this->start_time)) {
+            return Carbon::parse($this->start_time)->gt(now());
+        }
+
+        return false;
     }
 
     /**

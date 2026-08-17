@@ -49,6 +49,7 @@ class RideRequestController extends Controller
                 'vehicle_type',
                 'rental_vehicle',
                 'service',
+                'ride_status_activities',
             ])->latest('created_at')?->simplePaginate($request->paginate ?? $rideRequests->count() ?: null);
 
             return RideRequestResource::collection($rideRequests ?? []);
@@ -130,7 +131,7 @@ class RideRequestController extends Controller
                         $status->where('status', RideStatusEnum::SCHEDULED);
                     })->where(function (Builder $future) {
                         $future->whereNull('start_time')->orWhere('start_time', '>', now());
-                    });
+                    })->whereDoesntHave('ride');
                     if ($zoneIds) {
                         $announcement->whereHas('zones', function ($query) use ($zoneIds) {
                             $query->whereIn('zones.id', $zoneIds);
