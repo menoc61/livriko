@@ -91,6 +91,31 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
   },
+  whereToGoButton: {
+    marginHorizontal: windowWidth(18),
+    marginTop: windowHeight(15),
+    marginBottom: windowHeight(10),
+  },
+  whereToGoButtonView: {
+    backgroundColor: appColors.primary,
+    borderRadius: windowHeight(8),
+    paddingVertical: windowHeight(14),
+    paddingHorizontal: windowWidth(20),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: appColors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  whereToGoButtonText: {
+    color: appColors.whiteColor,
+    fontSize: fontSizes.FONT18,
+    fontFamily: appFonts.medium,
+    textAlign: "center",
+  },
 });
 
 export default styles;

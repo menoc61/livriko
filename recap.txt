@@ -1,0 +1,126 @@
+# Taxido Project — Current Situation (2026-08-17)
+
+## ✅ Completed (this session)
+
+### 1. User App TypeScript — 754 → 0 errors
+- Commit: `6f2b807` ("fix: resolve all 754 user app TypeScript errors to zero")
+- 136 files changed across Taxido_user screens, components, types, icons, navigation
+- Key fixes:
+  - Migrated raw `useNavigation`/`useRoute` → typed `useAppNavigation`/`useAppRoute`
+  - Cast DropDownPicker style props (`tickIconStyle`, `iconContainerStyle`, `arrowIconStyle`) as `any` (lib types as ViewStyle)
+  - Removed invalid `defaultValue` prop on DropDownPicker
+  - Fixed `currentMinutes` → `selectedMinutes` bug in locationScreen (real runtime bug)
+  - `react-native-svg` Path: `style` prop → `fill` prop
+  - Added `react-native-progress-bar-animated` module declaration
+  - `NativeAdCard`: removed non-existent `AdEventType.LOADED` listener and `ad.load()`
+  - WebView refs: `useRef<WebView>` → `useRef<any>` to avoid `never` props
+  - Ambulance/SignIn: `useRef` args, `OtpVerificationParams` + `cca2`
+  - Package/Parcel: `onCloseMenu` removed, `useState<string|null>` typing
+  - Various navigation type mismatches, arithmetic on strings, optional chaining
+- Driver app unchanged (492 errors), Laravel tests green (8/8)
+
+### 2. Book Now / Driver Notification Crash — FIXED
+Root causes in Laravel (`Modules/Taxido`):
+- **Redis::georadius() TypeError**: `georadius(key, lng, lat, radius, 'km', 'ASC')` — options must be array, not string.  
+  Fix: `georadius(..., ['ASC'])` in `DriverStateService::findNearestDrivers`.
+- **Metadata TTL mismatch**: Redis GEO members never expire; driver metadata expires after 600s. `findNearestDrivers` skipped drivers with missing metadata → empty driver list → "no driver available" error (bidding mode).  
+  Fix: DB fallback in `findNearestDrivers` — hydrate metadata from `Driver` model when Redis key missing.
+- Result: `POST /api/rideRequest` now returns HTTP 200, creates ride, broadcasts `DriverRideRequestBroadcast` to nearest driver(s), and queues FCM push (`InstantRideRequestNotification`).
+- `BROADCAST_DRIVER=log` in .env → Reverb events go to log file; Reverb server not running (supervisor points to non-existent `/var/www/livriko.fr/admin`). Driver notification path relies on FCM push (firebase.json present, `pushNotification()` helper wired).
+
+### 3. Quick UI/nav wins — COMPLETED (Taxido_user)
+- `categoryDetail`: services grid filtered to `ride/intercity/parcel` types only.
+- `detailContainer` + `bookRide`: vehicle FlatLists filter out id 1 (Bike) & id 2 (Auto/Tricycle).
+- `homeScreen/home`: "Où allons-nous" button added before Recentbooking (navigates to `Ride`). Uses `reset()` w/ route params + `TouchableOpacity` import.
+- `locationSelect`: confirm button restyled (taller, full-width, Target icon + text row via `confirmButtonContent`).
+
+### 4. Colis flow — locationSelect map + search (Taxido_user)
+- **Confirm button fix**: `handleConfirmLocation` no longer blocked when address fetch pending — it now fetches reverse-geocode on demand before navigating back. Button `disabled` only on loading/fetch.
+- **Manual address typing + autocomplete**: `AddressInput` is now an editable search field (Search icon) with a debounced (300ms) Google Places / Nominatim autocomplete dropdown. Selecting a suggestion pans the map (injected `window.moveMapCenter` in both OSM & Google HTML) and confirms coords. Added "Use current map location" row.
+- **Nearest-first**: `geocoder.ts` `autocompletePlaces()`/`googleAutocomplete()`/`nominatimAutocomplete()` now accept an optional `location {latitude, longitude, radius}` param → Google `&location+&radius=5000`, Nominatim `&lat+&lon` for proximity-sorted results. Existing callers unaffected.
+- `locationSelect/styles.ts`: added search/dropdown/address-hint/clear styles.
+- `homeScreen` button + `detailContainer` syntax error (missing `}` from earlier conversion) fixed — tsc 0.
+
+### 5. Colis flow — PackageInfo screen (New)
+- New screen `src/screens/packageInfo/` (`index.tsx` + `styles.ts`): package-info-first workflow — receiver name, phone (CountryCodeContainer +237 default), weight (KG), PackageTypeSelector chips, PictureCargo image, description, schedule date (DateTimeSchedule modal), validation, "Continue" → `RentalLocation`.
+- Registered as stack route `PackageInfo` (types + navigation index).
+- `topCategory` `package` shortcut now routes to `PackageInfo` (was `RentalLocation`).
+- `packageInfo` params threaded through `RentalLocation` → `Rental` (DetailContainer):
+  - `rentalLocation`: `gotoNext` forwards `packageInfo` + `scheduleDate`; reads `packageInfo` from route params.
+  - `detailContainer`: `forms` now includes `description`, `selectedImage`, `weight`, `package_type`, `parcel_receiver {name, phone, country_code}`; `BookRideRequest` appends these + `cargo_image` to the `/api/rideRequest` multipart payload.
+- Laravel `CreateRideRequest` already stores weight/parcel_receiver/package_type/cargo_image (RideRequestTrait) — no backend change needed.
+
+---
+
+## 🎯 Next Work Items (from team meeting, priority order)
+
+1. ~~Quick UI/nav wins~~ ✅ DONE
+   - Services page: show only 3 services (Intra-urban, Interurban, Package delivery); comment/hide others
+   - Home page slider shortcuts: Colis shortcut → Colis page directly (not Taxi)
+   - Remove/comment out motorcycles & tricycles from vehicle choices
+   - Add "Où allons-nous" button before "Trajet Récent" on home page
+   - Make map location-confirm button clearer
+
+2. **Colis flow** (in progress)
+   - ✅ Map selection not captured → fixed (confirm fetches address on demand)
+   - ✅ Manual address typing with nearest-first suggestions (autocomplete + location bias)
+   - ✅ Package-info-first workflow: `PackageInfo` screen built (info+image+date) → locations → validate
+   - ⏳ Remaining: test package booking end-to-end (PackageInfo → RentalLocation → DetailContainer → /api/rideRequest with weight/parcel_receiver/cargo_image)
+
+3. **Scheduling-first workflow**
+   - Before picking locations, user must pick *when* (now vs later)
+   - If "now" → normal flow
+   - If later (today at another hour or another day) → publish an announcement instead of instant ride
+
+4. **Driver announcement feature**
+   - Driver posts trip: destination, date/time, departure point, available seats, price/seat
+   - Platform recommends price; rider can accept, reduce (≤10%), or increase (≤20%)
+
+5. **Driver registration/verification**
+   - Upload: driver license, vehicle photo(s), carte grise (registration), manual plate entry
+   - Admin validation → auto-verify, notify, authenticate driver app
+   - (Future) Multi-vehicle per driver + auto plate verification via external API
+
+6. **Web homepage simplification**
+   - Only verifiable/true info, maximum simplicity
+
+---
+
+## 🔧 Technical Debt / Notes
+
+- `BROADCAST_DRIVER=log` + no Reverb process → real-time WebSocket broadcasts are logged only. Production needs Reverb started and `BROADCAST_DRIVER=reverb`.
+- FCM push path exists and is the likely current notification delivery for drivers.
+- Laravel `.env` used by live site is `Taxido_laravel/.env`; supervisor `websockets.conf` points to missing `/var/www/livriko.fr/admin` — needs correct path or removal.
+- **Do not delete functionality** unless necessary; comment out per team directive.
+
+---
+
+## 📍 Key Files Modified
+
+### Laravel
+- `Modules/Taxido/app/Services/DriverStateService.php`
+  - `findNearestDrivers`: `['ASC']` options array + DB fallback for missing metadata
+
+### Taxido_user (Quick UI/nav)
+- `src/screens/bottomTab/category/categoryDetail/index.tsx`: 3-service filter
+- `src/screens/bottomTab/category/selectRide/container/detailContainer/index.tsx`: vehicle filter (1,2); colis `forms` + `BookRideRequest` now send weight/package_type/parcel_receiver/cargo_image
+- `src/screens/bookRide/index.tsx`: vehicle FlatList filter
+- `src/screens/homeScreen/home/index.tsx` + `home/styles.tsx`: "Où allons-nous" button
+- `src/screens/locationSelect/index.tsx` + `styles.ts`: editable search + autocomplete dropdown + confirm fix
+
+### Taxido_user (Colis flow)
+- `src/screens/packageInfo/index.tsx` + `styles.ts`: NEW package-info-first screen
+- `src/navigation/index.tsx` + `types.ts`: `PackageInfo` route
+- `src/components/homeScreen/topCategory/index.tsx`: `package` shortcut → `PackageInfo`
+- `src/screens/rentalLocation/index.tsx`: forwards `packageInfo`/`scheduleDate` to `Rental`
+- `src/components/helper/geocoder.ts`: optional `location` bias param for autocomplete
+
+---
+
+## 🚀 How to continue
+
+Next agent should:
+1. Read this recap
+2. Start with **Quick UI/nav wins** (item 1 above) in Taxido_user
+3. Work end-to-end per item (user app + driver app + Laravel where needed)
+4. Update this file after each major milestone

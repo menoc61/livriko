@@ -1660,7 +1660,9 @@ export function BookRide() {
                 nestedScrollEnabled={true}
                 data={
                   vehicleTypedata && vehicleTypedata.length > 0
-                    ? vehicleTypedata
+                    ? vehicleTypedata.filter(
+                        (v: any) => v?.id !== 1 && v?.id !== 2,
+                      )
                     : noserviceData
                 }
                 renderItem={renderItem}

@@ -28,7 +28,7 @@ export function RentalLocation() {
   const route = useAppRoute();
   const { ScreenValue } = route.params || {};
   const { service_ID, service_category_ID, service_name, service_category_slug, formattedDate, formattedTime } = route.params;
-  const { selectedAddress, fieldValue } = route.params || {};
+  const { selectedAddress, fieldValue, packageInfo } = route.params || {};
   const [fieldLength, setFieldLength] = useState<number>(0);
   const [addressData, setAddressData] = useState<string>("");
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -261,13 +261,17 @@ export function RentalLocation() {
   };
 
   const gotoNext = () => {
-    setLoading(false)
+    setLoading(false);
     navigate("Rental", {
       pickupLocation,
       service_ID,
       service_category_ID,
       zoneValue,
-      pickupCoords
+      pickupCoords,
+      packageInfo,
+      scheduleDate: formattedDate
+        ? { DateValue: formattedDate, TimeValue: formattedTime }
+        : undefined,
     });
   };
 

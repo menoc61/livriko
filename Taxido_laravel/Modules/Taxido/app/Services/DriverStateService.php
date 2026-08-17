@@ -136,7 +136,7 @@ class DriverStateService
 
     public function findNearestDrivers(float $lat, float $lng, float $radiusKm = 10, array $filters = []): array
     {
-        $driverIds = Redis::georadius(self::KEY_ONLINE_DRIVERS, $lng, $lat, $radiusKm, 'km', 'ASC');
+        $driverIds = Redis::georadius(self::KEY_ONLINE_DRIVERS, $lng, $lat, $radiusKm, 'km', ['ASC']);
         if (empty($driverIds)) {
             return [];
         }
@@ -144,9 +144,30 @@ class DriverStateService
         $filteredDrivers = [];
         foreach ($driverIds as $driverId) {
             $metadataStr = Redis::get(self::KEY_DRIVER_METADATA . $driverId);
-            if (!$metadataStr) continue;
-            $metadata = json_decode($metadataStr, true);
-            if (!$metadata) continue;
+            $metadata    = null;
+            if ($metadataStr) {
+                $metadata = json_decode($metadataStr, true);
+            }
+
+            // Redis metadata can expire (10 min TTL) while the GEO member
+            // persists. Fall back to the DB record so online-but-idle
+            // drivers are NOT silently dropped from the dispatch pool.
+            if (!is_array($metadata) || empty($metadata)) {
+                $driver = Driver::with('vehicle_info')->find($driverId);
+                if (!$driver) {
+                    Redis::zrem(self::KEY_ONLINE_DRIVERS, (string) $driverId);
+                    continue;
+                }
+                $metadata = [
+                    'id'                  => (string) $driver->id,
+                    'is_online'           => $driver->is_online ? '1' : '0',
+                    'is_on_ride'          => $driver->is_on_ride ? '1' : '0',
+                    'is_verified'         => $driver->is_verified ? '1' : '0',
+                    'service_id'          => (string) ($driver->service_id ?? ''),
+                    'service_category_id' => (string) ($driver->service_category_id ?? ''),
+                    'vehicle_type_id'     => (string) ($driver->vehicle_type_id ?? ''),
+                ];
+            }
 
             $match = true;
             foreach ($filters as $key => $value) {

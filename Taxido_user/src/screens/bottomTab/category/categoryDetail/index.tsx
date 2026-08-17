@@ -24,7 +24,16 @@ export function CategoryDetail() {
     (item: any) => item?.visible !== false,
   );
 
-  const combinedData = [...visibleServices, additionalItem];
+  // Only show the 3 main services per team decision:
+  // - Trajet Intra-urbain (ride type)
+  // - Trajet Interurbain (intercity type)
+  // - Livraison des colis (parcel service)
+  const allowedServiceTypes = ['ride', 'intercity', 'parcel'];
+  const filteredServices = visibleServices.filter(
+    (item: any) => allowedServiceTypes.includes(item?.type || item?.slug),
+  );
+
+  const combinedData = [...filteredServices, additionalItem];
 
   const renderItem = ({ item }: { item: any }) => {
     const service = item.type;

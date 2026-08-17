@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator, Alert, Keyboard } from "react-native";
 import { WebView } from 'react-native-webview';
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Back, AddressMarker } from "@src/utils/icons";
+import { Back, Target, AddressMarker, Search, Locate } from "@src/utils/icons";
 import { appColors } from "@src/themes";
 import Images from "@utils/images";
 import styles from "./styles";
@@ -11,7 +11,7 @@ import { external } from "@src/styles/externalStyle";
 import { useSelector } from "react-redux";
 import { setValue } from "@src/utils/localstorage";
 import useSmartLocation from "@src/components/helper/locationHelper";
-import { reverseGeocode } from "@src/components/helper/geocoder";
+import { reverseGeocode, autocompletePlaces, geocodeAddress } from "@src/components/helper/geocoder";
 
 // Define route params interface
 interface RouteParams {
@@ -46,22 +46,93 @@ const AddressInput = React.memo(({
   currentAddress,
   isDark,
   viewRTLStyle,
+  searchQuery,
+  onChangeSearch,
+  onClearSearch,
+  suggestions,
+  onSelectSuggestion,
+  onConfirmSuggestion,
 }: {
   fetchingAddress: boolean;
   currentAddress: string;
   isDark: boolean;
   viewRTLStyle: "row" | "row-reverse";
+  searchQuery: string;
+  onChangeSearch: (text: string) => void;
+  onClearSearch: () => void;
+  suggestions: any[];
+  onSelectSuggestion: (item: any) => void;
+  onConfirmSuggestion: () => void;
 }) => (
-  <View style={[styles.textInputContainer, { backgroundColor: isDark ? appColors.darkPrimary : appColors.whiteColor, flexDirection: viewRTLStyle }]}>
-    <View style={[styles.addressBtnView, { backgroundColor: isDark ? appColors.bgDark : appColors.lightGray }]}>
-      <AddressMarker />
+  <View style={styles.searchContainer}>
+    <View style={[styles.textInputContainer, { backgroundColor: isDark ? appColors.darkPrimary : appColors.whiteColor, flexDirection: viewRTLStyle }]}>
+      <View style={[styles.addressBtnView, { backgroundColor: isDark ? appColors.bgDark : appColors.lightGray }]}>
+        <Search />
+      </View>
+      <TextInput
+        style={[styles.textInput, { color: isDark ? appColors.whiteColor : appColors.blackColor }]}
+        value={searchQuery}
+        onChangeText={onChangeSearch}
+        editable={true}
+        multiline
+        placeholder={fetchingAddress ? "Locating..." : "Search for an address"}
+        placeholderTextColor={isDark ? appColors.blackColor : "#999"}
+        autoCorrect={false}
+      />
+      {searchQuery.length > 0 && (
+        <TouchableOpacity onPress={onClearSearch} style={styles.clearSearchBtn} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+          <Text style={{ fontSize: 18, color: isDark ? appColors.whiteColor : appColors.blackColor }}>×</Text>
+        </TouchableOpacity>
+      )}
     </View>
-    <TextInput
-      style={[styles.textInput, { color: isDark ? appColors.whiteColor : appColors.blackColor }]}
-      value={fetchingAddress ? "Locating..." : currentAddress || "Move map to select location"}
-      editable={false}
-      multiline
-    />
+    <View style={[styles.currentAddressHint, { backgroundColor: isDark ? appColors.darkPrimary : appColors.whiteColor }]}>
+      <AddressMarker />
+      <Text
+        numberOfLines={2}
+        style={[styles.currentAddressText, { color: isDark ? appColors.whiteColor : appColors.blackColor }]}
+      >
+        {fetchingAddress ? "Locating..." : currentAddress || "Move map to select location"}
+      </Text>
+    </View>
+    {suggestions.length > 0 && (
+      <View style={[styles.suggestionContainer, { backgroundColor: isDark ? appColors.darkPrimary : appColors.whiteColor }]}>
+        {suggestions.map((item: any, index: number) => (
+          <TouchableOpacity
+            key={`${item.place_id || item.shortAddress}-${index}`}
+            style={styles.suggestionItem}
+            onPress={() => onSelectSuggestion(item)}
+          >
+            <View style={styles.suggestionIcon}>
+              <Search />
+            </View>
+            <View style={styles.suggestionBody}>
+              <Text numberOfLines={1} style={[styles.suggestionShort, { color: isDark ? appColors.whiteColor : appColors.blackColor }]}>
+                {item.shortAddress}
+              </Text>
+              <Text numberOfLines={1} style={styles.suggestionDetail}>
+                {item.detailAddress}
+              </Text>
+            </View>
+            {item.distance && (
+              <Text style={styles.suggestionDistance}>{item.distance}</Text>
+            )}
+          </TouchableOpacity>
+        ))}
+        <TouchableOpacity style={styles.suggestionItem} onPress={onConfirmSuggestion}>
+          <View style={styles.suggestionIcon}>
+            <Locate />
+          </View>
+          <View style={styles.suggestionBody}>
+            <Text numberOfLines={1} style={[styles.suggestionShort, { color: isDark ? appColors.whiteColor : appColors.blackColor }]}>
+              Use current map location
+            </Text>
+            <Text numberOfLines={2} style={styles.suggestionDetail}>
+              {currentAddress}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )}
   </View>
 ));
 
@@ -74,20 +145,25 @@ const ConfirmButton = React.memo(({
 }: {
   onPress: () => void;
   fetchingAddress: boolean;
-  loadingMap: boolean;
-  currentAddress: string;
-  translateData: any;
+loadingMap: boolean;
+      currentAddress: string;
+      translateData: any;
 }) => (
   <TouchableOpacity
     style={styles.confirmButton}
     onPress={onPress}
-    disabled={fetchingAddress || loadingMap || !currentAddress}
+    disabled={fetchingAddress || loadingMap}
     activeOpacity={0.8}
   >
     {fetchingAddress ? (
       <ActivityIndicator size="large" color={appColors.whiteColor} />
     ) : (
-      <Text style={styles.confirmText}>{translateData.confirmLocation || "Confirm Location"}</Text>
+      <View style={styles.confirmButtonContent}>
+        <Target color={appColors.whiteColor} />
+        <Text style={styles.confirmText}>
+          {translateData.confirmLocation || "Confirmer cet emplacement"}
+        </Text>
+      </View>
     )}
   </TouchableOpacity>
 ));
@@ -105,6 +181,10 @@ export function LocationSelect() {
   const [loadingMap, setLoadingMap] = useState(true);
   const [fetchingAddress, setFetchingAddress] = useState(false);
   const debounceTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
   const { translateData, taxidoSettingData } = useSelector((state: any) => state.setting);
   const mapType = taxidoSettingData?.cabbooking_values?.location?.map_provider;
 
@@ -173,10 +253,116 @@ export function LocationSelect() {
     }
   }, []);
 
+  const moveMapTo = useCallback((latitude: number, longitude: number) => {
+    if (!webViewRef.current) return;
+    const js = `if (window.moveMapCenter) { window.moveMapCenter(${latitude}, ${longitude}); } true;`;
+    webViewRef.current.injectJavaScript(js);
+    setMapCenterCoords({ latitude, longitude });
+  }, []);
+
+  const fetchAddressSuggestions = useCallback((query: string) => {
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+
+    if (!query || query.trim().length < 3) {
+      setSuggestions([]);
+      return;
+    }
+
+    searchTimeoutRef.current = setTimeout(async () => {
+      setSuggestionsLoading(true);
+      try {
+        const location =
+          currentLatitude != null && currentLongitude != null
+            ? { latitude: currentLatitude, longitude: currentLongitude }
+            : undefined;
+        const data: any = await autocompletePlaces(query, location);
+        if (data?.status === 'OK' && data.predictions?.length) {
+          const list = data.predictions.map((item: any) => ({
+            place_id: item.place_id,
+            shortAddress: item.structured_formatting?.main_text || item.description,
+            detailAddress: item.structured_formatting?.secondary_text || '',
+            distance: item.distance_meters != null
+              ? `${(item.distance_meters / 1000).toFixed(1)} km`
+              : undefined,
+            latitude: item.latitude,
+            longitude: item.longitude,
+          }));
+          setSuggestions(list);
+        } else {
+          setSuggestions([]);
+        }
+      } catch (error) {
+        console.error("[LocationSelect] autocomplete failed:", error);
+        setSuggestions([]);
+      } finally {
+        setSuggestionsLoading(false);
+      }
+    }, 300);
+  }, [mapType, currentLatitude, currentLongitude]);
+
+  const handleSelectSuggestion = useCallback(async (item: any) => {
+    Keyboard.dismiss();
+    setSuggestions([]);
+    setSearchQuery(item.shortAddress);
+
+    let lat: number | undefined = item.latitude;
+    let lng: number | undefined = item.longitude;
+
+    if (lat == null || lng == null) {
+      try {
+        const searchTerm = item.detailAddress
+          ? `${item.shortAddress}, ${item.detailAddress}`
+          : item.shortAddress;
+        const geocodeResult = await geocodeAddress(searchTerm);
+        if (geocodeResult.status === 'OK' && geocodeResult.results?.length > 0) {
+          lat = geocodeResult.results[0].geometry.location.lat;
+          lng = geocodeResult.results[0].geometry.location.lng;
+        }
+      } catch (error) {
+        console.error("[LocationSelect] geocode failed:", error);
+      }
+    }
+
+    if (lat != null && lng != null) {
+      moveMapTo(lat, lng);
+    } else {
+      Alert.alert(translateData.locationNotReady, translateData.locationDescription);
+    }
+  }, [moveMapTo, translateData]);
+
+  const handleConfirmSuggestion = useCallback(() => {
+    Keyboard.dismiss();
+    setSuggestions([]);
+    if (mapCenterCoords) {
+      fetchAddress(mapCenterCoords.latitude, mapCenterCoords.longitude);
+    }
+  }, [mapCenterCoords, fetchAddress]);
+
+  const handleChangeSearch = useCallback((text: string) => {
+    setSearchQuery(text);
+    fetchAddressSuggestions(text);
+  }, [fetchAddressSuggestions]);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchQuery("");
+    setSuggestions([]);
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+  }, []);
+
   const handleConfirmLocation = useCallback(async () => {
-    if (!currentAddress || !mapCenterCoords || fetchingAddress) {
+    if (!mapCenterCoords) {
       Alert.alert(translateData.locationNotReady, translateData.locationDescription);
       return;
+    }
+    // If address not ready yet, fetch it now
+    if (!currentAddress || fetchingAddress) {
+      if (mapCenterCoords) {
+        await fetchAddress(mapCenterCoords.latitude, mapCenterCoords.longitude);
+      }
+      if (!currentAddress) {
+        Alert.alert(translateData.locationNotReady, translateData.locationDescription);
+        return;
+      }
     }
     if (screenValue === "HomeScreen") {
       await setValue('user_latitude_Selected', mapCenterCoords?.latitude.toString());
@@ -243,6 +429,10 @@ export function LocationSelect() {
                       };
                       window.ReactNativeWebView.postMessage(JSON.stringify(message));
                   });
+
+                  window.moveMapCenter = function(lat, lng) {
+                      map.setView([lat, lng], map.getZoom());
+                  };
               }
               initMap();
           </script>
@@ -334,6 +524,10 @@ export function LocationSelect() {
                     };
                     window.ReactNativeWebView.postMessage(JSON.stringify(message));
                 });
+
+                window.moveMapCenter = function(lat, lng) {
+                    map.panTo({ lat: lat, lng: lng });
+                };
             }
         </script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=${Google_Map_Key}&callback=initMap"></script>
@@ -385,6 +579,12 @@ export function LocationSelect() {
         currentAddress={currentAddress}
         isDark={isDark}
         viewRTLStyle={viewRTLStyle}
+        searchQuery={searchQuery}
+        onChangeSearch={handleChangeSearch}
+        onClearSearch={handleClearSearch}
+        suggestions={suggestions}
+        onSelectSuggestion={handleSelectSuggestion}
+        onConfirmSuggestion={handleConfirmSuggestion}
       />
 
       <ConfirmButton

@@ -111,6 +111,7 @@ export type RootStackParamList = {
   HomeService: Record<string, any> | undefined;
   PaymentWebView: Record<string, any> | undefined;
   RentalLocation: Record<string, any> | undefined;
+  PackageInfo: Record<string, any> | undefined;
   RentalLocationSearch: undefined;
   LocationSave: Record<string, any> | undefined;
   RentalBooking: Record<string, any> | undefined;

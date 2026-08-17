@@ -87,6 +87,7 @@ export function DetailContainer() {
     service_ID,
     zoneValue: routeZoneValue,
     service_category_ID,
+    packageInfo,
   } = routeParams;
   const { zoneValue: reduxZoneValue } = useSelector((state: any) => state.zone);
   const zoneValue = routeZoneValue || reduxZoneValue;
@@ -549,8 +550,17 @@ export function DetailContainer() {
     currency_code: zoneValue?.currency_code,
     wallet_balance: null,
     coupon: inputValue,
-    description: null,
-    selectedImage: { uri: null, type: null, fileName: null },
+    description: packageInfo?.descriptionText ?? null,
+    selectedImage: packageInfo?.selectedImage ?? { uri: null, type: null, fileName: null },
+    weight: packageInfo?.parcelWeight,
+    package_type: packageInfo?.packageType,
+    parcel_receiver: packageInfo
+      ? {
+          name: packageInfo?.receiverName,
+          phone: packageInfo?.phoneNumber,
+          country_code: packageInfo?.countryCode,
+        }
+      : null,
     hourly_package_id: selectedPackageDetails?.id,
   };
 
@@ -577,6 +587,20 @@ export function DetailContainer() {
       formData.append("coupon", forme.coupon || "");
       formData.append("description", forme.description);
       formData.append("hourly_package_id", forme.hourly_package_id);
+      formData.append("weight", forme.weight || "");
+      formData.append("package_type", forme.package_type || "");
+      if (forme.parcel_receiver) {
+        formData.append("parcel_receiver[name]", forme.parcel_receiver?.name || "");
+        formData.append("parcel_receiver[phone]", forme.parcel_receiver?.phone || "");
+        formData.append("parcel_receiver[country_code]", forme.parcel_receiver?.country_code || "");
+      }
+      if (forme.selectedImage?.[0]?.uri) {
+        formData.append("cargo_image", {
+          uri: forme.selectedImage[0].uri || {},
+          type: forme.selectedImage[0].type || {},
+          name: forme.selectedImage[0].fileName || {},
+        } as any);
+      }
 
       const response = await fetch(`${URL}/api/rideRequest`, {
         method: "POST",
@@ -724,8 +748,11 @@ export function DetailContainer() {
     Object.values(selectedPackageDetails).some(value => value !== null);
   const activePaymentMethods = zoneValue?.payment_method;
 
-  const renderItem = ({ item }: { item: any }) => (
-    <BookRideItem
+  const renderItem = ({ item }: { item: any }) => {
+    // Filter out motorcycles (Bike) and tricycles (Auto) per team decision
+    if (item?.id === 1 || item?.id === 2) return null;
+    return (
+      <BookRideItem
       couponsData={couponValue}
       item={item}
       isDisabled={isExpanding}
@@ -752,6 +779,7 @@ export function DetailContainer() {
       }}
     />
   );
+  }
 
   const renderItem1 = ({ item, index }: { item: any; index: any }) => (
     <TouchableOpacity onPress={() => paymentData(index)} activeOpacity={0.7}>

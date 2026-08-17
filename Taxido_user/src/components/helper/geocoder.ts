@@ -190,9 +190,13 @@ export const geocodeAddress = async (
 
 const nominatimAutocomplete = async (
   input: string,
+  location?: { latitude?: number; longitude?: number },
 ): Promise<GoogleAutocompleteResponse> => {
   const lang = await getLanguage();
-  const url = `${NOMINATIM_SEARCH}?format=jsonv2&addressdetails=1&q=${encodeURIComponent(input)}&limit=5&accept-language=${lang}`;
+  let url = `${NOMINATIM_SEARCH}?format=jsonv2&addressdetails=1&q=${encodeURIComponent(input)}&limit=5&accept-language=${lang}`;
+  if (location?.latitude != null && location?.longitude != null) {
+    url += `&lat=${location.latitude}&lon=${location.longitude}`;
+  }
   const res = await fetch(url, { headers: NOMINATIM_HEADERS });
   const json = await res.json();
 
@@ -220,20 +224,25 @@ const nominatimAutocomplete = async (
 
 const googleAutocomplete = async (
   input: string,
+  location?: { latitude?: number; longitude?: number; radius?: number },
 ): Promise<GoogleAutocompleteResponse> => {
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${GOOGLE_KEY}&types=geocode`;
+  let url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${GOOGLE_KEY}&types=geocode`;
+  if (location?.latitude != null && location?.longitude != null) {
+    url += `&location=${location.latitude},${location.longitude}&radius=${location.radius || 5000}`;
+  }
   const res = await fetch(url);
   return res.json();
 };
 
 export const autocompletePlaces = async (
   input: string,
+  location?: { latitude?: number; longitude?: number; radius?: number },
 ): Promise<GoogleAutocompleteResponse> => {
   if (!input || input.trim().length < 3) {
     return { status: 'ZERO_RESULTS', predictions: [] };
   }
   if (getMapProvider() === 'osm') {
-    return nominatimAutocomplete(input);
+    return nominatimAutocomplete(input, location);
   }
-  return googleAutocomplete(input);
+  return googleAutocomplete(input, location);
 };

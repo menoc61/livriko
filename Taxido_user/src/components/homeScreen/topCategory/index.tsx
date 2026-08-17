@@ -149,7 +149,7 @@ export function TopCategory({ categoryData }: any) {
           defultCoords: addressCoords,
         });
       } else if (item?.slug == "package") {
-        navigate("RentalLocation", {
+        navigate("PackageInfo", {
           service_ID: item?.service_id,
           service_name: item?.service_type,
           service_category_ID: item?.id,

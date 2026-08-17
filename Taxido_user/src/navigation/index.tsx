@@ -44,6 +44,7 @@ import { PaymentWebView } from "../screens/paymentWebview/index";
 import { DetailContainer } from "../screens/bottomTab/category/selectRide/container/detailContainer/index";
 import { RentalLocation } from "../screens/rentalLocation/index";
 import { RentalLocationSearch } from "../screens/rentalLocationSearch/index";
+import { PackageInfo } from "../screens/packageInfo/index";
 import { RentalBooking } from "../screens/rentalBooking/index";
 import { SupportTicket } from "../screens/ticket/supportTicket";
 import { TicketDetails } from "../screens/ticket/ticketDetails";
@@ -167,6 +168,7 @@ const MyStack: React.FC = () => {
             <Stack.Screen name="HomeService" component={HomeService} />
             <Stack.Screen name="PaymentWebView" component={PaymentWebView} />
             <Stack.Screen name="RentalLocation" component={RentalLocation} />
+            <Stack.Screen name="PackageInfo" component={PackageInfo} />
             <Stack.Screen
               name="RentalLocationSearch"
               component={RentalLocationSearch}

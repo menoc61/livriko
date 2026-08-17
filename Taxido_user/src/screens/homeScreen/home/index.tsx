@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { AppDispatch } from "@src/api/store";
-import { SafeAreaView, ScrollView, View, BackHandler, Text, StyleSheet, Image, Modal } from "react-native";
+import { SafeAreaView, ScrollView, View, BackHandler, Text, StyleSheet, Image, Modal, TouchableOpacity } from "react-native";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { commonStyles } from "../../../styles/commonStyle";
 import { TodayOfferContainer } from "../../../components/homeScreen/todaysOffer";
@@ -224,6 +224,37 @@ export function HomeScreen() {
                   )}
                 />
               )}
+
+              {/* "Où allons-nous" button - quick access to new ride */}
+              <TouchableOpacity
+                style={styles.whereToGoButton}
+                onPress={() => {
+                  const firstCategory = homeScreenDataPrimary?.service_categories?.[0];
+                  if (firstCategory) {
+                    reset({
+                      index: 0,
+                      routes: [{
+                        name: "Ride",
+                        params: {
+                          service_ID: firstCategory?.service_id,
+                          service_name: firstCategory?.service_type,
+                          service_category_ID: firstCategory?.id,
+                          service_category_slug: firstCategory?.slug,
+                          defultAddress: "",
+                          defultCoords: null,
+                        },
+                      }],
+                    });
+                  }
+                }}
+                activeOpacity={0.7}
+              >
+                <View style={styles.whereToGoButtonView}>
+                  <Text style={styles.whereToGoButtonText}>
+                    {translateData?.whereToGo || "Où allons-nous"}
+                  </Text>
+                </View>
+              </TouchableOpacity>
 
               {homeScreenDataPrimary?.recent_rides?.length > 0 && (
                 <Recentbooking
