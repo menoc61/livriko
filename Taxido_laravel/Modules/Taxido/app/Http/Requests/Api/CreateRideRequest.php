@@ -43,6 +43,8 @@ class CreateRideRequest extends FormRequest
                 Rule::when($this->has('total_seats'), 'lte:total_seats'),
             ],
             'preferences.*' => ['nullable','exists:preferences,id,deleted_at,NULL'],
+            'start_time' => ['nullable','date'],
+            'ride_type' => ['nullable', 'in:instant,bidding,schedule'],
         ];
     }
 

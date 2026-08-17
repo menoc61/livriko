@@ -284,9 +284,19 @@ trait RideRequestTrait
                         $isBidding        = (bool) (int) ($taxidoSettings['activation']['bidding'] ?? 0);
                         $isManualAssign   = $request->driver_assign === 'manual' && $request->driver;
                         $isFindDriver     = $service?->type === ServicesEnum::FINDDRIVER;
+                        $isScheduled      = $request->start_time && Carbon::parse($request->start_time)->gt(now());
                         $drivers = [];
 
-                        if ($isManualAssign) {
+                        if ($isScheduled) {
+                            $drivers = [];
+                            $coordinate = head($rideRequest->location_coordinates ?? []);
+                            if (is_array($coordinate) && isset($coordinate['lat'], $coordinate['lng'])) {
+                                $zones = getDriverZoneByPoint($coordinate['lat'], $coordinate['lng'])?->pluck('id')?->toArray();
+                                if (count($zones)) {
+                                    $rideRequest?->zones()?->syncWithoutDetaching($zones);
+                                }
+                            }
+                        } elseif ($isManualAssign) {
                             $drivers = [$request->driver];
                         } elseif ($isFindDriver && ($request->drivers || $request->driver_id)) {
                             $drivers = [$request->drivers ?? $request->driver_id];
@@ -299,14 +309,6 @@ trait RideRequestTrait
                         } else {
                             $drivers = $this->findIdleDrivers($rideRequest);
                         }
-
-                        $isScheduled = in_array($serviceCategory?->type, [
-                            ServiceCategoryEnum::SCHEDULE,
-                            ServiceCategoryEnum::OUTSTATION,
-                            ServiceCategoryEnum::DAILY,
-                            ServiceCategoryEnum::ONEWAY,
-                            ServiceCategoryEnum::ROUNDTRIP,
-                        ]) && $request->start_time && Carbon::parse($request->start_time)->gt(now());
 
                         $rideRequest->ride_status_activities()->create([
                             'status'     => $isScheduled ? RideStatusEnum::SCHEDULED : RideStatusEnum::REQUESTED,

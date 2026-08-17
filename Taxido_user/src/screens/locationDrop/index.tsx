@@ -65,6 +65,11 @@ export function LocationDrop() {
   } | null>(null);
   const [stopCoords, setStopCoords] = useState<Array<{ lat: number; lng: number } | null> | null>(null);
   const [minRadiusKm, setMinRadiusKm] = useState(0);
+  const defaultWhen =
+    service_category_slug?.startsWith("schedule") || field === "schedule"
+      ? "later"
+      : "now";
+  const [whenType, setWhenType] = useState<"now" | "later">(defaultWhen);
 
 
 
@@ -730,9 +735,11 @@ export function LocationDrop() {
       }
 
       const isSchedule =
+        whenType === "later" ||
         ["schedule", "schedule-parcel", "schedule-freight"].includes(
           service_category_slug,
-        ) || field === "schedule";
+        ) ||
+        field === "schedule";
 
       if (isSchedule) {
         if (!scheduleDate?.DateValue || !scheduleDate?.TimeValue) {
@@ -998,15 +1005,44 @@ export function LocationDrop() {
                 isDark ? appColors.darkPrimary : appColors.whiteColor
               }
             />
-            <View
-              style={[
-                styles.horizontalView,
-                {
-                  backgroundColor: isDark
-                    ? appColors.darkPrimary
-                    : appColors.whiteColor,
-                },
-              ]}>
+<View
+                style={[
+                  styles.horizontalView,
+                  {
+                    backgroundColor: isDark
+                      ? appColors.darkPrimary
+                      : appColors.whiteColor,
+                  },
+                ]}>
+                <View style={styles.whenSelector}>
+                  {(["now", "later"] as const).map(option => (
+                    <TouchableOpacity
+                      key={option}
+                      activeOpacity={0.8}
+                      onPress={() => setWhenType(option)}
+                      style={[
+                        styles.whenOption,
+                        whenType === option && styles.whenOptionActive,
+                      ]}>
+                      <Text
+                        style={[
+                          styles.whenOptionText,
+                          {
+                            color:
+                              whenType === option
+                                ? appColors.whiteColor
+                                : isDark
+                                  ? appColors.whiteColor
+                                  : appColors.primaryText,
+                          },
+                        ]}>
+                        {option === "now"
+                          ? "Maintenant"
+                          : "Plus tard"}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
               <View style={styles.pickupdetailsView}>
                 <View
                   style={[
@@ -1321,7 +1357,8 @@ export function LocationDrop() {
                   </View >
                 </View >
               </View >
-              {(service_category_slug === "schedule" ||
+              {(whenType === "later" ||
+                service_category_slug === "schedule" ||
                 field === "schedule" ||
                 service_category_slug === "schedule-parcel" ||
                 service_category_slug === "schedule-freight") && (

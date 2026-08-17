@@ -88,10 +88,12 @@ export function DetailContainer() {
     zoneValue: routeZoneValue,
     service_category_ID,
     packageInfo,
+    scheduleDate,
   } = routeParams;
   const { zoneValue: reduxZoneValue } = useSelector((state: any) => state.zone);
   const zoneValue = routeZoneValue || reduxZoneValue;
   const dispatch = useDispatch<AppDispatch>();
+
   const { navigate, goBack } = useAppNavigation();
   const [isChecked, setIsChecked] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
@@ -536,6 +538,35 @@ export function DetailContainer() {
         .join(", ")}]`
       : "[]";
 
+  const formatScheduleDate = ({ DateValue, TimeValue }: any) => {
+    if (!DateValue || !TimeValue) return "";
+    const [day, month, year] = String(DateValue).split(" ");
+    const monthMap: Record<string, number> = {
+      Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
+      Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12,
+    };
+    const monthIndex = monthMap[month];
+    if (!monthIndex) return "";
+    const timeParts = String(TimeValue).match(/(\d{1,2}):(\d{2})\s?(AM|PM)/);
+    if (!timeParts) return "";
+    let hours: string = timeParts[1];
+    const minutes = timeParts[2];
+    const period = timeParts[3];
+    hours =
+      period === "PM" && hours !== "12"
+        ? String(+hours + 12)
+        : hours === "12" && period === "AM"
+          ? "00"
+          : hours;
+    return `${year}-${String(monthIndex).padStart(2, "0")}-${String(
+      day,
+    ).padStart(2, "0")} ${String(hours).padStart(2, "0")}:${minutes}`;
+  };
+
+  const start_time = formatScheduleDate(
+    scheduleDate || { DateValue: null, TimeValue: null },
+  );
+
   const forms = {
     location_coordinates:
       formattedData !== "[]" ? JSON.parse(formattedData) : [],
@@ -562,6 +593,8 @@ export function DetailContainer() {
         }
       : null,
     hourly_package_id: selectedPackageDetails?.id,
+    start_time: start_time || null,
+    ride_type: start_time ? "schedule" : "instant",
   };
 
   const BookRideRequest = async (forme: any) => {
@@ -587,6 +620,8 @@ export function DetailContainer() {
       formData.append("coupon", forme.coupon || "");
       formData.append("description", forme.description);
       formData.append("hourly_package_id", forme.hourly_package_id);
+      formData.append("start_time", forme.start_time || "");
+      formData.append("ride_type", forme.ride_type || "instant");
       formData.append("weight", forme.weight || "");
       formData.append("package_type", forme.package_type || "");
       if (forme.parcel_receiver) {
@@ -625,6 +660,17 @@ export function DetailContainer() {
         setStartDriverRequest(true);
         setRideId(responseData?.id);
         setDriverId(responseData?.drivers);
+
+        if (forme?.start_time) {
+          stopPulseAnimation();
+          setIsPulsing(false);
+          notificationHelper("", "Ride scheduled successfully!", "success");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "MyTabs" as never }],
+          });
+          return;
+        }
 
         if (taxidoSettingData?.cabbooking_values?.activation?.bidding == 1) {
           try {

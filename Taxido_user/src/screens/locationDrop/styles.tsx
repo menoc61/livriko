@@ -277,5 +277,26 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed'
   },
   pickupdetailsView: { marginTop: windowHeight(5) },
+  whenSelector: {
+    flexDirection: "row",
+    marginBottom: windowHeight(14),
+    borderRadius: windowHeight(10),
+    padding: windowHeight(3),
+    backgroundColor: appColors.lightGray,
+  },
+  whenOption: {
+    flex: 1,
+    paddingVertical: windowHeight(10),
+    borderRadius: windowHeight(8),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  whenOptionActive: {
+    backgroundColor: appColors.primary,
+  },
+  whenOptionText: {
+    fontFamily: appFonts.medium,
+    fontSize: fontSizes.FONT15,
+  },
 });
 export { styles };

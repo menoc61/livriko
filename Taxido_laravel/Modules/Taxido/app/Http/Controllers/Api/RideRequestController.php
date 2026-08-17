@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Taxido\Enums\RoleEnum;
+use Modules\Taxido\Enums\RideStatusEnum;
 use Modules\Taxido\Http\Requests\Api\AcceptRideRequest;
 use Modules\Taxido\Http\Requests\Api\CreateAmbulanceRideRequest;
 use Modules\Taxido\Http\Requests\Api\CreateRentalRideRequest;
@@ -117,14 +118,38 @@ class RideRequestController extends Controller
             $rideRequests = $rideRequests->where('rider_id', getCurrentRider()?->id);
         }
 
+        $zoneIds = [];
+        if ($request->has('zones')) {
+            $zoneIds = is_array($request->zones) ? $request->zones : explode(',', $request->zones);
+        }
+
         if ($roleName == RoleEnum::DRIVER) {
-            $rideRequests = $rideRequests->whereHas('drivers', function (Builder $query) {
-                $query->where('driver_id', getCurrentUserId());
+            $rideRequests = $rideRequests->where(function (Builder $q) use ($zoneIds) {
+                $q->where(function (Builder $announcement) use ($zoneIds) {
+                    $announcement->whereHas('ride_status_activities', function (Builder $status) {
+                        $status->where('status', RideStatusEnum::SCHEDULED);
+                    })->where(function (Builder $future) {
+                        $future->whereNull('start_time')->orWhere('start_time', '>', now());
+                    });
+                    if ($zoneIds) {
+                        $announcement->whereHas('zones', function ($query) use ($zoneIds) {
+                            $query->whereIn('zones.id', $zoneIds);
+                        });
+                    }
+                })->orWhere(function (Builder $assigned) use ($zoneIds) {
+                    $assigned->whereHas('drivers', function (Builder $query) {
+                        $query->where('driver_id', getCurrentUserId());
+                    });
+                    if ($zoneIds) {
+                        $assigned->whereHas('zones', function ($query) use ($zoneIds) {
+                            $query->whereIn('zones.id', $zoneIds);
+                        });
+                    }
+                });
             });
         }
 
-        if ($request->has('zones')) {
-            $zoneIds = is_array($request->zones) ? $request->zones : explode(',', $request->zones);
+        if ($roleName != RoleEnum::DRIVER && $zoneIds) {
             $rideRequests = $rideRequests->whereHas('zones', function ($query) use ($zoneIds) {
                 $query->whereIn('zones.id', $zoneIds);
             });

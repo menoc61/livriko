@@ -1060,6 +1060,8 @@ export function BookRide() {
         : null,
 
     schedule_time: formatScheduleDate(scheduleDates),
+    start_time: formatScheduleDate(scheduleDates),
+    ride_type: formatScheduleDate(scheduleDates) ? "schedule" : "instant",
     ...(selectedImage &&
       selectedImage[0] && {
       selectedImage: {
@@ -1168,6 +1170,8 @@ export function BookRide() {
         formData.append("new_rider[phone]", newRiderPhone || "");
       }
       formData.append("schedule_time", forms.schedule_time || "");
+      formData.append("start_time", forms.start_time || "");
+      formData.append("ride_type", forms.ride_type || "instant");
       if (forms.selectedImage) {
         formData.append("cargo_image", {
           uri: forms.selectedImage.uri || {},
@@ -1222,6 +1226,16 @@ export function BookRide() {
         setRideRequestId(responseData?.id);
         setRideId(responseData?.id);
         setDriverId(responseData?.drivers);
+
+        if (forms?.start_time) {
+          stopPulseAnimation();
+          setIsPulsing(false);
+          notificationHelper("", translateData?.rideScheduled || "Ride scheduled successfully!", "success");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "MyTabs" as never }],
+          });
+        }
       } else if (responseData) {
         notificationHelper("", responseData?.message, "error");
         setBookLoading(false);

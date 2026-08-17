@@ -67,10 +67,14 @@ Root causes in Laravel (`Modules/Taxido`):
    - ✅ Package-info-first workflow: `PackageInfo` screen built (info+image+date) → locations → validate
    - ⏳ Remaining: test package booking end-to-end (PackageInfo → RentalLocation → DetailContainer → /api/rideRequest with weight/parcel_receiver/cargo_image)
 
-3. **Scheduling-first workflow**
-   - Before picking locations, user must pick *when* (now vs later)
-   - If "now" → normal flow
-   - If later (today at another hour or another day) → publish an announcement instead of instant ride
+3. **Scheduling-first workflow** ✅ (pending end-to-end test)
+   - `locationDrop` (Ride): new "Maintenant / Plus tard" gate at top of screen (before location inputs). Date+time (Calander) shown for ALL services when "Plus tard".
+   - App threads `start_time` + `ride_type="schedule"` (bookRide + detailContainer colis path) → `/api/rideRequest`. Backend already stores these fields.
+   - Backend (`RideRequestTrait`): scheduled detection broadened to **any future `start_time`** (not just SCHEDULE/OUTSTATION/etc categories) → status `SCHEDULED`, no instant driver dispatch (announcement semantics), zones attached via `syncWithoutDetaching`.
+   - Driver listing (`RideRequestController::filter`): drivers now also see SCHEDULED announcements (zone-scoped) alongside rides assigned to them — grouped query to avoid `OR` precedence bug.
+   - `CreateRideRequest`: added `start_time` (nullable date) + `ride_type` (instant|bidding|schedule) validation.
+   - Scheduled POST success → app shows "Ride scheduled" and resets to home (no driver-finding pulse).
+   - ⏳ Remaining: driver app announcement feed UI (separate item #4).
 
 4. **Driver announcement feature**
    - Driver posts trip: destination, date/time, departure point, available seats, price/seat
@@ -114,6 +118,16 @@ Root causes in Laravel (`Modules/Taxido`):
 - `src/components/homeScreen/topCategory/index.tsx`: `package` shortcut → `PackageInfo`
 - `src/screens/rentalLocation/index.tsx`: forwards `packageInfo`/`scheduleDate` to `Rental`
 - `src/components/helper/geocoder.ts`: optional `location` bias param for autocomplete
+
+### Taxido_user (Scheduling-first)
+- `src/screens/locationDrop/index.tsx` + `styles.tsx`: "Maintenant / Plus tard" when-gate + Calander shown when later; `isSchedule` gate extended
+- `src/screens/bookRide/index.tsx`: sends `start_time` + `ride_type`; scheduled success → home reset
+- `src/screens/bottomTab/category/selectRide/container/detailContainer/index.tsx`: `start_time`/`ride_type` from `scheduleDate` param; scheduled success → home reset
+
+### Laravel (Scheduling-first)
+- `Modules/Taxido/app/Http/Traits/RideRequestTrait.php`: `isScheduled` = any future start_time; scheduled skips driver dispatch + attaches zones
+- `Modules/Taxido/app/Http/Controllers/Api/RideRequestController.php`: driver filter shows SCHEDULED announcements (zone-scoped) + assigned rides
+- `Modules/Taxido/app/Http/Requests/Api/CreateRideRequest.php`: `start_time`/`ride_type` rules + `tests/Feature/CreateRideRequestValidationTest.php`
 
 ---
 
