@@ -138,7 +138,7 @@
                                     <h2 class="current-time" id="current-time"></h2>
                                     <div class="notify-data">
                                         <div class="message mt-0">
-                                            <img id="notify-image" src="{{ asset('images/favicon.svg') }}" alt="user">
+                                            <img id="notify-image" src="{{ asset('images/favicon-livriko.png') }}" alt="user">
                                             <h5>{{ config('app.name') }}</h5>
                                         </div>
 

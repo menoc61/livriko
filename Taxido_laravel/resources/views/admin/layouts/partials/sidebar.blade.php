@@ -12,9 +12,9 @@
                     @if (isset(getSettings()['general']['dark_logo_image']))
                         <img src="{{ getSettings()['general']['dark_logo_image']?->original_url }}" class="main-logo"
                             alt="logo">
-                        <img src="{{ asset('images/favicon.svg') }}" alt="favicon" class="sm-logo">
+                        <img src="{{ asset('images/favicon-livriko.png') }}" alt="favicon" class="sm-logo">
                     @else
-                        <img src="{{ asset('images/logo.svg') }}" alt="logo">
+                        <img src="{{ asset('images/logo-livriko.png') }}" alt="logo">
                     @endif
                 </a>
             </div>

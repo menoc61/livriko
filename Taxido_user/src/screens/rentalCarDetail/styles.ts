@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   confirmButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#1070b7',
     padding: 10,
     borderRadius: 5,
     flex: 1,

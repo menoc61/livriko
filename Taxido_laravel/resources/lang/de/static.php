@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'taxido' => 'Taxido',
+    'taxido' => 'Livriko',
     'dashboard' => 'Dashboard',
     'edit' => 'Bearbeiten',
     'recent_sos_alerts' => 'Aktuelle SOS-Alarme',
@@ -291,7 +291,7 @@ return [
         'footer' => 'Fußzeile',
         'faq' => 'FAQ',
         'social_links' => 'Soziale Links',
-        'why_taxido' => 'Warum Taxido?',
+        'why_taxido' => 'Warum Livriko?',
         'how_it_works' => 'Wie es funktioniert',
         'raise_a_ticket' => 'Ticket erstellen',
         'logo' => 'Kopfzeilen-Logo',
@@ -391,7 +391,7 @@ return [
         'homes' => 'Startseite',
         'screenshots' => 'Screenshot',
         'ride_together_message' => 'Lass uns zusammen fahren, vergiss nicht zu bewerten',
-        'app_title' => 'Taxido-App',
+        'app_title' => 'Livriko-App',
         'testimonials' => 'Testimonials',
         'testimonial' => 'Testimonials',
         'no_testimonials_message' => '*Um neue Testimonials hinzuzufügen, klicken Sie einfach',
@@ -554,7 +554,7 @@ return [
         'google_recaptcha' => 'Google Recaptcha',
         'admin_commissions' => 'Admin-Provisionen',
         'mode' => 'Modus',
-        'copyright' => '© Taxido Theme von Pixelstrap',
+        'copyright' => '© Livriko',
         'enter_copyright_text' => 'Copyright-Text eingeben',
         'copyright_text' => 'Copyright-Text',
         'wallet_span' => '*Aktivieren Sie die Nutzung des Wallet-Guthabens für Zahlungen beim Checkout.',

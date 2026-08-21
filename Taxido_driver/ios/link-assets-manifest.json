@@ -14,6 +14,34 @@
       "sha1": "03b3aec5e961aa91f360aac8d990d456bbca0b5a"
     },
     {
+      "path": "src/assets/fonts/Inter-Regular.ttf",
+      "sha1": "03b3aec5e961aa91f360aac8d990d456bbca0b5a"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Medium.ttf",
+      "sha1": "ad1877fb65fc6cc7e0f0f4a087c09842b9836f05"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBold.ttf",
+      "sha1": "ad1877fb65fc6cc7e0f0f4a087c09842b9836f05"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Bold.ttf",
+      "sha1": "5cb890f35454069a283b30eb05ce3f216d65ff18"
+    },
+    {
+      "path": "src/assets/fonts/DMSans-Regular.ttf",
+      "sha1": "03b3aec5e961aa91f360aac8d990d456bbca0b5a"
+    },
+    {
+      "path": "src/assets/fonts/DMSans-Medium.ttf",
+      "sha1": "ad1877fb65fc6cc7e0f0f4a087c09842b9836f05"
+    },
+    {
+      "path": "src/assets/fonts/DMSans-Bold.ttf",
+      "sha1": "5cb890f35454069a283b30eb05ce3f216d65ff18"
+    },
+    {
       "path": "src/assets/ringtone/seatbelt.mp3",
       "sha1": "1da387dbc5e41678a286a252888e5ac01c3e97a2"
     }

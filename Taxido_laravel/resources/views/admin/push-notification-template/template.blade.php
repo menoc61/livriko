@@ -125,7 +125,7 @@
                                                     <h2 class="current-time" id="current-time"></h2>
                                                     <div class="notify-data">
                                                         <div class="message mt-0">
-                                                            <img id="notify-image" src="{{ asset('images/favicon.svg') }}"
+                                                             <img id="notify-image" src="{{ asset('images/favicon-livriko.png') }}"
                                                                 alt="user">
                                                             <div class="notifi-head">
                                                                 <h5 id="notify-title">

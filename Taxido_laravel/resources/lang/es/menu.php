@@ -2,7 +2,7 @@
 
 return [
   'home' => 'Inicio',
-  'why_cabbooking' => '¿Por qué Taxido?',
+  'why_cabbooking' => '¿Por qué Livriko?',
   'how_it_works' => 'Cómo funciona',
   'blog' => 'Blogs',
   'faq' => 'Preguntas frecuentes',

@@ -349,7 +349,7 @@
                                             <div class="col-xxl-9 col-md-8">
                                                 <input type="color" class="form-control color-picker"
                                                     name="appearance[primary_color]" id="primary_color"
-                                                    value="{{ $settings['appearance']['primary_color'] ?? '#199675' }}">
+                                                    value="{{ $settings['appearance']['primary_color'] ?? '#1070b7' }}">
                                             </div>
                                         </div>
 
@@ -398,7 +398,7 @@
                                             <div class="col-md-9">
                                                 <input type="color" class="form-control color-picker"
                                                     name="appearance[sidebar_solid_color]"
-                                                    value="{{ $settings['appearance']['sidebar_solid_color'] ?? '#199675' }}">
+                                                    value="{{ $settings['appearance']['sidebar_solid_color'] ?? '#1070b7' }}">
                                             </div>
                                         </div>
 
@@ -411,7 +411,7 @@
                                             <div class="col-md-4">
                                                 <input type="color" class="form-control color-picker" id="gradient-color-1"
                                                     name="appearance[sidebar_gradient_color_1]"
-                                                    value="{{ $settings['appearance']['sidebar_gradient_color_1'] ?? '#199675' }}">
+                                                    value="{{ $settings['appearance']['sidebar_gradient_color_1'] ?? '#1070b7' }}">
                                             </div>
                                         </div>
 

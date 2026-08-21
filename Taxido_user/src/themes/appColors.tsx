@@ -60,6 +60,9 @@ export type Color = {
   switchGray: string;
   gray: string;
   sliderLine: string;
+  secondaryBlue: string;
+  gradientStart: string;
+  gradientEnd: string;
 };
 
 export const appColors: Color = {
@@ -75,7 +78,7 @@ export const appColors: Color = {
   lightPrimary: "#303C39",
   linearBorder: "rgba(149, 143, 159, 0.00)",
   subtitle: "#9BA6B8",
-  lightGreen: "#E8F4F1",
+  lightGreen: "#E8F0F8",
   whiteColor: "#fff",
   dayTextColor: "#2d4150",
   todayTextColor: "#2d4150",
@@ -91,12 +94,12 @@ export const appColors: Color = {
   bgDark: "#1F1F1F",
   darkPrimary: "#343434",
   greenColor: "#313E3B",
-  sliderColor: "#005841",
+  sliderColor: "#0E5E9E",
   readyText: "#065C46",
   notificationColor: "#F2F2F2",
   border: "#E9E9E9",
   transparentBlack: "rgba(0, 0, 0, 0.001)",
-  categoryTitle: "#8CCBBA",
+  categoryTitle: "#8CBED4",
   activeColor: "#3F8FDA",
   completeColor: "#FFB400",
   scheduleColor: "#7F00FF",
@@ -105,17 +108,17 @@ export const appColors: Color = {
   alertBg: "#F7E4E4",
   iconRed: "#FEEBEB",
   darkBorder: "#474747",
-  selectPrimary: "#E8F4F1",
+  selectPrimary: "#E8F0F8",
   textRed: "#be1823",
   iconColor: "#8F8F8F",
   warnBg: "#FDD7D7",
-  radioBg: "#52B097",
-  lightButton: "#E8F4F1",
+  radioBg: "#3F8FDA",
+  lightButton: "#E8F0F8",
   darkPurpal: "#C084FC",
   lightPurpal: "#F9F3FF",
   lightRed: "#FFEDED",
-  dotLight: "#D1EAE3",
-  dotDark: "#2F4841",
+  dotLight: "#D1E3F0",
+  dotDark: "#2F3E48",
   darkText: "#BCBCBC",
   lightPink: "#F2E5FF",
   lightYellow: "#FFF7E5",
@@ -123,5 +126,8 @@ export const appColors: Color = {
   go: "#CCCCCC",
   switchGray: "#454545",
   gray: "#777777",
-  sliderLine: '#E5E8EA'
+  sliderLine: '#E5E8EA',
+  secondaryBlue: '#074b6d',
+  gradientStart: '#1070b7',
+  gradientEnd: '#074b6d',
 };

@@ -17,12 +17,13 @@ import { BackArrow } from "@src/utils/icons";
 import { useValues } from "@src/utils/context/index";
 import { useAppNavigation } from "@src/utils/navigation";
 import Images from "@src/utils/images";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { useDispatch, useSelector } from "react-redux"; // useDispatch kept for future "recent search" quick-book reuse
 import { getValue } from "@src/utils/localstorage";
 // import { useIsFocused } from "@react-navigation/native"; // kept for future "recent search" focus reload
 import { notificationHelper } from "@src/commonComponent";
-import { RootState } from "@src/api/store";
+import { AppDispatch, RootState } from "@src/api/store";
+import { homeScreenData } from "@src/api/store/actions";
 // import { AppDispatch, RootState } from "@src/api/store"; // AppDispatch kept for future "recent search" quick-book reuse
 // import { vehicleTypeDataGet } from "@src/api/store/actions"; // kept for future "recent search" quick-book reuse
 import useStoredLocation from "@src/components/helper/useStoredLocation";
@@ -41,6 +42,7 @@ export function TopCategory({ categoryData }: any) {
     isRTL,
   } = useValues();
   const { navigate }: any = useAppNavigation();
+  const dispatch = useDispatch<AppDispatch>();
   const isScrollable = categoryData?.length > 4;
   const { translateData } = useSelector((state: any) => state.setting);
   const flatListRef = useRef<any>(null);
@@ -148,13 +150,12 @@ export function TopCategory({ categoryData }: any) {
           defultAddress: fullAddress,
           defultCoords: addressCoords,
         });
-      } else if (item?.slug == "package") {
-        navigate("PackageInfo", {
-          service_ID: item?.service_id,
-          service_name: item?.service_type,
-          service_category_ID: item?.id,
-          service_category_slug: item?.slug,
-        });
+    } else if (item?.slug == "package") {
+      dispatch(homeScreenData({ service: item?.type || "parcel" }));
+      navigate("HomeService", {
+        itemName: item?.name,
+        serviceValue: item,
+      });
       } else if (item?.slug == "schedule") {
         navigate("Ride", {
           service_ID: item?.service_id,

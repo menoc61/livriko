@@ -2,7 +2,7 @@
 
 return [
   'home' => 'Home',
-  'why_cabbooking' => 'Why Taxido?',
+  'why_cabbooking' => 'Why Livriko?',
   'how_it_works' => 'How It Works',
   'blog' => 'Blogs',
   'faq' => 'FAQ',

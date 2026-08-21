@@ -14,14 +14,27 @@ import { HomeServiceLoader } from "./component";
 export function HomeService() {
   const route = useAppRoute();
   const { itemName } = route.params || {};
-  const { homeScreenData, loading } = useSelector((state: any) => state.home);
+  const { homeScreenData, homeScreenDataPrimary, loading } = useSelector((state: any) => state.home);
   const { isDark, linearColorStyle } = useValues();
   const [isScrolling, setIsScrolling] = useState(true);
 
+  const serviceCategories =
+    homeScreenData?.service_categories?.length > 0
+      ? homeScreenData.service_categories
+      : homeScreenDataPrimary?.service_categories;
+
+  const hasPrimaryData =
+    homeScreenDataPrimary &&
+    typeof homeScreenDataPrimary === 'object' &&
+    !Array.isArray(homeScreenDataPrimary) &&
+    Object.keys(homeScreenDataPrimary).length > 0;
+
   const isDataEmpty =
-    !homeScreenData ||
-    Object.keys(homeScreenData).length === 0 ||
-    homeScreenData === null;
+    (!homeScreenData ||
+     (Array.isArray(homeScreenData) && homeScreenData.length === 0) ||
+     (typeof homeScreenData === 'object' && !Array.isArray(homeScreenData) && Object.keys(homeScreenData).length === 0) ||
+     homeScreenData === null) &&
+    !hasPrimaryData;
 
   return (
     <View
@@ -49,11 +62,11 @@ export function HomeService() {
           <HomeSlider
             onSwipeStart={() => setIsScrolling(false)}
             onSwipeEnd={() => setIsScrolling(true)}
-            bannerData={homeScreenData?.banners}
+            bannerData={homeScreenData?.banners || homeScreenDataPrimary?.banners}
           />
-          <TopCategory categoryData={homeScreenData?.service_categories} />
-          <Recentbooking recentRideData={homeScreenData?.recent_rides} />
-          <TodayOfferContainer couponsData={homeScreenData?.coupons} />
+          <TopCategory categoryData={serviceCategories} />
+          <Recentbooking recentRideData={homeScreenData?.recent_rides || homeScreenDataPrimary?.recent_rides} />
+          <TodayOfferContainer couponsData={homeScreenData?.coupons || homeScreenDataPrimary?.coupons} />
           <BottomTitle />
         </ScrollView>
       )}

@@ -239,13 +239,14 @@ export function PackageInfo() {
           />
         </TouchableOpacity>
 
-        <View style={styles.buttonView}>
-          <Button
-            title={translateData.continue || "Continue"}
-            onPress={gotoLocations}
-          />
-        </View>
       </ScrollView>
+
+      <View style={styles.buttonView}>
+        <Button
+          title={translateData.continue || "Continue"}
+          onPress={gotoLocations}
+        />
+      </View>
 
       <CommonModal
         isVisible={showDate}

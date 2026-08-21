@@ -1,9 +1,9 @@
 <?php
 $settings = getSettings();
 $bgType = $settings['appearance']['sidebar_background_type'] ?? 'solid';
-$solidColor = $settings['appearance']['sidebar_solid_color'] ?? '#199675';
-$gradientColor1 = $settings['appearance']['sidebar_gradient_color_1'] ?? '#199675';
-$gradientColor2 = $settings['appearance']['sidebar_gradient_color_2'] ?? '#212121';
+$solidColor = $settings['appearance']['sidebar_solid_color'] ?? '#1070b7';
+$gradientColor1 = $settings['appearance']['sidebar_gradient_color_1'] ?? '#1070b7';
+$gradientColor2 = $settings['appearance']['sidebar_gradient_color_2'] ?? '#074b6d';
 ?>
 
 <style>
@@ -19,6 +19,12 @@ $gradientColor2 = $settings['appearance']['sidebar_gradient_color_2'] ?? '#21212
             <?php else: ?>
                 var(--sidebar-solid-color);
             <?php endif; ?>
+    }
+
+    .logo-box img,
+    .footer-logo img {
+        max-width: 50%;
+        height: auto;
     }
 
     .sidebar {

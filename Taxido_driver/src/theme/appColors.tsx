@@ -82,6 +82,9 @@ type AppColors = {
   darkPrimary: string;
   lightGreen1:string;
   rgb:string
+  secondaryBlue: string;
+  gradientStart: string;
+  gradientEnd: string;
 }
 
 const appColors: AppColors = {
@@ -92,11 +95,11 @@ const appColors: AppColors = {
   darkText: '#BCBCBC',
   primary: '#1070b7',
   darkFillBar: '#303E3A',
-  dotPrimary: '#2F4841',
+  dotPrimary: '#2F3E48',
   lightYellow: '#FFF7E5',
   pink: '#ff00ff',
   lightPink: '#F2E5FF',
-  subPrimary: '#C9E2DB',
+  subPrimary: '#C9D8E2',
   lightGreen: '#ECF4FB',
   primaryFont: '#1F1F1F',
   secondaryFont: '#8F8F8F',
@@ -104,8 +107,8 @@ const appColors: AppColors = {
   border: '#E9E9E9',
   delBackground: '#FFEDED',
   primaryLight: '#1070b7',
-  greenborder: '#8ECCBB',
-  cardicon: '#E8F4F1',
+  greenborder: '#8EB8CC',
+  cardicon: '#E8F0F8',
   price: '#20B149',
   red: '#be1823',
   alertRed: '#be1823',
@@ -133,17 +136,17 @@ const appColors: AppColors = {
   bgDark: '#272727',
   planNote: '#F5F6F7',
   dropDownColor: '#fafafa',
-  planDot: '#47AB91',
-  planLine: '#9DCFC2',
-  round: '#1B8569',
+  planDot: '#4791AB',
+  planLine: '#9DB8CF',
+  round: '#1B6985',
   grayRound: '#D0D3D8',
-  tagColor: '#E8F5F2',
+  tagColor: '#E8F0F5',
   loader: '#EEEEEE',
   lightOrange: '#FEEBEB',
   iconColor: '#777777',
   line: '#C7CACF',
-  darkLine: '#1A8065',
-  dotDark: "#2F4841",
+  darkLine: '#1A6580',
+  dotDark: "#2F3E48",
   border1: "#E9E9E9",
   yellow: '#ECB238',
   bgColor: '#FDF7EB',
@@ -159,14 +162,17 @@ const appColors: AppColors = {
   setp: '#86909C',
   lightGray: "#F4F4F4",
   cream: '#FCF9EA',
-  mintCream: '#EEFBF6',
+  mintCream: '#EEF5FB',
   steelGray: '#86909C',
   brightRed: '#F14848',
   vividRed: '#FF4B4B',
   darkCrimson: '#B42D30',
   roseTint: '#F5D5D6',
   darkPrimary: '#0F453A',
-  lightGreen1:"#C1E2DA",
-  rgb:"rgba(211, 211, 211, 0.2)"
+  lightGreen1:"#C1D5E2",
+  rgb:"rgba(211, 211, 211, 0.2)",
+  secondaryBlue: '#074b6d',
+  gradientStart: '#1070b7',
+  gradientEnd: '#074b6d',
 }
 export default appColors

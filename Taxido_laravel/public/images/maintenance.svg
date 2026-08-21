@@ -15,14 +15,14 @@
 		.s5 { fill: #000000 } 
 		.s6 { fill: #343c45 } 
 		.s7 { fill: #f52711 } 
-		.s8 { fill: #61a601 } 
+		.s8 { fill: #1070b7 } 
 		.s9 { opacity: .1;fill: #2b3944 } 
 		.s10 { fill: #495d69 } 
 		.s11 { fill: #1d2930 } 
 		.s12 { fill: none;stroke: #ffc500;stroke-miterlimit:10;stroke-width: 10 } 
 		.s13 { fill: none;stroke: #ffc500;stroke-miterlimit:10;stroke-width: 10;stroke-dasharray: 60.5347,60.5347 } 
 		.s14 { fill: #375a64 } 
-		.s15 { fill: #199675 } 
+		.s15 { fill: #1070b7 } 
 		.s16 { fill: #595959 } 
 		.s17 { fill: #2b3944 } 
 	</style>

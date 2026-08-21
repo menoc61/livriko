@@ -230,10 +230,10 @@ export function SignUp() {
   }, []);
 
   useEffect(() => {
-    const formatted = countryList?.data?.data?.map((item: any) => ({
+    const formatted = countryList?.data?.map((item: any) => ({
       label: `${item?.name}`,
       value: item?.name,
-    }));
+    })) || [];
     setItems(formatted);
   }, [countryList]);
   const [isFocused, setIsFocused] = useState(false);

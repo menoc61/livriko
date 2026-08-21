@@ -63,6 +63,7 @@ import BottomSheet, {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SeatSelector } from "../../../../../outStation/Freight/seatSelector/index";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RootState, AppDispatch } from "@src/api/store";
@@ -181,6 +182,8 @@ export function DetailContainer() {
   const [isValid, setIsValid] = useState<boolean>(true);
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [fareValue, setFareValue] = useState<number>(0);
+  const [bookedSeats, setBookedSeats] = useState<number>(1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const TIMER_DURATION =
     taxidoSettingData?.cabbooking_values?.ride?.find_driver_time_limit *
     60 *
@@ -212,9 +215,19 @@ export function DetailContainer() {
 
   useEffect(() => {
     if (selectedItemData?.charges?.total) {
-      setFareValue(selectedItemData.charges.total);
+      const basePrice = Number(finalPrices[selectedItemData.id] ?? selectedItemData.charges.total) || 0;
+      setFareValue(basePrice * (bookedSeats || 1));
+      setSelectedFinalPrice(`${basePrice * (bookedSeats || 1)}`);
     }
   }, [selectedItemData]);
+
+  useEffect(() => {
+    if (selectedItemData?.charges?.total) {
+      const basePrice = Number(finalPrices[selectedItemData.id] ?? selectedItemData.charges.total) || 0;
+      setFareValue(basePrice * (bookedSeats || 1));
+      setSelectedFinalPrice(`${basePrice * (bookedSeats || 1)}`);
+    }
+  }, [bookedSeats]);
   const handleOpenVehicleDetails = useCallback((item: any) => {
     setFareValue(item.charges.total);
     setSelectedItemData(item);
@@ -382,8 +395,16 @@ export function DetailContainer() {
       notificationHelper("", translateData.pleaseVehicle, "error");
       return;
     }
+    if (!seletedPayment) {
+      notificationHelper("", translateData?.pleaseSelectPaymentMethod || "Please select a payment method", "error");
+      return;
+    }
+    setShowConfirmModal(true);
+  };
 
-    startTimer(); // Start the 3-minute timer
+  const confirmBooking = () => {
+    setShowConfirmModal(false);
+    startTimer();
     Keyboard.dismiss();
     setBookLoading(true);
     if (
@@ -577,7 +598,7 @@ export function DetailContainer() {
     vehicle_type_id: filteredVehicle?.id,
     distance: selectedPackageDetails?.distance,
     distance_unit: "km",
-    payment_method: "cash",
+    payment_method: seletedPayment || "cash",
     currency_code: zoneValue?.currency_code,
     wallet_balance: null,
     coupon: inputValue,
@@ -595,6 +616,8 @@ export function DetailContainer() {
     hourly_package_id: selectedPackageDetails?.id,
     start_time: start_time || null,
     ride_type: start_time ? "schedule" : "instant",
+    total_seats: selectedItemData?.max_seat ?? selectedItemData?.seat ?? null,
+    booked_seats: bookedSeats,
   };
 
   const BookRideRequest = async (forme: any) => {
@@ -809,8 +832,8 @@ export function DetailContainer() {
 
           if (taxidoSettingData?.cabbooking_values?.activation?.bidding === 0) {
             const price = finalPrices[item.id] ?? item?.charges?.total;
-            setFareValue(Number(price) || 0);
-            setSelectedFinalPrice(`${price}`);
+            setFareValue((Number(price) || 0) * (bookedSeats || 1));
+            setSelectedFinalPrice(`${(Number(price) || 0) * (bookedSeats || 1)}`);
           }
         }
       }}
@@ -1105,6 +1128,17 @@ export function DetailContainer() {
                   </View>
                 </>
               )}
+              {selectedItemData?.id &&
+                (selectedItemData?.max_seat || selectedItemData?.seat) && (
+                  <SeatSelector
+                    totalSeats={selectedItemData?.max_seat || selectedItemData?.seat || 1}
+                    value={bookedSeats}
+                    onChange={setBookedSeats}
+                    translateData={translateData}
+                    textColorStyle={textColorStyle}
+                    isDark={isDark}
+                  />
+                )}
             </ScrollView>
             <View>
               <View
@@ -1171,7 +1205,7 @@ export function DetailContainer() {
                     title={translateData.bookRide}
                     onPress={handleBookRide}
                     loading={bookLoading}
-                    disabled={bookLoading}
+                    disabled={bookLoading || !selectedItemData || !seletedPayment}
                   />
                 ) : (
                   <Button
@@ -1525,6 +1559,97 @@ export function DetailContainer() {
           </BottomSheetView>
         </BottomSheet>
       </View>
+
+      {showConfirmModal && (
+        <View style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
+        }}>
+          <View style={{
+            backgroundColor: isDark ? appColors.darkPrimary : appColors.whiteColor,
+            borderRadius: 16,
+            padding: 20,
+            width: '85%',
+            maxHeight: '80%',
+          }}>
+            <Text style={{
+              fontSize: fontSizes.FONT_18,
+              fontWeight: '700',
+              color: textColorStyle,
+              textAlign: 'center',
+              marginBottom: 16,
+            }}>
+              {translateData?.confirmBooking || 'Confirm Booking'}
+            </Text>
+
+            {/* Vehicle */}
+            <View style={{ marginBottom: 12 }}>
+              <Text style={{ color: appColors.regularText, fontSize: fontSizes.FONT_14, marginBottom: 4 }}>
+                {translateData?.vehicletype || 'Vehicle'}
+              </Text>
+              <Text style={{ color: textColorStyle, fontSize: fontSizes.FONT_16, fontWeight: '600' }}>
+                {selectedItemData?.name || '-'}
+              </Text>
+            </View>
+
+            {/* Seats */}
+            <View style={{ marginBottom: 12 }}>
+              <Text style={{ color: appColors.regularText, fontSize: fontSizes.FONT_14, marginBottom: 4 }}>
+                {translateData?.numberOfSeats || 'Number of seats'}
+              </Text>
+              <Text style={{ color: textColorStyle, fontSize: fontSizes.FONT_16, fontWeight: '600' }}>
+                {bookedSeats}
+              </Text>
+            </View>
+
+            {/* Price */}
+            <View style={{ marginBottom: 12 }}>
+              <Text style={{ color: appColors.regularText, fontSize: fontSizes.FONT_14, marginBottom: 4 }}>
+                {translateData?.tariff || 'Tariff'}
+              </Text>
+              <Text style={{ color: textColorStyle, fontSize: fontSizes.FONT_18, fontWeight: '700' }}>
+                {fareValue} {zoneValue?.currency_code}
+              </Text>
+            </View>
+
+            {/* Payment Method */}
+            <View style={{ marginBottom: 16 }}>
+              <Text style={{ color: appColors.regularText, fontSize: fontSizes.FONT_14, marginBottom: 4 }}>
+                {translateData?.paymentMethod || 'Payment Method'}
+              </Text>
+              <Text style={{ color: textColorStyle, fontSize: fontSizes.FONT_16, fontWeight: '600' }}>
+                {seletedPayment || '-'}
+              </Text>
+            </View>
+
+            {/* Buttons */}
+            <View style={{ flexDirection: 'row', gap: 12 }}>
+              <View style={{ flex: 1 }}>
+                <Button
+                  title={translateData?.cancel || 'Cancel'}
+                  backgroundColor={isDark ? appColors.darkHeader : appColors.primaryGray}
+                  textColor={appColors.regularText}
+                  onPress={() => setShowConfirmModal(false)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Button
+                  title={translateData?.confirm || 'Confirm'}
+                  onPress={confirmBooking}
+                  loading={bookLoading}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      )}
     </GestureHandlerRootView>
   );
 }

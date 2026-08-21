@@ -28,9 +28,9 @@ export function CategoryDetail() {
   // - Trajet Intra-urbain (ride type)
   // - Trajet Interurbain (intercity type)
   // - Livraison des colis (parcel service)
-  const allowedServiceTypes = ['ride', 'intercity', 'parcel'];
+  const allowedServiceTypes = ['cab', 'parcel'];
   const filteredServices = visibleServices.filter(
-    (item: any) => allowedServiceTypes.includes(item?.type || item?.slug),
+    (item: any) => allowedServiceTypes.includes(item?.type) || allowedServiceTypes.includes(item?.slug),
   );
 
   const combinedData = [...filteredServices, additionalItem];

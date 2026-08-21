@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     marginTop: windowHeight(18),
+    paddingHorizontal: windowHeight(20),
+    paddingBottom: windowHeight(16),
   },
 });
 

@@ -32,7 +32,7 @@
                         <img src="<?php echo e(getSettings()['general']['dark_logo_image']?->original_url); ?>" alt="user"
                             class="dark-mode">
                         <?php else: ?>
-                        <img src="<?php echo e(asset('images/logo.svg')); ?>" alt="user">
+                        <img src="<?php echo e(asset('images/logo-livriko.png')); ?>" alt="user">
                         <?php endif; ?>
                     </a>
                 </div>

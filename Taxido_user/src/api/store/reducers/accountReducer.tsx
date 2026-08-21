@@ -40,7 +40,7 @@ const accountSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(selfData.fulfilled, (state, action) => {
-      state.self = action.payload?.data;
+      state.self = action.payload;
       action?.payload?.address?.map((item: any) => {
         if (item.is_default == 1) state.defaultAddress = item;
       });

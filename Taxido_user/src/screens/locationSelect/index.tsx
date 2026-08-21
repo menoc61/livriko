@@ -277,16 +277,19 @@ export function LocationSelect() {
             : undefined;
         const data: any = await autocompletePlaces(query, location);
         if (data?.status === 'OK' && data.predictions?.length) {
-          const list = data.predictions.map((item: any) => ({
-            place_id: item.place_id,
-            shortAddress: item.structured_formatting?.main_text || item.description,
-            detailAddress: item.structured_formatting?.secondary_text || '',
-            distance: item.distance_meters != null
-              ? `${(item.distance_meters / 1000).toFixed(1)} km`
-              : undefined,
-            latitude: item.latitude,
-            longitude: item.longitude,
-          }));
+          const list = data.predictions
+            .map((item: any) => ({
+              place_id: item.place_id,
+              shortAddress: item.structured_formatting?.main_text || item.description,
+              detailAddress: item.structured_formatting?.secondary_text || '',
+              distance: item.distance_meters != null
+                ? `${(item.distance_meters / 1000).toFixed(1)} km`
+                : undefined,
+              _sortKey: item.distance_meters ?? Infinity,
+              latitude: item.latitude,
+              longitude: item.longitude,
+            }))
+            .sort((a: any, b: any) => a._sortKey - b._sortKey);
           setSuggestions(list);
         } else {
           setSuggestions([]);

@@ -11,12 +11,12 @@
 <path opacity="0.25" d="M13.3276 10.9301L39.2826 25.6749C40.0812 26.2062 40.6136 26.7375 40.6136 27.4017C40.6136 26.7375 40.2143 26.0734 39.2826 25.542L13.3276 10.7973C11.4641 9.73459 10 10.5316 10 12.657V12.7898C10 10.7973 11.4641 9.86742 13.3276 10.9301Z" fill="white"/>
 <defs>
 <linearGradient id="paint0_linear_7042_6471" x1="25.7061" y1="12.4071" x2="3.41236" y2="34.7444" gradientUnits="userSpaceOnUse">
-<stop stop-color="#00A0FF"/>
-<stop offset="0.007" stop-color="#00A1FF"/>
-<stop offset="0.26" stop-color="#00BEFF"/>
-<stop offset="0.512" stop-color="#00D2FF"/>
-<stop offset="0.76" stop-color="#00DFFF"/>
-<stop offset="1" stop-color="#00E3FF"/>
+<stop stop-color="#1070b7"/>
+<stop offset="0.007" stop-color="#1070b7"/>
+<stop offset="0.26" stop-color="#1070b7"/>
+<stop offset="0.512" stop-color="#1070b7"/>
+<stop offset="0.76" stop-color="#1070b7"/>
+<stop offset="1" stop-color="#1070b7"/>
 </linearGradient>
 <linearGradient id="paint1_linear_7042_6471" x1="41.7253" y1="27.4007" x2="9.51846" y2="27.4007" gradientUnits="userSpaceOnUse">
 <stop stop-color="#FFE000"/>
@@ -29,11 +29,11 @@
 <stop offset="1" stop-color="#C31162"/>
 </linearGradient>
 <linearGradient id="paint3_linear_7042_6471" x1="6.40498" y1="1.06911" x2="19.905" y2="14.5963" gradientUnits="userSpaceOnUse">
-<stop stop-color="#32A071"/>
-<stop offset="0.069" stop-color="#2DA771"/>
-<stop offset="0.476" stop-color="#15CF74"/>
-<stop offset="0.801" stop-color="#06E775"/>
-<stop offset="1" stop-color="#00F076"/>
+<stop stop-color="#1070b7"/>
+<stop offset="0.069" stop-color="#1070b7"/>
+<stop offset="0.476" stop-color="#1070b7"/>
+<stop offset="0.801" stop-color="#1070b7"/>
+<stop offset="1" stop-color="#1070b7"/>
 </linearGradient>
 </defs>
 </svg>

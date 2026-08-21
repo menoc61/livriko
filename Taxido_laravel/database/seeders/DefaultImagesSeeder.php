@@ -14,9 +14,9 @@ class DefaultImagesSeeder extends Seeder
     public function run()
     {
         $defaultImagePaths = [
-            'images/light.svg',
-            'images/dark.svg',
-            'images/favicon.svg',
+            'images/logo-livriko.png',
+            'images/logo-dark-livriko.png',
+            'images/favicon-livriko.png',
         ];
 
         $attachments = createAttachment();

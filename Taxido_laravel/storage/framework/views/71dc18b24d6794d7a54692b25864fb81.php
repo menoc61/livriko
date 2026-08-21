@@ -15,8 +15,8 @@ function hexToRgb($hex) {
     return "$r, $g, $b";
 }
 
-$primaryColorRgb = hexToRgb($settings['appearance']['primary_color'] ?? '#199675');
-$secondaryColorRgb = hexToRgb($settings['appearance']['secondary_color'] ?? '#115444');
+$primaryColorRgb = hexToRgb($settings['appearance']['primary_color'] ?? '#1070b7');
+$secondaryColorRgb = hexToRgb($settings['appearance']['secondary_color'] ?? '#be1823');
 ?>
 
 <style>

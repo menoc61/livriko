@@ -25,7 +25,7 @@
         var directionsRenderer = new google.maps.DirectionsRenderer({
             map: map,
             polylineOptions: {
-                strokeColor: '#199675',
+                strokeColor: '#1070b7',
                 strokeWeight: 5,
                 strokeOpacity: 0.8
             }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { AppDispatch } from "@src/api/store";
-import { Text, TouchableOpacity, View, ScrollView, Modal, Animated, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, FlatList, Alert, Platform, TextInput } from "react-native";
+import { Text, TouchableOpacity, View, ScrollView, Modal, Animated, Dimensions, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert, Platform, TextInput } from "react-native";
 import { History, Calender, AddressMarker, PickLocation, Save, Driving, Gps, Close, Add, Minus } from "@utils/icons";
 import { styles } from "./styles";
 import { commonStyles } from "../../styles/commonStyle";
@@ -679,8 +679,19 @@ export function LocationDrop() {
           detailAddress: destination.trim(),
         };
         try {
+          let storedLocations: any[] = [];
           const stored: any = await getValue("locations");
-          let storedLocations = JSON.parse(stored) || [];
+
+          if (stored) {
+            try {
+              storedLocations = JSON.parse(stored);
+              if (!Array.isArray(storedLocations)) {
+                storedLocations = [storedLocations];
+              }
+            } catch {
+              storedLocations = [];
+            }
+          }
 
           const alreadyExists = storedLocations.some(
             (loc: any) =>
@@ -1509,124 +1520,114 @@ export function LocationDrop() {
                 },
               ]}>
               {suggestions?.length >= 3 ? (
-                <FlatList
-                  data={suggestions}
-                  keyExtractor={(_, index) => index.toString()}
-                  renderItem={({ item: suggestion, index }: { item: any; index: any }) => (
-                    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                      <TouchableOpacity
-                        activeOpacity={0.7}
+                suggestions.map((suggestion: any, index: number) => (
+                  <TouchableWithoutFeedback key={index.toString()} onPress={() => Keyboard.dismiss()}>
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={[
+                        styles.suggestionsView,
+                        { flexDirection: viewRTLStyle },
+                      ]}
+                      onPress={() => handleSuggestionClick(suggestion)}
+                    >
+                      <View
                         style={[
-                          styles.suggestionsView,
-                          { flexDirection: viewRTLStyle },
+                          styles.addressMArker,
+                          {
+                            backgroundColor: isDark
+                              ? appColors.bgDark
+                              : appColors.lightGray,
+                          },
                         ]}
-                        onPress={() => handleSuggestionClick(suggestion)}
                       >
-                        <View
-                          style={[
-                            styles.addressMArker,
-                            {
-                              backgroundColor: isDark
-                                ? appColors.bgDark
-                                : appColors.lightGray,
-                            },
-                          ]}
-                        >
-                          <AddressMarker />
+                        <AddressMarker />
+                      </View>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          width: "90%",
+                          marginHorizontal: windowWidth(5)
+                        }}
+                      >
+                        <View>
+                          <View
+                            style={[
+                              { flexDirection: viewRTLStyle },
+                              styles.spaceing,
+                            ]}
+                          >
+                            <View>
+                              <Text
+                                style={[
+                                  styles.titleText,
+                                  {
+                                    color: textColorStyle,
+                                    textAlign: textRTLStyle,
+                                  },
+                                ]}
+                              >
+                                {suggestion?.shortAddress}
+                              </Text>
+                              <Text
+                                style={[
+                                  styles.titleTextDetail,
+                                  { textAlign: textRTLStyle },
+                                ]}
+                              >
+                                {suggestion?.detailAddress}
+                              </Text>
+                            </View>
+                          </View>
+
+                          {index !== suggestions?.length - 1 ? (
+                            <View style={{ alignSelf: "center" }}>
+                              <SolidLine color={bgFullLayout} />
+                            </View>
+                          ) : null}
                         </View>
 
                         <View
                           style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            width: "90%",
-                            marginHorizontal: windowWidth(5)
+                            justifyContent: "center",
+                            alignItems: "flex-end",
+                            marginHorizontal: windowWidth(5),
                           }}
                         >
-                          <View>
-                            <View
-                              style={[
-                                { flexDirection: viewRTLStyle },
-                                styles.spaceing,
-                              ]}
-                            >
-                              <View>
-                                <Text
-                                  style={[
-                                    styles.titleText,
-                                    {
-                                      color: textColorStyle,
-                                      textAlign: textRTLStyle,
-                                    },
-                                  ]}
-                                >
-                                  {suggestion?.shortAddress}
-                                </Text>
-                                <Text
-                                  style={[
-                                    styles.titleTextDetail,
-                                    { textAlign: textRTLStyle },
-                                  ]}
-                                >
-                                  {suggestion?.detailAddress}
-                                </Text>
-                              </View>
-                            </View>
-
-                            {index !== suggestions?.length - 1 ? (
-                              <View style={{ alignSelf: "center" }}>
-                                <SolidLine color={bgFullLayout} />
-                              </View>
-                            ) : null}
-                          </View>
-
-                          <View
+                          <Text
                             style={{
-                              justifyContent: "center",
-                              alignItems: "flex-end",
-                              marginHorizontal: windowWidth(5),
+                              fontFamily: appFonts.medium,
+                              color: appColors.primary,
+                              width: windowWidth(70),
+                              textAlign: isRTL ? "left" : "right",
                             }}
                           >
-                            <Text
-                              style={{
-                                fontFamily: appFonts.medium,
-                                color: appColors.primary,
-                                width: windowWidth(70),
-                                textAlign: isRTL ? "left" : "right",
-                              }}
-                            >
-                              {(
-                                taxidoSettingData?.cabbooking_values?.ride?.distance_unit?.toLowerCase() ===
-                                  "mile"
-                                  ? (parseFloat(suggestion?.distanceKm) || 0) * 0.621371
-                                  : parseFloat(suggestion?.distanceKm) || 0
-                              ).toFixed(2)}
-                            </Text>
-                            <Text
-                              style={{
-                                fontFamily: appFonts.medium,
-                                color: appColors.primary,
-                                width: windowWidth(60),
-                                textAlign: isRTL ? "left" : "right",
-                              }}
-                            >
-                              {taxidoSettingData?.cabbooking_values?.ride?.distance_unit}
-                            </Text>
-                          </View>
+                            {(
+                              taxidoSettingData?.cabbooking_values?.ride?.distance_unit?.toLowerCase() ===
+                                "mile"
+                                ? (parseFloat(suggestion?.distanceKm) || 0) * 0.621371
+                                : parseFloat(suggestion?.distanceKm) || 0
+                            ).toFixed(2)}
+                          </Text>
+                          <Text
+                            style={{
+                              fontFamily: appFonts.medium,
+                              color: appColors.primary,
+                              width: windowWidth(60),
+                              textAlign: isRTL ? "left" : "right",
+                            }}
+                          >
+                            {taxidoSettingData?.cabbooking_values?.ride?.distance_unit}
+                          </Text>
                         </View>
-                      </TouchableOpacity>
-                    </TouchableWithoutFeedback>
-                  )}
-                  keyboardShouldPersistTaps="always"
-                />
+                      </View>
+                    </TouchableOpacity>
+                  </TouchableWithoutFeedback>
+                ))
 
               ) : Array.isArray(recentDatas) && recentDatas?.length > 0 ? (
-                <FlatList
-                  data={recentDatas}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={renderItemRecentData}
-                  keyboardShouldPersistTaps="always"
-                />
+                recentDatas.map((suggestion: any, index: number) => renderItemRecentData({ item: suggestion, index }))
               ) : (
                 <View style={styles.addressItemView}>
                   <Text

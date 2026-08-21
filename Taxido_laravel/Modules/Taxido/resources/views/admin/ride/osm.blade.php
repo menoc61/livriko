@@ -6,7 +6,7 @@
         position: relative;
         width: 30px;
         height: 30px;
-        background: #199675;
+        background: #1070b7;
         border-radius: 50%;
         text-align: center;
         line-height: 30px;
@@ -71,7 +71,7 @@
             routeWhileDragging: false,
             createMarker: function() { return null; }, 
             lineOptions: {
-                styles: [{ color: '#199675', weight: 5, opacity: 0.7 }]
+                styles: [{ color: '#1070b7', weight: 5, opacity: 0.7 }]
             },
         }).addTo(map);
     });

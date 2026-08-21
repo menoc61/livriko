@@ -325,7 +325,7 @@ trait RideTrait
 
                 $ride = $ride->refresh();
                 $driver = getDriverById($ride?->driver_id);
-                if ($rideRequest?->service_category?->type != ServiceCategoryEnum::SCHEDULE) {
+                if (! $rideRequest?->isScheduleRideRequest()) {
                     $driver?->update([
                         'is_on_ride' => true,
                     ]);

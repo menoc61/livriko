@@ -22,7 +22,7 @@
             }
 
             .text-primary {
-                color: #199675;
+                color: #1070b7;
                 font-weight: 700;
             }
 
@@ -37,7 +37,7 @@
             .invoice-header h1 {
                 margin: 0;
                 font-size: 70px;
-                color: #199675;
+                color: #1070b7;
             }
 
             .invoice-header div {
@@ -83,7 +83,7 @@
             .section-title {
                 margin-top: 15px;
                 margin-bottom: 5px;
-                color: #199675;
+                color: #1070b7;
             }
 
             p {

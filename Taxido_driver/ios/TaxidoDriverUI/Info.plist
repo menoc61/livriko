@@ -52,6 +52,13 @@
 		<string>GTWalsheimPro-Bold.ttf</string>
 		<string>GTWalsheimPro-Medium.ttf</string>
 		<string>GTWalsheimPro-Regular.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>DMSans-Regular.ttf</string>
+		<string>DMSans-Medium.ttf</string>
+		<string>DMSans-Bold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

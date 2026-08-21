@@ -31,7 +31,7 @@
                         <img src="{{ getSettings()['general']['dark_logo_image']?->original_url }}" alt="user"
                             class="dark-mode">
                         @else
-                        <img src="{{ asset('images/logo.svg') }}" alt="user">
+                        <img src="{{ asset('images/logo-livriko.png') }}" alt="user">
                         @endif
                     </a>
                 </div>

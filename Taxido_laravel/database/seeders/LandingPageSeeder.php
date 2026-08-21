@@ -15,7 +15,7 @@ class LandingPageSeeder extends Seeder
         $content = [
             "en" => [
                 "header" => [
-                    "logo" => "/front/images/placeholder/142x36.png",
+                    "logo" => "/front/images/logo-livriko.png",
                     "menus" => [
                         'home',
                         'why_taxi_booking',
@@ -82,8 +82,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "feature" => [
                     "status" => "1",
-                    "title" => "Why Taxido Stands Out as Your Go-To Ride Option",
-                    "description" => "With Taxido, enjoy affordable rates, safe journeys, and a user-friendly platform that makes travel easier and more enjoyable than ever before.",
+                    "title" => "Why Livriko Stands Out as Your Go-To Ride Option",
+                    "description" => "With Livriko, enjoy affordable rates, safe journeys, and a user-friendly platform that makes travel easier and more enjoyable than ever before.",
                     "images" => [
                         [
                             "image" => "front/images/placeholder/486x496.png",
@@ -119,8 +119,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "ride" => [
                     "status" => "1",
-                    "title" => "How Taxido Makes Your Ride Easy",
-                    "description" => "Get started in just a few simple steps. Choose your ride, track your driver, and enjoy a smooth, hassle-free journey with Taxido..",
+                    "title" => "How Livriko Makes Your Ride Easy",
+                    "description" => "Get started in just a few simple steps. Choose your ride, track your driver, and enjoy a smooth, hassle-free journey with Livriko..",
                     "step" => [
                         [
                             "image" => "front/images/placeholder/348x701.png",
@@ -151,25 +151,25 @@ class LandingPageSeeder extends Seeder
                 ],
                 "faq" => [
                     "title" => "Frequently Asked Questions",
-                    "sub_title" => "Got questions? Explore our FAQs for quick answers about Taxido's features, services, and app usage. Booking a ride, scheduling, or exploring services? Find all the answers here.",
+                    "sub_title" => "Got questions? Explore our FAQs for quick answers about Livriko's features, services, and app usage. Booking a ride, scheduling, or exploring services? Find all the answers here.",
                     "faqs" => [],
                     "status" => "1",
                 ],
                 "blog" => [
-                    "title" => "Stay Updated with Taxido",
-                    "sub_title" => "Be the first to know about exciting offers, latest updates, and helpful travel tips from Taxido. Stay informed and make the most out of your rides with insights and announcements tailored just for you.",
+                    "title" => "Stay Updated with Livriko",
+                    "sub_title" => "Be the first to know about exciting offers, latest updates, and helpful travel tips from Livriko. Stay informed and make the most out of your rides with insights and announcements tailored just for you.",
                     "blogs" => [],
                     "status" => "1",
                 ],
                 "testimonial" => [
                     "title" => "What Our Users Say",
-                    "sub_title" => "Real stories from our satisfied users. Taxido is transforming the way people commute, providing safe, reliable, and convenient rides.",
+                    "sub_title" => "Real stories from our satisfied users. Livriko is transforming the way people commute, providing safe, reliable, and convenient rides.",
                     "testimonials" => [],
                     "status" => "1",
                 ],
                 "footer" => [
-                    "footer_logo" => "front/images/placeholder/197x50.png",
-                    "description" => "Get started in minutes—choose your ride, track your driver, and enjoy a hassle-free journey with Taxido!",
+                    "footer_logo" => "/images/logo-dark-livriko.png",
+                    "description" => "Get started in minutes—choose your ride, track your driver, and enjoy a hassle-free journey with Livriko!",
                     "newsletter" => [
                         "label" => "Subscribe our Newsletter",
                         "placeholder" => "Enter email address",
@@ -187,17 +187,17 @@ class LandingPageSeeder extends Seeder
                     ],
                     "pages" => [],
                     "right_image" => "front/images/placeholder/638x528.png",
-                    "copyright" => "© Taxido All Rights & Reserves -",
+                    "copyright" => "© Livriko All Rights & Reserves -",
                     "status" => "1",
                 ],
                 "seo" => [
                     "status" => "1",
-                    "og_title" => "Taxido - The Future of Convenient Transportation",
-                    "meta_tags" => "taxido, ride-hailing, taxi service, transportation, car service, book a ride, city transport, ride sharing, reliable taxi, on-demand rides.",
-                    "meta_image" => "/front/images/logo.svg",
-                    "meta_title" => "Taxido - Your Reliable Ride-Hailing Partner",
-                    "og_description" => "Discover Taxido, your ultimate ride-hailing solution. Enjoy fast, safe, and reliable transportation at your fingertips. Download our app today for a seamless travel experience.",
-                    "meta_description" => "Experience seamless and convenient transportation with Taxido. Book your ride easily and get to your destination safely with our reliable and efficient ride-hailing service."
+                    "og_title" => "Livriko - The Future of Convenient Transportation",
+                    "meta_tags" => "livriko, ride-hailing, taxi service, transportation, car service, book a ride, city transport, ride sharing, reliable taxi, on-demand rides.",
+                    "meta_image" => "/front/images/logo-livriko.png",
+                    "meta_title" => "Livriko - Your Reliable Ride-Hailing Partner",
+                    "og_description" => "Discover Livriko, your ultimate ride-hailing solution. Enjoy fast, safe, and reliable transportation at your fingertips. Download our app today for a seamless travel experience.",
+                    "meta_description" => "Experience seamless and convenient transportation with Livriko. Book your ride easily and get to your destination safely with our reliable and efficient ride-hailing service."
                 ],
                 "analytics" => [
                     "status" => "1",
@@ -210,7 +210,7 @@ class LandingPageSeeder extends Seeder
             ],
             "fr" => [
                 "header" => [
-                    "logo" => "/front/images/placeholder/142x36.png",
+                    "logo" => "/front/images/logo-livriko.png",
                     "menus" => [
                         'home',
                         'why_taxi_booking',
@@ -277,8 +277,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "feature" => [
                     "status" => "1",
-                    "title" => "Pourquoi Taxido se distingue comme votre option de trajet préférée",
-                    "description" => "Avec Taxido, profitez de tarifs abordables, de voyages sûrs et d'une plateforme conviviale qui rend les déplacements plus faciles et plus agréables que jamais.",
+                    "title" => "Pourquoi Livriko se distingue comme votre option de trajet préférée",
+                    "description" => "Avec Livriko, profitez de tarifs abordables, de voyages sûrs et d'une plateforme conviviale qui rend les déplacements plus faciles et plus agréables que jamais.",
                     "images" => [
                         [
                             "image" => "front/images/placeholder/486x496.png",
@@ -314,8 +314,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "ride" => [
                     "status" => "1",
-                    "title" => "Comment Taxido facilite votre trajet",
-                    "description" => "Commencez en quelques étapes simples. Choisissez votre trajet, suivez votre conducteur et profitez d'un voyage fluide et sans tracas avec Taxido.",
+                    "title" => "Comment Livriko facilite votre trajet",
+                    "description" => "Commencez en quelques étapes simples. Choisissez votre trajet, suivez votre conducteur et profitez d'un voyage fluide et sans tracas avec Livriko.",
                     "step" => [
                         [
                             "image" => "front/images/placeholder/348x701.png",
@@ -346,25 +346,25 @@ class LandingPageSeeder extends Seeder
                 ],
                 "faq" => [
                     "title" => "Foire aux questions",
-                    "sub_title" => "Des questions? Explorez notre FAQ pour des réponses rapides sur les fonctionnalités, services et utilisation de l'application Taxido. Réserver un trajet, planifier ou explorer des services? Trouvez toutes les réponses ici.",
+                    "sub_title" => "Des questions? Explorez notre FAQ pour des réponses rapides sur les fonctionnalités, services et utilisation de l'application Livriko. Réserver un trajet, planifier ou explorer des services? Trouvez toutes les réponses ici.",
                     "faqs" => [],
                     "status" => "1",
                 ],
                 "blog" => [
-                    "title" => "Restez informé avec Taxido",
-                    "sub_title" => "Soyez le premier à connaître les offres passionnantes, les dernières mises à jour et les conseils de voyage utiles de Taxido. Restez informé et profitez au maximum de vos trajets avec des informations et des annonces adaptées spécialement pour vous.",
+                    "title" => "Restez informé avec Livriko",
+                    "sub_title" => "Soyez le premier à connaître les offres passionnantes, les dernières mises à jour et les conseils de voyage utiles de Livriko. Restez informé et profitez au maximum de vos trajets avec des informations et des annonces adaptées spécialement pour vous.",
                     "blogs" => [],
                     "status" => "1",
                 ],
                 "testimonial" => [
                     "title" => "Ce que disent nos utilisateurs",
-                    "sub_title" => "Des histoires réelles de nos utilisateurs satisfaits. Taxido transforme la façon dont les gens se déplacent, en offrant des trajets sûrs, fiables et pratiques.",
+                    "sub_title" => "Des histoires réelles de nos utilisateurs satisfaits. Livriko transforme la façon dont les gens se déplacent, en offrant des trajets sûrs, fiables et pratiques.",
                     "testimonials" => [],
                     "status" => "1",
                 ],
                 "footer" => [
-                    "footer_logo" => "front/images/placeholder/197x50.png",
-                    "description" => "Commencez en quelques minutes—choisissez votre trajet, suivez votre conducteur et profitez d'un voyage sans tracas avec Taxido!",
+                    "footer_logo" => "/images/logo-dark-livriko.png",
+                    "description" => "Commencez en quelques minutes—choisissez votre trajet, suivez votre conducteur et profitez d'un voyage sans tracas avec Livriko!",
                     "newsletter" => [
                         "label" => "Abonnez-vous à notre newsletter",
                         "placeholder" => "Entrez votre adresse e-mail",
@@ -374,7 +374,7 @@ class LandingPageSeeder extends Seeder
                     "app_store_url" => "#!",
                     "quick_links" => [
                         'Accueil',
-                        'Pourquoi Taxido?',
+                        'Pourquoi Livriko?',
                         'Comment ça marche',
                         'FAQs',
                         'Blogs',
@@ -382,17 +382,17 @@ class LandingPageSeeder extends Seeder
                     ],
                     "pages" => [],
                     "right_image" => "front/images/placeholder/638x528.png",
-                    "copyright" => "© Taxido Tous droits réservés -",
+                    "copyright" => "© Livriko Tous droits réservés -",
                     "status" => "1",
                 ],
                 "seo" => [
                     "status" => "1",
-                    "og_title" => "Taxido - L'avenir des transports pratiques",
-                    "meta_tags" => "taxido, ride-hailing, service de taxi, transport, service de voiture, réserver un trajet, transport urbain, covoiturage, taxi fiable, trajets à la demande.",
-                    "meta_image" => "/front/images/logo.svg",
-                    "meta_title" => "Taxido - Votre partenaire fiable de transport",
-                    "og_description" => "Découvrez Taxido, votre solution ultime de transport. Profitez de transports rapides, sûrs et fiables à portée de main. Téléchargez notre application dès aujourd'hui pour une expérience de voyage fluide.",
-                    "meta_description" => "Vivez une expérience de transport fluide et pratique avec Taxido. Réservez facilement votre trajet et arrivez à destination en toute sécurité avec notre service de transport fiable et efficace."
+                    "og_title" => "Livriko - L'avenir des transports pratiques",
+                    "meta_tags" => "livriko, ride-hailing, service de taxi, transport, service de voiture, réserver un trajet, transport urbain, covoiturage, taxi fiable, trajets à la demande.",
+                    "meta_image" => "/front/images/logo-livriko.png",
+                    "meta_title" => "Livriko - Votre partenaire fiable de transport",
+                    "og_description" => "Découvrez Livriko, votre solution ultime de transport. Profitez de transports rapides, sûrs et fiables à portée de main. Téléchargez notre application dès aujourd'hui pour une expérience de voyage fluide.",
+                    "meta_description" => "Vivez une expérience de transport fluide et pratique avec Livriko. Réservez facilement votre trajet et arrivez à destination en toute sécurité avec notre service de transport fiable et efficace."
                 ],
                 "analytics" => [
                     "status" => "1",
@@ -404,7 +404,7 @@ class LandingPageSeeder extends Seeder
             ],
             "de" => [
                 "header" => [
-                    "logo" => "/front/images/placeholder/142x36.png",
+                    "logo" => "/front/images/logo-livriko.png",
                     "menus" => [
                         'home',
                         'why_taxi_booking',
@@ -469,8 +469,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "feature" => [
                     "status" => "1",
-                    "title" => "Warum Taxido Ihre bevorzugte Fahrtoption ist",
-                    "description" => "Mit Taxido genießen Sie günstige Preise, sichere Fahrten und eine benutzerfreundliche Plattform, die das Reisen einfacher und angenehmer macht als je zuvor.",
+                    "title" => "Warum Livriko Ihre bevorzugte Fahrtoption ist",
+                    "description" => "Mit Livriko genießen Sie günstige Preise, sichere Fahrten und eine benutzerfreundliche Plattform, die das Reisen einfacher und angenehmer macht als je zuvor.",
                     "images" => [
                         [
                             "image" => "front/images/placeholder/486x496.png",
@@ -506,8 +506,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "ride" => [
                     "status" => "1",
-                    "title" => "Wie Taxido Ihre Fahrt erleichtert",
-                    "description" => "Starten Sie in wenigen einfachen Schritten. Wählen Sie Ihre Fahrt, verfolgen Sie Ihren Fahrer und genießen Sie eine reibungslose, stressfreie Fahrt mit Taxido.",
+                    "title" => "Wie Livriko Ihre Fahrt erleichtert",
+                    "description" => "Starten Sie in wenigen einfachen Schritten. Wählen Sie Ihre Fahrt, verfolgen Sie Ihren Fahrer und genießen Sie eine reibungslose, stressfreie Fahrt mit Livriko.",
                     "step" => [
                         [
                             "image" => "front/images/placeholder/348x701.png",
@@ -538,25 +538,25 @@ class LandingPageSeeder extends Seeder
                 ],
                 "faq" => [
                     "title" => "Häufig gestellte Fragen",
-                    "sub_title" => "Haben Sie Fragen? Durchsuchen Sie unsere FAQs für schnelle Antworten zu den Funktionen, Dienstleistungen und der Nutzung der Taxido-App. Eine Fahrt buchen, planen oder Dienstleistungen erkunden? Hier finden Sie alle Antworten.",
+                    "sub_title" => "Haben Sie Fragen? Durchsuchen Sie unsere FAQs für schnelle Antworten zu den Funktionen, Dienstleistungen und der Nutzung der Livriko-App. Eine Fahrt buchen, planen oder Dienstleistungen erkunden? Hier finden Sie alle Antworten.",
                     "faqs" => [],
                     "status" => "1",
                 ],
                 "blog" => [
-                    "title" => "Bleiben Sie mit Taxido auf dem Laufenden",
-                    "sub_title" => "Seien Sie der Erste, der spannende Angebote, die neuesten Updates und hilfreiche Reisetipps von Taxido erfährt. Bleiben Sie informiert und machen Sie das Beste aus Ihren Fahrten mit maßgeschneiderten Einblicken und Ankündigungen.",
+                    "title" => "Bleiben Sie mit Livriko auf dem Laufenden",
+                    "sub_title" => "Seien Sie der Erste, der spannende Angebote, die neuesten Updates und hilfreiche Reisetipps von Livriko erfährt. Bleiben Sie informiert und machen Sie das Beste aus Ihren Fahrten mit maßgeschneiderten Einblicken und Ankündigungen.",
                     "blogs" => [],
                     "status" => "1",
                 ],
                 "testimonial" => [
                     "title" => "Was unsere Nutzer sagen",
-                    "sub_title" => "Echte Geschichten von unseren zufriedenen Nutzern. Taxido verändert die Art und Weise, wie Menschen pendeln, und bietet sichere, zuverlässige und bequeme Fahrten.",
+                    "sub_title" => "Echte Geschichten von unseren zufriedenen Nutzern. Livriko verändert die Art und Weise, wie Menschen pendeln, und bietet sichere, zuverlässige und bequeme Fahrten.",
                     "testimonials" => [],
                     "status" => "1",
                 ],
                 "footer" => [
-                    "footer_logo" => "front/images/placeholder/197x50.png",
-                    "description" => "Starten Sie in wenigen Minuten—wählen Sie Ihre Fahrt, verfolgen Sie Ihren Fahrer und genießen Sie eine stressfreie Fahrt mit Taxido!",
+                    "footer_logo" => "/images/logo-dark-livriko.png",
+                    "description" => "Starten Sie in wenigen Minuten—wählen Sie Ihre Fahrt, verfolgen Sie Ihren Fahrer und genießen Sie eine stressfreie Fahrt mit Livriko!",
                     "newsletter" => [
                         "label" => "Abonnieren Sie unseren Newsletter",
                         "placeholder" => "Geben Sie Ihre E-Mail-Adresse ein",
@@ -566,7 +566,7 @@ class LandingPageSeeder extends Seeder
                     "app_store_url" => "#!",
                     "quick_links" => [
                         'Startseite',
-                        'Warum Taxido?',
+                        'Warum Livriko?',
                         'Wie es funktioniert',
                         'FAQs',
                         'Blogs',
@@ -574,17 +574,17 @@ class LandingPageSeeder extends Seeder
                     ],
                     "pages" => [],
                     "right_image" => "front/images/placeholder/638x528.png",
-                    "copyright" => "© Taxido Alle Rechte vorbehalten -",
+                    "copyright" => "© Livriko Alle Rechte vorbehalten -",
                     "status" => "1",
                 ],
                 "seo" => [
                     "status" => "1",
-                    "og_title" => "Taxido - Die Zukunft des bequemen Transports",
-                    "meta_tags" => "taxido, ride-hailing, Taxiservice, Transport, Autoservice, Fahrt buchen, Stadtverkehr, Mitfahrgelegenheit, zuverlässiges Taxi, On-Demand-Fahrten.",
-                    "meta_image" => "/front/images/logo.svg",
-                    "meta_title" => "Taxido - Ihr zuverlässiger Ride-Hailing-Partner",
-                    "og_description" => "Entdecken Sie Taxido, Ihre ultimative Ride-Hailing-Lösung. Genießen Sie schnellen, sicheren und zuverlässigen Transport. Laden Sie unsere App noch heute herunter für ein nahtloses Reiseerlebnis.",
-                    "meta_description" => "Erleben Sie nahtlosen und bequemen Transport mit Taxido. Buchen Sie Ihre Fahrt einfach und kommen Sie sicher an Ihr Ziel mit unserem zuverlässigen und effizienten Ride-Hailing-Service."
+                    "og_title" => "Livriko - Die Zukunft des bequemen Transports",
+                    "meta_tags" => "livriko, ride-hailing, Taxiservice, Transport, Autoservice, Fahrt buchen, Stadtverkehr, Mitfahrgelegenheit, zuverlässiges Taxi, On-Demand-Fahrten.",
+                    "meta_image" => "/front/images/logo-livriko.png",
+                    "meta_title" => "Livriko - Ihr zuverlässiger Ride-Hailing-Partner",
+                    "og_description" => "Entdecken Sie Livriko, Ihre ultimative Ride-Hailing-Lösung. Genießen Sie schnellen, sicheren und zuverlässigen Transport. Laden Sie unsere App noch heute herunter für ein nahtloses Reiseerlebnis.",
+                    "meta_description" => "Erleben Sie nahtlosen und bequemen Transport mit Livriko. Buchen Sie Ihre Fahrt einfach und kommen Sie sicher an Ihr Ziel mit unserem zuverlässigen und effizienten Ride-Hailing-Service."
                 ],
                 "analytics" => [
                     "status" => "1",
@@ -596,7 +596,7 @@ class LandingPageSeeder extends Seeder
             ],
             "ar" => [
                 "header" => [
-                    "logo" => "/front/images/placeholder/142x36.png",
+                    "logo" => "/front/images/logo-livriko.png",
                     "menus" => [
                         'home',
                         'why_taxi_booking',
@@ -663,8 +663,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "feature" => [
                     "status" => "1",
-                    "title" => "لماذا Taxido تبرز كخيارك المفضل للرحلات",
-                    "description" => "مع Taxido، استمتع بأسعار معقولة، رحلات آمنة، ومنصة سهلة الاستخدام تجعل السفر أسهل وأكثر متعة من أي وقت مضى.",
+                    "title" => "لماذا Livriko تبرز كخيارك المفضل للرحلات",
+                    "description" => "مع Livriko، استمتع بأسعار معقولة، رحلات آمنة، ومنصة سهلة الاستخدام تجعل السفر أسهل وأكثر متعة من أي وقت مضى.",
                     "images" => [
                         [
                             "image" => "front/images/placeholder/486x496.png",
@@ -700,8 +700,8 @@ class LandingPageSeeder extends Seeder
                 ],
                 "ride" => [
                     "status" => "1",
-                    "title" => "كيف تجعل Taxido رحلتك سهلة",
-                    "description" => "ابدأ في بضع خطوات بسيطة. اختر رحلتك، تتبع سائقك، واستمتع برحلة سلسة وخالية من المتاعب مع Taxido.",
+                    "title" => "كيف تجعل Livriko رحلتك سهلة",
+                    "description" => "ابدأ في بضع خطوات بسيطة. اختر رحلتك، تتبع سائقك، واستمتع برحلة سلسة وخالية من المتاعب مع Livriko.",
                     "step" => [
                         [
                             "image" => "front/images/placeholder/348x701.png",
@@ -732,25 +732,25 @@ class LandingPageSeeder extends Seeder
                 ],
                 "faq" => [
                     "title" => "الأسئلة الشائعة",
-                    "sub_title" => "هل لديك أسئلة؟ استكشف الأسئلة الشائعة للحصول على إجابات سريعة حول ميزات Taxido وخدماتها واستخدام التطبيق. حجز رحلة، جدولة، أو استكشاف الخدمات؟ ستجد جميع الإجابات هنا.",
+                    "sub_title" => "هل لديك أسئلة؟ استكشف الأسئلة الشائعة للحصول على إجابات سريعة حول ميزات Livriko وخدماتها واستخدام التطبيق. حجز رحلة، جدولة، أو استكشاف الخدمات؟ ستجد جميع الإجابات هنا.",
                     "faqs" => [],
                     "status" => "1",
                 ],
                 "blog" => [
-                    "title" => "ابقَ على اطلاع مع Taxido",
-                    "sub_title" => "كن أول من يعرف عن العروض المثيرة، آخر التحديثات، ونصائح السفر المفيدة من Taxido. ابقَ على اطلاع واستفد إلى أقصى حد من رحلاتك مع رؤى وإعلانات مصممة خصيصًا لك.",
+                    "title" => "ابقَ على اطلاع مع Livriko",
+                    "sub_title" => "كن أول من يعرف عن العروض المثيرة، آخر التحديثات، ونصائح السفر المفيدة من Livriko. ابقَ على اطلاع واستفد إلى أقصى حد من رحلاتك مع رؤى وإعلانات مصممة خصيصًا لك.",
                     "blogs" => [],
                     "status" => "1",
                 ],
                 "testimonial" => [
                     "title" => "ما يقوله مستخدمونا",
-                    "sub_title" => "قصص حقيقية من مستخدمينا الراضين. Taxido تغير الطريقة التي يتنقل بها الناس، وتوفر رحلات آمنة وموثوقة ومريحة.",
+                    "sub_title" => "قصص حقيقية من مستخدمينا الراضين. Livriko تغير الطريقة التي يتنقل بها الناس، وتوفر رحلات آمنة وموثوقة ومريحة.",
                     "testimonials" => [],
                     "status" => "1",
                 ],
                 "footer" => [
-                    "footer_logo" => "front/images/placeholder/197x50.png",
-                    "description" => "ابدأ في دقائق—اختر رحلتك، تتبع سائقك، واستمتع برحلة خالية من المتاعب مع Taxido!",
+                    "footer_logo" => "/images/logo-dark-livriko.png",
+                    "description" => "ابدأ في دقائق—اختر رحلتك، تتبع سائقك، واستمتع برحلة خالية من المتاعب مع Livriko!",
                     "newsletter" => [
                         "label" => "اشترك في نشرتنا الإخبارية",
                         "placeholder" => "أدخل عنوان البريد الإلكتروني",
@@ -760,7 +760,7 @@ class LandingPageSeeder extends Seeder
                     "app_store_url" => "#!",
                     "quick_links" => [
                         'الرئيسية',
-                        'لماذا Taxido؟',
+                        'لماذا Livriko؟',
                         'كيف تعمل',
                         'الأسئلة الشائعة',
                         'المدونات',
@@ -768,17 +768,17 @@ class LandingPageSeeder extends Seeder
                     ],
                     "pages" => [],
                     "right_image" => "front/images/placeholder/638x528.png",
-                    "copyright" => "© Taxido جميع الحقوق محفوظة -",
+                    "copyright" => "© Livriko جميع الحقوق محفوظة -",
                     "status" => "1",
                 ],
                 "seo" => [
                     "status" => "1",
-                    "og_title" => "Taxido - مستقبل النقل المريح",
-                    "meta_tags" => "taxido, ride-hailing, خدمة سيارات الأجرة, نقل, خدمة سيارات, حجز رحلة, نقل حضري, مشاركة الركوب, سيارات أجرة موثوقة, رحلات عند الطلب.",
-                    "meta_image" => "/front/images/logo.svg",
-                    "meta_title" => "Taxido - شريكك الموثوق في النقل",
-                    "og_description" => "اكتشف Taxido، الحل النهائي للنقل. استمتع بنقل سريع وآمن وموثوق في متناول يدك. قم بتنزيل تطبيقنا اليوم لتجربة سفر سلسة.",
-                    "meta_description" => "جرب النقل السلس والمريح مع Taxido. احجز رحلتك بسهولة ووصل إلى وجهتك بأمان مع خدمة النقل الموثوقة والفعالة لدينا."
+                    "og_title" => "Livriko - مستقبل النقل المريح",
+                    "meta_tags" => "livriko, ride-hailing, خدمة سيارات الأجرة, نقل, خدمة سيارات, حجز رحلة, نقل حضري, مشاركة الركوب, سيارات أجرة موثوقة, رحلات عند الطلب.",
+                    "meta_image" => "/front/images/logo-livriko.png",
+                    "meta_title" => "Livriko - شريكك الموثوق في النقل",
+                    "og_description" => "اكتشف Livriko، الحل النهائي للنقل. استمتع بنقل سريع وآمن وموثوق في متناول يدك. قم بتنزيل تطبيقنا اليوم لتجربة سفر سلسة.",
+                    "meta_description" => "جرب النقل السلس والمريح مع Livriko. احجز رحلتك بسهولة ووصل إلى وجهتك بأمان مع خدمة النقل الموثوقة والفعالة لدينا."
                 ],
                 "analytics" => [
                     "status" => "1",

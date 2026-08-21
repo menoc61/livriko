@@ -527,6 +527,7 @@ export function BookRide() {
           { latitude: destinationCoords.lat, longitude: destinationCoords.lng },
         ];
 
+        if (typeof mapRef.current?.fitToCoordinates !== 'function') return;
         mapRef.current.fitToCoordinates(coordinates, {
           edgePadding: {
             top: 100,
@@ -1440,6 +1441,7 @@ export function BookRide() {
 
   const focusOnPickup = () => {
     if (pickupCoords?.lat && pickupCoords?.lng && mapRef.current) {
+      if (typeof mapRef.current?.animateToRegion !== 'function') return;
       mapRef.current.animateToRegion(
         {
           latitude: pickupCoords?.lat,

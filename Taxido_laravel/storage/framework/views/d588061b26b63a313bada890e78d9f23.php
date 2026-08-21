@@ -7,10 +7,10 @@
 <meta name="author" content="<?php echo e(env('APP_NAME')); ?>">
 <!-- CSRF Token -->
 <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-<link rel="icon" href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon.svg')); ?>"
+<link rel="icon" href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon-livriko.png')); ?>"
     type="image/x-icon">
 <link rel="shortcut icon" type="image/x-icon"
-    href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon.svg')); ?>">
+    href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon-livriko.png')); ?>">
 
 <!-- Google font-->
 <link rel="preconnect" href="https://fonts.googleapis.com">

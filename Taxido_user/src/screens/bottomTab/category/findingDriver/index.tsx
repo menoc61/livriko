@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, Image, FlatList } from 'react-native';
+import { View, ScrollView, Text, Image } from 'react-native';
 import { commonStyles } from '../../../../styles/commonStyle';
 import { external } from '../../../../styles/externalStyle';
 import { Header, SolidLine, LineContainer, LocationDetails, ProgressBar, Button } from '@src/commonComponent';
@@ -38,8 +38,6 @@ export function FindingDriver() {
       }
     }, 100);
   };
-  const renderItem = ({ item }: { item: any }) => <CancelRender item={item} />;
-
   return (
     <View style={[commonStyles.flexContainer]}>
       <Header
@@ -49,9 +47,9 @@ export function FindingDriver() {
             contentContainerStyle={[external.Pb_80]}
             showsVerticalScrollIndicator={false}
             style={[external.mh_20, external.mt_20]}>
-            {completed && (
-              <FlatList renderItem={renderItem} data={CancelFareData} />
-            )}
+            {completed && CancelFareData.map((item, index) => (
+              <CancelRender key={item.id ?? index} item={item} />
+            ))}
             <LocationDetails />
             <LineContainer />
             <View style={[styles.addressContainer, { backgroundColor: bgFullLayout }]}>

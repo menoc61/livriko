@@ -13,7 +13,7 @@ import { UpdateProfileInterface } from "@src/api/interface/accountInterface";
 export const selfData = createAsyncThunk(SELF, async () => {
   const response = await accountServices.selfData();
   if (response.status == 200) {
-    return response;
+    return response?.data;
   } else if (response.status == 401) {
     return "Unauthorized";
   } else {
@@ -23,7 +23,7 @@ export const selfData = createAsyncThunk(SELF, async () => {
 
 export const countryData = createAsyncThunk(COUNTRY, async () => {
   const response = await accountServices.countryData();
-  return response;
+  return response?.data;
 });
 
 export const updateProfile = createAsyncThunk(
@@ -46,7 +46,7 @@ export const updateMobileEmail = createAsyncThunk(
   async (data: UpdateProfileInterface) => {
     const response = await accountServices.updateMobileEmail(data);
     if (response.status == 200) {
-      return response;
+      return response?.data;
     }
   },
 );
@@ -56,7 +56,7 @@ export const verifyMobileEmail = createAsyncThunk(
   async (data: UpdateProfileInterface) => {
     const response = await accountServices.verifyMobileEmail(data);
     if (response.status == 200) {
-      return response;
+      return response?.data;
     }
   },
 );

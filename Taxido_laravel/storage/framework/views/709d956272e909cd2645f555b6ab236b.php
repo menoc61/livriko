@@ -6,13 +6,13 @@
 <meta property="og:image" content="<?php echo e(asset($content['seo']['meta_image'] ?? '')); ?>">
 <meta property="og:title" content="<?php echo e($content['seo']['og_title'] ?? ''); ?>">
 <meta property="og:description" content="<?php echo e($content['seo']['og_description'] ?? ''); ?>">
-<meta name="author" content="Taxido">
+<meta name="author" content="Livriko">
 <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-<link rel="icon" href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon.svg')); ?>" type="image/x-icon">
-<link rel="shortcut icon" type="image/x-icon" href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon.svg')); ?>">
+<link rel="icon" href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon-livriko.png')); ?>" type="image/x-icon">
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo e(getSettings()['general']['favicon_image']?->original_url ?? asset('images/favicon-livriko.png')); ?>">
 <title><?php echo e(config('app.title')); ?> - <?php echo $__env->yieldContent('title'); ?></title>
-<link rel="apple-touch-icon" href="<?php echo e(asset('front/images/logo/favicon.png')); ?>">
-<meta name="theme-color" content="#7C57FF">
+<link rel="apple-touch-icon" href="<?php echo e(asset('front/images/logo/favicon-livriko.png')); ?>">
+<meta name="theme-color" content="#1070b7">
 <link rel="canonical" href="<?php echo e(url()?->current()); ?>" />
 <meta property="og:url" content="<?php echo e(url()?->current()); ?>" />
 <meta name="apple-mobile-web-app-capable" content="yes">

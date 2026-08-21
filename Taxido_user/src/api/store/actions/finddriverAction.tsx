@@ -7,7 +7,7 @@ export const findDriverAction = createAsyncThunk(
   BID,
   async (data: FindDriverInterface) => {
     const response = await FindDriverService.findDriverService(data);
-    return response;
+    return response?.data;
   },
 );
 

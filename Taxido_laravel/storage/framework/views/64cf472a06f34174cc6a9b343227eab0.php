@@ -12,9 +12,9 @@
                     <?php if(isset(getSettings()['general']['dark_logo_image'])): ?>
                         <img src="<?php echo e(getSettings()['general']['dark_logo_image']?->original_url); ?>" class="main-logo"
                             alt="logo">
-                        <img src="<?php echo e(asset('images/favicon.svg')); ?>" alt="favicon" class="sm-logo">
+                        <img src="<?php echo e(asset('images/favicon-livriko.png')); ?>" alt="favicon" class="sm-logo">
                     <?php else: ?>
-                        <img src="<?php echo e(asset('images/logo.svg')); ?>" alt="logo">
+                        <img src="<?php echo e(asset('images/logo-livriko.png')); ?>" alt="logo">
                     <?php endif; ?>
                 </a>
             </div>

@@ -29,9 +29,9 @@ class SettingSeeder extends Seeder
         $language_id = Language::where('status', true)->first()->id;
         $values = [
             'general' => [
-                'light_logo_image_id' => getAttachmentId('light.svg'),
-                'dark_logo_image_id' => getAttachmentId('dark.svg'),
-                'favicon_image_id' => getAttachmentId('favicon.svg'),
+                'light_logo_image_id' => getAttachmentId('logo-livriko.png'),
+                'dark_logo_image_id' => getAttachmentId('logo-dark-livriko.png'),
+                'favicon_image_id' => getAttachmentId('favicon-livriko.png'),
                 'site_name' => $this->baseName,
                 'site_url' => $this->baseURL,
                 'default_timezone' => 'UTC',
@@ -46,11 +46,12 @@ class SettingSeeder extends Seeder
             ],
             'appearance' => [
                 'font_family' => 'Inter',
-                'primary_color' => '#199675',
+                'primary_color' => '#1070b7',
+                'secondary_color' => '#be1823',
                 'sidebar_background_type' => 'gradient',
-                'sidebar_solid_color' => '#199675',
-                'sidebar_gradient_color_1' => '#199675',
-                'sidebar_gradient_color_2' => '#212121',
+                'sidebar_solid_color' => '#1070b7',
+                'sidebar_gradient_color_1' => '#1070b7',
+                'sidebar_gradient_color_2' => '#074b6d',
                 'front_font_family' => 'DM Sans',
                 'preloader_image_id' => '',
             ],

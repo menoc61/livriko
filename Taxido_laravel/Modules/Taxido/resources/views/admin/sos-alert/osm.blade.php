@@ -47,7 +47,7 @@
                 routeWhileDragging: false,
                 show: false, // Hide the default itinerary
                 lineOptions: {
-                    styles: [{ color: '#199675', weight: 5, opacity: 0.8 }]
+                    styles: [{ color: '#1070b7', weight: 5, opacity: 0.8 }]
                 },
                 createMarker: function(i, waypoint, n) {
                     // Only add markers for start and end points
