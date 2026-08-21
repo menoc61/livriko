@@ -181,6 +181,8 @@ export function TopCategory({ categoryData }: any) {
           defultAddress: fullAddress,
           defultCoords: addressCoords,
         });
+      } else if (item?.slug == 'carpooling' || item?.service_type == 'carpooling') {
+        navigate('CarpoolingHome');
       }
     }
   };

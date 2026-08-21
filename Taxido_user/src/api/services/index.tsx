@@ -24,6 +24,7 @@ import notificationServices from './notificationService'
 import homeScreenService from './homeScreenService'
 import ambulanceServices from './ambulanceService'
 import referralService from './referralService'
+import carpoolingOfferService from './carpoolingOfferService'
 
 export {
     authServices,
@@ -52,4 +53,5 @@ export {
     homeScreenService,
     ambulanceServices,
     referralService,
+    carpoolingOfferService,
 }

@@ -21,6 +21,7 @@ import cancelationServices from './cancelationService'
 import fleetServices from './fleetService'
 import referralService from './referralService'
 import incentiveService from './incentiveService'
+import carpoolingOfferService from './carpoolingOfferService'
 
 export {
   authServices,
@@ -45,5 +46,6 @@ export {
   cancelationServices,
   fleetServices,
   referralService,
-  incentiveService
+  incentiveService,
+  carpoolingOfferService
 }

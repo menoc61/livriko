@@ -13,4 +13,5 @@ enum ServiceCategoryEnum: string
     const ROUNDTRIP ='roundtrip';
     const OUTSTATION = 'outstation';
     const  DAILY = 'daily';
+    const CARPOOLING = 'carpooling';
 }

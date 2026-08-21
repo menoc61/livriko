@@ -128,6 +128,8 @@ export type RootStackParamList = {
   AmbulancePayment: Record<string, any> | undefined;
   CarpoolingHome: undefined;
   PublishRide: undefined;
+  RideList: { pickupLat?: number; pickupLng?: number; dropoffLat?: number; dropoffLng?: number } | undefined;
+  CarpoolingRideDetails: { offerId?: number; offer?: any };
   AddVehicle: Record<string, any> | undefined;
   FindDriverHome: undefined;
   OneWaySelect: Record<string, any> | undefined;

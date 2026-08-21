@@ -164,6 +164,12 @@ Route::group(['middleware' => ['localization','throttle:api']], function () {
         // Bids
         Route::apiResource('bid', 'BidController');
 
+        // Carpooling Offers
+        Route::apiResource('carpooling-offer', 'CarpoolingOfferController', ['except' => ['show']]);
+        Route::get('carpooling-offers/search', 'CarpoolingOfferController@search')->name('carpooling-offer.search');
+        Route::post('carpooling-offer/{offer}/book', 'CarpoolingOfferController@book')->name('carpooling-offer.book');
+        Route::get('carpooling-offer/{offer}', 'CarpoolingOfferController@show')->name('carpooling-offer.show');
+
         // Rider Wallets
         Route::get('riderWallet/history', 'RiderWalletController@index')->middleware('can:rider_wallet.index');
         Route::post('rider/top-up', 'RiderWalletController@topUp')->middleware('throttle:20,1');

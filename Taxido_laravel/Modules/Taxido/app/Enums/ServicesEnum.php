@@ -8,5 +8,6 @@ enum ServicesEnum:string {
   const FREIGHT = 'freight';
   const AMBULANCE = 'ambulance';
   const FINDDRIVER ='finddriver';
+  const CARPOOLING = 'carpooling';
 }
 

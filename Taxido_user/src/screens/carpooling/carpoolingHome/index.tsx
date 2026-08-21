@@ -10,6 +10,7 @@ import { useAppNavigation } from '@src/utils/navigation'
 import MapView, { Marker } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import { useValues } from '@src/utils/context/index';
+import useStoredLocation from '@src/components/helper/useStoredLocation'
 
 
 export function CarpoolingHome() {
@@ -17,12 +18,28 @@ export function CarpoolingHome() {
     const { navigate, goBack } = useAppNavigation();
     const { viewRTLStyle, Google_Map_Key } = useValues()
     const mapRef = useRef(null);
-    const [pickupCoords, setPickupCoords] = useState(null);
-    const [dropOffCoords, setDropOffCoords] = useState(null);
+    const { latitude, longitude } = useStoredLocation();
+    const [pickupCoords, setPickupCoords] = useState<{ lat: number; lng: number } | null>(null);
+    const [dropOffCoords, setDropOffCoords] = useState<{ lat: number; lng: number } | null>(null);
+    const [pickupText, setPickupText] = useState('');
+    const [dropoffText, setDropoffText] = useState('');
+
+    const userLat = latitude || 37.7749;
+    const userLng = longitude || -122.4194;
+
+    const handleSwapLocations = () => {
+        setPickupCoords(prev => {
+            setDropOffCoords(prev);
+            return dropOffCoords;
+        });
+        setPickupText(prev => {
+            setDropoffText(prev);
+            return dropoffText;
+        });
+    };
 
     return (
         <View style={styles.mainView}>
-
             <View style={styles.headerView}>
                 <TouchableOpacity onPress={goBack} activeOpacity={0.7} style={styles.back}>
                     <Back />
@@ -33,28 +50,38 @@ export function CarpoolingHome() {
                 </TouchableOpacity>
             </View>
 
-
             <View style={styles.mapContainer}>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                >
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.mapView}>
                         <MapView
                             ref={mapRef}
                             style={styles.map}
                             initialRegion={{
-                                latitude: 37.7749,
-                                longitude: -122.4194,
+                                latitude: userLat,
+                                longitude: userLng,
                                 latitudeDelta: 0.05,
                                 longitudeDelta: 0.05
                             }}
+                            showsUserLocation={true}
                         >
-                            {pickupCoords && <Marker coordinate={pickupCoords} title="Pickup" />}
-                            {dropOffCoords && <Marker coordinate={dropOffCoords} title="Drop-off" />}
+                            {pickupCoords && (
+                                <Marker
+                                    coordinate={{ latitude: pickupCoords.lat, longitude: pickupCoords.lng }}
+                                    title="Pickup"
+                                    pinColor={appColors.primary}
+                                />
+                            )}
+                            {dropOffCoords && (
+                                <Marker
+                                    coordinate={{ latitude: dropOffCoords.lat, longitude: dropOffCoords.lng }}
+                                    title="Drop-off"
+                                    pinColor="red"
+                                />
+                            )}
                             {pickupCoords && dropOffCoords && (
                                 <MapViewDirections
-                                    origin={pickupCoords}
-                                    destination={dropOffCoords}
+                                    origin={{ latitude: pickupCoords.lat, longitude: pickupCoords.lng }}
+                                    destination={{ latitude: dropOffCoords.lat, longitude: dropOffCoords.lng }}
                                     apikey={Google_Map_Key}
                                     strokeWidth={4}
                                     strokeColor={appColors.primary}
@@ -64,10 +91,10 @@ export function CarpoolingHome() {
                     </View>
                     <View style={styles.view}>
                         <View style={styles.rideView}>
-                            <TouchableOpacity style={styles.searchRideView}>
+                            <TouchableOpacity style={styles.searchRideView} onPress={() => navigate('RideList')}>
                                 <Text style={styles.searchRide}>Search Ride</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.createRideView}>
+                            <TouchableOpacity style={styles.createRideView} onPress={() => navigate('PublishRide')}>
                                 <Text style={styles.createRide}>Create Ride</Text>
                             </TouchableOpacity>
                         </View>
@@ -83,7 +110,14 @@ export function CarpoolingHome() {
                                     <TextInput
                                         placeholder="Pickup Location"
                                         placeholderTextColor={appColors.gray}
-
+                                        value={pickupText}
+                                        onChangeText={setPickupText}
+                                        onFocus={() => {
+                                            if (latitude && longitude) {
+                                                setPickupCoords({ lat: latitude, lng: longitude });
+                                                setPickupText('Current Location');
+                                            }
+                                        }}
                                     />
                                 </View>
                                 <View style={styles.inputBox}>
@@ -94,46 +128,34 @@ export function CarpoolingHome() {
                                         placeholder="Drop-off Location"
                                         style={styles.input}
                                         placeholderTextColor={appColors.gray}
-
+                                        value={dropoffText}
+                                        onChangeText={setDropoffText}
+                                        onFocus={() => {
+                                            if (latitude && longitude) {
+                                                setDropOffCoords({ lat: latitude + 0.01, lng: longitude + 0.01 });
+                                                setDropoffText('Selected Destination');
+                                            }
+                                        }}
                                     />
                                 </View>
 
-                                <TouchableOpacity style={styles.swapButton} activeOpacity={0.7}>
+                                <TouchableOpacity style={styles.swapButton} activeOpacity={0.7} onPress={handleSwapLocations}>
                                     <Swap />
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.buttonView}>
-                                <Button textColor={appColors.whiteColor} title='Next' onPress={() => navigate('Stopover', {})} />
+                                <Button
+                                    textColor={appColors.whiteColor}
+                                    title='Search Rides'
+                                    onPress={() => navigate('RideList', {
+                                        pickupLat: pickupCoords?.lat,
+                                        pickupLng: pickupCoords?.lng,
+                                        dropoffLat: dropOffCoords?.lat,
+                                        dropoffLng: dropOffCoords?.lng,
+                                    })}
+                                />
                             </View>
                         </View>
-                        <View style={styles.addressMainView}>
-                            <Text
-                                style={styles.recent}
-                            >
-                                Recent Search
-                            </Text>
-                            <View style={styles.textView}>
-                                <Location />
-                                <Text
-                                    style={styles.adajanText}
-                                >
-                                    Adajan, Gujarat
-                                </Text>
-                            </View>
-                            <View
-                                style={styles.addressView}
-                            />
-                            <View style={{ flexDirection: viewRTLStyle, alignItems: "center" }}>
-                                <Location />
-                                <Text
-                                    style={styles.adajanText}
-                                >
-                                    Adajan, Gujarat
-                                </Text>
-                            </View>
-                        </View>
-
-
 
                         <View style={styles.slider}>
                             <HomeSlider
@@ -144,19 +166,6 @@ export function CarpoolingHome() {
                     </View>
                 </ScrollView>
             </View>
-
-
         </View>
     )
 }
-
-
-
-
-
-
-
-
-
-
-

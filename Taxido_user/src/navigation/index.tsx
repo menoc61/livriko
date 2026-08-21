@@ -62,6 +62,8 @@ import { LocationSave } from "@src/screens/bottomTab/profileTab/savedLocation/co
 import { AmbulanceSearch } from "../screens/ambulance/ambulanceSearch";
 import { BookAmbulance } from "../screens/ambulance/bookAmbulance";
 import { CarpoolingHome } from "../screens/carpooling/carpoolingHome";
+import { RideList } from "../screens/carpooling/rideList";
+import { CarpolingRideDetails } from "../screens/carpooling/carpolingRideDetails";
 import { PublishRide } from "../screens/carpooling/publishRide";
 import NetInfo from "@react-native-community/netinfo";
 import { AddVehicle } from "../screens/carpooling/addVehicle";
@@ -193,6 +195,8 @@ const MyStack: React.FC = () => {
               component={AmbulancePayment}
             />
             <Stack.Screen name="CarpoolingHome" component={CarpoolingHome} />
+            <Stack.Screen name="RideList" component={RideList} />
+            <Stack.Screen name="CarpoolingRideDetails" component={CarpolingRideDetails} />
             <Stack.Screen name="PublishRide" component={PublishRide} />
             <Stack.Screen name="AddVehicle" component={AddVehicle} />
             <Stack.Screen name="NoService" component={NoService} />

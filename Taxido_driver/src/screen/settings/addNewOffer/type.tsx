@@ -5,6 +5,8 @@ export interface DropdownProps {
   onChange: any
   setOpen: any
   containerStyle?: Record<string, any>
+  style?: any
+  textStyle?: any
   zIndex?: number
   placeholderValue?: string
   setValue?: any
